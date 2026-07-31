@@ -1,64 +1,58 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>TREASURE DAY 💎</title>
-
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TREASURE DAY 💎</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
 <div id="splash">
-    <div class="logo">💎</div>
-    <h1>TREASURE DAY</h1>
-    <p>Have a Treasure Day.</p>
+  <div class="logo">💎</div>
+  <h1>TREASURE DAY</h1>
+  <p>Have a Treasure Day.</p>
 </div>
 
-<div id="app">
+<main id="app">
 
-<header>
+  <header class="hero">
 
-<h2>NEXT EVENT</h2>
+    <p class="label">NEXT EVENT</p>
 
-<div class="event-card">
+    <div class="event-card">
 
-<h1>THE STAGE</h1>
+      <h1>THE STAGE</h1>
 
-<p>IGアリーナ</p>
+      <p>IGアリーナ</p>
 
-<p>2026.08.01</p>
+      <p>2026.08.01</p>
 
-<div class="dday">
-D-DAY
-</div>
+      <div class="dday">
+        D-DAY
+      </div>
 
-</div>
+    </div>
 
-</header>
+  </header>
 
-<section class="card">
+  <section class="card">
 
-<h2>🎒 持ち物</h2>
+    <h2>🎒 持ち物</h2>
 
-<div class="progress">
+    <div class="progress">
+      <div id="progress-bar"></div>
+    </div>
 
-<div id="progress-bar"></div>
+    <p class="percent">0%</p>
 
-</div>
+    <div id="checklist"></div>
 
-<p class="percent">0%</p>
+  </section>
 
-<div id="checklist"></div>
-
-</section>
+</main>
 
 <script src="app.js"></script>
 
-</div>
-
 </body>
-
 </html>
