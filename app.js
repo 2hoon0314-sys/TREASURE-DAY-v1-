@@ -162,10 +162,12 @@ memoryTab.addEventListener("click",()=>{
     homePage.style.display="none";
     planPage.style.display="none";
     memoryPage.style.display="block";
-
+  
+settingsPage.style.display="none";
     homeTab.classList.remove("active");
     planTab.classList.remove("active");
     memoryTab.classList.add("active");
+  settingsTab.classList.remove("active");
 
 });
 settingsTab.addEventListener("click",()=>{
