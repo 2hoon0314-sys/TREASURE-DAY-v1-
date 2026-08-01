@@ -364,7 +364,6 @@ if (treasureDayInput) {
 }
 
 // ===== NEXT EVENT 保存 =====
-
 const eventNameInput = document.getElementById("event-name");
 const eventPlaceInput = document.getElementById("event-place");
 const eventDateInput = document.getElementById("event-date");
