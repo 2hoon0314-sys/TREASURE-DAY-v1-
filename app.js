@@ -364,7 +364,7 @@ if (treasureDayInput) {
 }
 
 // ===== NEXT EVENT 保存 =====
-alert("NEXT EVENT JS到達💎");
+
 const eventNameInput = document.getElementById("event-name");
 const eventPlaceInput = document.getElementById("event-place");
 const eventDateInput = document.getElementById("event-date");
