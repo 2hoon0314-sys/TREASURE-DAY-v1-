@@ -189,3 +189,21 @@ weight:bold;
     padding:20px;
     padding-bottom:130px;
 }
+.page{
+    padding-bottom:130px;
+}
+
+.plan-item{
+    background:#2a313d;
+    padding:16px;
+    margin-top:12px;
+    border-radius:14px;
+    font-size:17px;
+    color:white;
+    transition:.2s;
+}
+
+.plan-item:active{
+    transform:scale(.98);
+    background:#3a4353;
+}
