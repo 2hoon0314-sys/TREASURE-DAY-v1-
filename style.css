@@ -267,3 +267,16 @@ body.light-mode .bottom-nav {
 body.light-mode .nav-btn {
   color: #1b1f2a;
 }
+body.light-mode,
+body.light-mode #app {
+  background: white !important;
+  color: #111827 !important;
+}
+
+body.light-mode .card,
+body.light-mode .event-card,
+body.light-mode .plan-item,
+body.light-mode .memory-card {
+  background: #ffffff !important;
+  color: #111827 !important;
+}
