@@ -126,10 +126,12 @@ setTimeout(()=>{
 },1800);
 const homeTab = document.getElementById("home-tab");
 const planTab = document.getElementById("plan-tab");
-
+const memoryTab =
+document.getElementById("memory-tab");
 const homePage = document.querySelector("main");
 const planPage = document.getElementById("plan-page");
-
+const memoryPage =
+document.getElementById("memory-page");
 homeTab.addEventListener("click",()=>{
 
     homePage.style.display="block";
@@ -147,5 +149,16 @@ planTab.addEventListener("click",()=>{
 
     planTab.classList.add("active");
     homeTab.classList.remove("active");
+
+});
+memoryTab.addEventListener("click",()=>{
+
+    homePage.style.display="none";
+    planPage.style.display="none";
+    memoryPage.style.display="block";
+
+    homeTab.classList.remove("active");
+    planTab.classList.remove("active");
+    memoryTab.classList.add("active");
 
 });
