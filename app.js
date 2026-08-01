@@ -245,3 +245,27 @@ saveMemoryBtn.addEventListener("click",()=>{
 });
 
 renderMemories();
+// ===== THEME 設定 =====
+const themeToggle = document.getElementById("theme-toggle");
+
+const savedTheme = localStorage.getItem("treasure-theme") || "dark";
+
+function applyTheme(theme) {
+  if (theme === "light") {
+    document.body.classList.add("light-mode");
+    themeToggle.textContent = "DARK MODE";
+  } else {
+    document.body.classList.remove("light-mode");
+    themeToggle.textContent = "LIGHT MODE";
+  }
+}
+
+applyTheme(savedTheme);
+
+themeToggle.addEventListener("click", () => {
+  const isLight = document.body.classList.contains("light-mode");
+  const newTheme = isLight ? "dark" : "light";
+
+  localStorage.setItem("treasure-theme", newTheme);
+  applyTheme(newTheme);
+});
