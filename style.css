@@ -179,34 +179,9 @@ input[type="checkbox"]{
     color:white;
     font-weight:bold;
 }
-.bottom-nav{
-    position:fixed;
-    bottom:0;
-    left:0;
-    width:100%;
-    background:#171b22;
-    border-top:1px solid #2a313d;
-    display:flex;
-    justify-content:space-around;
-    padding:10px 0 calc(10px + env(safe-area-inset-bottom));
+weight:bold;
 }
 
-.nav-btn{
-    background:none;
-    border:none;
-    color:#9aa3b2;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:4px;
-    font-size:12px;
-}
-
-.nav-btn span{
-    font-size:22px;
-}
-
-.nav-btn.active{
     color:#4ba8ff;
 }
 
