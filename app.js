@@ -139,9 +139,11 @@ homeTab.addEventListener("click",()=>{
     homePage.style.display="block";
     planPage.style.display="none";
 memoryPage.style.display="none";
+  settingsPage.style.display="none";
     homeTab.classList.add("active");
     planTab.classList.remove("active");
 memoryTab.classList.remove("active");
+  settingsTab.classList.remove("active");
 });
 
 planTab.addEventListener("click",()=>{
@@ -149,9 +151,11 @@ planTab.addEventListener("click",()=>{
     homePage.style.display="none";
     planPage.style.display="block";
 memoryPage.style.display="none";
+  settingsPage.style.display="none";
     planTab.classList.add("active");
     homeTab.classList.remove("active");
 memoryTab.classList.remove("active");
+  settingsTab.classList.remove("active");
 });
 memoryTab.addEventListener("click",()=>{
 
