@@ -164,6 +164,19 @@ memoryTab.addEventListener("click",()=>{
     memoryTab.classList.add("active");
 
 });
+settingsTab.addEventListener("click",()=>{
+
+  homePage.style.display="none";
+  planPage.style.display="none";
+  memoryPage.style.display="none";
+  settingsPage.style.display="block";
+
+  homeTab.classList.remove("active");
+  planTab.classList.remove("active");
+  memoryTab.classList.remove("active");
+  settingsTab.classList.add("active");
+
+});
 // ===== MEMORY 保存機能 =====
 
 const memoryTitle = document.getElementById("memory-title");
