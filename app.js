@@ -39,7 +39,7 @@ function render(){
 
         if(input.checked) checked++;
 
-        input.addEventListener("change",()=>{
+        input.addEventListenerさ("change",()=>{
 
             saved[item]=input.checked;
 
@@ -360,5 +360,28 @@ updateTreasureCountdown();
 if (treasureDayInput) {
   treasureDayInput.addEventListener("change", () => {
     updateTreasureCountdown();
+  });
+}
+
+// ===== NEXT EVENT 保存 =====
+const eventNameInput = document.getElementById("event-name");
+const eventPlaceInput = document.getElementById("event-place");
+const eventDateInput = document.getElementById("event-date");
+const saveEventButton = document.getElementById("save-event");
+
+if (saveEventButton) {
+  saveEventButton.addEventListener("click", () => {
+    const eventData = {
+      name: eventNameInput.value,
+      place: eventPlaceInput.value,
+      date: eventDateInput.value
+    };
+
+    localStorage.setItem(
+      "treasure-next-event",
+      JSON.stringify(eventData)
+    );
+
+    alert("💎 NEXT EVENTを保存しました！");
   });
 }
