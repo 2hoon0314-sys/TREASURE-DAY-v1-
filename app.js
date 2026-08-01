@@ -347,7 +347,7 @@ function updateTreasureCountdown() {
   const diff = Math.ceil((treasureDate - today) / (1000 * 60 * 60 * 24));
 
   if (diff > 0) {
-    treasureCountdown.textContent = "D-" + diff;
+treasureCountdown.textContent = `D-${diff}`;
   } else if (diff === 0) {
     treasureCountdown.textContent = "🎉 TODAY IS TREASURE DAY 💎";
   } else {
