@@ -243,3 +243,27 @@ body.light-mode .memory-card {
   background: #eef1f5;
   color: #111827;
 }
+/* ===== LIGHT MODE ===== */
+
+body.light-mode {
+  background: #f5f7fb;
+  color: #1b1f2a;
+}
+
+body.light-mode .card {
+  background: #ffffff;
+  color: #1b1f2a;
+}
+
+body.light-mode .plan-item {
+  background: #eef1f6;
+  color: #1b1f2a;
+}
+
+body.light-mode .bottom-nav {
+  background: #ffffff;
+}
+
+body.light-mode .nav-btn {
+  color: #1b1f2a;
+}
