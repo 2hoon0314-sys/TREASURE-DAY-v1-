@@ -71,7 +71,35 @@ function render(){
 }
 
 render();
+document.getElementById("check-all").addEventListener("click",()=>{
 
+    items.forEach(item=>{
+        saved[item]=true;
+    });
+
+    localStorage.setItem(
+        "treasure-day",
+        JSON.stringify(saved)
+    );
+
+    render();
+
+});
+
+document.getElementById("clear-all").addEventListener("click",()=>{
+
+    items.forEach(item=>{
+        saved[item]=false;
+    });
+
+    localStorage.setItem(
+        "treasure-day",
+        JSON.stringify(saved)
+    );
+
+    render();
+
+});
 setTimeout(()=>{
 
     document.getElementById("splash").style.display="none";
