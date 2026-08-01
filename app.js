@@ -143,7 +143,16 @@ memoryPage.style.display="none";
     homeTab.classList.add("active");
     planTab.classList.remove("active");
 memoryTab.classList.remove("active");
-  settingsTab.classList.remove("active");
+settingsTab.classList.remove("active");
+
+// 保存した推しメンをHOMEに反映
+const savedHomeMember = localStorage.getItem("treasure-member") || "JIHOON";
+const homeMemberDisplay = document.getElementById("home-member");
+
+if (homeMemberDisplay) {
+  homeMemberDisplay.textContent = savedHomeMember;
+}
+
 });
 
 planTab.addEventListener("click",()=>{
