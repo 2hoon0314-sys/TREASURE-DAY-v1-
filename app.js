@@ -269,3 +269,18 @@ themeToggle.addEventListener("click", () => {
   localStorage.setItem("treasure-theme", newTheme);
   applyTheme(newTheme);
 });
+// ===== 推しメン設定 =====
+
+const memberSelect = document.getElementById("member-select");
+
+// 保存済みの推しメンを読み込む
+const savedMember = localStorage.getItem("treasure-member");
+
+if (savedMember) {
+  memberSelect.value = savedMember;
+}
+
+// メンバーを選んだら保存
+memberSelect.addEventListener("change", () => {
+  localStorage.setItem("treasure-member", memberSelect.value);
+});
