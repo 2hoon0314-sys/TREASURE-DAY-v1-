@@ -386,23 +386,3 @@ if (saveEventButton) {
   });
 }
 
-// ===== NEXT EVENT 保存 =====
-const saveEventButton = document.getElementById("save-event");
-const eventNameInput = document.getElementById("event-name");
-const eventPlaceInput = document.getElementById("event-place");
-const eventDateInput = document.getElementById("event-date");
-
-if (saveEventButton) {
-  saveEventButton.addEventListener("click", () => {
-
-    const eventName = eventNameInput.value;
-    const eventPlace = eventPlaceInput.value;
-    const eventDate = eventDateInput.value;
-
-    localStorage.setItem("next-event-name", eventName);
-    localStorage.setItem("next-event-place", eventPlace);
-    localStorage.setItem("next-event-date", eventDate);
-
-    alert("保存しました💎");
-  });
-}
