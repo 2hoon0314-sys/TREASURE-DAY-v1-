@@ -124,3 +124,28 @@ setTimeout(()=>{
     document.getElementById("app").style.display="block";
 
 },1800);
+const homeTab = document.getElementById("home-tab");
+const planTab = document.getElementById("plan-tab");
+
+const homePage = document.querySelector("main");
+const planPage = document.getElementById("plan-page");
+
+homeTab.addEventListener("click",()=>{
+
+    homePage.style.display="block";
+    planPage.style.display="none";
+
+    homeTab.classList.add("active");
+    planTab.classList.remove("active");
+
+});
+
+planTab.addEventListener("click",()=>{
+
+    homePage.style.display="none";
+    planPage.style.display="block";
+
+    planTab.classList.add("active");
+    homeTab.classList.remove("active");
+
+});
