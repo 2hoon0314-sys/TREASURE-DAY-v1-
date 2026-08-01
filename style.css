@@ -156,3 +156,26 @@ input[type="checkbox"]{
     color:white;
     font-weight:bold;
 }
+.event-editor{
+    margin-top:16px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.event-editor input{
+    padding:12px;
+    border:none;
+    border-radius:12px;
+    background:#2a313d;
+    color:white;
+}
+
+.event-editor button{
+    padding:12px;
+    border:none;
+    border-radius:12px;
+    background:#4ba8ff;
+    color:white;
+    font-weight:bold;
+}
