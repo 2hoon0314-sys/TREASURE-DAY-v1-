@@ -295,11 +295,7 @@ memberSelect.addEventListener("change", () => {
 
   localStorage.setItem("treasure-member", selectedMember);
 
-  const homeMember = document.getElementById("home-member");
 
-  if (homeMember) {
-    homeMember.textContent = selectedMember;
-  }
 });
 // ===== HOME 推しメン表示 =====
 const homeMember = document.getElementById("home-member");
