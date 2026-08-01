@@ -332,3 +332,33 @@ if (treasureDayInput) {
     localStorage.setItem("treasure-day", treasureDayInput.value);
   });
 }
+// ===== TREASURE DAY カウントダウン表示 =====
+const treasureCountdown = document.getElementById("treasure-countdown");
+
+function updateTreasureCountdown() {
+  const savedDate = localStorage.getItem("treasure-day");
+
+  if (!savedDate || !treasureCountdown) return;
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const treasureDate = new Date(savedDate + "T00:00:00");
+  const diff = Math.ceil((treasureDate - today) / (1000 * 60 * 60 * 24));
+
+  if (diff > 0) {
+    treasureCountdown.textContent = "D-" + diff;
+  } else if (diff === 0) {
+    treasureCountdown.textContent = "🎉 TODAY IS TREASURE DAY 💎";
+  } else {
+    treasureCountdown.textContent = "💎 TREASURE DAY 💎";
+  }
+}
+
+updateTreasureCountdown();
+
+if (treasureDayInput) {
+  treasureDayInput.addEventListener("change", () => {
+    updateTreasureCountdown();
+  });
+}
