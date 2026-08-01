@@ -284,3 +284,22 @@ if (savedMember) {
 memberSelect.addEventListener("change", () => {
   localStorage.setItem("treasure-member", memberSelect.value);
 });
+// ===== HOME 推しメン表示 =====
+const homeMember = document.getElementById("home-member");
+
+function updateHomeMember() {
+  const member =
+    localStorage.getItem("treasure-member") || "JIHOON";
+
+  if (homeMember) {
+    homeMember.textContent = member;
+  }
+}
+
+// 最初にHOMEへ反映
+updateHomeMember();
+
+// SETTINGSで変更したらHOMEもすぐ変更
+memberSelect.addEventListener("change", () => {
+  updateHomeMember();
+});
