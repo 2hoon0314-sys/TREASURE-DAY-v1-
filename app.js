@@ -146,7 +146,7 @@ planTab.addEventListener("click",()=>{
 
     homePage.style.display="none";
     planPage.style.display="block";
-
+memoryPage.style.display="none";
     planTab.classList.add("active");
     homeTab.classList.remove("active");
 
