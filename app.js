@@ -44,7 +44,7 @@ function render(){
             saved[item]=input.checked;
 
             localStorage.setItem(
-                "treasure-day",
+"treasure-checklist",
                 JSON.stringify(saved)
             );
 
