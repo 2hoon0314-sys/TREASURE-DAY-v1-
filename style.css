@@ -207,3 +207,39 @@ weight:bold;
     transform:scale(.98);
     background:#3a4353;
 }
+/* ===== LIGHT MODE ===== */
+
+body.light-mode {
+  background: #f4f6f9;
+  color: #111827;
+}
+
+body.light-mode .card {
+  background: #ffffff;
+  color: #111827;
+}
+
+body.light-mode .plan-item {
+  background: #eef1f5;
+  color: #111827;
+}
+
+body.light-mode .bottom-nav {
+  background: #ffffff;
+}
+
+body.light-mode .nav-btn {
+  background: #ffffff;
+  color: #111827;
+}
+
+body.light-mode input,
+body.light-mode textarea {
+  background: #f4f6f9;
+  color: #111827;
+}
+
+body.light-mode .memory-card {
+  background: #eef1f5;
+  color: #111827;
+}
