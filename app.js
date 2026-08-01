@@ -128,10 +128,12 @@ const homeTab = document.getElementById("home-tab");
 const planTab = document.getElementById("plan-tab");
 const memoryTab =
 document.getElementById("memory-tab");
+const settingsTab = document.getElementById("settings-tab");
 const homePage = document.querySelector("main");
 const planPage = document.getElementById("plan-page");
 const memoryPage =
 document.getElementById("memory-page");
+const settingsPage = document.getElementById("settings-page");
 homeTab.addEventListener("click",()=>{
 
     homePage.style.display="block";
