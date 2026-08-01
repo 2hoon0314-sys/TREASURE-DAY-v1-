@@ -20,7 +20,7 @@ const progressBar = document.getElementById("progress-bar");
 const percent = document.querySelector(".percent");
 
 const saved =
-JSON.parse(localStorage.getItem("treasure-day")) || {};
+JSON.parse(localStorage.getItem("treasure-checklist")) || {};
 
 function render(){
 
