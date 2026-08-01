@@ -162,3 +162,65 @@ memoryTab.addEventListener("click",()=>{
     memoryTab.classList.add("active");
 
 });
+// ===== MEMORY 保存機能 =====
+
+const memoryTitle = document.getElementById("memory-title");
+const memoryText = document.getElementById("memory-text");
+const saveMemoryBtn = document.getElementById("save-memory");
+const memoryList = document.getElementById("memory-list");
+
+let memories =
+  JSON.parse(localStorage.getItem("treasure-memories")) || [];
+
+function renderMemories(){
+
+  memoryList.innerHTML = "";
+
+  memories.forEach((memory)=>{
+
+    const card = document.createElement("div");
+    card.className = "memory-card";
+
+    const title = document.createElement("h3");
+    title.textContent = memory.title;
+
+    const text = document.createElement("p");
+    text.textContent = memory.text;
+
+    card.appendChild(title);
+    card.appendChild(text);
+
+    memoryList.appendChild(card);
+
+  });
+
+}
+
+saveMemoryBtn.addEventListener("click",()=>{
+
+  const title = memoryTitle.value.trim();
+  const text = memoryText.value.trim();
+
+  if(title === "" && text === ""){
+    alert("思い出を書いてね💎");
+    return;
+  }
+
+  memories.unshift({
+    title: title || "TREASURE MEMORY 💎",
+    text: text
+  });
+
+  localStorage.setItem(
+    "treasure-memories",
+    JSON.stringify(memories)
+  );
+
+  memoryTitle.value = "";
+  memoryText.value = "";
+
+  renderMemories();
+
+});
+
+renderMemories();
