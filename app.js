@@ -320,7 +320,7 @@ memberSelect.addEventListener("change", () => {
 const treasureDayInput = document.getElementById("treasure-day-input");
 
 // 保存済みの日付を読み込む
-const savedTreasureDay = localStorage.getItem("treasure-day");
+const savedTreasureDay = localStorage.getItem("treasure-day-date");
 
 if (savedTreasureDay && treasureDayInput) {
   treasureDayInput.value = savedTreasureDay;
@@ -329,14 +329,14 @@ if (savedTreasureDay && treasureDayInput) {
 // 日付を変更したら保存
 if (treasureDayInput) {
   treasureDayInput.addEventListener("change", () => {
-    localStorage.setItem("treasure-day", treasureDayInput.value);
+localStorage.setItem("treasure-day-date", treasureDayInput.value);
   });
 }
 // ===== TREASURE DAY カウントダウン表示 =====
 const treasureCountdown = document.getElementById("treasure-countdown");
 
 function updateTreasureCountdown() {
-  const savedDate = localStorage.getItem("treasure-day");
+  const savedDate = localStorage.getItem("treasure-day-date");
 
   if (!savedDate || !treasureCountdown) return;
 
