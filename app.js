@@ -1,3 +1,12 @@
+// ========================================
+// 💎 TREASURE DAY - app.js
+// ========================================
+
+
+// ========================================
+// 🎒 持ち物 CHECKLIST
+// ========================================
+
 const items = [
   "充電器",
   "AirPods",
@@ -19,288 +28,415 @@ const checklist = document.getElementById("checklist");
 const progressBar = document.getElementById("progress-bar");
 const percent = document.querySelector(".percent");
 
-const saved =
-JSON.parse(localStorage.getItem("treasure-checklist")) || {};
+let savedChecklist = {};
 
-function render(){
-
-    checklist.innerHTML="";
-
-    let checked = 0;
-
-    items.forEach(item=>{
-
-        const row=document.createElement("label");
-        row.className="item";
-
-        const input=document.createElement("input");
-        input.type="checkbox";
-        input.checked=saved[item]||false;
-
-        if(input.checked) checked++;
-
-        input.addEventListener("change",()=>{
-
-            saved[item]=input.checked;
-
-            localStorage.setItem(
-"treasure-checklist",
-                JSON.stringify(saved)
-            );
-
-            render();
-
-        });
-
-        const span=document.createElement("span");
-        span.textContent=item;
-
-        row.appendChild(input);
-        row.appendChild(span);
-
-        checklist.appendChild(row);
-
-    });
-
-    const value=Math.round((checked/items.length)*100);
-
-    progressBar.style.width=value+"%";
-
-    percent.textContent=value+"%";
-
+try {
+  savedChecklist =
+    JSON.parse(localStorage.getItem("treasure-checklist")) || {};
+} catch (e) {
+  savedChecklist = {};
 }
 
-render();
-document.getElementById("check-all").addEventListener("click",()=>{
+function renderChecklist() {
 
-    items.forEach(item=>{
-        saved[item]=true;
+  if (!checklist) return;
+
+  checklist.innerHTML = "";
+
+  let checked = 0;
+
+  items.forEach((item) => {
+
+    const row = document.createElement("label");
+    row.className = "item";
+
+    const input = document.createElement("input");
+    input.type = "checkbox";
+    input.checked = savedChecklist[item] || false;
+
+    if (input.checked) {
+      checked++;
+    }
+
+    input.addEventListener("change", () => {
+
+      savedChecklist[item] = input.checked;
+
+      localStorage.setItem(
+        "treasure-checklist",
+        JSON.stringify(savedChecklist)
+      );
+
+      renderChecklist();
+    });
+
+    const span = document.createElement("span");
+    span.textContent = item;
+
+    row.appendChild(input);
+    row.appendChild(span);
+
+    checklist.appendChild(row);
+  });
+
+  const value =
+    items.length > 0
+      ? Math.round((checked / items.length) * 100)
+      : 0;
+
+  if (progressBar) {
+    progressBar.style.width = value + "%";
+  }
+
+  if (percent) {
+    percent.textContent = value + "%";
+  }
+}
+
+renderChecklist();
+
+
+// ========================================
+// ✅ 全部チェック
+// ========================================
+
+const checkAllButton = document.getElementById("check-all");
+
+if (checkAllButton) {
+
+  checkAllButton.addEventListener("click", () => {
+
+    items.forEach((item) => {
+      savedChecklist[item] = true;
     });
 
     localStorage.setItem(
-        "treasure-day",
-        JSON.stringify(saved)
+      "treasure-checklist",
+      JSON.stringify(savedChecklist)
     );
 
-    render();
+    renderChecklist();
+  });
+}
 
-});
 
-document.getElementById("clear-all").addEventListener("click",()=>{
+// ========================================
+// 🔄 リセット
+// ========================================
 
-    items.forEach(item=>{
-        saved[item]=false;
+const clearAllButton = document.getElementById("clear-all");
+
+if (clearAllButton) {
+
+  clearAllButton.addEventListener("click", () => {
+
+    items.forEach((item) => {
+      savedChecklist[item] = false;
     });
 
     localStorage.setItem(
-        "treasure-day",
-        JSON.stringify(saved)
+      "treasure-checklist",
+      JSON.stringify(savedChecklist)
     );
 
-    render();
+    renderChecklist();
+  });
+}
 
-});
-const eventDate = new Date("2026-08-01");
-const today = new Date();
 
-eventDate.setHours(0,0,0,0);
-today.setHours(0,0,0,0);
-
-const diff = Math.ceil((eventDate - today)/(1000*60*60*24));
+// ========================================
+// 💙 THE STAGE D-DAY
+// ========================================
 
 const dday = document.getElementById("dday");
 
-if(diff > 0){
+if (dday) {
+
+  const eventDate = new Date("2026-08-01T00:00:00");
+  const today = new Date();
+
+  eventDate.setHours(0, 0, 0, 0);
+  today.setHours(0, 0, 0, 0);
+
+  const diff = Math.ceil(
+    (eventDate - today) / (1000 * 60 * 60 * 24)
+  );
+
+  if (diff > 0) {
     dday.textContent = "D-" + diff;
-}else if(diff === 0){
+  } else if (diff === 0) {
     dday.textContent = "TODAY 💎";
-}else{
+  } else {
     dday.textContent = "THANK YOU 💙";
+  }
 }
-setTimeout(()=>{
 
-    document.getElementById("splash").style.display="none";
 
-    document.getElementById("app").style.display="block";
+// ========================================
+// 💎 SPLASH
+// ========================================
 
-},1800);
+const splash = document.getElementById("splash");
+const app = document.getElementById("app");
+
+setTimeout(() => {
+
+  if (splash) {
+    splash.style.display = "none";
+  }
+
+  if (app) {
+    app.style.display = "block";
+  }
+
+}, 1800);
+
+
+// ========================================
+// 📱 TAB
+// ========================================
+
 const homeTab = document.getElementById("home-tab");
 const planTab = document.getElementById("plan-tab");
-const memoryTab =
-document.getElementById("memory-tab");
+const memoryTab = document.getElementById("memory-tab");
 const settingsTab = document.getElementById("settings-tab");
+
 const homePage = document.querySelector("main");
 const planPage = document.getElementById("plan-page");
-const memoryPage =
-document.getElementById("memory-page");
+const memoryPage = document.getElementById("memory-page");
 const settingsPage = document.getElementById("settings-page");
-homeTab.addEventListener("click",()=>{
 
-    homePage.style.display="block";
-    planPage.style.display="none";
-memoryPage.style.display="none";
-  settingsPage.style.display="none";
-    homeTab.classList.add("active");
-    planTab.classList.remove("active");
-memoryTab.classList.remove("active");
-settingsTab.classList.remove("active");
+function showPage(pageName) {
 
-// 保存した推しメンをHOMEに反映
-const savedHomeMember = localStorage.getItem("treasure-member") || "JIHOON";
-const homeMemberDisplay = document.getElementById("home-member");
+  if (homePage) {
+    homePage.style.display =
+      pageName === "home" ? "block" : "none";
+  }
 
-if (homeMemberDisplay) {
-  homeMemberDisplay.textContent = savedHomeMember;
+  if (planPage) {
+    planPage.style.display =
+      pageName === "plan" ? "block" : "none";
+  }
+
+  if (memoryPage) {
+    memoryPage.style.display =
+      pageName === "memory" ? "block" : "none";
+  }
+
+  if (settingsPage) {
+    settingsPage.style.display =
+      pageName === "settings" ? "block" : "none";
+  }
+
+  if (homeTab) {
+    homeTab.classList.toggle(
+      "active",
+      pageName === "home"
+    );
+  }
+
+  if (planTab) {
+    planTab.classList.toggle(
+      "active",
+      pageName === "plan"
+    );
+  }
+
+  if (memoryTab) {
+    memoryTab.classList.toggle(
+      "active",
+      pageName === "memory"
+    );
+  }
+
+  if (settingsTab) {
+    settingsTab.classList.toggle(
+      "active",
+      pageName === "settings"
+    );
+  }
 }
 
-});
+if (homeTab) {
+  homeTab.addEventListener("click", () => {
+    showPage("home");
+    updateHomeMember();
+  });
+}
 
-planTab.addEventListener("click",()=>{
+if (planTab) {
+  planTab.addEventListener("click", () => {
+    showPage("plan");
+  });
+}
 
-    homePage.style.display="none";
-    planPage.style.display="block";
-memoryPage.style.display="none";
-  settingsPage.style.display="none";
-    planTab.classList.add("active");
-    homeTab.classList.remove("active");
-memoryTab.classList.remove("active");
-  settingsTab.classList.remove("active");
-});
-memoryTab.addEventListener("click",()=>{
+if (memoryTab) {
+  memoryTab.addEventListener("click", () => {
+    showPage("memory");
+  });
+}
 
-    homePage.style.display="none";
-    planPage.style.display="none";
-    memoryPage.style.display="block";
-  
-settingsPage.style.display="none";
-    homeTab.classList.remove("active");
-    planTab.classList.remove("active");
-    memoryTab.classList.add("active");
-  settingsTab.classList.remove("active");
+if (settingsTab) {
+  settingsTab.addEventListener("click", () => {
+    showPage("settings");
+  });
+}
 
-});
-settingsTab.addEventListener("click",()=>{
 
-  homePage.style.display="none";
-  planPage.style.display="none";
-  memoryPage.style.display="none";
-  settingsPage.style.display="block";
+// ========================================
+// 📝 MEMORY
+// ========================================
 
-  homeTab.classList.remove("active");
-  planTab.classList.remove("active");
-  memoryTab.classList.remove("active");
-  settingsTab.classList.add("active");
+const memoryTitle =
+  document.getElementById("memory-title");
 
-});
-// ===== MEMORY 保存機能 =====
+const memoryText =
+  document.getElementById("memory-text");
 
-const memoryTitle = document.getElementById("memory-title");
-const memoryText = document.getElementById("memory-text");
-const saveMemoryBtn = document.getElementById("save-memory");
-const memoryList = document.getElementById("memory-list");
+const saveMemoryBtn =
+  document.getElementById("save-memory");
 
-let memories =
-  JSON.parse(localStorage.getItem("treasure-memories")) || [];
+const memoryList =
+  document.getElementById("memory-list");
 
-function renderMemories(){
+let memories = [];
+
+try {
+  memories =
+    JSON.parse(localStorage.getItem("treasure-memories")) || [];
+} catch (e) {
+  memories = [];
+}
+
+function renderMemories() {
+
+  if (!memoryList) return;
 
   memoryList.innerHTML = "";
 
-  memories.forEach((memory)=>{
+  memories.forEach((memory) => {
 
     const card = document.createElement("div");
     card.className = "memory-card";
 
     const title = document.createElement("h3");
-    title.textContent = memory.title;
+    title.textContent =
+      memory.title || "TREASURE MEMORY 💎";
 
     const text = document.createElement("p");
-    text.textContent = memory.text;
+    text.textContent = memory.text || "";
 
     card.appendChild(title);
     card.appendChild(text);
 
     memoryList.appendChild(card);
-
   });
-
 }
 
-saveMemoryBtn.addEventListener("click",()=>{
+if (saveMemoryBtn) {
 
-  const title = memoryTitle.value.trim();
-  const text = memoryText.value.trim();
+  saveMemoryBtn.addEventListener("click", () => {
 
-  if(title === "" && text === ""){
-    alert("思い出を書いてね💎");
-    return;
-  }
+    const title =
+      memoryTitle ? memoryTitle.value.trim() : "";
 
-  memories.unshift({
-    title: title || "TREASURE MEMORY 💎",
-    text: text
+    const text =
+      memoryText ? memoryText.value.trim() : "";
+
+    if (title === "" && text === "") {
+      alert("思い出を書いてね💎");
+      return;
+    }
+
+    memories.unshift({
+      title: title || "TREASURE MEMORY 💎",
+      text: text
+    });
+
+    localStorage.setItem(
+      "treasure-memories",
+      JSON.stringify(memories)
+    );
+
+    if (memoryTitle) {
+      memoryTitle.value = "";
+    }
+
+    if (memoryText) {
+      memoryText.value = "";
+    }
+
+    renderMemories();
   });
-
-  localStorage.setItem(
-    "treasure-memories",
-    JSON.stringify(memories)
-  );
-
-  memoryTitle.value = "";
-  memoryText.value = "";
-
-  renderMemories();
-
-});
+}
 
 renderMemories();
-// ===== THEME 設定 =====
-const themeToggle = document.getElementById("theme-toggle");
 
-const savedTheme = localStorage.getItem("treasure-theme") || "dark";
+
+// ========================================
+// 🌙 THEME
+// ========================================
+
+const themeToggle =
+  document.getElementById("theme-toggle");
+
+const savedTheme =
+  localStorage.getItem("treasure-theme") || "dark";
 
 function applyTheme(theme) {
+
   if (theme === "light") {
+
     document.body.classList.add("light-mode");
-    themeToggle.textContent = "DARK MODE";
+
+    if (themeToggle) {
+      themeToggle.textContent = "DARK MODE";
+    }
+
   } else {
+
     document.body.classList.remove("light-mode");
-    themeToggle.textContent = "LIGHT MODE";
+
+    if (themeToggle) {
+      themeToggle.textContent = "LIGHT MODE";
+    }
   }
 }
 
 applyTheme(savedTheme);
 
-themeToggle.addEventListener("click", () => {
-  const isLight = document.body.classList.contains("light-mode");
-  const newTheme = isLight ? "dark" : "light";
+if (themeToggle) {
 
-  localStorage.setItem("treasure-theme", newTheme);
-  applyTheme(newTheme);
-});
-// ===== 推しメン設定 =====
+  themeToggle.addEventListener("click", () => {
 
-const memberSelect = document.getElementById("member-select");
+    const isLight =
+      document.body.classList.contains("light-mode");
 
-// 保存済みの推しメンを読み込む
-const savedMember = localStorage.getItem("treasure-member");
+    const newTheme =
+      isLight ? "dark" : "light";
 
-if (savedMember) {
-  memberSelect.value = savedMember;
+    localStorage.setItem(
+      "treasure-theme",
+      newTheme
+    );
+
+    applyTheme(newTheme);
+  });
 }
 
-// メンバーを選んだら保存
-memberSelect.addEventListener("change", () => {
-  const selectedMember = memberSelect.value;
 
-  localStorage.setItem("treasure-member", selectedMember);
+// ========================================
+// 💎 推しメン設定
+// ========================================
 
+const memberSelect =
+  document.getElementById("member-select");
 
-});
-// ===== HOME 推しメン表示 =====
-const homeMember = document.getElementById("home-member");
+const homeMember =
+  document.getElementById("home-member");
 
 function updateHomeMember() {
+
   const member =
     localStorage.getItem("treasure-member") || "JIHOON";
 
@@ -309,80 +445,200 @@ function updateHomeMember() {
   }
 }
 
-// 最初にHOMEへ反映
+const savedMember =
+  localStorage.getItem("treasure-member");
+
+if (memberSelect && savedMember) {
+  memberSelect.value = savedMember;
+}
+
+if (memberSelect) {
+
+  memberSelect.addEventListener("change", () => {
+
+    localStorage.setItem(
+      "treasure-member",
+      memberSelect.value
+    );
+
+    updateHomeMember();
+  });
+}
+
 updateHomeMember();
 
-// SETTINGSで変更したらHOMEもすぐ変更
-memberSelect.addEventListener("change", () => {
-  updateHomeMember();
-});
-// ===== TREASURE DAY 設定 =====
-const treasureDayInput = document.getElementById("treasure-day-input");
 
-// 保存済みの日付を読み込む
-const savedTreasureDay = localStorage.getItem("treasure-day-date");
+// ========================================
+// 🎉 TREASURE DAY 設定
+// ========================================
 
-if (savedTreasureDay && treasureDayInput) {
+const treasureDayInput =
+  document.getElementById("treasure-day-input");
+
+const treasureCountdown =
+  document.getElementById("treasure-countdown");
+
+const savedTreasureDay =
+  localStorage.getItem("treasure-day-date");
+
+if (treasureDayInput && savedTreasureDay) {
   treasureDayInput.value = savedTreasureDay;
 }
 
-// 日付を変更したら保存
-if (treasureDayInput) {
-  treasureDayInput.addEventListener("change", () => {
-localStorage.setItem("treasure-day-date", treasureDayInput.value);
-  });
-}
-// ===== TREASURE DAY カウントダウン表示 =====
-const treasureCountdown = document.getElementById("treasure-countdown");
-
 function updateTreasureCountdown() {
-  const savedDate = localStorage.getItem("treasure-day-date");
 
-  if (!savedDate || !treasureCountdown) return;
+  if (!treasureCountdown) return;
+
+  const savedDate =
+    localStorage.getItem("treasure-day-date");
+
+  if (!savedDate) {
+    treasureCountdown.textContent = "D-DAY";
+    return;
+  }
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  const treasureDate = new Date(savedDate + "T00:00:00");
-  const diff = Math.ceil((treasureDate - today) / (1000 * 60 * 60 * 24));
+  const treasureDate =
+    new Date(savedDate + "T00:00:00");
+
+  const diff = Math.ceil(
+    (treasureDate - today) /
+    (1000 * 60 * 60 * 24)
+  );
 
   if (diff > 0) {
-treasureCountdown.textContent = `D-${diff}`;
+
+    treasureCountdown.textContent =
+      `D-${diff}`;
+
   } else if (diff === 0) {
-    treasureCountdown.textContent = "🎉 TODAY IS TREASURE DAY 💎";
+
+    treasureCountdown.textContent =
+      "🎉 TODAY IS TREASURE DAY 💎";
+
   } else {
-    treasureCountdown.textContent = "💎 TREASURE DAY 💎";
+
+    treasureCountdown.textContent =
+      "💎 TREASURE DAY 💎";
   }
+}
+
+if (treasureDayInput) {
+
+  treasureDayInput.addEventListener(
+    "change",
+    () => {
+
+      localStorage.setItem(
+        "treasure-day-date",
+        treasureDayInput.value
+      );
+
+      updateTreasureCountdown();
+    }
+  );
 }
 
 updateTreasureCountdown();
 
-if (treasureDayInput) {
-  treasureDayInput.addEventListener("change", () => {
-    updateTreasureCountdown();
-  });
-}
 
-// ===== NEXT EVENT 保存 =====
-const eventNameInput = document.getElementById("event-name");
-const eventPlaceInput = document.getElementById("event-place");
-const eventDateInput = document.getElementById("event-date");
-const saveEventButton = document.getElementById("save-event");
+// ========================================
+// 🎫 NEXT EVENT
+// ========================================
 
-if (saveEventButton) {
-  saveEventButton.addEventListener("click", () => {
-    const eventData = {
-      name: eventNameInput.value,
-      place: eventPlaceInput.value,
-      date: eventDateInput.value
-    };
+const eventNameInput =
+  document.getElementById("event-name");
 
-    localStorage.setItem(
-      "treasure-next-event",
-      JSON.stringify(eventData)
+const eventPlaceInput =
+  document.getElementById("event-place");
+
+const eventDateInput =
+  document.getElementById("event-date");
+
+const saveEventButton =
+  document.getElementById("save-event");
+
+
+// 保存済みイベントを読み込む
+let savedEvent = null;
+
+try {
+  savedEvent =
+    JSON.parse(
+      localStorage.getItem("treasure-next-event")
     );
-
-    alert("💎 NEXT EVENTを保存しました！");
-  });
+} catch (e) {
+  savedEvent = null;
 }
 
+if (savedEvent) {
+
+  if (eventNameInput) {
+    eventNameInput.value =
+      savedEvent.name || "";
+  }
+
+  if (eventPlaceInput) {
+    eventPlaceInput.value =
+      savedEvent.place || "";
+  }
+
+  if (eventDateInput) {
+    eventDateInput.value =
+      savedEvent.date || "";
+  }
+}
+
+
+// 保存ボタン
+if (saveEventButton) {
+
+  saveEventButton.addEventListener(
+    "click",
+    () => {
+
+      const eventData = {
+
+        name:
+          eventNameInput
+            ? eventNameInput.value.trim()
+            : "",
+
+        place:
+          eventPlaceInput
+            ? eventPlaceInput.value.trim()
+            : "",
+
+        date:
+          eventDateInput
+            ? eventDateInput.value
+            : ""
+      };
+
+      if (
+        eventData.name === "" &&
+        eventData.place === "" &&
+        eventData.date === ""
+      ) {
+        alert("イベント情報を入力してね💎");
+        return;
+      }
+
+      localStorage.setItem(
+        "treasure-next-event",
+        JSON.stringify(eventData)
+      );
+
+      alert("💎 NEXT EVENTを保存しました！");
+    }
+  );
+}
+
+
+// ========================================
+// 💎 TREASURE DAY READY
+// ========================================
+
+console.log("💎 TREASURE DAY READY 💎");
