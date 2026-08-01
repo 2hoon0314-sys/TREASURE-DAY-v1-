@@ -39,7 +39,7 @@ function render(){
 
         if(input.checked) checked++;
 
-        input.addEventListenerさ("change",()=>{
+        input.addEventListener("change",()=>{
 
             saved[item]=input.checked;
 
