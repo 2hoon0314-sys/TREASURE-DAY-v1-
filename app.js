@@ -100,6 +100,23 @@ document.getElementById("clear-all").addEventListener("click",()=>{
     render();
 
 });
+const eventDate = new Date("2026-08-01");
+const today = new Date();
+
+eventDate.setHours(0,0,0,0);
+today.setHours(0,0,0,0);
+
+const diff = Math.ceil((eventDate - today)/(1000*60*60*24));
+
+const dday = document.getElementById("dday");
+
+if(diff > 0){
+    dday.textContent = "D-" + diff;
+}else if(diff === 0){
+    dday.textContent = "TODAY 💎";
+}else{
+    dday.textContent = "THANK YOU 💙";
+}
 setTimeout(()=>{
 
     document.getElementById("splash").style.display="none";
