@@ -320,3 +320,19 @@ updateHomeMember();
 memberSelect.addEventListener("change", () => {
   updateHomeMember();
 });
+// ===== TREASURE DAY 設定 =====
+const treasureDayInput = document.getElementById("treasure-day-input");
+
+// 保存済みの日付を読み込む
+const savedTreasureDay = localStorage.getItem("treasure-day");
+
+if (savedTreasureDay && treasureDayInput) {
+  treasureDayInput.value = savedTreasureDay;
+}
+
+// 日付を変更したら保存
+if (treasureDayInput) {
+  treasureDayInput.addEventListener("change", () => {
+    localStorage.setItem("treasure-day", treasureDayInput.value);
+  });
+}
