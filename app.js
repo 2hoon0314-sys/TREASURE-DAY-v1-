@@ -139,7 +139,7 @@ homeTab.addEventListener("click",()=>{
 memoryPage.style.display="none";
     homeTab.classList.add("active");
     planTab.classList.remove("active");
-
+memoryTab.classList.remove("active");
 });
 
 planTab.addEventListener("click",()=>{
