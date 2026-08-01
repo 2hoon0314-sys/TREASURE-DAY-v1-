@@ -291,7 +291,15 @@ if (savedMember) {
 
 // メンバーを選んだら保存
 memberSelect.addEventListener("change", () => {
-  localStorage.setItem("treasure-member", memberSelect.value);
+  const selectedMember = memberSelect.value;
+
+  localStorage.setItem("treasure-member", selectedMember);
+
+  const homeMember = document.getElementById("home-member");
+
+  if (homeMember) {
+    homeMember.textContent = selectedMember;
+  }
 });
 // ===== HOME 推しメン表示 =====
 const homeMember = document.getElementById("home-member");
