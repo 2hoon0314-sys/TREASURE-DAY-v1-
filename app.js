@@ -642,3 +642,37 @@ if (saveEventButton) {
 // ========================================
 
 console.log("💎 TREASURE DAY READY 💎");
+// ===== HOME NEXT EVENT 表示 =====
+const homeEventName = document.getElementById("home-event-name");
+const homeEventPlace = document.getElementById("home-event-place");
+const homeEventDate = document.getElementById("home-event-date");
+
+function updateHomeEvent() {
+  let eventData = null;
+
+  try {
+    eventData = JSON.parse(
+      localStorage.getItem("treasure-next-event")
+    );
+  } catch (e) {
+    eventData = null;
+  }
+
+  if (!eventData) return;
+
+  if (homeEventName) {
+    homeEventName.textContent = eventData.name || "NEXT EVENT";
+  }
+
+  if (homeEventPlace) {
+    homeEventPlace.textContent = eventData.place || "";
+  }
+
+  if (homeEventDate) {
+    homeEventDate.textContent = eventData.date
+      ? eventData.date.replaceAll("-", ".")
+      : "";
+  }
+}
+
+updateHomeEvent();
