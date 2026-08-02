@@ -630,7 +630,7 @@ if (saveEventButton) {
         "treasure-next-event",
         JSON.stringify(eventData)
       );
-
+updateHomeEvent();
       alert("💎 NEXT EVENTを保存しました！");
     }
   );
