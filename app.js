@@ -6,7 +6,7 @@
 // 🎒 持ち物 CHECKLIST
 // ==========================================
 
-// 最初に入っている持ち物
+// 最初から入っている持ち物
 const defaultItems = [
   "充電器",
   "AirPods",
@@ -24,7 +24,7 @@ const defaultItems = [
   "ハンディファン"
 ];
 
-// 保存済みの持ち物を読み込む
+// 保存されている持ち物一覧を読み込む
 let items = [];
 
 try {
@@ -32,12 +32,21 @@ try {
     localStorage.getItem("treasure-items")
   );
 
-  items =
-    Array.isArray(savedItems) && savedItems.length > 0
-      ? savedItems
-      : [...defaultItems];
+  if (Array.isArray(savedItems)) {
+    items = savedItems;
+  } else {
+    items = [...defaultItems];
+  }
 } catch (e) {
   items = [...defaultItems];
+}
+
+// 初回だけ持ち物一覧を保存
+if (!localStorage.getItem("treasure-items")) {
+  localStorage.setItem(
+    "treasure-items",
+    JSON.stringify(items)
+  );
 }
 
 
@@ -54,7 +63,7 @@ try {
 }
 
 
-// HTMLのパーツ
+// HTML取得
 const checklist =
   document.getElementById("checklist");
 
@@ -77,7 +86,7 @@ const addItemButton =
   document.getElementById("add-item-btn");
 
 
-// 持ち物リストを保存
+// 保存
 function saveItems() {
   localStorage.setItem(
     "treasure-items",
@@ -85,8 +94,6 @@ function saveItems() {
   );
 }
 
-
-// チェック状態を保存
 function saveChecklist() {
   localStorage.setItem(
     "treasure-checklist",
@@ -95,7 +102,7 @@ function saveChecklist() {
 }
 
 
-// 持ち物を画面に表示
+// 持ち物一覧を表示
 function renderChecklist() {
 
   if (!checklist) return;
@@ -106,17 +113,18 @@ function renderChecklist() {
 
   items.forEach((item) => {
 
-    const row =
-      document.createElement("div");
-
+    const row = document.createElement("div");
     row.className = "item";
 
 
     // チェックボックス
+    const label = document.createElement("label");
+
     const input =
       document.createElement("input");
 
     input.type = "checkbox";
+
     input.checked =
       savedChecklist[item] || false;
 
@@ -133,8 +141,8 @@ function renderChecklist() {
           input.checked;
 
         saveChecklist();
-        renderChecklist();
 
+        renderChecklist();
       }
     );
 
@@ -146,41 +154,45 @@ function renderChecklist() {
     span.textContent = item;
 
 
+    label.appendChild(input);
+    label.appendChild(span);
+
+
     // 削除ボタン
     const deleteButton =
       document.createElement("button");
 
     deleteButton.type = "button";
     deleteButton.textContent = "🗑️";
-
-    deleteButton.style.marginLeft = "auto";
-    deleteButton.style.width = "auto";
-    deleteButton.style.padding = "6px 10px";
-    deleteButton.style.background = "transparent";
+    deleteButton.className = "delete-item";
 
 
     deleteButton.addEventListener(
       "click",
       () => {
 
-        items =
-          items.filter(
-            (savedItem) =>
-              savedItem !== item
-          );
+        const ok = confirm(
+          "「" + item + "」を削除する？"
+        );
+
+        if (!ok) return;
+
+
+        items = items.filter(
+          (name) => name !== item
+        );
 
         delete savedChecklist[item];
 
         saveItems();
         saveChecklist();
-        renderChecklist();
 
+        renderChecklist();
       }
     );
 
 
-    row.appendChild(input);
-    row.appendChild(span);
+    row.appendChild(label);
     row.appendChild(deleteButton);
 
     checklist.appendChild(row);
@@ -202,15 +214,12 @@ function renderChecklist() {
       value + "%";
   }
 
+
   if (percent) {
     percent.textContent =
       value + "%";
   }
 }
-
-
-// 最初の表示
-renderChecklist();
 
 
 // ==========================================
@@ -224,15 +233,16 @@ function addNewItem() {
   const newItem =
     newItemInput.value.trim();
 
-  if (!newItem) return;
+
+  if (!newItem) {
+    alert("持ち物を入力してね💎");
+    return;
+  }
 
 
-  // 同じ名前の持ち物は追加しない
   if (items.includes(newItem)) {
-
     alert("その持ち物はもう入ってるよ💎");
     return;
-
   }
 
 
@@ -259,14 +269,13 @@ if (addItemButton) {
 }
 
 
-// キーボードのEnterでも追加
 if (newItemInput) {
 
   newItemInput.addEventListener(
     "keydown",
-    (event) => {
+    (e) => {
 
-      if (event.key === "Enter") {
+      if (e.key === "Enter") {
         addNewItem();
       }
 
@@ -291,8 +300,8 @@ if (checkAllButton) {
       });
 
       saveChecklist();
-      renderChecklist();
 
+      renderChecklist();
     }
   );
 
@@ -314,13 +323,16 @@ if (clearAllButton) {
       });
 
       saveChecklist();
-      renderChecklist();
 
+      renderChecklist();
     }
   );
 
 }
 
+
+// 最初に表示
+renderChecklist();
 // ========================================
 // 💙 THE STAGE D-DAY
 // ========================================
