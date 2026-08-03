@@ -6,7 +6,7 @@
 // 🎒 持ち物 CHECKLIST
 // ==========================================
 
-// 最初から入っている持ち物
+// 最初に入っている持ち物
 const defaultItems = [
   "充電器",
   "AirPods",
@@ -24,7 +24,7 @@ const defaultItems = [
   "ハンディファン"
 ];
 
-// 保存されている持ち物一覧を読み込む
+// 保存済みの持ち物を読み込む
 let items = [];
 
 try {
@@ -32,21 +32,12 @@ try {
     localStorage.getItem("treasure-items")
   );
 
-  if (Array.isArray(savedItems)) {
-    items = savedItems;
-  } else {
-    items = [...defaultItems];
-  }
+  items =
+    Array.isArray(savedItems) && savedItems.length > 0
+      ? savedItems
+      : [...defaultItems];
 } catch (e) {
   items = [...defaultItems];
-}
-
-// 初回だけ持ち物一覧を保存
-if (!localStorage.getItem("treasure-items")) {
-  localStorage.setItem(
-    "treasure-items",
-    JSON.stringify(items)
-  );
 }
 
 
@@ -63,7 +54,7 @@ try {
 }
 
 
-// HTML取得
+// HTMLのパーツ
 const checklist =
   document.getElementById("checklist");
 
@@ -86,7 +77,7 @@ const addItemButton =
   document.getElementById("add-item-btn");
 
 
-// 保存
+// 持ち物リストを保存
 function saveItems() {
   localStorage.setItem(
     "treasure-items",
@@ -94,6 +85,8 @@ function saveItems() {
   );
 }
 
+
+// チェック状態を保存
 function saveChecklist() {
   localStorage.setItem(
     "treasure-checklist",
@@ -102,7 +95,7 @@ function saveChecklist() {
 }
 
 
-// 持ち物一覧を表示
+// 持ち物を画面に表示
 function renderChecklist() {
 
   if (!checklist) return;
@@ -113,18 +106,17 @@ function renderChecklist() {
 
   items.forEach((item) => {
 
-    const row = document.createElement("div");
+    const row =
+      document.createElement("div");
+
     row.className = "item";
 
 
     // チェックボックス
-    const label = document.createElement("label");
-
     const input =
       document.createElement("input");
 
     input.type = "checkbox";
-
     input.checked =
       savedChecklist[item] || false;
 
@@ -141,8 +133,8 @@ function renderChecklist() {
           input.checked;
 
         saveChecklist();
-
         renderChecklist();
+
       }
     );
 
@@ -154,45 +146,41 @@ function renderChecklist() {
     span.textContent = item;
 
 
-    label.appendChild(input);
-    label.appendChild(span);
-
-
     // 削除ボタン
     const deleteButton =
       document.createElement("button");
 
     deleteButton.type = "button";
     deleteButton.textContent = "🗑️";
-    deleteButton.className = "delete-item";
+
+    deleteButton.style.marginLeft = "auto";
+    deleteButton.style.width = "auto";
+    deleteButton.style.padding = "6px 10px";
+    deleteButton.style.background = "transparent";
 
 
     deleteButton.addEventListener(
       "click",
       () => {
 
-        const ok = confirm(
-          "「" + item + "」を削除する？"
-        );
-
-        if (!ok) return;
-
-
-        items = items.filter(
-          (name) => name !== item
-        );
+        items =
+          items.filter(
+            (savedItem) =>
+              savedItem !== item
+          );
 
         delete savedChecklist[item];
 
         saveItems();
         saveChecklist();
-
         renderChecklist();
+
       }
     );
 
 
-    row.appendChild(label);
+    row.appendChild(input);
+    row.appendChild(span);
     row.appendChild(deleteButton);
 
     checklist.appendChild(row);
@@ -214,12 +202,15 @@ function renderChecklist() {
       value + "%";
   }
 
-
   if (percent) {
     percent.textContent =
       value + "%";
   }
 }
+
+
+// 最初の表示
+renderChecklist();
 
 
 // ==========================================
@@ -233,16 +224,15 @@ function addNewItem() {
   const newItem =
     newItemInput.value.trim();
 
-
-  if (!newItem) {
-    alert("持ち物を入力してね💎");
-    return;
-  }
+  if (!newItem) return;
 
 
+  // 同じ名前の持ち物は追加しない
   if (items.includes(newItem)) {
+
     alert("その持ち物はもう入ってるよ💎");
     return;
+
   }
 
 
@@ -269,13 +259,14 @@ if (addItemButton) {
 }
 
 
+// キーボードのEnterでも追加
 if (newItemInput) {
 
   newItemInput.addEventListener(
     "keydown",
-    (e) => {
+    (event) => {
 
-      if (e.key === "Enter") {
+      if (event.key === "Enter") {
         addNewItem();
       }
 
@@ -300,8 +291,8 @@ if (checkAllButton) {
       });
 
       saveChecklist();
-
       renderChecklist();
+
     }
   );
 
@@ -323,16 +314,13 @@ if (clearAllButton) {
       });
 
       saveChecklist();
-
       renderChecklist();
+
     }
   );
 
 }
 
-
-// 最初に表示
-renderChecklist();
 // ========================================
 // 💙 THE STAGE D-DAY
 // ========================================
@@ -865,289 +853,3 @@ function updateHomeEvent() {
 }
 
 updateHomeEvent();
-// ==========================================
-// 📅 PLAN イベント管理
-// ==========================================
-
-const planName = document.getElementById("plan-name");
-const planPlace = document.getElementById("plan-place");
-const planDate = document.getElementById("plan-date");
-const addPlanBtn = document.getElementById("add-plan-btn");
-const planList = document.getElementById("plan-list");
-
-let planEvents = [];
-
-try {
-  planEvents =
-    JSON.parse(localStorage.getItem("treasure-plan-events")) || [];
-} catch (e) {
-  planEvents = [];
-}
-
-
-// PLANを保存
-function savePlanEvents() {
-  localStorage.setItem(
-    "treasure-plan-events",
-    JSON.stringify(planEvents)
-  );
-}
-
-
-// 日付順に並べて表示
-function renderPlanEvents() {
-
-  if (!planList) return;
-
-  planList.innerHTML = "";
-
-  planEvents.sort((a, b) =>
-    a.date.localeCompare(b.date)
-  );
-
-  planEvents.forEach((event, index) => {
-
-    const card = document.createElement("div");
-    card.className = "plan-item";
-
-    const info = document.createElement("div");
-
-    const title = document.createElement("strong");
-    title.textContent = "💎 " + event.name;
-
-    const place = document.createElement("div");
-    place.textContent = "📍 " + event.place;
-
-    const date = document.createElement("div");
-    date.textContent =
-      "📅 " + event.date.replaceAll("-", ".");
-
-    info.appendChild(title);
-    info.appendChild(place);
-    info.appendChild(date);
-
-
-    const deleteBtn = document.createElement("button");
-
-    deleteBtn.textContent = "🗑️";
-    deleteBtn.className = "delete-plan";
-
-    deleteBtn.addEventListener("click", () => {
-
-      planEvents.splice(index, 1);
-
-      savePlanEvents();
-      renderPlanEvents();
-      updateNextEventFromPlan();
-
-    });
-
-
-    card.appendChild(info);
-    card.appendChild(deleteBtn);
-
-    planList.appendChild(card);
-
-  });
-
-}
-
-
-// 一番近い未来のイベントをHOMEへ送る
-function updateNextEventFromPlan() {
-
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
-  const upcoming = planEvents
-    .filter(event => {
-
-      const eventDate =
-        new Date(event.date + "T00:00:00");
-
-      return eventDate >= today;
-
-    })
-    .sort((a, b) =>
-      a.date.localeCompare(b.date)
-    );
-
-
-  if (upcoming.length === 0) {
-
-    localStorage.removeItem(
-      "treasure-next-event"
-    );
-
-    eventData = null;
-
-    if (homeEventName) {
-      homeEventName.textContent = "";
-    }
-
-    if (homeEventPlace) {
-      homeEventPlace.textContent = "";
-    }
-
-    if (homeEventDate) {
-      homeEventDate.textContent = "";
-    }
-
-    return;
-  }
-
-
-  const next = upcoming[0];
-
-  const nextEvent = {
-    name: next.name,
-    place: next.place,
-    date: next.date
-  };
-
-
-  localStorage.setItem(
-    "treasure-next-event",
-    JSON.stringify(nextEvent)
-  );
-
-  eventData = nextEvent;
-
-  updateHomeEvent();
-
-}
-
-// PLANイベント保存用
-let planEvents = [];
-
-try {
-  const savedPlanEvents = JSON.parse(
-    localStorage.getItem("treasure-plan-events")
-  );
-
-  if (Array.isArray(savedPlanEvents)) {
-    planEvents = savedPlanEvents;
-  }
-} catch (e) {
-  planEvents = [];
-}
-
-function savePlanEvents() {
-  localStorage.setItem(
-    "treasure-plan-events",
-    JSON.stringify(planEvents)
-  );
-}
-// PLANイベント一覧を表示
-function renderPlanEvents() {
-  const planList = document.getElementById("plan-list");
-  if (!planList) return;
-
-  planList.innerHTML = "";
-
-  planEvents.forEach((event, index) => {
-    const card = document.createElement("div");
-    card.className = "plan-event";
-
-    card.innerHTML = `
-      <div>
-        <strong>${event.name}</strong><br>
-        📍 ${event.place}<br>
-        📅 ${event.date.replaceAll("-", ".")}
-      </div>
-      <button type="button" data-index="${index}">削除</button>
-    `;
-
-    const deleteBtn = card.querySelector("button");
-
-    deleteBtn.addEventListener("click", () => {
-      planEvents.splice(index, 1);
-      savePlanEvents();
-      renderPlanEvents();
-      updateNextEventFromPlan();
-    });
-
-    planList.appendChild(card);
-  });
-}
-// ＋イベントを追加
-const addPlanBtn = document.getElementById("add-plan-btn");
-const planName = document.getElementById("plan-name");
-const planPlace = document.getElementById("plan-place");
-const planDate = document.getElementById("plan-date");
-if (addPlanBtn) {
-
-  addPlanBtn.addEventListener("click", () => {
-
-    const name = planName.value.trim();
-    const place = planPlace.value.trim();
-    const date = planDate.value;
-
-
-    if (!name || !place || !date) {
-
-      alert("イベント情報を全部入力してね💎");
-      return;
-
-    }
-
-
-    planEvents.push({
-      name: name,
-      place: place,
-      date: date
-    });
-
-
-    savePlanEvents();
-
-    renderPlanEvents();
-
-    updateNextEventFromPlan();
-
-
-    planName.value = "";
-    planPlace.value = "";
-    planDate.value = "";
-
-
-    alert("💎 PLANに追加しました！");
-
-  });
-
-}
-
-
-// 最初に表示
-renderPlanEvents();
-
-// HOMEのNEXT EVENTも同期
-
-function updateNextEventFromPlan() {
-  if (!Array.isArray(planEvents) || planEvents.length === 0) {
-    return;
-  }
-
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
-  const upcomingEvents = planEvents
-    .filter((event) => {
-      const eventDate = new Date(event.date + "T00:00:00");
-      return eventDate >= today;
-    })
-    .sort((a, b) => {
-      return new Date(a.date) - new Date(b.date);
-    });
-
-  if (upcomingEvents.length === 0) {
-    return;
-  }
-
-  const nextEvent = upcomingEvents[0];
-
-  localStorage.setItem(
-    "treasure-next-event",
-    JSON.stringify(nextEvent)
-  );
-}
