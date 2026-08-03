@@ -865,3 +865,205 @@ function updateHomeEvent() {
 }
 
 updateHomeEvent();
+// ==========================================
+// 📅 PLAN イベント管理
+// ==========================================
+
+const planName = document.getElementById("plan-name");
+const planPlace = document.getElementById("plan-place");
+const planDate = document.getElementById("plan-date");
+const addPlanBtn = document.getElementById("add-plan-btn");
+const planList = document.getElementById("plan-list");
+
+let planEvents = [];
+
+try {
+  planEvents =
+    JSON.parse(localStorage.getItem("treasure-plan-events")) || [];
+} catch (e) {
+  planEvents = [];
+}
+
+
+// PLANを保存
+function savePlanEvents() {
+  localStorage.setItem(
+    "treasure-plan-events",
+    JSON.stringify(planEvents)
+  );
+}
+
+
+// 日付順に並べて表示
+function renderPlanEvents() {
+
+  if (!planList) return;
+
+  planList.innerHTML = "";
+
+  planEvents.sort((a, b) =>
+    a.date.localeCompare(b.date)
+  );
+
+  planEvents.forEach((event, index) => {
+
+    const card = document.createElement("div");
+    card.className = "plan-item";
+
+    const info = document.createElement("div");
+
+    const title = document.createElement("strong");
+    title.textContent = "💎 " + event.name;
+
+    const place = document.createElement("div");
+    place.textContent = "📍 " + event.place;
+
+    const date = document.createElement("div");
+    date.textContent =
+      "📅 " + event.date.replaceAll("-", ".");
+
+    info.appendChild(title);
+    info.appendChild(place);
+    info.appendChild(date);
+
+
+    const deleteBtn = document.createElement("button");
+
+    deleteBtn.textContent = "🗑️";
+    deleteBtn.className = "delete-plan";
+
+    deleteBtn.addEventListener("click", () => {
+
+      planEvents.splice(index, 1);
+
+      savePlanEvents();
+      renderPlanEvents();
+      updateNextEventFromPlan();
+
+    });
+
+
+    card.appendChild(info);
+    card.appendChild(deleteBtn);
+
+    planList.appendChild(card);
+
+  });
+
+}
+
+
+// 一番近い未来のイベントをHOMEへ送る
+function updateNextEventFromPlan() {
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const upcoming = planEvents
+    .filter(event => {
+
+      const eventDate =
+        new Date(event.date + "T00:00:00");
+
+      return eventDate >= today;
+
+    })
+    .sort((a, b) =>
+      a.date.localeCompare(b.date)
+    );
+
+
+  if (upcoming.length === 0) {
+
+    localStorage.removeItem(
+      "treasure-next-event"
+    );
+
+    eventData = null;
+
+    if (homeEventName) {
+      homeEventName.textContent = "";
+    }
+
+    if (homeEventPlace) {
+      homeEventPlace.textContent = "";
+    }
+
+    if (homeEventDate) {
+      homeEventDate.textContent = "";
+    }
+
+    return;
+  }
+
+
+  const next = upcoming[0];
+
+  const nextEvent = {
+    name: next.name,
+    place: next.place,
+    date: next.date
+  };
+
+
+  localStorage.setItem(
+    "treasure-next-event",
+    JSON.stringify(nextEvent)
+  );
+
+  eventData = nextEvent;
+
+  updateHomeEvent();
+
+}
+
+
+// ＋イベントを追加
+if (addPlanBtn) {
+
+  addPlanBtn.addEventListener("click", () => {
+
+    const name = planName.value.trim();
+    const place = planPlace.value.trim();
+    const date = planDate.value;
+
+
+    if (!name || !place || !date) {
+
+      alert("イベント情報を全部入力してね💎");
+      return;
+
+    }
+
+
+    planEvents.push({
+      name: name,
+      place: place,
+      date: date
+    });
+
+
+    savePlanEvents();
+
+    renderPlanEvents();
+
+    updateNextEventFromPlan();
+
+
+    planName.value = "";
+    planPlace.value = "";
+    planDate.value = "";
+
+
+    alert("💎 PLANに追加しました！");
+
+  });
+
+}
+
+
+// 最初に表示
+renderPlanEvents();
+
+// HOMEのNEXT EVENTも同期
+updateNextEventFromPlan();
