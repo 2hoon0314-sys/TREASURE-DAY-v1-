@@ -1123,3 +1123,31 @@ renderPlanEvents();
 
 // HOMEのNEXT EVENTも同期
 updateNextEventFromPlan();
+function updateNextEventFromPlan() {
+  if (!Array.isArray(planEvents) || planEvents.length === 0) {
+    return;
+  }
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const upcomingEvents = planEvents
+    .filter((event) => {
+      const eventDate = new Date(event.date + "T00:00:00");
+      return eventDate >= today;
+    })
+    .sort((a, b) => {
+      return new Date(a.date) - new Date(b.date);
+    });
+
+  if (upcomingEvents.length === 0) {
+    return;
+  }
+
+  const nextEvent = upcomingEvents[0];
+
+  localStorage.setItem(
+    "treasure-next-event",
+    JSON.stringify(nextEvent)
+  );
+}
