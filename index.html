@@ -103,28 +103,41 @@
 </main>
 <section id="plan-page" class="page" style="display:none;">
 
-  <div class="card">
+<div class="card">
 
-    <h2>📅 PLAN</h2>
+  <h2>📅 PLAN</h2>
 
-    <div class="plan-item">
-      ✈️ 飛行機
-    </div>
+  <div class="plan-form">
 
-    <div class="plan-item">
-      🏨 ホテル
-    </div>
+    <input
+      id="plan-name"
+      class="input"
+      type="text"
+      placeholder="イベント名 💎"
+    >
 
-    <div class="plan-item">
-      🎫 チケット
-    </div>
+    <input
+      id="plan-place"
+      class="input"
+      type="text"
+      placeholder="会場 📍"
+    >
 
-    <div class="plan-item">
-      🕐 タイムスケジュール
-    </div>
+    <input
+      id="plan-date"
+      class="input"
+      type="date"
+    >
+
+    <button id="add-plan-btn">
+      ＋ イベントを追加
+    </button>
 
   </div>
 
+  <div id="plan-list"></div>
+
+</div>
 </section>  
  <section id="memory-page" class="page" style="display:none;">
 
