@@ -280,3 +280,32 @@ body.light-mode .memory-card {
   background: #ffffff !important;
   color: #111827 !important;
 }
+/* ==========================================
+   🗑️ 持ち物 削除ボタン
+========================================== */
+
+#checklist .item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+#checklist .item label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+}
+
+#checklist .delete-item {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: none;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.08);
+    font-size: 20px;
+    cursor: pointer;
+}
