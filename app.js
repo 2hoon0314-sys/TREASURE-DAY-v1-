@@ -1122,7 +1122,7 @@ if (addPlanBtn) {
 renderPlanEvents();
 
 // HOMEのNEXT EVENTも同期
-updateNextEventFromPlan();
+
 function updateNextEventFromPlan() {
   if (!Array.isArray(planEvents) || planEvents.length === 0) {
     return;
