@@ -1017,7 +1017,27 @@ function updateNextEventFromPlan() {
 
 }
 
+// PLANイベント保存用
+let planEvents = [];
 
+try {
+  const savedPlanEvents = JSON.parse(
+    localStorage.getItem("treasure-plan-events")
+  );
+
+  if (Array.isArray(savedPlanEvents)) {
+    planEvents = savedPlanEvents;
+  }
+} catch (e) {
+  planEvents = [];
+}
+
+function savePlanEvents() {
+  localStorage.setItem(
+    "treasure-plan-events",
+    JSON.stringify(planEvents)
+  );
+}
 // ＋イベントを追加
 const addPlanBtn = document.getElementById("add-plan-btn");
 const planName = document.getElementById("plan-name");
