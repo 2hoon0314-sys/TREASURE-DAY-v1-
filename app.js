@@ -2,12 +2,12 @@
 // 💎 TREASURE DAY - app.js
 // ========================================
 
-
-// ========================================
+// ==========================================
 // 🎒 持ち物 CHECKLIST
-// ========================================
+// ==========================================
 
-const items = [
+// 最初に入っている持ち物
+const defaultItems = [
   "充電器",
   "AirPods",
   "ペンライト",
@@ -24,19 +24,78 @@ const items = [
   "ハンディファン"
 ];
 
-const checklist = document.getElementById("checklist");
-const progressBar = document.getElementById("progress-bar");
-const percent = document.querySelector(".percent");
+// 保存済みの持ち物を読み込む
+let items = [];
 
+try {
+  const savedItems = JSON.parse(
+    localStorage.getItem("treasure-items")
+  );
+
+  items =
+    Array.isArray(savedItems) && savedItems.length > 0
+      ? savedItems
+      : [...defaultItems];
+} catch (e) {
+  items = [...defaultItems];
+}
+
+
+// チェック状態を読み込む
 let savedChecklist = {};
 
 try {
   savedChecklist =
-    JSON.parse(localStorage.getItem("treasure-checklist")) || {};
+    JSON.parse(
+      localStorage.getItem("treasure-checklist")
+    ) || {};
 } catch (e) {
   savedChecklist = {};
 }
 
+
+// HTMLのパーツ
+const checklist =
+  document.getElementById("checklist");
+
+const progressBar =
+  document.getElementById("progress-bar");
+
+const percent =
+  document.querySelector(".percent");
+
+const checkAllButton =
+  document.getElementById("check-all");
+
+const clearAllButton =
+  document.getElementById("clear-all");
+
+const newItemInput =
+  document.getElementById("new-item");
+
+const addItemButton =
+  document.getElementById("add-item-btn");
+
+
+// 持ち物リストを保存
+function saveItems() {
+  localStorage.setItem(
+    "treasure-items",
+    JSON.stringify(items)
+  );
+}
+
+
+// チェック状態を保存
+function saveChecklist() {
+  localStorage.setItem(
+    "treasure-checklist",
+    JSON.stringify(savedChecklist)
+  );
+}
+
+
+// 持ち物を画面に表示
 function renderChecklist() {
 
   if (!checklist) return;
@@ -47,102 +106,220 @@ function renderChecklist() {
 
   items.forEach((item) => {
 
-    const row = document.createElement("label");
+    const row =
+      document.createElement("div");
+
     row.className = "item";
 
-    const input = document.createElement("input");
+
+    // チェックボックス
+    const input =
+      document.createElement("input");
+
     input.type = "checkbox";
-    input.checked = savedChecklist[item] || false;
+    input.checked =
+      savedChecklist[item] || false;
 
     if (input.checked) {
       checked++;
     }
 
-    input.addEventListener("change", () => {
 
-      savedChecklist[item] = input.checked;
+    input.addEventListener(
+      "change",
+      () => {
 
-      localStorage.setItem(
-        "treasure-checklist",
-        JSON.stringify(savedChecklist)
-      );
+        savedChecklist[item] =
+          input.checked;
 
-      renderChecklist();
-    });
+        saveChecklist();
+        renderChecklist();
 
-    const span = document.createElement("span");
+      }
+    );
+
+
+    // 持ち物名
+    const span =
+      document.createElement("span");
+
     span.textContent = item;
+
+
+    // 削除ボタン
+    const deleteButton =
+      document.createElement("button");
+
+    deleteButton.type = "button";
+    deleteButton.textContent = "🗑️";
+
+    deleteButton.style.marginLeft = "auto";
+    deleteButton.style.width = "auto";
+    deleteButton.style.padding = "6px 10px";
+    deleteButton.style.background = "transparent";
+
+
+    deleteButton.addEventListener(
+      "click",
+      () => {
+
+        items =
+          items.filter(
+            (savedItem) =>
+              savedItem !== item
+          );
+
+        delete savedChecklist[item];
+
+        saveItems();
+        saveChecklist();
+        renderChecklist();
+
+      }
+    );
+
 
     row.appendChild(input);
     row.appendChild(span);
+    row.appendChild(deleteButton);
 
     checklist.appendChild(row);
+
   });
 
+
+  // 進捗率
   const value =
     items.length > 0
-      ? Math.round((checked / items.length) * 100)
+      ? Math.round(
+          (checked / items.length) * 100
+        )
       : 0;
 
+
   if (progressBar) {
-    progressBar.style.width = value + "%";
+    progressBar.style.width =
+      value + "%";
   }
 
   if (percent) {
-    percent.textContent = value + "%";
+    percent.textContent =
+      value + "%";
   }
 }
 
+
+// 最初の表示
 renderChecklist();
 
 
-// ========================================
-// ✅ 全部チェック
-// ========================================
+// ==========================================
+// ➕ 持ち物追加
+// ==========================================
 
-const checkAllButton = document.getElementById("check-all");
+function addNewItem() {
+
+  if (!newItemInput) return;
+
+  const newItem =
+    newItemInput.value.trim();
+
+  if (!newItem) return;
+
+
+  // 同じ名前の持ち物は追加しない
+  if (items.includes(newItem)) {
+
+    alert("その持ち物はもう入ってるよ💎");
+    return;
+
+  }
+
+
+  items.push(newItem);
+
+  savedChecklist[newItem] = false;
+
+  saveItems();
+  saveChecklist();
+
+  newItemInput.value = "";
+
+  renderChecklist();
+}
+
+
+if (addItemButton) {
+
+  addItemButton.addEventListener(
+    "click",
+    addNewItem
+  );
+
+}
+
+
+// キーボードのEnterでも追加
+if (newItemInput) {
+
+  newItemInput.addEventListener(
+    "keydown",
+    (event) => {
+
+      if (event.key === "Enter") {
+        addNewItem();
+      }
+
+    }
+  );
+
+}
+
+
+// ==========================================
+// ✅ 全部チェック
+// ==========================================
 
 if (checkAllButton) {
 
-  checkAllButton.addEventListener("click", () => {
+  checkAllButton.addEventListener(
+    "click",
+    () => {
 
-    items.forEach((item) => {
-      savedChecklist[item] = true;
-    });
+      items.forEach((item) => {
+        savedChecklist[item] = true;
+      });
 
-    localStorage.setItem(
-      "treasure-checklist",
-      JSON.stringify(savedChecklist)
-    );
+      saveChecklist();
+      renderChecklist();
 
-    renderChecklist();
-  });
+    }
+  );
+
 }
 
 
-// ========================================
+// ==========================================
 // 🔄 リセット
-// ========================================
-
-const clearAllButton = document.getElementById("clear-all");
+// ==========================================
 
 if (clearAllButton) {
 
-  clearAllButton.addEventListener("click", () => {
+  clearAllButton.addEventListener(
+    "click",
+    () => {
 
-    items.forEach((item) => {
-      savedChecklist[item] = false;
-    });
+      items.forEach((item) => {
+        savedChecklist[item] = false;
+      });
 
-    localStorage.setItem(
-      "treasure-checklist",
-      JSON.stringify(savedChecklist)
-    );
+      saveChecklist();
+      renderChecklist();
 
-    renderChecklist();
-  });
+    }
+  );
+
 }
-
 
 // ========================================
 // 💙 THE STAGE D-DAY
