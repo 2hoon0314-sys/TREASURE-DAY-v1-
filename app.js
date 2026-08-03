@@ -1038,6 +1038,38 @@ function savePlanEvents() {
     JSON.stringify(planEvents)
   );
 }
+// PLANイベント一覧を表示
+function renderPlanEvents() {
+  const planList = document.getElementById("plan-list");
+  if (!planList) return;
+
+  planList.innerHTML = "";
+
+  planEvents.forEach((event, index) => {
+    const card = document.createElement("div");
+    card.className = "plan-event";
+
+    card.innerHTML = `
+      <div>
+        <strong>${event.name}</strong><br>
+        📍 ${event.place}<br>
+        📅 ${event.date.replaceAll("-", ".")}
+      </div>
+      <button type="button" data-index="${index}">削除</button>
+    `;
+
+    const deleteBtn = card.querySelector("button");
+
+    deleteBtn.addEventListener("click", () => {
+      planEvents.splice(index, 1);
+      savePlanEvents();
+      renderPlanEvents();
+      updateNextEventFromPlan();
+    });
+
+    planList.appendChild(card);
+  });
+}
 // ＋イベントを追加
 const addPlanBtn = document.getElementById("add-plan-btn");
 const planName = document.getElementById("plan-name");
