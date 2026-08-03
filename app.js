@@ -1019,6 +1019,10 @@ function updateNextEventFromPlan() {
 
 
 // ＋イベントを追加
+const addPlanBtn = document.getElementById("add-plan-btn");
+const planName = document.getElementById("plan-name");
+const planPlace = document.getElementById("plan-place");
+const planDate = document.getElementById("plan-date");
 if (addPlanBtn) {
 
   addPlanBtn.addEventListener("click", () => {
