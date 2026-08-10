@@ -1168,25 +1168,51 @@ card.addEventListener("click", (e) => {
   tdUpdateNextEvent();
 })();
 // ========================================
-// 📸 HOME フォト自動スライド
+// 📸 HOME フォト ゆったり無限ループ
 // ========================================
 
 const homePhotoStrip = document.querySelector(".home-photo-strip");
-const homePhotoCards = document.querySelectorAll(".home-photo-card");
+const homePhotoTrack = document.querySelector(".home-photo-track");
 
-if (homePhotoStrip && homePhotoCards.length > 1) {
-  let photoIndex = 0;
+if (homePhotoStrip && homePhotoTrack) {
 
-  setInterval(() => {
-    photoIndex++;
+  // 4枚をもう1セット複製して後ろにつなげる
+  const originalCards = Array.from(homePhotoTrack.children);
 
-    if (photoIndex >= homePhotoCards.length) {
-      photoIndex = 0;
+  originalCards.forEach((card) => {
+    const clone = card.cloneNode(true);
+    homePhotoTrack.appendChild(clone);
+  });
+
+  let scrollPosition = 0;
+  let paused = false;
+
+  function autoScrollPhotos() {
+    if (!paused) {
+      scrollPosition += 0.35; // ← 流れる速さ
+      homePhotoStrip.scrollLeft = scrollPosition;
+
+      // 1セット分流れたら同じ位置へ戻す
+      const halfWidth = homePhotoTrack.scrollWidth / 2;
+
+      if (scrollPosition >= halfWidth) {
+        scrollPosition -= halfWidth;
+        homePhotoStrip.scrollLeft = scrollPosition;
+      }
     }
 
-    homePhotoStrip.scrollTo({
-      left: homePhotoCards[photoIndex].offsetLeft,
-      behavior: "smooth"
-    });
-  }, 3500);
+    requestAnimationFrame(autoScrollPhotos);
+  }
+
+  // 触っている間は止める
+  homePhotoStrip.addEventListener("touchstart", () => {
+    paused = true;
+  });
+
+  homePhotoStrip.addEventListener("touchend", () => {
+    scrollPosition = homePhotoStrip.scrollLeft;
+    paused = false;
+  });
+
+  autoScrollPhotos();
 }
