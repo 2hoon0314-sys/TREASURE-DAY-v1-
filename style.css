@@ -851,6 +851,6 @@ body.light-mode .plan-item button {
 .home-lightstick {
     width: 72px !important;
     right: 8px !important;
-    top: 320px !important;
+    top: 350px !important;
     transform: rotate(18deg) !important;
 }
