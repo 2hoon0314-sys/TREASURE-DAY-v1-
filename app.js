@@ -486,13 +486,11 @@ try {
 }
 
 function renderMemories() {
-
   if (!memoryList) return;
 
   memoryList.innerHTML = "";
 
-  memories.forEach((memory) => {
-
+  memories.forEach((memory, index) => {
     const card = document.createElement("div");
     card.className = "memory-card";
 
@@ -503,13 +501,120 @@ function renderMemories() {
     const text = document.createElement("p");
     text.textContent = memory.text || "";
 
+    // ボタンエリア
+    const actions = document.createElement("div");
+    actions.className = "memory-actions";
+
+    // ✏️ 編集
+    const editBtn = document.createElement("button");
+    editBtn.type = "button";
+    editBtn.textContent = "編集";
+
+    editBtn.addEventListener("click", () => {
+      const newTitle = prompt(
+        "タイトルを編集",
+        memory.title || ""
+      );
+
+      if (newTitle === null) return;
+
+      const newText = prompt(
+        "感想を編集",
+        memory.text || ""
+      );
+
+      if (newText === null) return;
+
+      memory.title =
+        newTitle.trim() || "TREASURE MEMORY 💎";
+
+      memory.text = newText.trim();
+
+      localStorage.setItem(
+        "treasure-memories",
+        JSON.stringify(memories)
+      );
+
+      renderMemories();
+    });
+
+    // 🗑️ 削除
+    const deleteBtn = document.createElement("button");
+    deleteBtn.type = "button";
+    deleteBtn.textContent = "削除";
+
+    deleteBtn.addEventListener("click", () => {
+      const ok = confirm(
+        "このMEMORYを削除する？"
+      );
+
+      if (!ok) return;
+
+      memories.splice(index, 1);
+
+      localStorage.setItem(
+        "treasure-memories",
+        JSON.stringify(memories)
+      );
+
+      renderMemories();
+    });
+
+    // ⬆️ 上へ
+    const upBtn = document.createElement("button");
+    upBtn.type = "button";
+    upBtn.textContent = "↑";
+
+    upBtn.disabled = index === 0;
+
+    upBtn.addEventListener("click", () => {
+      if (index === 0) return;
+
+      [memories[index - 1], memories[index]] =
+        [memories[index], memories[index - 1]];
+
+      localStorage.setItem(
+        "treasure-memories",
+        JSON.stringify(memories)
+      );
+
+      renderMemories();
+    });
+
+    // ⬇️ 下へ
+    const downBtn = document.createElement("button");
+    downBtn.type = "button";
+    downBtn.textContent = "↓";
+
+    downBtn.disabled =
+      index === memories.length - 1;
+
+    downBtn.addEventListener("click", () => {
+      if (index === memories.length - 1) return;
+
+      [memories[index], memories[index + 1]] =
+        [memories[index + 1], memories[index]];
+
+      localStorage.setItem(
+        "treasure-memories",
+        JSON.stringify(memories)
+      );
+
+      renderMemories();
+    });
+
+    actions.appendChild(editBtn);
+    actions.appendChild(deleteBtn);
+    actions.appendChild(upBtn);
+    actions.appendChild(downBtn);
+
     card.appendChild(title);
     card.appendChild(text);
+    card.appendChild(actions);
 
     memoryList.appendChild(card);
   });
 }
-
 if (saveMemoryBtn) {
 
   saveMemoryBtn.addEventListener("click", () => {
