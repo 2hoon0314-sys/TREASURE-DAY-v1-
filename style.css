@@ -709,3 +709,28 @@ body.light-mode .plan-item button {
     transform: translateX(calc(-50% - 7px));
   }
 }
+/* ========================================
+   🎞️ HOME PHOTO SMOOTH LOOP
+======================================== */
+
+.home-photo-strip {
+  overflow: hidden;
+}
+
+.home-photo-track {
+  display: flex;
+  gap: 14px;
+  width: max-content;
+  animation: homePhotoLoop 32s linear infinite;
+  will-change: transform;
+}
+
+@keyframes homePhotoLoop {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(calc(-50% - 7px));
+  }
+}
