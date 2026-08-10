@@ -852,42 +852,50 @@ updateHomeEvent();
     );
   }
 
-  function tdUpdateNextEvent() {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+function tdUpdateNextEvent() {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
 
-    const upcoming = tdPlanEvents
-      .filter((event) => {
-        const eventDate = new Date(
-          event.date + "T00:00:00"
-        );
-        return eventDate >= today;
-      })
-      .sort((a, b) => {
-        return new Date(a.date) - new Date(b.date);
-      });
+  const upcoming = tdPlanEvents
+    .filter((event) => {
+      const eventDate = new Date(
+        event.date + "T00:00:00"
+      );
 
-    if (upcoming.length === 0) {
-      localStorage.removeItem("treasure-next-event");
-      return;
-    }
+      return eventDate >= today;
+    })
+    .sort((a, b) => {
+      return new Date(a.date) - new Date(b.date);
+    });
 
-    const next = upcoming[0];
-
-    localStorage.setItem(
-      "treasure-next-event",
-      JSON.stringify({
-        name: next.name,
-        place: next.place,
-        date: next.date
-      })
-    );
+  // 未来の予定が0件
+  if (upcoming.length === 0) {
+    localStorage.removeItem("treasure-next-event");
 
     if (typeof updateHomeEvent === "function") {
       updateHomeEvent();
     }
+
+    return;
   }
 
+  // 一番近い未来イベント
+  const next = upcoming[0];
+
+  localStorage.setItem(
+    "treasure-next-event",
+    JSON.stringify({
+      name: next.name,
+      place: next.place,
+      date: next.date
+    })
+  );
+
+  // HOMEを即更新
+  if (typeof updateHomeEvent === "function") {
+    updateHomeEvent();
+  }
+}
   function tdRenderPlanEvents() {
     tdPlanList.innerHTML = "";
 
