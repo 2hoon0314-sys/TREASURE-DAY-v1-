@@ -725,93 +725,6 @@ updateTreasureCountdown();
 // 🎫 NEXT EVENT
 // ========================================
 
-const eventNameInput =
-  document.getElementById("event-name");
-
-const eventPlaceInput =
-  document.getElementById("event-place");
-
-const eventDateInput =
-  document.getElementById("event-date");
-
-const saveEventButton =
-  document.getElementById("save-event");
-
-
-// 保存済みイベントを読み込む
-let savedEvent = null;
-
-try {
-  savedEvent =
-    JSON.parse(
-      localStorage.getItem("treasure-next-event")
-    );
-} catch (e) {
-  savedEvent = null;
-}
-
-if (savedEvent) {
-
-  if (eventNameInput) {
-    eventNameInput.value =
-      savedEvent.name || "";
-  }
-
-  if (eventPlaceInput) {
-    eventPlaceInput.value =
-      savedEvent.place || "";
-  }
-
-  if (eventDateInput) {
-    eventDateInput.value =
-      savedEvent.date || "";
-  }
-}
-
-
-// 保存ボタン
-if (saveEventButton) {
-
-  saveEventButton.addEventListener(
-    "click",
-    () => {
-
-      const eventData = {
-
-        name:
-          eventNameInput
-            ? eventNameInput.value.trim()
-            : "",
-
-        place:
-          eventPlaceInput
-            ? eventPlaceInput.value.trim()
-            : "",
-
-        date:
-          eventDateInput
-            ? eventDateInput.value
-            : ""
-      };
-
-      if (
-        eventData.name === "" &&
-        eventData.place === "" &&
-        eventData.date === ""
-      ) {
-        alert("イベント情報を入力してね💎");
-        return;
-      }
-
-      localStorage.setItem(
-        "treasure-next-event",
-        JSON.stringify(eventData)
-      );
-      updateHomeEvent();
-      alert("💎 NEXT EVENTを保存しました！");
-    }
-  );
-}
 
 
 // ========================================
@@ -835,10 +748,32 @@ function updateHomeEvent() {
     eventData = null;
   }
 
-  if (!eventData) return;
+  const dday = document.getElementById("dday");
 
+  // PLANに未来の予定がないとき
+  if (!eventData) {
+    if (homeEventName) {
+      homeEventName.textContent = "予定なし";
+    }
+
+    if (homeEventPlace) {
+      homeEventPlace.textContent = "PLANに予定を追加してね💎";
+    }
+
+    if (homeEventDate) {
+      homeEventDate.textContent = "";
+    }
+
+    if (dday) {
+      dday.textContent = "NO PLAN";
+    }
+
+    return;
+  }
+
+  // NEXT EVENTを表示
   if (homeEventName) {
-    homeEventName.textContent = eventData.name || "NEXT EVENT";
+    homeEventName.textContent = eventData.name || "";
   }
 
   if (homeEventPlace) {
@@ -850,8 +785,29 @@ function updateHomeEvent() {
       ? eventData.date.replaceAll("-", ".")
       : "";
   }
-}
 
+  // D-DAYを自動計算
+  if (dday && eventData.date) {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const eventDate = new Date(
+      eventData.date + "T00:00:00"
+    );
+
+    const diff = Math.round(
+      (eventDate - today) / (1000 * 60 * 60 * 24)
+    );
+
+    if (diff > 0) {
+      dday.textContent = "D-" + diff;
+    } else if (diff === 0) {
+      dday.textContent = "TODAY 💎";
+    } else {
+      dday.textContent = "THANK YOU 💙";
+    }
+  }
+}
 updateHomeEvent();
 
 // ========================================
