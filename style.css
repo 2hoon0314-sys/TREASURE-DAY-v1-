@@ -786,9 +786,7 @@ body.light-mode .plan-item button {
   height: 100%;
   object-fit: cover;
 }
-/* 🌼 JIHOON TRUZ ぴょんぴょん */
-/* 🌼 JIHOON TRUZ - EVENT CARD内をぴょんぴょん */
-
+/* 🌼 JIHOON TRUZ - ゆらゆらロミ */
 .home-event-card {
     position: relative;
     overflow: hidden;
@@ -796,7 +794,7 @@ body.light-mode .plan-item button {
 
 .jihoon-truz {
     position: absolute;
-    width: 95px;
+    width: 105px;
     height: auto;
     z-index: 5;
     pointer-events: none;
@@ -804,49 +802,15 @@ body.light-mode .plan-item button {
     right: 12px;
     bottom: 18px;
 
-    animation: romy-hop 4.5s ease-in-out infinite;
+    animation: romy-sway 3s ease-in-out infinite;
 }
 
-@keyframes romy-hop {
-    0% {
-        right: 10px;
-        bottom: 16px;
-        transform: rotate(-4deg) scale(1);
+@keyframes romy-sway {
+    0%, 100% {
+        transform: rotate(-3deg);
     }
 
-    18% {
-        right: 55px;
-        bottom: 65px;
-        transform: rotate(5deg) scale(1.03);
-    }
-
-    36% {
-        right: 95px;
-        bottom: 16px;
-        transform: rotate(-3deg) scale(1);
-    }
-
-    54% {
-        right: 145px;
-        bottom: 58px;
-        transform: rotate(5deg) scale(1.03);
-    }
-
-    72% {
-        right: 190px;
-        bottom: 16px;
-        transform: rotate(-4deg) scale(1);
-    }
-
-    86% {
-        right: 95px;
-        bottom: 55px;
-        transform: rotate(4deg) scale(1.03);
-    }
-
-    100% {
-        right: 10px;
-        bottom: 16px;
-        transform: rotate(-4deg) scale(1);
+    50% {
+        transform: rotate(3deg);
     }
 }
