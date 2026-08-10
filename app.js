@@ -1123,11 +1123,12 @@ function tdUpdateNextEvent() {
 card.addEventListener("click", (e) => {
   if (e.target === deleteBtn) return;
 
-  alert(
-    "💎 " + event.name +
-    "\n📍 " + event.place +
-    "\n📅 " + event.date.replaceAll("-", ".")
+  localStorage.setItem(
+    "treasure-selected-event",
+    JSON.stringify(event)
   );
+
+  window.location.href = "event.html";
 });
       tdPlanList.appendChild(card);
     });
