@@ -734,3 +734,51 @@ body.light-mode .plan-item button {
     transform: translateX(calc(-50% - 7px));
   }
 }
+/* ========================================
+   🎞️ HOME PHOTO - FILM DESIGN
+======================================== */
+
+/* フィルム本体 */
+.home-photo-strip {
+  position: relative;
+  padding-top: 18px;
+  padding-bottom: 18px;
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255,255,255,0.95) 3px,
+      transparent 4px
+    ) top / 32px 14px repeat-x,
+
+    radial-gradient(
+      circle,
+      rgba(255,255,255,0.95) 3px,
+      transparent 4px
+    ) bottom / 32px 14px repeat-x,
+
+    rgba(255,255,255,0.16);
+
+  border-radius: 20px;
+}
+
+/* 写真の間を少しフィルムっぽく */
+.home-photo-track {
+  gap: 10px;
+}
+
+/* 写真カード */
+.home-photo-card {
+  overflow: hidden;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+/* 写真 */
+.home-photo-card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
