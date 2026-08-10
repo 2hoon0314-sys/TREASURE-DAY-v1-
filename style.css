@@ -721,7 +721,7 @@ body.light-mode .plan-item button {
   display: flex;
   gap: 14px;
   width: max-content;
-  animation: homePhotoLoop 32s linear infinite;
+  animation: homePhotoLoop 28s linear infinite;
   will-change: transform;
 }
 
