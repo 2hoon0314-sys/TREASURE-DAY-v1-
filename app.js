@@ -853,3 +853,168 @@ function updateHomeEvent() {
 }
 
 updateHomeEvent();
+
+// ========================================
+// 📅 PLAN イベント追加・保存機能
+// ========================================
+
+(() => {
+  const tdPlanName = document.getElementById("plan-name");
+  const tdPlanPlace = document.getElementById("plan-place");
+  const tdPlanDate = document.getElementById("plan-date");
+  const tdPlanAddBtn = document.getElementById("add-plan-btn");
+  const tdPlanList = document.getElementById("plan-list");
+
+  if (
+    !tdPlanName ||
+    !tdPlanPlace ||
+    !tdPlanDate ||
+    !tdPlanAddBtn ||
+    !tdPlanList
+  ) {
+    return;
+  }
+
+  let tdPlanEvents = [];
+
+  try {
+    const saved = JSON.parse(
+      localStorage.getItem("treasure-plan-events")
+    );
+
+    if (Array.isArray(saved)) {
+      tdPlanEvents = saved;
+    }
+  } catch (e) {
+    tdPlanEvents = [];
+  }
+
+  function tdSavePlanEvents() {
+    localStorage.setItem(
+      "treasure-plan-events",
+      JSON.stringify(tdPlanEvents)
+    );
+  }
+
+  function tdUpdateNextEvent() {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const upcoming = tdPlanEvents
+      .filter((event) => {
+        const eventDate = new Date(
+          event.date + "T00:00:00"
+        );
+        return eventDate >= today;
+      })
+      .sort((a, b) => {
+        return new Date(a.date) - new Date(b.date);
+      });
+
+    if (upcoming.length === 0) {
+      localStorage.removeItem("treasure-next-event");
+      return;
+    }
+
+    const next = upcoming[0];
+
+    localStorage.setItem(
+      "treasure-next-event",
+      JSON.stringify({
+        name: next.name,
+        place: next.place,
+        date: next.date
+      })
+    );
+
+    if (typeof updateHomeEvent === "function") {
+      updateHomeEvent();
+    }
+  }
+
+  function tdRenderPlanEvents() {
+    tdPlanList.innerHTML = "";
+
+    const sortedEvents = [...tdPlanEvents].sort(
+      (a, b) => new Date(a.date) - new Date(b.date)
+    );
+
+    sortedEvents.forEach((event) => {
+      const originalIndex = tdPlanEvents.findIndex(
+        (item) =>
+          item.id === event.id
+      );
+
+      const card = document.createElement("div");
+      card.className = "plan-item";
+
+      const info = document.createElement("div");
+
+      const title = document.createElement("strong");
+      title.textContent = event.name;
+
+      const place = document.createElement("div");
+      place.textContent = "📍 " + event.place;
+
+      const date = document.createElement("div");
+      date.textContent =
+        "📅 " + event.date.replaceAll("-", ".");
+
+      info.appendChild(title);
+      info.appendChild(place);
+      info.appendChild(date);
+
+      const deleteBtn = document.createElement("button");
+      deleteBtn.type = "button";
+      deleteBtn.textContent = "削除";
+
+      deleteBtn.addEventListener("click", () => {
+        if (originalIndex < 0) return;
+
+        tdPlanEvents.splice(originalIndex, 1);
+
+        tdSavePlanEvents();
+        tdRenderPlanEvents();
+        tdUpdateNextEvent();
+      });
+
+      card.appendChild(info);
+      card.appendChild(deleteBtn);
+
+      tdPlanList.appendChild(card);
+    });
+  }
+
+  tdPlanAddBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+
+    const name = tdPlanName.value.trim();
+    const place = tdPlanPlace.value.trim();
+    const date = tdPlanDate.value;
+
+    if (!name || !place || !date) {
+      alert("イベント情報を全部入力してね💎");
+      return;
+    }
+
+    tdPlanEvents.push({
+      id: Date.now(),
+      name: name,
+      place: place,
+      date: date
+    });
+
+    tdSavePlanEvents();
+    tdRenderPlanEvents();
+    tdUpdateNextEvent();
+
+    tdPlanName.value = "";
+    tdPlanPlace.value = "";
+    tdPlanDate.value = "";
+
+    alert("💎 PLANに追加しました！");
+  });
+
+  tdRenderPlanEvents();
+  tdUpdateNextEvent();
+})();
