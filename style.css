@@ -830,3 +830,20 @@ body.light-mode .plan-item button {
         transform: rotate(3deg);
     }
 }
+/* 💎 HOME ペンライトデコ */
+.home-lightstick {
+    position: absolute;
+    width: 58px;
+    height: auto;
+
+    right: 20px;
+    top: 405px;
+
+    transform: rotate(14deg);
+    z-index: 4;
+
+    filter: drop-shadow(0 4px 5px rgba(0,0,0,0.12));
+}
+.home-hero {
+    position: relative;
+}
