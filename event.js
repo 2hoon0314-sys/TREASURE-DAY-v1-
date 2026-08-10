@@ -87,3 +87,53 @@ if (selectedEvent) {
 backToPlanBtn.addEventListener("click", () => {
   window.history.back();
 });
+// ========================================
+// 🎒 持ち物チェックリスト
+// ========================================
+
+const packingList = document.getElementById("packing-list");
+const packingInput = document.getElementById("packing-input");
+const packingAddBtn = document.getElementById("packing-add-btn");
+
+let packingItems = [];
+
+function renderPackingList() {
+  packingList.innerHTML = "";
+
+  packingItems.forEach((item, index) => {
+    const row = document.createElement("div");
+    row.className = "packing-item";
+
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.checked = item.checked;
+
+    const text = document.createElement("span");
+    text.textContent = item.text;
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.type = "button";
+    deleteBtn.textContent = "削除";
+
+    row.appendChild(checkbox);
+    row.appendChild(text);
+    row.appendChild(deleteBtn);
+
+    packingList.appendChild(row);
+  });
+}
+
+packingAddBtn.addEventListener("click", () => {
+  const text = packingInput.value.trim();
+
+  if (!text) return;
+
+  packingItems.push({
+    text: text,
+    checked: false
+  });
+
+  packingInput.value = "";
+
+  renderPackingList();
+});
