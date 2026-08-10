@@ -1167,3 +1167,26 @@ card.addEventListener("click", (e) => {
   tdRenderPlanEvents();
   tdUpdateNextEvent();
 })();
+// ========================================
+// 📸 HOME フォト自動スライド
+// ========================================
+
+const homePhotoStrip = document.querySelector(".home-photo-strip");
+const homePhotoCards = document.querySelectorAll(".home-photo-card");
+
+if (homePhotoStrip && homePhotoCards.length > 1) {
+  let photoIndex = 0;
+
+  setInterval(() => {
+    photoIndex++;
+
+    if (photoIndex >= homePhotoCards.length) {
+      photoIndex = 0;
+    }
+
+    homePhotoStrip.scrollTo({
+      left: homePhotoCards[photoIndex].offsetLeft,
+      behavior: "smooth"
+    });
+  }, 3500);
+}
