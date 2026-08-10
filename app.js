@@ -1120,7 +1120,15 @@ function tdUpdateNextEvent() {
 
       card.appendChild(info);
       card.appendChild(deleteBtn);
+card.addEventListener("click", (e) => {
+  if (e.target === deleteBtn) return;
 
+  alert(
+    "💎 " + event.name +
+    "\n📍 " + event.place +
+    "\n📅 " + event.date.replaceAll("-", ".")
+  );
+});
       tdPlanList.appendChild(card);
     });
   }
