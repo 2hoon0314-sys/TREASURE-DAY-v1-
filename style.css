@@ -847,3 +847,10 @@ body.light-mode .plan-item button {
 .home-hero {
     position: relative;
 }
+/* 💎 ペンライト位置 強制調整 */
+.home-lightstick {
+    width: 72px !important;
+    right: 8px !important;
+    top: 320px !important;
+    transform: rotate(18deg) !important;
+}
