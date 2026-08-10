@@ -849,7 +849,7 @@ body.light-mode .plan-item button {
 }
 /* 💎 ペンライト位置 強制調整 */
 .home-lightstick {
-    width: 72px !important;
+    width: 66px !important;
     right: 8px !important;
     top: 380px !important;
     transform: rotate(18deg) !important;
