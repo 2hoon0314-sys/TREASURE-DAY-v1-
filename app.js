@@ -472,7 +472,8 @@ const memoryText =
 
 const saveMemoryBtn =
   document.getElementById("save-memory");
-
+const memoryPhoto =
+  document.getElementById("memory-photo");
 const memoryList =
   document.getElementById("memory-list");
 
@@ -500,7 +501,13 @@ function renderMemories() {
 
     const text = document.createElement("p");
     text.textContent = memory.text || "";
+// 📸 MEMORY写真
+const photo = document.createElement("img");
+photo.className = "memory-photo";
 
+if (memory.photo) {
+  photo.src = memory.photo;
+}
     // ボタンエリア
     const actions = document.createElement("div");
     actions.className = "memory-actions";
@@ -615,9 +622,37 @@ function renderMemories() {
     memoryList.appendChild(card);
   });
 }
+function resizeMemoryPhoto(file) {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      const img = new Image();
+
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        const maxWidth = 1000;
+
+        const scale = Math.min(1, maxWidth / img.width);
+
+        canvas.width = img.width * scale;
+        canvas.height = img.height * scale;
+
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+        resolve(canvas.toDataURL("image/jpeg", 0.75));
+      };
+
+      img.src = reader.result;
+    };
+
+    reader.readAsDataURL(file);
+  });
+}
 if (saveMemoryBtn) {
 
-  saveMemoryBtn.addEventListener("click", () => {
+saveMemoryBtn.addEventListener("click", async () => {
 
     const title =
       memoryTitle ? memoryTitle.value.trim() : "";
@@ -629,11 +664,22 @@ if (saveMemoryBtn) {
       alert("思い出を書いてね💎");
       return;
     }
+let photo = "";
 
-    memories.unshift({
-      title: title || "TREASURE MEMORY 💎",
-      text: text
-    });
+if (
+  memoryPhoto &&
+  memoryPhoto.files &&
+  memoryPhoto.files[0]
+) {
+  photo = await resizeMemoryPhoto(
+    memoryPhoto.files[0]
+  );
+}
+memories.unshift({
+  title: title || "TREASURE MEMORY 💎",
+  text: text,
+  photo: photo
+});
 
     localStorage.setItem(
       "treasure-memories",
