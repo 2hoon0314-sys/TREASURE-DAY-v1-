@@ -617,6 +617,9 @@ if (memory.photo) {
 
     card.appendChild(title);
     card.appendChild(text);
+    if (memory.photo) {
+  card.appendChild(photo);
+}
     card.appendChild(actions);
 
     memoryList.appendChild(card);
