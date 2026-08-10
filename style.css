@@ -739,24 +739,29 @@ body.light-mode .plan-item button {
 ======================================== */
 
 /* フィルム本体 */
+/* フィルム本体 */
 .home-photo-strip {
   position: relative;
-  padding-top: 18px;
-  padding-bottom: 18px;
+  padding-top: 20px;
+  padding-bottom: 20px;
   overflow: hidden;
 
   background:
-    radial-gradient(
-      circle,
-      rgba(255,255,255,0.95) 3px,
-      transparent 4px
-    ) top / 32px 14px repeat-x,
+    repeating-linear-gradient(
+      90deg,
+      rgba(255,255,255,0.95) 0px,
+      rgba(255,255,255,0.95) 18px,
+      transparent 18px,
+      transparent 30px
+    ) top / 100% 9px no-repeat,
 
-    radial-gradient(
-      circle,
-      rgba(255,255,255,0.95) 3px,
-      transparent 4px
-    ) bottom / 32px 14px repeat-x,
+    repeating-linear-gradient(
+      90deg,
+      rgba(255,255,255,0.95) 0px,
+      rgba(255,255,255,0.95) 18px,
+      transparent 18px,
+      transparent 30px
+    ) bottom / 100% 9px no-repeat,
 
     rgba(255,255,255,0.16);
 
