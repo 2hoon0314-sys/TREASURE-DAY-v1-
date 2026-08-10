@@ -536,7 +536,29 @@ if (memory.photo) {
         newTitle.trim() || "TREASURE MEMORY 💎";
 
       memory.text = newText.trim();
+// 📸 写真をあとから追加・変更
+const changePhoto = confirm("写真を追加・変更する？📸");
 
+if (changePhoto) {
+  const photoInput = document.createElement("input");
+  photoInput.type = "file";
+  photoInput.accept = "image/*";
+
+  photoInput.onchange = async () => {
+    if (photoInput.files && photoInput.files[0]) {
+      memory.photo = await resizeMemoryPhoto(photoInput.files[0]);
+
+      localStorage.setItem(
+        "treasure-memories",
+        JSON.stringify(memories)
+      );
+
+      renderMemories();
+    }
+  };
+
+  photoInput.click();
+}
       localStorage.setItem(
         "treasure-memories",
         JSON.stringify(memories)
