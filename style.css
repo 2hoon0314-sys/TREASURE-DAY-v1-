@@ -457,3 +457,13 @@ body.light-mode .plan-item button {
   background: #e5e7eb;
   color: #111827;
 }
+#plan-date {
+  appearance: none;
+  -webkit-appearance: none;
+  color: #ffffff;
+}
+
+#plan-date::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  opacity: 0.85;
+}
