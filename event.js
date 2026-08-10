@@ -97,6 +97,28 @@ const packingAddBtn = document.getElementById("packing-add-btn");
 
 let packingItems = [];
 
+// イベント専用の持ち物保存キー
+const packingKey = selectedEvent
+  ? "treasure-packing-" + selectedEvent.id
+  : "treasure-packing";
+
+// 保存済みの持ち物を読み込み
+try {
+  packingItems =
+    JSON.parse(localStorage.getItem(packingKey)) || [];
+} catch (e) {
+  packingItems = [];
+}
+
+// 保存
+function savePackingList() {
+  localStorage.setItem(
+    packingKey,
+    JSON.stringify(packingItems)
+  );
+}
+
+// 表示
 function renderPackingList() {
   packingList.innerHTML = "";
 
@@ -108,12 +130,25 @@ function renderPackingList() {
     checkbox.type = "checkbox";
     checkbox.checked = item.checked;
 
+    // ☑️ チェック状態を保存
+    checkbox.addEventListener("change", () => {
+      packingItems[index].checked = checkbox.checked;
+      savePackingList();
+    });
+
     const text = document.createElement("span");
     text.textContent = item.text;
 
+    // 🗑️ 削除
     const deleteBtn = document.createElement("button");
     deleteBtn.type = "button";
     deleteBtn.textContent = "削除";
+
+    deleteBtn.addEventListener("click", () => {
+      packingItems.splice(index, 1);
+      savePackingList();
+      renderPackingList();
+    });
 
     row.appendChild(checkbox);
     row.appendChild(text);
@@ -123,6 +158,7 @@ function renderPackingList() {
   });
 }
 
+// ＋追加
 packingAddBtn.addEventListener("click", () => {
   const text = packingInput.value.trim();
 
@@ -135,5 +171,9 @@ packingAddBtn.addEventListener("click", () => {
 
   packingInput.value = "";
 
+  savePackingList();
   renderPackingList();
 });
+
+// 最初に表示
+renderPackingList();
