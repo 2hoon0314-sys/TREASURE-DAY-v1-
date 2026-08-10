@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PLAN DETAIL</title>
+  <link rel="stylesheet" href="style.css?v=3">
+</head>
+
+<body>
+
+  <main class="event-detail-page">
+
+    <button id="back-to-plan">← PLANに戻る</button>
+
+    <section class="event-detail-card">
+      <h1 id="detail-name">EVENT</h1>
+
+      <p id="detail-place">📍 会場</p>
+      <p id="detail-date">📅 日付</p>
+
+      <hr>
+
+      <label>
+        ⏰ 開場
+        <input type="time" id="detail-open">
+      </label>
+
+      <label>
+        🎤 開演
+        <input type="time" id="detail-start">
+      </label>
+
+      <label>
+        🎫 座席
+        <input type="text" id="detail-seat" placeholder="例：アリーナA3 10列">
+      </label>
+
+      <label>
+        🚄 行き
+        <textarea id="detail-go" placeholder="交通・時間など"></textarea>
+      </label>
+
+      <label>
+        🚄 帰り
+        <textarea id="detail-return" placeholder="交通・時間など"></textarea>
+      </label>
+
+      <label>
+        🏨 ホテル
+        <input type="text" id="detail-hotel" placeholder="ホテル名">
+      </label>
+
+      <label>
+        📝 メモ
+        <textarea id="detail-memo" placeholder="予定やメモ"></textarea>
+      </label>
+
+      <button id="save-detail">保存💎</button>
+    </section>
+
+  </main>
+
+  <script src="event.js?v=1"></script>
+
+</body>
+</html>
