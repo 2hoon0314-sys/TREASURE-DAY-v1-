@@ -1154,3 +1154,48 @@ body.light-mode .plan-item button {
   flex: 0 0 auto !important;
   margin-left: auto !important;
 }
+/* 🎒 持ち物追加エリア */
+.detail-packing .packing-add {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  width: 100% !important;
+  margin-top: 18px !important;
+}
+
+/* 入力欄 */
+.detail-packing .packing-add #packing-input {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  height: 54px !important;
+
+  padding: 0 18px !important;
+
+  background: #ffffff !important;
+  border: none !important;
+  border-radius: 18px !important;
+
+  font-size: 16px !important;
+  box-sizing: border-box !important;
+  outline: none !important;
+}
+
+/* ＋追加ボタン */
+.detail-packing .packing-add #packing-add-btn {
+  flex: 0 0 auto !important;
+
+  height: 54px !important;
+  padding: 0 18px !important;
+  margin: 0 !important;
+
+  border: none !important;
+  border-radius: 18px !important;
+
+  background: #86b8f3 !important;
+  color: #ffffff !important;
+
+  font-size: 15px !important;
+  font-weight: 700 !important;
+
+  box-shadow: none !important;
+}
