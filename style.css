@@ -854,3 +854,189 @@ body.light-mode .plan-item button {
     top: 380px !important;
     transform: rotate(18deg) !important;
 }
+/* =========================================
+   💎 EVENT DETAIL PAGE
+========================================= */
+
+.event-detail-page {
+    min-height: 100vh;
+    padding: 28px 20px 80px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,255,255,0.95) 3px,
+            transparent 4px
+        ) 0 0 / 42px 42px,
+        #dbeeff;
+
+    color: #172033;
+}
+
+/* ← PLANに戻る */
+#back-to-plan {
+    border: none;
+    background: rgba(255,255,255,0.9);
+    color: #52657f;
+
+    padding: 10px 16px;
+    border-radius: 999px;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    margin-bottom: 18px;
+}
+
+/* メインカード */
+.event-detail-card {
+    background: rgba(255,255,255,0.94);
+    border-radius: 28px;
+
+    padding: 24px 20px 28px;
+
+    box-shadow: 0 12px 32px rgba(62,105,153,0.12);
+}
+
+/* イベントタイトル */
+.event-detail-card h1 {
+    margin: 0 0 10px;
+
+    font-size: 30px;
+    line-height: 1.2;
+
+    color: #172033;
+}
+
+#detail-place,
+#detail-date {
+    margin: 6px 0;
+
+    color: #64748b;
+    font-size: 16px;
+}
+
+.event-detail-card hr {
+    border: none;
+    height: 1px;
+
+    background: #dbe7f3;
+
+    margin: 22px 0;
+}
+
+/* 各入力項目 */
+.event-detail-card > label {
+    display: block;
+
+    margin-bottom: 16px;
+
+    color: #52657f;
+    font-weight: 700;
+}
+
+/* input / textarea 共通 */
+.event-detail-card input,
+.event-detail-card textarea {
+    width: 100%;
+    box-sizing: border-box;
+
+    margin-top: 8px;
+
+    border: none;
+    outline: none;
+
+    background: #f2f7fc;
+    color: #172033;
+
+    border-radius: 16px;
+
+    padding: 13px 14px;
+
+    font-size: 16px;
+    font-family: inherit;
+}
+
+/* 時間入力 */
+.event-detail-card input[type="time"] {
+    min-height: 48px;
+}
+
+/* テキストエリア */
+.event-detail-card textarea {
+    min-height: 82px;
+    resize: vertical;
+}
+
+/* 持ち物エリア */
+.detail-packing {
+    margin-top: 22px;
+
+    padding: 18px;
+
+    background: #eef7ff;
+
+    border-radius: 22px;
+}
+
+.detail-packing h2 {
+    margin: 0 0 14px;
+
+    font-size: 22px;
+    color: #172033;
+}
+
+#packing-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    margin-bottom: 14px;
+}
+
+/* 持ち物追加 */
+.packing-add {
+    display: flex;
+    gap: 8px;
+}
+
+.packing-add input {
+    margin-top: 0;
+    flex: 1;
+}
+
+#packing-add-btn {
+    flex-shrink: 0;
+
+    border: none;
+
+    background: #86bdf7;
+    color: white;
+
+    border-radius: 14px;
+
+    padding: 0 16px;
+
+    font-weight: 800;
+}
+
+/* 保存ボタン */
+#save-detail {
+    width: 100%;
+
+    margin-top: 24px;
+
+    border: none;
+
+    background: #76adf2;
+    color: white;
+
+    border-radius: 18px;
+
+    padding: 15px;
+
+    font-size: 17px;
+    font-weight: 800;
+
+    box-shadow: 0 8px 18px rgba(79,137,205,0.18);
+}
