@@ -1040,3 +1040,22 @@ body.light-mode .plan-item button {
 
     box-shadow: 0 8px 18px rgba(79,137,205,0.18);
 }
+/* 💎 開場・開演 横並び */
+.event-time-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  width: 100%;
+}
+
+.event-time-row label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.event-time-row input {
+  width: 100%;
+  box-sizing: border-box;
+}
