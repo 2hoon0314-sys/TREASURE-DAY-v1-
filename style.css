@@ -1112,3 +1112,19 @@ body.light-mode .plan-item button {
     -webkit-appearance: none;
     appearance: none;
 }
+/* 🎒 持ち物 削除ボタンをかわいく */
+.detail-packing button {
+  border: none !important;
+  background: #ffffff !important;
+  color: #7d8ca5 !important;
+
+  font-size: 12px !important;
+  font-weight: 700 !important;
+
+  padding: 5px 10px !important;
+  margin-left: 10px !important;
+
+  border-radius: 999px !important;
+
+  box-shadow: 0 2px 8px rgba(100, 130, 170, 0.12) !important;
+}
