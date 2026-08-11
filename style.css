@@ -1199,3 +1199,43 @@ body.light-mode .plan-item button {
 
   box-shadow: none !important;
 }
+
+/* 🎒 持ち物リスト 横ズレ修正版 */
+#packing-list {
+  width: 100%;
+}
+
+#packing-list > div {
+  display: flex !important;
+  align-items: center !important;
+  width: 100% !important;
+  gap: 12px !important;
+  margin-bottom: 14px !important;
+  box-sizing: border-box !important;
+}
+
+/* チェックボックス */
+#packing-list input[type="checkbox"] {
+  flex: 0 0 auto !important;
+  width: 28px !important;
+  height: 28px !important;
+  margin: 0 !important;
+}
+
+/* 持ち物名 */
+#packing-list span {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  text-align: left !important;
+  word-break: break-word !important;
+}
+
+/* 削除ボタン */
+#packing-list button {
+  flex: 0 0 auto !important;
+  width: auto !important;
+  margin: 0 0 0 auto !important;
+  padding: 7px 14px !important;
+  white-space: nowrap !important;
+  border-radius: 999px !important;
+}
