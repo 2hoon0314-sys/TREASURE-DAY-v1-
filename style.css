@@ -1128,3 +1128,29 @@ body.light-mode .plan-item button {
 
   box-shadow: 0 2px 8px rgba(100, 130, 170, 0.12) !important;
 }
+/* 🎒 持ち物を横一列に整える */
+#packing-list > div {
+  display: flex !important;
+  align-items: center !important;
+  width: 100% !important;
+  gap: 10px !important;
+  margin-bottom: 12px !important;
+}
+
+/* チェックボックス */
+#packing-list input[type="checkbox"] {
+  flex: 0 0 auto !important;
+  margin: 0 !important;
+}
+
+/* 持ち物名 */
+#packing-list span {
+  flex: 1 !important;
+  min-width: 0 !important;
+}
+
+/* 削除ボタン */
+#packing-list button {
+  flex: 0 0 auto !important;
+  margin-left: auto !important;
+}
