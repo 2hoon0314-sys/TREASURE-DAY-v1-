@@ -1078,16 +1078,21 @@ function tdUpdateNextEvent() {
     const sortedEvents = [...tdPlanEvents].sort(
       (a, b) => new Date(a.date) - new Date(b.date)
     );
-
+// 過去イベントかどうか判定
+const today = new Date();
+today.setHours(0, 0, 0, 0);
     sortedEvents.forEach((event) => {
       const originalIndex = tdPlanEvents.findIndex(
         (item) =>
           item.id === event.id
       );
-
+const eventDate = new Date(event.date + "T00:00:00");
+const isPast = eventDate < today;
       const card = document.createElement("div");
       card.className = "plan-item";
-
+if (isPast) {
+  card.classList.add("past-event");
+}
       const info = document.createElement("div");
 
       const title = document.createElement("strong");
