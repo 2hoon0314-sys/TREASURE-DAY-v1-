@@ -1117,11 +1117,44 @@ function tdUpdateNextEvent() {
         tdRenderPlanEvents();
         tdUpdateNextEvent();
       });
+// ✏️ 編集ボタン
+const editBtn = document.createElement("button");
+editBtn.type = "button";
+editBtn.textContent = "編集";
 
-      card.appendChild(info);
-      card.appendChild(deleteBtn);
+editBtn.addEventListener("click", (e) => {
+  e.stopPropagation();
+
+  const newName = prompt("イベント名", event.name);
+  if (newName === null) return;
+
+  const newPlace = prompt("会場", event.place);
+  if (newPlace === null) return;
+
+  const newDate = prompt("日付（YYYY-MM-DD）", event.date);
+  if (newDate === null) return;
+
+  if (!newName.trim() || !newPlace.trim() || !newDate) {
+    alert("イベント情報を全部入力してね💎");
+    return;
+  }
+
+  tdPlanEvents[originalIndex] = {
+    ...tdPlanEvents[originalIndex],
+    name: newName.trim(),
+    place: newPlace.trim(),
+    date: newDate
+  };
+
+  tdSavePlanEvents();
+  tdRenderPlanEvents();
+  tdUpdateNextEvent();
+});
+card.appendChild(info);
+card.appendChild(editBtn);
+card.appendChild(deleteBtn);
 card.addEventListener("click", (e) => {
-  if (e.target === deleteBtn) return;
+if (e.target === deleteBtn || e.target === editBtn) return;
 
   localStorage.setItem(
     "treasure-selected-event",
