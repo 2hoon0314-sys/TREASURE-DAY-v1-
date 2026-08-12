@@ -1081,6 +1081,10 @@ function tdUpdateNextEvent() {
 // 過去イベントかどうか判定
 const today = new Date();
 today.setHours(0, 0, 0, 0);
+const nextEvent = sortedEvents.find((event) => {
+  const eventDate = new Date(event.date + "T00:00:00");
+  return eventDate >= today;
+});
     sortedEvents.forEach((event) => {
       const originalIndex = tdPlanEvents.findIndex(
         (item) =>
@@ -1092,6 +1096,13 @@ const isPast = eventDate < today;
       card.className = "plan-item";
 if (isPast) {
   card.classList.add("past-event");
+}
+    // 💎 一番近いイベントにNEXTバッジ
+if (nextEvent && event.id === nextEvent.id) {
+  const nextBadge = document.createElement("span");
+  nextBadge.className = "plan-next-badge";
+  nextBadge.textContent = "NEXT 💎";
+  card.appendChild(nextBadge);
 }
       const info = document.createElement("div");
 
