@@ -1400,3 +1400,35 @@ body.light-mode .plan-item button {
 
   z-index: 2 !important;
 }
+/* 💎 NEXTバッジ位置 強制修正版 */
+#plan-page #plan-list .plan-item .plan-next-badge {
+  position: absolute !important;
+  top: 10px !important;
+  left: 12px !important;
+  right: auto !important;
+  bottom: auto !important;
+
+  display: inline-block !important;
+  width: auto !important;
+  height: auto !important;
+
+  margin: 0 !important;
+  padding: 6px 10px !important;
+
+  background: #dfeeff !important;
+  color: #5f86b6 !important;
+
+  border-radius: 999px !important;
+
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  line-height: 1 !important;
+
+  z-index: 10 !important;
+}
+
+/* NEXT分だけカード上に余白 */
+#plan-page #plan-list .plan-item {
+  position: relative !important;
+  padding-top: 42px !important;
+}
