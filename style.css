@@ -1239,3 +1239,135 @@ body.light-mode .plan-item button {
   white-space: nowrap !important;
   border-radius: 999px !important;
 }
+/* =========================================
+   📅 PLAN PAGE DESIGN
+========================================= */
+
+/* PLAN全体 */
+#plan-page {
+  min-height: 100vh;
+  padding: 28px 20px 100px;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255,255,255,0.95) 3px,
+      transparent 4px
+    ) 0 0 / 42px 42px,
+    #dbeeff;
+
+  box-sizing: border-box;
+}
+
+/* PLANの白いメインカード */
+#plan-page > .card {
+  background: rgba(255,255,255,0.94);
+  border-radius: 28px;
+
+  padding: 24px 20px 28px;
+
+  box-shadow: 0 12px 32px rgba(62,105,153,0.10);
+}
+
+/* PLANタイトル */
+#plan-page h2 {
+  margin-top: 0;
+  margin-bottom: 24px;
+
+  font-size: 34px;
+  color: #172033;
+}
+
+/* 入力欄 */
+#plan-page .plan-form input {
+  width: 100%;
+  box-sizing: border-box;
+
+  background: #f2f7fc;
+  border: none;
+  outline: none;
+
+  border-radius: 18px;
+
+  padding: 15px 16px;
+  margin-bottom: 12px;
+
+  font-size: 16px;
+}
+
+/* イベント追加ボタン */
+#add-plan-btn {
+  width: 100%;
+
+  border: none;
+  border-radius: 18px;
+
+  padding: 15px;
+
+  background: #76adf2;
+  color: white;
+
+  font-size: 17px;
+  font-weight: 800;
+
+  margin-bottom: 26px;
+}
+
+/* イベント一覧 */
+#plan-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* 1イベント＝カード */
+#plan-list .plan-item {
+  background: #ffffff;
+
+  border-radius: 22px;
+
+  padding: 18px 16px;
+
+  box-shadow: 0 8px 18px rgba(70,110,160,0.10);
+
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 10px;
+}
+
+/* イベント情報部分 */
+#plan-list .plan-item > div:first-child {
+  min-width: 0;
+}
+
+/* イベント名 */
+#plan-list .plan-item h3 {
+  margin: 0 0 6px;
+
+  font-size: 21px;
+  color: #172033;
+}
+
+/* 会場・日付 */
+#plan-list .plan-item p {
+  margin: 3px 0;
+
+  color: #64748b;
+  font-size: 15px;
+}
+
+/* 編集・削除ボタン */
+#plan-list .plan-item button {
+  border: none;
+
+  background: #eef3f9;
+  color: #58677d;
+
+  border-radius: 14px;
+
+  padding: 10px 12px;
+
+  font-size: 13px;
+  font-weight: 700;
+}
