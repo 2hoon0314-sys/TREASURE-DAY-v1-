@@ -2021,7 +2021,15 @@ thoughts: eventMemoryThoughts ? eventMemoryThoughts.value : ""
     );
 await saveEventPhotos(eventKey, eventMemoryPhotos);
     saveEventMemoryBtn.textContent = "保存しました ✓ 💎";
+const savedToast = document.getElementById("event-memory-saved-toast");
 
+if (savedToast) {
+  savedToast.classList.add("show");
+
+  setTimeout(() => {
+    savedToast.classList.remove("show");
+  }, 1800);
+}
     setTimeout(() => {
       saveEventMemoryBtn.textContent = "保存する 💎";
     }, 1500);
