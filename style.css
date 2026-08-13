@@ -2654,3 +2654,98 @@ body {
   text-align: center;
   font-weight: 700;
 }
+/* ========================================
+   🎤 EVENT MEMORY DETAIL
+======================================== */
+
+.event-memory-detail-card {
+  padding: 24px 18px 120px;
+}
+
+.event-memory-back-btn {
+  border: none;
+  background: #eef4ff;
+  color: #7893c8;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 10px 16px;
+  border-radius: 999px;
+  margin-bottom: 22px;
+  cursor: pointer;
+}
+
+.event-memory-detail-date {
+  color: #91a4c8;
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+#event-memory-detail-name {
+  font-size: 28px;
+  font-weight: 800;
+  color: #121a2d;
+  margin: 0 0 8px;
+}
+
+.event-memory-detail-place {
+  color: #8396b8;
+  font-size: 15px;
+  margin-bottom: 28px;
+}
+
+.event-memory-detail-section {
+  background: #f5f8fd;
+  border-radius: 24px;
+  padding: 18px;
+  margin-bottom: 16px;
+}
+
+.event-memory-detail-section label {
+  display: block;
+  color: #6f88b7;
+  font-size: 15px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.event-memory-detail-section textarea {
+  width: 100%;
+  min-height: 100px;
+  box-sizing: border-box;
+  border: none;
+  outline: none;
+  resize: vertical;
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 16px;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #172033;
+  font-family: inherit;
+}
+
+.event-memory-detail-section textarea::placeholder {
+  color: #aab8d0;
+}
+
+.event-memory-save-btn {
+  width: 100%;
+  border: none;
+  border-radius: 999px;
+  padding: 16px;
+  margin-top: 10px;
+
+  background: #88a8e6;
+  color: white;
+
+  font-size: 17px;
+  font-weight: 800;
+  cursor: pointer;
+
+  box-shadow: 0 8px 20px rgba(120, 150, 210, 0.22);
+}
+
+.event-memory-save-btn:active {
+  transform: scale(0.98);
+}
