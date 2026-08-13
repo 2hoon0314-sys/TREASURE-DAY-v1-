@@ -2312,3 +2312,45 @@ body {
   transform: scale(0.96);
   background: #dcecff;
 }
+/* ========================================
+   💎 MEMORY MODE TABS
+======================================== */
+
+.memory-mode-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+
+  margin: 18px 0 26px;
+  padding: 6px;
+
+  background: rgba(235, 244, 255, 0.95);
+  border-radius: 22px;
+}
+
+.memory-mode-btn {
+  min-height: 52px;
+  padding: 10px 8px;
+
+  border: none;
+  border-radius: 17px;
+
+  background: transparent;
+  color: #7890af;
+
+  font-size: 13px;
+  font-weight: 800;
+
+  transition: 0.2s;
+}
+
+.memory-mode-btn.active {
+  background: #ffffff;
+  color: #5f83b5;
+
+  box-shadow: 0 4px 12px rgba(90, 130, 180, 0.12);
+}
+
+.memory-mode-btn:active {
+  transform: scale(0.97);
+}
