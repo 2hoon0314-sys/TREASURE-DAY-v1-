@@ -1945,13 +1945,28 @@ if (eventMemoryPhoto && eventMemoryPhotoPreview) {
     files.forEach((file) => {
       const reader = new FileReader();
 
-      reader.onload = (e) => {
-        const img = document.createElement("img");
-        img.src = e.target.result;
-        img.alt = "EVENT MEMORY";
-        eventMemoryPhotoPreview.appendChild(img);
-      };
+     reader.onload = (e) => {
+  const photoItem = document.createElement("div");
+  photoItem.className = "event-memory-photo-item";
 
+  const img = document.createElement("img");
+  img.src = e.target.result;
+  img.alt = "EVENT MEMORY";
+
+  const deleteBtn = document.createElement("button");
+  deleteBtn.type = "button";
+  deleteBtn.className = "event-memory-photo-delete";
+  deleteBtn.textContent = "×";
+
+  deleteBtn.addEventListener("click", () => {
+    photoItem.remove();
+  });
+
+  photoItem.appendChild(img);
+  photoItem.appendChild(deleteBtn);
+
+  eventMemoryPhotoPreview.appendChild(photoItem);
+};
       reader.readAsDataURL(file);
     });
   });
