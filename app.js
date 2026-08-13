@@ -486,8 +486,9 @@ function tdRenderPastEvents() {
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);
-
-  const pastEvents = tdPlanEvents
+const savedPlanEvents =
+  JSON.parse(localStorage.getItem("treasure-plan-events") || "[]");
+const pastEvents = savedPlanEvents
     .filter((event) => {
       const eventDate = new Date(event.date + "T00:00:00");
       return eventDate < today;
@@ -522,6 +523,7 @@ function tdRenderPastEvents() {
     pastEventsList.appendChild(card);
   });
 }
+
 // ========================================
 // 📝 MEMORY
 // ========================================
