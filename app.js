@@ -781,21 +781,33 @@ if (photoMemoryDetailDelete) {
     window.scrollTo(0, 0);
   });
 }
-// ⬆️ PHOTO MEMORY を1つ上へ
+// ⬆️ PHOTO MEMORY を前の写真の上へ
 const photoMemoryDetailUp =
   document.getElementById("photo-memory-detail-up");
 
 if (photoMemoryDetailUp) {
   photoMemoryDetailUp.addEventListener("click", () => {
     if (currentPhotoMemoryIndex === null) return;
-    if (currentPhotoMemoryIndex <= 0) return;
 
     const index = currentPhotoMemoryIndex;
 
-    [memories[index - 1], memories[index]] =
-      [memories[index], memories[index - 1]];
+    // 今より上にある「写真付きMEMORY」を探す
+    let prevPhotoIndex = -1;
 
-    currentPhotoMemoryIndex = index - 1;
+    for (let i = index - 1; i >= 0; i--) {
+      if (memories[i].photoKey || memories[i].photo) {
+        prevPhotoIndex = i;
+        break;
+      }
+    }
+
+    // 上に写真がなければ何もしない
+    if (prevPhotoIndex === -1) return;
+
+    [memories[prevPhotoIndex], memories[index]] =
+      [memories[index], memories[prevPhotoIndex]];
+
+    currentPhotoMemoryIndex = prevPhotoIndex;
 
     localStorage.setItem(
       "treasure-memories",
