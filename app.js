@@ -902,7 +902,9 @@ memories.unshift({
     if (memoryText) {
       memoryText.value = "";
     }
-
+if (memoryPhoto) {
+  memoryPhoto.value = "";
+}
     renderMemories();
   });
 }
