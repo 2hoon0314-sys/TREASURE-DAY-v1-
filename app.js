@@ -1314,9 +1314,9 @@ if (e.target === deleteBtn || e.target === editBtn) return;
 // ========================================
 
 const notificationSwitches = [
-  "event-reminder",
+  "event-notification",
   "treasure-day-notification",
-  "memory-reminder"
+  "memory-notification"
 ];
 
 notificationSwitches.forEach((id) => {
