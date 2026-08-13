@@ -241,24 +241,57 @@
 </section>
   <!-- 🔔 NOTIFICATION SETTINGS PAGE -->
 <section id="notification-page" class="page" style="display:none;">
-  <div class="card">
-    <h2>🔔 NOTIFICATIONS</h2>
+  <div class="card notification-card">
 
-    <button id="back-to-settings-btn" type="button">
+    <div class="notification-header">
+      <h2>🔔 NOTIFICATIONS</h2>
+      <p>大切な予定を忘れないように💎</p>
+    </div>
+
+    <div class="notification-list">
+
+      <div class="notification-item">
+        <div class="notification-text">
+          <strong>💎 イベント前通知</strong>
+          <small>イベント前にお知らせ</small>
+        </div>
+
+        <label class="switch">
+          <input type="checkbox" id="event-notification">
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <div class="notification-item">
+        <div class="notification-text">
+          <strong>📅 TREASURE DAY通知</strong>
+          <small>TREASURE DAY当日にお知らせ</small>
+        </div>
+
+        <label class="switch">
+          <input type="checkbox" id="treasure-day-notification">
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <div class="notification-item">
+        <div class="notification-text">
+          <strong>📸 MEMORYリマインド</strong>
+          <small>思い出を残すのを忘れないように</small>
+        </div>
+
+        <label class="switch">
+          <input type="checkbox" id="memory-notification">
+          <span class="slider"></span>
+        </label>
+      </div>
+
+    </div>
+
+    <button id="back-to-settings-btn" type="button" class="back-settings-btn">
       ← SETTINGSに戻る
     </button>
 
-    <div class="plan-item">
-      <span>💎 イベント前通知</span>
-    </div>
-
-    <div class="plan-item">
-      <span>📅 TREASURE DAY通知</span>
-    </div>
-
-    <div class="plan-item">
-      <span>📸 MEMORYリマインド</span>
-    </div>
   </div>
 </section>
 <nav class="bottom-nav">
