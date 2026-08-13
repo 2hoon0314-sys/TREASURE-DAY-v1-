@@ -2134,3 +2134,10 @@ body.light-mode .plan-item button {
 body {
   padding-bottom: 110px;
 }
+#home-page,
+#plan-page,
+#memory-page,
+#settings-page,
+#past-events-page {
+  padding-bottom: 150px !important;
+}
