@@ -2008,6 +2008,22 @@ const editEventMemoryBtn =
 
 const backFromEventMemoryViewBtn =
   document.getElementById("back-from-event-memory-view-btn");
+if (backFromEventMemoryViewBtn) {
+  backFromEventMemoryViewBtn.addEventListener("click", () => {
+    if (eventMemoryViewPage) {
+      eventMemoryViewPage.style.display = "none";
+    }
+
+    const memoryPage =
+      document.getElementById("memory-page");
+
+    if (memoryPage) {
+      memoryPage.style.display = "block";
+    }
+
+    window.scrollTo(0, 0);
+  });
+}
 let currentEventMemory = null;
 // EVENT MEMORY 入力欄
 const eventMemoryVisual =
