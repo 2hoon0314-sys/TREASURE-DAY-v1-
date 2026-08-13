@@ -2024,6 +2024,68 @@ if (backFromEventMemoryViewBtn) {
     window.scrollTo(0, 0);
   });
 }
+if (editEventMemoryBtn) {
+  editEventMemoryBtn.addEventListener("click", async () => {
+    if (!currentEventMemory) return;
+
+    const event = currentEventMemory;
+
+    const eventKey =
+      `${event.date}_${event.name}_${event.place}`;
+
+    const eventMemoryData = JSON.parse(
+      localStorage.getItem("treasure-event-memories") || "{}"
+    );
+
+    const savedMemory =
+      eventMemoryData[eventKey] || {};
+
+    if (eventMemoryVisual) {
+      eventMemoryVisual.value = savedMemory.visual || "";
+    }
+
+    if (eventMemoryStage) {
+      eventMemoryStage.value = savedMemory.stage || "";
+    }
+
+    if (eventMemoryMoment) {
+      eventMemoryMoment.value = savedMemory.moment || "";
+    }
+
+    if (eventMemoryThoughts) {
+      eventMemoryThoughts.value = savedMemory.thoughts || "";
+    }
+
+    if (eventMemoryPhotoPreview) {
+      eventMemoryPhotoPreview.innerHTML = "";
+
+      const savedPhotos =
+        await loadEventPhotos(eventKey);
+
+      savedPhotos.forEach((photoSrc) => {
+        const photoItem = document.createElement("div");
+        photoItem.className = "event-memory-photo-item";
+
+        const img = document.createElement("img");
+        img.src = photoSrc;
+        img.alt = "EVENT MEMORY";
+
+        photoItem.appendChild(img);
+        eventMemoryPhotoPreview.appendChild(photoItem);
+      });
+    }
+
+    if (eventMemoryViewPage) {
+      eventMemoryViewPage.style.display = "none";
+    }
+
+    if (eventMemoryDetailPage) {
+      eventMemoryDetailPage.style.display = "block";
+    }
+
+    window.scrollTo(0, 0);
+  });
+}
 let currentEventMemory = null;
 // EVENT MEMORY 入力欄
 const eventMemoryVisual =
