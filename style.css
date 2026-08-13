@@ -2749,3 +2749,56 @@ body {
 .event-memory-save-btn:active {
   transform: scale(0.98);
 }
+/* =========================
+   📸 TODAY'S MEMORY
+========================= */
+
+.event-memory-photo-section {
+  margin-top: 24px;
+  padding: 22px;
+  background: #f4f8ff;
+  border-radius: 28px;
+}
+
+.event-memory-photo-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: #7894c7;
+  margin-bottom: 16px;
+}
+
+.event-memory-photo-preview {
+  width: 100%;
+  min-height: 180px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+
+.event-memory-photo-preview img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 24px;
+}
+
+.event-memory-photo-label {
+  display: block;
+  width: 100%;
+  padding: 15px 18px;
+  box-sizing: border-box;
+  text-align: center;
+  background: white;
+  color: #7894c7;
+  font-weight: 800;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.event-memory-photo-input {
+  display: none;
+}
