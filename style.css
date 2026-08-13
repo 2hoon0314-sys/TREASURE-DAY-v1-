@@ -2134,15 +2134,29 @@ body.light-mode .plan-item button {
 body {
   padding-bottom: 110px;
 }
-#home-page,
-#plan-page,
-#memory-page,
-#settings-page,
-#past-events-page {
-  padding-bottom: 220px !important;
-}
+
 /* 💎 BOTTOM NAV 位置の微調整 */
 .bottom-nav {
   bottom: calc(18px + env(safe-area-inset-bottom));
 }
 
+/* 💎 固定BOTTOM NAVと本文を重ねない */
+#app,
+#plan-page,
+#memory-page,
+#settings-page,
+#past-events-page {
+  height: calc(100dvh - 125px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+/* 💎 メイン画面とBOTTOM NAVの間の余白 */
+#app,
+#plan-page,
+#memory-page,
+#settings-page,
+#past-events-page {
+  padding-bottom: 24px;
+  box-sizing: border-box;
+}
