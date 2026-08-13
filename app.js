@@ -1309,3 +1309,33 @@ if (e.target === deleteBtn || e.target === editBtn) return;
   tdRenderPlanEvents();
   tdUpdateNextEvent();
 })();
+// ========================================
+// 🔔 NOTIFICATION SETTINGS SAVE
+// ========================================
+
+const notificationSwitches = [
+  "event-reminder",
+  "treasure-day-notification",
+  "memory-reminder"
+];
+
+notificationSwitches.forEach((id) => {
+  const toggle = document.getElementById(id);
+
+  if (!toggle) return;
+
+  // 💎 保存されている設定を読み込む
+  const savedValue = localStorage.getItem(`treasure-notification-${id}`);
+
+  if (savedValue !== null) {
+    toggle.checked = savedValue === "true";
+  }
+
+  // 💎 ON / OFFが変わったら保存
+  toggle.addEventListener("change", () => {
+    localStorage.setItem(
+      `treasure-notification-${id}`,
+      toggle.checked
+    );
+  });
+});
