@@ -2552,3 +2552,31 @@ body {
 .diary-edit-btn:active {
   transform: scale(0.95);
 }
+/* ================================
+   💎 DIARY FILTER
+================================ */
+
+.diary-filter {
+  display: flex;
+  gap: 10px;
+  margin: 18px 0 22px;
+}
+
+.diary-filter-btn {
+  flex: 1;
+  border: none;
+  border-radius: 999px;
+  padding: 13px 10px;
+  font-size: 14px;
+  font-weight: 700;
+  background: #eef5ff;
+  color: #7d9bc8;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.diary-filter-btn.active {
+  background: #87a9e6;
+  color: white;
+  box-shadow: 0 5px 14px rgba(100, 140, 200, 0.18);
+}
