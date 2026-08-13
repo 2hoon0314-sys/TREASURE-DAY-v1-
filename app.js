@@ -1904,7 +1904,11 @@ const eventMemoryMoment =
 
 const eventMemoryThoughts =
   document.getElementById("event-memory-thoughts");
+const eventMemoryPhoto =
+  document.getElementById("event-memory-photo");
 
+const eventMemoryPhotoPreview =
+  document.getElementById("event-memory-photo-preview");
 const saveEventMemoryBtn =
   document.getElementById("save-event-memory-btn");
 if (backToEventMemoryBtn) {
