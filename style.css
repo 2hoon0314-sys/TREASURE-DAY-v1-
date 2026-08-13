@@ -1758,3 +1758,53 @@ body.light-mode .plan-item button {
   font-weight: 800;
   color: #172033;
 }
+/* 💎 MEMORY 操作エリア */
+#memory-list .memory-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+/* 💎 MEMORY 操作ボタン */
+#memory-list .memory-actions button {
+  border: none;
+  background: #eef5ff;
+  color: #6f8fb8;
+
+  min-width: 46px;
+  height: 42px;
+  padding: 0 14px;
+
+  border-radius: 999px;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+/* 押したとき */
+#memory-list .memory-actions button:active {
+  transform: scale(0.94);
+  background: #dfeeff;
+}
+/* 💎 MEMORY 操作エリア 最終調整 */
+#memory-list .memory-actions {
+  justify-content: flex-end;
+  padding-top: 4px;
+}
+
+/* ↑ ↓ は小さめ丸ボタン */
+#memory-list .memory-actions button:nth-child(3),
+#memory-list .memory-actions button:nth-child(4) {
+  min-width: 42px;
+  width: 42px;
+  padding: 0;
+  border-radius: 50%;
+}
