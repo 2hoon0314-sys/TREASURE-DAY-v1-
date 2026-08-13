@@ -1972,3 +1972,22 @@ body.light-mode .plan-item button {
 #settings-page .plan-item:active {
   transform: scale(0.99);
 }
+/* ⚙️ SETTINGS 間隔をコンパクトに */
+#settings-page .plan-item {
+  min-height: auto !important;
+  padding: 18px 20px !important;
+  margin-bottom: 14px !important;
+  gap: 12px !important;
+}
+
+/* 推しメン・TREASURE DAYも余白を統一 */
+#settings-page .member-setting,
+#settings-page .treasure-day-setting {
+  min-height: auto !important;
+}
+
+/* 選択欄・日付欄の余計な余白を消す */
+#settings-page select,
+#treasure-day-input {
+  margin-bottom: 0 !important;
+}
