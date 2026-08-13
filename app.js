@@ -573,12 +573,12 @@ try {
   memories = [];
 }
 
-function renderMemories() {
+async function renderMemories() {
   if (!memoryList) return;
 
   memoryList.innerHTML = "";
 
-  memories.forEach((memory, index) => {
+  for (const [index, memory] of memories.entries()) {
     const card = document.createElement("div");
     card.className = "memory-card";
 
@@ -588,11 +588,15 @@ function renderMemories() {
 
     const text = document.createElement("p");
     text.textContent = memory.text || "";
-// 📸 MEMORY写真
+// 📸 PHOTO MEMORY 写真
 const photo = document.createElement("img");
 photo.className = "memory-photo";
 
-if (memory.photo) {
+if (memory.photoKey) {
+  photo.src =
+    await loadPhotoMemoryImage(memory.photoKey);
+} else if (memory.photo) {
+  // 以前に保存した写真もそのまま表示
   photo.src = memory.photo;
 }
     // ボタンエリア
@@ -732,7 +736,7 @@ if (changePhoto) {
     card.appendChild(actions);
 
     memoryList.appendChild(card);
-  });
+ }
 }
 function resizeMemoryPhoto(file) {
   return new Promise((resolve) => {
@@ -762,6 +766,84 @@ function resizeMemoryPhoto(file) {
     reader.readAsDataURL(file);
   });
 }
+// ========================================
+// 📸 PHOTO MEMORY DATABASE
+// ========================================
+
+const photoMemoryDBName = "treasure-photo-memory-db";
+const photoMemoryStoreName = "photo-memory-images";
+
+function openPhotoMemoryDB() {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open(photoMemoryDBName, 1);
+
+    request.onupgradeneeded = (event) => {
+      const db = event.target.result;
+
+      if (!db.objectStoreNames.contains(photoMemoryStoreName)) {
+        db.createObjectStore(photoMemoryStoreName);
+      }
+    };
+
+    request.onsuccess = () => {
+      resolve(request.result);
+    };
+
+    request.onerror = () => {
+      reject(request.error);
+    };
+  });
+}
+// 📸 PHOTO MEMORY 写真を保存
+async function savePhotoMemoryImage(photoKey, photoData) {
+  const db = await openPhotoMemoryDB();
+
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction(
+      photoMemoryStoreName,
+      "readwrite"
+    );
+
+    const store =
+      transaction.objectStore(photoMemoryStoreName);
+
+    const request =
+      store.put(photoData, photoKey);
+
+    request.onsuccess = () => resolve();
+
+    request.onerror = () =>
+      reject(request.error);
+  });
+}
+
+
+// 📸 PHOTO MEMORY 写真を読み込む
+async function loadPhotoMemoryImage(photoKey) {
+  if (!photoKey) return "";
+
+  const db = await openPhotoMemoryDB();
+
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction(
+      photoMemoryStoreName,
+      "readonly"
+    );
+
+    const store =
+      transaction.objectStore(photoMemoryStoreName);
+
+    const request =
+      store.get(photoKey);
+
+    request.onsuccess = () => {
+      resolve(request.result || "");
+    };
+
+    request.onerror = () =>
+      reject(request.error);
+  });
+}
 if (saveMemoryBtn) {
 
 saveMemoryBtn.addEventListener("click", async () => {
@@ -776,21 +858,36 @@ saveMemoryBtn.addEventListener("click", async () => {
       alert("思い出を書いてね💎");
       return;
     }
-let photo = "";
+// 📸 PHOTO MEMORYの写真を準備
+let photoKey = "";
 
 if (
   memoryPhoto &&
   memoryPhoto.files &&
   memoryPhoto.files[0]
 ) {
-  photo = await resizeMemoryPhoto(
+  const photoData = await resizeMemoryPhoto(
     memoryPhoto.files[0]
   );
+
+  photoKey =
+    "photo-" +
+    Date.now() +
+    "-" +
+    Math.random().toString(36).slice(2);
+
+  await savePhotoMemoryImage(
+    photoKey,
+    photoData
+  );
 }
+
+
+// 💎 MEMORY本体には写真ではなくキーだけ保存
 memories.unshift({
   title: title || "TREASURE MEMORY 💎",
   text: text,
-  photo: photo
+  photoKey: photoKey
 });
 
     localStorage.setItem(
