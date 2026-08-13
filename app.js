@@ -572,7 +572,104 @@ try {
 } catch (e) {
   memories = [];
 }
+// ========================================
+// 📸 PHOTO MEMORY DETAIL
+// ========================================
 
+let currentPhotoMemoryIndex = null;
+
+async function openPhotoMemoryDetail(index) {
+  const memory = memories[index];
+  if (!memory) return;
+
+  currentPhotoMemoryIndex = index;
+
+  const detailPage =
+    document.getElementById("photo-memory-detail-page");
+
+  const detailImage =
+    document.getElementById("photo-memory-detail-image");
+
+  const detailTitle =
+    document.getElementById("photo-memory-detail-title");
+
+  const detailText =
+    document.getElementById("photo-memory-detail-text");
+
+  const memoryPage =
+    document.getElementById("memory-page");
+
+  // タイトル
+  if (detailTitle) {
+    detailTitle.textContent =
+      memory.title || "PHOTO MEMORY 💎";
+  }
+
+  // キャプション
+  if (detailText) {
+    detailText.textContent =
+      memory.text || "";
+  }
+
+  // 写真
+  if (detailImage) {
+    let photoSrc = "";
+
+    if (memory.photoKey) {
+      photoSrc =
+        await loadPhotoMemoryImage(memory.photoKey);
+    } else if (memory.photo) {
+      photoSrc = memory.photo;
+    }
+
+    detailImage.src = photoSrc;
+    detailImage.style.display =
+      photoSrc ? "block" : "none";
+  }
+
+  // MEMORY一覧を隠す
+  if (memoryPage) {
+    memoryPage.style.display = "none";
+  }
+
+  // 詳細ページ表示
+  if (detailPage) {
+    detailPage.style.display = "block";
+  }
+
+  window.scrollTo(0, 0);
+}
+
+
+// ← PHOTO MEMORYに戻る
+const photoMemoryDetailBackBtn =
+  document.getElementById("photo-memory-detail-back");
+
+if (photoMemoryDetailBackBtn) {
+  photoMemoryDetailBackBtn.addEventListener(
+    "click",
+    () => {
+      const detailPage =
+        document.getElementById(
+          "photo-memory-detail-page"
+        );
+
+      const memoryPage =
+        document.getElementById("memory-page");
+
+      if (detailPage) {
+        detailPage.style.display = "none";
+      }
+
+      if (memoryPage) {
+        memoryPage.style.display = "block";
+      }
+
+      switchMemoryMode("photo");
+      window.scrollTo(0, 0);
+    }
+  );
+}
 async function renderMemories() {
   if (!memoryList) return;
 
