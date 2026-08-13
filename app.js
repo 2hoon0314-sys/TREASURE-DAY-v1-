@@ -1981,8 +1981,7 @@ const eventMemoryPhotos = Array.from(
       visual: eventMemoryVisual ? eventMemoryVisual.value : "",
       stage: eventMemoryStage ? eventMemoryStage.value : "",
       moment: eventMemoryMoment ? eventMemoryMoment.value : "",
-      thoughts: eventMemoryThoughts ? eventMemoryThoughts.value : "",
-photos: eventMemoryPhotos
+thoughts: eventMemoryThoughts ? eventMemoryThoughts.value : ""
     };
 
     localStorage.setItem(
