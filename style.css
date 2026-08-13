@@ -1432,3 +1432,15 @@ body.light-mode .plan-item button {
   position: relative !important;
   padding-top: 42px !important;
 }
+/* ✨ PLAN 終了済みイベント */
+#plan-page #plan-list .plan-item.past-event {
+  opacity: 0.62 !important;
+  transform: scale(0.98);
+  box-shadow: none !important;
+  background: #f7f9fc !important;
+}
+
+/* 終了済みイベントの文字を少し淡く */
+#plan-page #plan-list .plan-item.past-event * {
+  color: #8d99aa;
+}
