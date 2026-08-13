@@ -1085,7 +1085,13 @@ const nextEvent = sortedEvents.find((event) => {
   const eventDate = new Date(event.date + "T00:00:00");
   return eventDate >= today;
 });
-    sortedEvents.forEach((event) => {
+// 💎 PLANには今日以降のイベントだけ表示
+const upcomingEvents = sortedEvents.filter((event) => {
+  const eventDate = new Date(event.date + "T00:00:00");
+  return eventDate >= today;
+});
+
+upcomingEvents.forEach((event) => {
       const originalIndex = tdPlanEvents.findIndex(
         (item) =>
           item.id === event.id
