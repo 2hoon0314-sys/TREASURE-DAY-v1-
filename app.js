@@ -1577,14 +1577,21 @@ try {
   diaryPosts = [];
 }
 
-
+let diaryFilter = "all";
 function renderDiaryPosts() {
 
   if (!diaryList) return;
 
   diaryList.innerHTML = "";
 
-  diaryPosts.forEach((post, index) => {
+  const postsToShow =
+  diaryFilter === "favorites"
+    ? diaryPosts.filter(post => post.favorite)
+    : diaryPosts;
+
+postsToShow.forEach((post) => {
+
+  const index = diaryPosts.indexOf(post);
 
     const card = document.createElement("div");
     card.className = "diary-post";
