@@ -1743,3 +1743,73 @@ if (saveDiaryBtn && diaryText) {
 
 
 renderDiaryPosts();
+// ========================================
+// 🎤 EVENT MEMORY LIST
+// ========================================
+
+const eventMemoryList =
+  document.getElementById("event-memory-list");
+
+function renderEventMemoryList() {
+
+  if (!eventMemoryList) return;
+
+  let planEvents = [];
+
+  try {
+    planEvents =
+      JSON.parse(
+        localStorage.getItem("treasure-plan-events") || "[]"
+      );
+  } catch (e) {
+    planEvents = [];
+  }
+
+  eventMemoryList.innerHTML = "";
+
+  if (planEvents.length === 0) {
+    eventMemoryList.innerHTML =
+      '<p class="event-memory-empty">まだイベントがないよ💎</p>';
+
+    return;
+  }
+
+  const sortedEvents = [...planEvents].sort((a, b) => {
+    return new Date(b.date) - new Date(a.date);
+  });
+
+  sortedEvents.forEach((event) => {
+
+    const card = document.createElement("button");
+    card.type = "button";
+    card.className = "event-memory-card";
+
+    const date = document.createElement("div");
+    date.className = "event-memory-date";
+    date.textContent =
+      (event.date || "").replaceAll("-", ".");
+
+    const name = document.createElement("div");
+    name.className = "event-memory-name";
+    name.textContent =
+      event.name || "TREASURE EVENT 💎";
+
+    const place = document.createElement("div");
+    place.className = "event-memory-place";
+    place.textContent =
+      event.place ? `📍 ${event.place}` : "";
+
+    const arrow = document.createElement("div");
+    arrow.className = "event-memory-arrow";
+    arrow.textContent = "MEMORYを書く →";
+
+    card.appendChild(date);
+    card.appendChild(name);
+    card.appendChild(place);
+    card.appendChild(arrow);
+
+    eventMemoryList.appendChild(card);
+  });
+}
+
+renderEventMemoryList();
