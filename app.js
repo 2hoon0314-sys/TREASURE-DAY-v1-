@@ -709,6 +709,78 @@ if (photoMemoryDetailEdit) {
     openPhotoMemoryDetail(currentPhotoMemoryIndex);
   });
 }
+// 🗑️ PHOTO MEMORY 詳細ページから削除
+const photoMemoryDetailDelete =
+  document.getElementById("photo-memory-detail-delete");
+
+if (photoMemoryDetailDelete) {
+  photoMemoryDetailDelete.addEventListener("click", async () => {
+    if (currentPhotoMemoryIndex === null) return;
+
+    const memory = memories[currentPhotoMemoryIndex];
+    if (!memory) return;
+
+    const ok = confirm(
+      "このPHOTO MEMORYを削除しますか？📸"
+    );
+
+    if (!ok) return;
+
+    // IndexedDBに保存した写真も削除
+    if (memory.photoKey) {
+      try {
+        const db = await openPhotoMemoryDB();
+
+        await new Promise((resolve, reject) => {
+          const transaction = db.transaction(
+            photoMemoryStoreName,
+            "readwrite"
+          );
+
+          const store =
+            transaction.objectStore(photoMemoryStoreName);
+
+          const request = store.delete(memory.photoKey);
+
+          request.onsuccess = () => resolve();
+          request.onerror = () => reject(request.error);
+        });
+      } catch (e) {
+        console.log("写真削除エラー", e);
+      }
+    }
+
+    // MEMORY本体を削除
+    memories.splice(currentPhotoMemoryIndex, 1);
+
+    localStorage.setItem(
+      "treasure-memories",
+      JSON.stringify(memories)
+    );
+
+    currentPhotoMemoryIndex = null;
+
+    renderMemories();
+
+    // 詳細ページを閉じる
+    const detailPage =
+      document.getElementById("photo-memory-detail-page");
+
+    const memoryPage =
+      document.getElementById("memory-page");
+
+    if (detailPage) {
+      detailPage.style.display = "none";
+    }
+
+    if (memoryPage) {
+      memoryPage.style.display = "block";
+    }
+
+    switchMemoryMode("photo");
+    window.scrollTo(0, 0);
+  });
+}
 async function renderMemories() {
   if (!memoryList) return;
 
