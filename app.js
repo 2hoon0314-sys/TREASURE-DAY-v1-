@@ -1617,6 +1617,33 @@ favoriteBtn.addEventListener("click", () => {
 
   renderDiaryPosts();
 });
+    const editBtn = document.createElement("button");
+editBtn.type = "button";
+editBtn.className = "diary-edit-btn";
+editBtn.textContent = "編集";
+
+editBtn.addEventListener("click", () => {
+
+  const newText = prompt(
+    "DIARYを編集💎",
+    post.text
+  );
+
+  if (newText === null) return;
+
+  const trimmedText = newText.trim();
+
+  if (!trimmedText) return;
+
+  post.text = trimmedText;
+
+  localStorage.setItem(
+    "treasure-diary",
+    JSON.stringify(diaryPosts)
+  );
+
+  renderDiaryPosts();
+});
     const deleteBtn = document.createElement("button");
     deleteBtn.type = "button";
     deleteBtn.textContent = "削除";
@@ -1633,7 +1660,8 @@ favoriteBtn.addEventListener("click", () => {
       renderDiaryPosts();
     });
 actions.appendChild(favoriteBtn);
-    actions.appendChild(deleteBtn);
+actions.appendChild(editBtn);
+actions.appendChild(deleteBtn);
 
     card.appendChild(date);
     card.appendChild(text);
