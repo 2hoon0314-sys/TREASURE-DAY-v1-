@@ -1500,3 +1500,61 @@ function checkMemoryReminder() {
 }
 
 checkMemoryReminder();
+// ========================================
+// 🎤 EVENT MEMORY / 💎 TREASURE DIARY 切替
+// ========================================
+
+const eventMemoryTab =
+  document.getElementById("event-memory-tab");
+
+const treasureDiaryTab =
+  document.getElementById("treasure-diary-tab");
+
+const eventMemoryArea =
+  document.getElementById("event-memory-area");
+
+const treasureDiaryArea =
+  document.getElementById("treasure-diary-area");
+
+
+function switchMemoryMode(mode) {
+
+  if (
+    !eventMemoryTab ||
+    !treasureDiaryTab ||
+    !eventMemoryArea ||
+    !treasureDiaryArea
+  ) {
+    return;
+  }
+
+  const isEvent = mode === "event";
+
+  eventMemoryTab.classList.toggle("active", isEvent);
+  treasureDiaryTab.classList.toggle("active", !isEvent);
+
+  eventMemoryArea.classList.toggle("active", isEvent);
+  treasureDiaryArea.classList.toggle("active", !isEvent);
+
+  localStorage.setItem(
+    "treasure-memory-mode",
+    isEvent ? "event" : "diary"
+  );
+}
+
+
+if (eventMemoryTab && treasureDiaryTab) {
+
+  eventMemoryTab.addEventListener("click", () => {
+    switchMemoryMode("event");
+  });
+
+  treasureDiaryTab.addEventListener("click", () => {
+    switchMemoryMode("diary");
+  });
+
+  const savedMemoryMode =
+    localStorage.getItem("treasure-memory-mode") || "event";
+
+  switchMemoryMode(savedMemoryMode);
+}
