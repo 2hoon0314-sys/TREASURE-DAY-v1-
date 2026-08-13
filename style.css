@@ -1880,3 +1880,95 @@ body.light-mode .plan-item button {
 
   box-shadow: 0 4px 12px rgba(90, 130, 180, 0.06);
 }
+/* ⚙️ SETTINGS 各設定カード */
+#settings-page .plan-item {
+  background: #f3f7fc;
+  border: none;
+  border-radius: 22px;
+
+  padding: 18px 20px;
+  margin-bottom: 14px;
+
+  box-shadow: none;
+
+  color: #64748b;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+/* 設定名 */
+#settings-page .plan-item > span {
+  color: #64748b;
+  font-weight: 700;
+}
+/* 💎 TREASURE DAY 日付設定 */
+#treasure-day-input {
+  width: 100%;
+  box-sizing: border-box;
+
+  margin-top: 12px;
+  padding: 14px 16px;
+
+  background: #ffffff;
+  color: #172033;
+
+  border: none;
+  outline: none;
+  border-radius: 16px;
+
+  font-size: 15px;
+  font-weight: 700;
+
+  box-shadow: 0 4px 12px rgba(90, 130, 180, 0.06);
+}
+
+/* 🎨 テーマ切替ボタン */
+#theme-toggle {
+  width: 100%;
+  margin-top: 12px;
+  padding: 14px 18px;
+
+  border: none;
+  border-radius: 16px;
+
+  background: #e3efff;
+  color: #6f8fb8;
+
+  font-size: 14px;
+  font-weight: 800;
+
+  box-shadow: none;
+}
+
+/* 押したとき */
+#theme-toggle:active {
+  transform: scale(0.98);
+}
+/* ⚙️ SETTINGS 最終調整 */
+
+/* 各カードを縦に見やすく */
+#settings-page .plan-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* 通知設定・アプリ情報 */
+#settings-page .plan-item:not(.member-setting):not(.treasure-day-setting) {
+  min-height: 58px;
+  justify-content: center;
+}
+
+/* SETTINGS全体の余白 */
+#settings-page > .card {
+  margin-bottom: 24px;
+}
+
+/* タップした時に少し反応 */
+#settings-page .plan-item {
+  transition: transform 0.15s ease;
+}
+
+#settings-page .plan-item:active {
+  transform: scale(0.99);
+}
