@@ -1991,3 +1991,28 @@ body.light-mode .plan-item button {
 #treasure-day-input {
   margin-bottom: 0 !important;
 }
+/* 🔔 通知設定 / 📱 アプリ情報 */
+#settings-page .plan-item:nth-of-type(4),
+#settings-page .plan-item:nth-of-type(5) {
+  background: #f3f7fc;
+  border-radius: 22px;
+
+  padding: 18px 20px !important;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  color: #172033;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+/* 右側にちょっと矢印感 */
+#settings-page .plan-item:nth-of-type(4)::after,
+#settings-page .plan-item:nth-of-type(5)::after {
+  content: "›";
+  color: #8ba4c6;
+  font-size: 24px;
+  font-weight: 700;
+}
