@@ -1599,7 +1599,24 @@ function renderDiaryPosts() {
 
     const actions = document.createElement("div");
     actions.className = "diary-post-actions";
+const favoriteBtn = document.createElement("button");
+favoriteBtn.type = "button";
+favoriteBtn.className = "diary-favorite-btn";
 
+favoriteBtn.textContent =
+  post.favorite ? "♥" : "♡";
+
+favoriteBtn.addEventListener("click", () => {
+
+  post.favorite = !post.favorite;
+
+  localStorage.setItem(
+    "treasure-diary",
+    JSON.stringify(diaryPosts)
+  );
+
+  renderDiaryPosts();
+});
     const deleteBtn = document.createElement("button");
     deleteBtn.type = "button";
     deleteBtn.textContent = "削除";
@@ -1615,7 +1632,7 @@ function renderDiaryPosts() {
 
       renderDiaryPosts();
     });
-
+actions.appendChild(favoriteBtn);
     actions.appendChild(deleteBtn);
 
     card.appendChild(date);
