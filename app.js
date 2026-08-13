@@ -678,7 +678,9 @@ async function renderMemories() {
   for (const [index, memory] of memories.entries()) {
     const card = document.createElement("div");
     card.className = "memory-card";
-
+card.addEventListener("click", () => {
+  openPhotoMemoryDetail(index);
+});
     const title = document.createElement("h3");
     title.textContent =
       memory.title || "TREASURE MEMORY 💎";
