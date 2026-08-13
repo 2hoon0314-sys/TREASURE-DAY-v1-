@@ -2871,3 +2871,133 @@ body {
   visibility: visible;
   transform: translate(-50%, 0);
 }
+/* =================================
+   💎 EVENT MEMORY VIEW
+================================= */
+
+.event-memory-view-card {
+  padding: 24px 18px 30px;
+}
+
+.event-memory-view-date {
+  margin-top: 18px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #9aabc9;
+}
+
+.event-memory-view-name {
+  margin: 7px 0 4px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 900;
+  color: #7894c7;
+}
+
+.event-memory-view-place {
+  margin-bottom: 22px;
+  text-align: center;
+  font-size: 13px;
+  color: #9aa6b8;
+}
+
+/* 📸 写真エリア */
+
+.event-memory-view-photos {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+
+  margin: 18px -18px 26px;
+  padding: 0 18px 8px;
+
+  scrollbar-width: none;
+}
+
+.event-memory-view-photos::-webkit-scrollbar {
+  display: none;
+}
+
+.event-memory-view-photos img {
+  width: 88%;
+  flex: 0 0 88%;
+
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+
+  border-radius: 24px;
+  scroll-snap-align: center;
+
+  box-shadow: 0 8px 24px rgba(120, 148, 199, 0.16);
+}
+
+/* 📝 思い出の文章 */
+
+.event-memory-view-section {
+  margin: 14px 0;
+  padding: 18px;
+
+  background: rgba(255, 255, 255, 0.72);
+  border-radius: 22px;
+
+  box-shadow: 0 5px 18px rgba(120, 148, 199, 0.08);
+}
+
+.event-memory-view-label {
+  margin-bottom: 9px;
+
+  font-size: 13px;
+  font-weight: 800;
+  color: #7894c7;
+}
+
+.event-memory-view-text {
+  font-size: 14px;
+  line-height: 1.8;
+  color: #505968;
+
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* ← 戻る */
+
+.event-memory-back-btn {
+  border: 0;
+  background: transparent;
+
+  padding: 4px 0;
+
+  font-size: 12px;
+  font-weight: 700;
+  color: #9aabc9;
+
+  cursor: pointer;
+}
+
+/* 💎 EDIT */
+
+.event-memory-edit-btn {
+  display: block;
+  width: 100%;
+
+  margin-top: 24px;
+  padding: 15px 18px;
+
+  border: 0;
+  border-radius: 999px;
+
+  background: white;
+  color: #7894c7;
+
+  font-size: 14px;
+  font-weight: 900;
+  letter-spacing: 1px;
+
+  box-shadow: 0 8px 24px rgba(120, 148, 199, 0.16);
+
+  cursor: pointer;
+}
