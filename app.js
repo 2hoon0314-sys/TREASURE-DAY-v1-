@@ -1909,6 +1909,26 @@ const eventMemoryPhoto =
 
 const eventMemoryPhotoPreview =
   document.getElementById("event-memory-photo-preview");
+if (eventMemoryPhoto && eventMemoryPhotoPreview) {
+  eventMemoryPhoto.addEventListener("change", () => {
+    eventMemoryPhotoPreview.innerHTML = "";
+
+    const files = Array.from(eventMemoryPhoto.files);
+
+    files.forEach((file) => {
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        const img = document.createElement("img");
+        img.src = e.target.result;
+        img.alt = "EVENT MEMORY";
+        eventMemoryPhotoPreview.appendChild(img);
+      };
+
+      reader.readAsDataURL(file);
+    });
+  });
+}
 const saveEventMemoryBtn =
   document.getElementById("save-event-memory-btn");
 if (backToEventMemoryBtn) {
