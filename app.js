@@ -806,6 +806,33 @@ if (photoMemoryDetailUp) {
     openPhotoMemoryDetail(currentPhotoMemoryIndex);
   });
 }
+// ⬇️ PHOTO MEMORY を1つ下へ
+const photoMemoryDetailDown =
+  document.getElementById("photo-memory-detail-down");
+
+if (photoMemoryDetailDown) {
+  photoMemoryDetailDown.addEventListener("click", () => {
+    if (currentPhotoMemoryIndex === null) return;
+
+    const index = currentPhotoMemoryIndex;
+
+    // 一番下なら何もしない
+    if (index >= memories.length - 1) return;
+
+    [memories[index], memories[index + 1]] =
+      [memories[index + 1], memories[index]];
+
+    currentPhotoMemoryIndex = index + 1;
+
+    localStorage.setItem(
+      "treasure-memories",
+      JSON.stringify(memories)
+    );
+
+    renderMemories();
+    openPhotoMemoryDetail(currentPhotoMemoryIndex);
+  });
+}
 async function renderMemories() {
   if (!memoryList) return;
 
