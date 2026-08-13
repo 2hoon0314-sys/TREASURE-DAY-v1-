@@ -1896,3 +1896,38 @@ if (backToEventMemoryBtn) {
     window.scrollTo(0, 0);
   });
 }
+// ========================================
+// 💎 EVENT MEMORY SAVE
+// ========================================
+
+if (saveEventMemoryBtn) {
+  saveEventMemoryBtn.addEventListener("click", () => {
+
+    if (!currentEventMemory) return;
+
+    const eventMemoryData = JSON.parse(
+      localStorage.getItem("treasure-event-memories") || "{}"
+    );
+
+    const eventKey =
+      `${currentEventMemory.date}_${currentEventMemory.name}_${currentEventMemory.place}`;
+
+    eventMemoryData[eventKey] = {
+      visual: eventMemoryVisual ? eventMemoryVisual.value : "",
+      stage: eventMemoryStage ? eventMemoryStage.value : "",
+      moment: eventMemoryMoment ? eventMemoryMoment.value : "",
+      thoughts: eventMemoryThoughts ? eventMemoryThoughts.value : ""
+    };
+
+    localStorage.setItem(
+      "treasure-event-memories",
+      JSON.stringify(eventMemoryData)
+    );
+
+    saveEventMemoryBtn.textContent = "保存しました ✓ 💎";
+
+    setTimeout(() => {
+      saveEventMemoryBtn.textContent = "保存する 💎";
+    }, 1500);
+  });
+}
