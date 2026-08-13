@@ -1819,6 +1819,61 @@ const eventKey =
 
 const savedMemory =
   eventMemoryData[eventKey] || {};
+  const viewPhotos = await loadEventPhotos(eventKey);
+
+const hasSavedMemory =
+  !!savedMemory.visual ||
+  !!savedMemory.stage ||
+  !!savedMemory.moment ||
+  !!savedMemory.thoughts ||
+  viewPhotos.length > 0;
+
+if (hasSavedMemory && eventMemoryViewPage) {
+
+  eventMemoryViewDate.textContent =
+    (event.date || "").replaceAll("-", ".");
+
+  eventMemoryViewName.textContent =
+    event.name || "TREASURE EVENT 💎";
+
+  eventMemoryViewPlace.textContent =
+    event.place ? `📍 ${event.place}` : "";
+
+  eventMemoryViewVisual.textContent =
+    savedMemory.visual || "";
+
+  eventMemoryViewStage.textContent =
+    savedMemory.stage || "";
+
+  eventMemoryViewMoment.textContent =
+    savedMemory.moment || "";
+
+  eventMemoryViewThoughts.textContent =
+    savedMemory.thoughts || "";
+
+  eventMemoryViewPhotos.innerHTML = "";
+
+  viewPhotos.forEach((photoSrc) => {
+    const img = document.createElement("img");
+    img.src = photoSrc;
+    img.alt = "EVENT MEMORY";
+    eventMemoryViewPhotos.appendChild(img);
+  });
+
+  const memoryPage =
+    document.getElementById("memory-page");
+
+  if (memoryPage) {
+    memoryPage.style.display = "none";
+  }
+
+  eventMemoryDetailPage.style.display = "none";
+  eventMemoryViewPage.style.display = "block";
+
+  window.scrollTo(0, 0);
+
+  return;
+}
 if (eventMemoryPhotoPreview) {
   eventMemoryPhotoPreview.innerHTML = "";
 
@@ -1917,7 +1972,42 @@ const eventMemoryDetailPlace =
 
 const backToEventMemoryBtn =
   document.getElementById("back-to-event-memory-btn");
+// ===============================
+// 💎 EVENT MEMORY VIEW PAGE
+// ===============================
 
+const eventMemoryViewPage =
+  document.getElementById("event-memory-view-page");
+
+const eventMemoryViewDate =
+  document.getElementById("event-memory-view-date");
+
+const eventMemoryViewName =
+  document.getElementById("event-memory-view-name");
+
+const eventMemoryViewPlace =
+  document.getElementById("event-memory-view-place");
+
+const eventMemoryViewPhotos =
+  document.getElementById("event-memory-view-photos");
+
+const eventMemoryViewVisual =
+  document.getElementById("event-memory-view-visual");
+
+const eventMemoryViewStage =
+  document.getElementById("event-memory-view-stage");
+
+const eventMemoryViewMoment =
+  document.getElementById("event-memory-view-moment");
+
+const eventMemoryViewThoughts =
+  document.getElementById("event-memory-view-thoughts");
+
+const editEventMemoryBtn =
+  document.getElementById("edit-event-memory-btn");
+
+const backFromEventMemoryViewBtn =
+  document.getElementById("back-from-event-memory-view-btn");
 let currentEventMemory = null;
 // EVENT MEMORY 入力欄
 const eventMemoryVisual =
