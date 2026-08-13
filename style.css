@@ -1558,3 +1558,28 @@ body.light-mode .plan-item button {
 #past-events-page .plan-item > div:not(.past-badge) {
   width: 100%;
 }
+/* =========================
+   📸 MEMORY PAGE
+========================= */
+
+#memory-page {
+  background: #dcecff;
+  background-image: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.95) 6px,
+    transparent 7px
+  );
+  background-size: 46px 46px;
+
+  min-height: 100vh;
+  padding: 28px 18px 120px;
+  box-sizing: border-box;
+}
+
+#memory-page .memory-inner {
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 30px;
+  padding: 28px 22px 40px;
+  min-height: 70vh;
+  box-shadow: 0 10px 30px rgba(90, 130, 180, 0.08);
+}
