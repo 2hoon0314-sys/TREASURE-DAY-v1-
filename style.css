@@ -2016,3 +2016,68 @@ body.light-mode .plan-item button {
   font-size: 24px;
   font-weight: 700;
 }
+/* 💎 NEW BOTTOM NAV */
+.bottom-nav {
+  position: fixed;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
+
+  width: calc(100% - 32px);
+  max-width: 430px;
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.94);
+  border-radius: 28px;
+
+  box-shadow: 0 8px 25px rgba(90, 130, 180, 0.15);
+  z-index: 9999;
+}
+/* 💎 NAV BUTTON */
+.bottom-nav .nav-btn {
+  min-width: 0;
+  height: 72px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+
+  border: none;
+  border-radius: 22px;
+  background: #ffffff;
+
+  color: #7487a3;
+  font-weight: 700;
+
+  box-shadow: 0 4px 12px rgba(90, 130, 180, 0.08);
+
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+/* 💎 選択中のNAVボタン */
+.bottom-nav .nav-btn.active {
+  background: #e4f0ff;
+  color: #5f83b5;
+
+  box-shadow:
+    0 5px 14px rgba(90, 130, 180, 0.12),
+    inset 0 0 0 1px rgba(150, 185, 225, 0.18);
+}
+/* 💎 NAV アイコン＆文字 */
+.bottom-nav .nav-btn {
+  font-size: 13px;
+  line-height: 1.15;
+}
+
+/* 絵文字アイコンを少し大きく */
+.bottom-nav .nav-btn .nav-icon {
+  font-size: 23px;
+  line-height: 1;
+  margin-bottom: 2px;
+}
