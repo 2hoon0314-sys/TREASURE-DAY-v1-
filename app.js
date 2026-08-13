@@ -1807,7 +1807,7 @@ function renderEventMemoryList() {
     card.appendChild(name);
     card.appendChild(place);
     card.appendChild(arrow);
-card.addEventListener("click", () => {
+card.addEventListener("click", async () => {
 
   currentEventMemory = event;
 const eventMemoryData = JSON.parse(
@@ -1822,7 +1822,7 @@ const savedMemory =
 if (eventMemoryPhotoPreview) {
   eventMemoryPhotoPreview.innerHTML = "";
 
-  const savedPhotos = savedMemory.photos || [];
+  const savedPhotos = await loadEventPhotos(eventKey);
 
   savedPhotos.forEach((photoSrc) => {
     const img = document.createElement("img");
@@ -1964,7 +1964,7 @@ if (backToEventMemoryBtn) {
 // ========================================
 
 if (saveEventMemoryBtn) {
-  saveEventMemoryBtn.addEventListener("click", () => {
+saveEventMemoryBtn.addEventListener("click", async () => {
 const eventMemoryPhotos = Array.from(
   eventMemoryPhotoPreview.querySelectorAll("img")
 ).map(img => img.src);
@@ -1988,11 +1988,80 @@ thoughts: eventMemoryThoughts ? eventMemoryThoughts.value : ""
       "treasure-event-memories",
       JSON.stringify(eventMemoryData)
     );
-
+await saveEventPhotos(eventKey, eventMemoryPhotos);
     saveEventMemoryBtn.textContent = "保存しました ✓ 💎";
 
     setTimeout(() => {
       saveEventMemoryBtn.textContent = "保存する 💎";
     }, 1500);
+  });
+}
+// ========================================
+// 📸 EVENT MEMORY PHOTO DATABASE
+// ========================================
+
+const eventPhotoDBName = "treasure-event-photo-db";
+const eventPhotoStoreName = "event-photos";
+
+function openEventPhotoDB() {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open(eventPhotoDBName, 1);
+
+    request.onupgradeneeded = (event) => {
+      const db = event.target.result;
+
+      if (!db.objectStoreNames.contains(eventPhotoStoreName)) {
+        db.createObjectStore(eventPhotoStoreName);
+      }
+    };
+
+    request.onsuccess = () => {
+      resolve(request.result);
+    };
+
+    request.onerror = () => {
+      reject(request.error);
+    };
+  });
+}
+// 📸 写真を保存
+async function saveEventPhotos(eventKey, photos) {
+  const db = await openEventPhotoDB();
+
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction(
+      eventPhotoStoreName,
+      "readwrite"
+    );
+
+    const store = transaction.objectStore(eventPhotoStoreName);
+
+    const request = store.put(photos, eventKey);
+
+    request.onsuccess = () => resolve();
+    request.onerror = () => reject(request.error);
+  });
+}
+// 📸 保存した写真を読み出す
+async function loadEventPhotos(eventKey) {
+  const db = await openEventPhotoDB();
+
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction(
+      eventPhotoStoreName,
+      "readonly"
+    );
+
+    const store = transaction.objectStore(eventPhotoStoreName);
+
+    const request = store.get(eventKey);
+
+    request.onsuccess = () => {
+      resolve(request.result || []);
+    };
+
+    request.onerror = () => {
+      reject(request.error);
+    };
   });
 }
