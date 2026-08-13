@@ -250,29 +250,54 @@
 
 <div id="diary-list"></div>
 </div>
-        <input
-            id="memory-title"
-            class="input"
-            placeholder="タイトル">
+<!-- =========================
+     📸 PHOTO MEMORY AREA
+========================= -->
+<div id="photo-memory-area" class="memory-mode-area" style="display:none;">
 
-        <textarea
-            id="memory-text"
-            class="input"
-            placeholder="思い出を書こう✨"
-            rows="5"></textarea>
-<label class="memory-photo-label">
-  📸 写真を追加
-  <input
-    type="file"
-    id="memory-photo"
-    accept="image/*"
-  >
-</label>
-        <button id="save-memory" class="primary-btn">
-            保存💎
-        </button>
+  <div class="memory-section-title">
+    📸 PHOTO MEMORY
+  </div>
 
-    </div>
+  <p class="memory-section-description">
+    TREASUREとの思い出を写真で残そう💎
+  </p>
+
+  <div class="photo-memory-compose">
+
+    <input
+      id="memory-title"
+      class="input"
+      placeholder="タイトルをつける💎"
+    >
+
+    <textarea
+      id="memory-text"
+      class="input"
+      placeholder="この写真の思い出を書こう✨"
+      rows="3"
+    ></textarea>
+
+    <label class="memory-photo-label">
+      📸 写真を選ぶ
+      <input
+        type="file"
+        id="memory-photo"
+        accept="image/*"
+      >
+    </label>
+
+    <button
+      id="save-memory"
+      class="primary"
+      type="button"
+    >
+      PHOTOを保存 💎
+    </button>
+
+  </div>
+
+</div>
 
     <div class="card">
 
