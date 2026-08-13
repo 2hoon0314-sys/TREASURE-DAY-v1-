@@ -1808,3 +1808,75 @@ body.light-mode .plan-item button {
   padding: 0;
   border-radius: 50%;
 }
+/* ⚙️ SETTINGS PAGE */
+#settings-page {
+  min-height: 100vh;
+  padding: 28px 18px 120px;
+
+  background-color: #dcecff;
+  background-image: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.95) 5px,
+    transparent 6px
+  );
+  background-size: 46px 46px;
+}
+
+/* SETTINGSの白い大枠 */
+#settings-page > .card {
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 30px;
+  padding: 28px 22px;
+  border: none;
+
+  box-shadow:
+    0 10px 30px rgba(90, 130, 180, 0.08);
+}
+/* ⚙️ SETTINGS タイトル */
+#settings-page h2 {
+  margin: 0 0 28px;
+  color: #111827;
+
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+/* 👤 推しメン設定カード */
+#settings-page .member-setting {
+  background: #f3f7fc;
+  border-radius: 24px;
+  padding: 20px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+
+  border: none;
+  box-shadow: none;
+}
+
+/* 👤 推しメン設定 の文字 */
+#settings-page .member-setting > span {
+  color: #64748b;
+  font-size: 15px;
+  font-weight: 700;
+}
+/* 💎 推しメン選択欄 */
+#settings-page .member-setting select {
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 15px 18px;
+
+  background: #ffffff;
+  color: #172033;
+
+  border: none;
+  outline: none;
+  border-radius: 18px;
+
+  font-size: 16px;
+  font-weight: 700;
+
+  box-shadow: 0 4px 12px rgba(90, 130, 180, 0.06);
+}
