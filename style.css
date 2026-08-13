@@ -2444,3 +2444,58 @@ body {
   flex-direction: column;
   gap: 12px;
 }
+/* ========================================
+   💎 TREASURE DIARY POST
+======================================== */
+
+.diary-post {
+  padding: 18px 20px;
+
+  background: #ffffff;
+  border-radius: 22px;
+
+  box-shadow: 0 6px 18px rgba(90, 130, 180, 0.08);
+}
+
+.diary-post-date {
+  margin-bottom: 10px;
+
+  color: #9aa9bd;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.diary-post-text {
+  margin: 0;
+
+  color: #172033;
+  font-size: 15px;
+  line-height: 1.7;
+
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.diary-post-actions {
+  display: flex;
+  justify-content: flex-end;
+
+  margin-top: 12px;
+}
+
+.diary-post-actions button {
+  padding: 7px 13px;
+
+  border: none;
+  border-radius: 999px;
+
+  background: #f2f6fb;
+  color: #8b9bb0;
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.diary-post-actions button:active {
+  transform: scale(0.95);
+}
