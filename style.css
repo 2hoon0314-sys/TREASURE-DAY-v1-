@@ -1583,3 +1583,135 @@ body.light-mode .plan-item button {
   min-height: 70vh;
   box-shadow: 0 10px 30px rgba(90, 130, 180, 0.08);
 }
+/* MEMORY 入力欄 */
+#memory-page .input {
+  width: 100%;
+  box-sizing: border-box;
+
+  background: #f1f6fc;
+  border: none;
+  outline: none;
+
+  border-radius: 22px;
+  padding: 18px 20px;
+  margin-bottom: 16px;
+
+  font-size: 16px;
+  color: #172033;
+}
+
+#memory-page textarea.input {
+  min-height: 130px;
+  resize: vertical;
+}
+
+#memory-page .input::placeholder {
+  color: #7b8799;
+  opacity: 1;
+}
+/* 📸 MEMORY 写真追加 */
+#memory-page .memory-photo-label {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+
+  background: #eef5ff;
+  border-radius: 22px;
+  padding: 16px 18px;
+  margin: 4px 0 18px;
+
+  color: #5f7fa8;
+  font-size: 15px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+#memory-page .memory-photo-label input[type="file"] {
+  width: 100%;
+  margin-top: 10px;
+
+  font-size: 14px;
+  color: #6f7b8d;
+}
+/* 💎 MEMORY 保存ボタン */
+#save-memory {
+  width: 100%;
+  box-sizing: border-box;
+
+  border: none;
+  border-radius: 22px;
+
+  background: #7fa8e8;
+  color: white;
+
+  padding: 17px 20px;
+  margin-top: 4px;
+
+  font-size: 17px;
+  font-weight: 800;
+
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(90, 130, 180, 0.12);
+
+  transition: transform 0.15s ease;
+}
+
+#save-memory:active {
+  transform: scale(0.98);
+}
+/* =========================
+   💎 SAVED MEMORY
+========================= */
+
+/* 保存したMEMORY 見出し */
+#memory-page h3 {
+  margin: 34px 0 18px;
+  font-size: 22px;
+  font-weight: 800;
+  color: #172033;
+}
+
+/* MEMORY一覧 */
+#memory-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* 保存されたMEMORYカード */
+#memory-list .memory-item {
+  background: #ffffff;
+  border-radius: 26px;
+  padding: 20px;
+
+  box-shadow: 0 8px 24px rgba(90, 130, 180, 0.10);
+}
+
+/* MEMORYタイトル */
+#memory-list .memory-item h3 {
+  margin: 0 0 8px;
+  font-size: 20px;
+  font-weight: 800;
+  color: #172033;
+}
+
+/* MEMORY本文 */
+#memory-list .memory-item p {
+  margin: 0 0 14px;
+  font-size: 15px;
+  line-height: 1.7;
+  color: #5f6b7d;
+}
+
+/* MEMORY写真 */
+#memory-list .memory-item img {
+  display: block;
+  width: 100%;
+  height: auto;
+
+  margin-top: 14px;
+  border-radius: 20px;
+
+  object-fit: cover;
+}
