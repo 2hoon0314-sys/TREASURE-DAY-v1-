@@ -670,6 +670,45 @@ if (photoMemoryDetailBackBtn) {
     }
   );
 }
+// ✏️ PHOTO MEMORY 詳細ページから編集
+const photoMemoryDetailEdit =
+  document.getElementById("photo-memory-detail-edit");
+
+if (photoMemoryDetailEdit) {
+  photoMemoryDetailEdit.addEventListener("click", () => {
+    if (currentPhotoMemoryIndex === null) return;
+
+    const memory = memories[currentPhotoMemoryIndex];
+    if (!memory) return;
+
+    const newTitle = prompt(
+      "タイトルを編集",
+      memory.title || ""
+    );
+
+    if (newTitle === null) return;
+
+    const newText = prompt(
+      "感想を編集",
+      memory.text || ""
+    );
+
+    if (newText === null) return;
+
+    memory.title =
+      newTitle.trim() || "PHOTO MEMORY 💎";
+
+    memory.text = newText.trim();
+
+    localStorage.setItem(
+      "treasure-memories",
+      JSON.stringify(memories)
+    );
+
+    renderMemories();
+    openPhotoMemoryDetail(currentPhotoMemoryIndex);
+  });
+}
 async function renderMemories() {
   if (!memoryList) return;
 
