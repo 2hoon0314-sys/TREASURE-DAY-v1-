@@ -1339,3 +1339,164 @@ notificationSwitches.forEach((id) => {
     );
   });
 });
+// ========================================
+// 💎 EVENT REMINDER
+// ========================================
+
+function checkEventReminder() {
+  const enabled =
+    localStorage.getItem(
+      "treasure-notification-event-notification"
+    ) === "true";
+
+  if (!enabled) return;
+
+  const events = JSON.parse(
+    localStorage.getItem("treasure-plan-events") || "[]"
+  );
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  events.forEach((event) => {
+    const eventDate = new Date(event.date + "T00:00:00");
+
+    const diff = Math.round(
+      (eventDate - today) / (1000 * 60 * 60 * 24)
+    );
+
+if (diff === 1) {
+
+  // 今日このイベントを通知済みか確認
+  const reminderKey =
+    `treasure-event-reminder-${event.date}`;
+
+  const lastReminder =
+    localStorage.getItem(reminderKey);
+
+  const todayKey =
+    today.toISOString().split("T")[0];
+
+  // 今日まだ通知していない場合だけ表示
+  if (lastReminder !== todayKey) {
+
+    alert(
+      `💎 明日は ${event.name}！\n📍 ${event.place}\n楽しんできてね✨`
+    );
+
+    // 今日通知したことを保存
+    localStorage.setItem(
+      reminderKey,
+      todayKey
+    );
+  }
+}
+  });
+}
+
+checkEventReminder();
+// ========================================
+// 📅 TREASURE DAY REMINDER
+// ========================================
+
+function checkTreasureDayReminder() {
+
+  const enabled =
+    localStorage.getItem(
+      "treasure-notification-treasure-day-notification"
+    ) === "true";
+
+  if (!enabled) return;
+
+  const treasureDay =
+    localStorage.getItem("treasure-day-date");
+
+  if (!treasureDay) return;
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const todayKey =
+    today.getFullYear() +
+    "-" +
+    String(today.getMonth() + 1).padStart(2, "0") +
+    "-" +
+    String(today.getDate()).padStart(2, "0");
+
+  // TREASURE DAY当日だけ
+  if (todayKey === treasureDay) {
+
+    const reminderKey =
+      `treasure-day-reminder-${treasureDay}`;
+
+    const alreadyShown =
+      localStorage.getItem(reminderKey);
+
+    // 今日まだ表示してなければ通知
+    if (alreadyShown !== todayKey) {
+
+      alert(
+        "💎 TODAY IS TREASURE DAY 💎\n今日は待ちに待った日！楽しんできてね🩵✨"
+      );
+
+      localStorage.setItem(
+        reminderKey,
+        todayKey
+      );
+    }
+  }
+}
+
+checkTreasureDayReminder();
+// ========================================
+// 📸 MEMORY REMINDER
+// ========================================
+
+function checkMemoryReminder() {
+
+  const enabled =
+    localStorage.getItem(
+      "treasure-notification-memory-notification"
+    ) === "true";
+
+  if (!enabled) return;
+
+  const treasureDay =
+    localStorage.getItem("treasure-day-date");
+
+  if (!treasureDay) return;
+
+  const now = new Date();
+
+  const todayKey =
+    now.getFullYear() +
+    "-" +
+    String(now.getMonth() + 1).padStart(2, "0") +
+    "-" +
+    String(now.getDate()).padStart(2, "0");
+
+  // TREASURE DAY当日だけ
+  if (todayKey === treasureDay && now.getHours() >= 18) {
+
+    const reminderKey =
+      `treasure-memory-reminder-${treasureDay}`;
+
+    const alreadyShown =
+      localStorage.getItem(reminderKey);
+
+    // 今日まだ表示していなければ1回だけ
+    if (alreadyShown !== todayKey) {
+
+      alert(
+        "📸 今日の思い出、MEMORYに残した？💎\n最高だった瞬間を忘れないうちに残しておこ🩵"
+      );
+
+      localStorage.setItem(
+        reminderKey,
+        todayKey
+      );
+    }
+  }
+}
+
+checkMemoryReminder();
