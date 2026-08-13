@@ -1565,7 +1565,11 @@ if (eventMemoryTab && treasureDiaryTab) {
 const diaryText = document.getElementById("diary-text");
 const saveDiaryBtn = document.getElementById("save-diary");
 const diaryList = document.getElementById("diary-list");
+const diaryFilterAllBtn =
+  document.getElementById("diary-filter-all");
 
+const diaryFilterFavoritesBtn =
+  document.getElementById("diary-filter-favorites");
 let diaryPosts = [];
 
 try {
@@ -1578,6 +1582,27 @@ try {
 }
 
 let diaryFilter = "all";
+if (diaryFilterAllBtn) {
+  diaryFilterAllBtn.addEventListener("click", () => {
+    diaryFilter = "all";
+
+    diaryFilterAllBtn.classList.add("active");
+    diaryFilterFavoritesBtn?.classList.remove("active");
+
+    renderDiaryPosts();
+  });
+}
+
+if (diaryFilterFavoritesBtn) {
+  diaryFilterFavoritesBtn.addEventListener("click", () => {
+    diaryFilter = "favorites";
+
+    diaryFilterFavoritesBtn.classList.add("active");
+    diaryFilterAllBtn?.classList.remove("active");
+
+    renderDiaryPosts();
+  });
+}
 function renderDiaryPosts() {
 
   if (!diaryList) return;
