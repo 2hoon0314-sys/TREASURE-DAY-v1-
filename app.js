@@ -503,7 +503,9 @@ const pastEvents = savedPlanEvents
   pastEvents.forEach((event) => {
     const card = document.createElement("div");
     card.className = "plan-item";
-
+const pastBadge = document.createElement("div");
+pastBadge.className = "past-badge";
+pastBadge.textContent = "PAST 💎";
     const info = document.createElement("div");
 
     const title = document.createElement("h3");
@@ -518,7 +520,7 @@ const pastEvents = savedPlanEvents
     info.appendChild(title);
     info.appendChild(place);
     info.appendChild(date);
-
+card.appendChild(pastBadge);
     card.appendChild(info);
     pastEventsList.appendChild(card);
   });
