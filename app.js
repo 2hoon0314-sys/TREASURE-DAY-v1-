@@ -382,7 +382,7 @@ const homePage = document.querySelector("main");
 const planPage = document.getElementById("plan-page");
 const memoryPage = document.getElementById("memory-page");
 const settingsPage = document.getElementById("settings-page");
-
+const pastEventsPage = document.getElementById("past-events-page");
 function showPage(pageName) {
 
   if (homePage) {
@@ -404,7 +404,10 @@ function showPage(pageName) {
     settingsPage.style.display =
       pageName === "settings" ? "block" : "none";
   }
-
+if (pastEventsPage) {
+  pastEventsPage.style.display =
+    pageName === "past-events" ? "block" : "none";
+}
   if (homeTab) {
     homeTab.classList.toggle(
       "active",
@@ -458,8 +461,67 @@ if (settingsTab) {
     showPage("settings");
   });
 }
+const pastEventsBtn = document.getElementById("past-events-btn");
 
+if (pastEventsBtn) {
+  pastEventsBtn.addEventListener("click", () => {
+    tdRenderPastEvents();
+    showPage("past-events");
+    window.scrollTo(0, 0);
+  });
+}
+const backToPlanBtn = document.getElementById("back-to-plan-btn");
 
+if (backToPlanBtn) {
+  backToPlanBtn.addEventListener("click", () => {
+    showPage("plan");
+    window.scrollTo(0, 0);
+  });
+}
+function tdRenderPastEvents() {
+  const pastEventsList = document.getElementById("past-events-list");
+  if (!pastEventsList) return;
+
+  pastEventsList.innerHTML = "";
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const pastEvents = tdPlanEvents
+    .filter((event) => {
+      const eventDate = new Date(event.date + "T00:00:00");
+      return eventDate < today;
+    })
+    .sort((a, b) => new Date(b.date) - new Date(a.date));
+
+  if (pastEvents.length === 0) {
+    pastEventsList.innerHTML = "<p>まだ過去のイベントはありません💎</p>";
+    return;
+  }
+
+  pastEvents.forEach((event) => {
+    const card = document.createElement("div");
+    card.className = "plan-item";
+
+    const info = document.createElement("div");
+
+    const title = document.createElement("h3");
+    title.textContent = event.name;
+
+    const place = document.createElement("p");
+    place.textContent = "📍 " + event.place;
+
+    const date = document.createElement("p");
+    date.textContent = "📅 " + event.date.replaceAll("-", ".");
+
+    info.appendChild(title);
+    info.appendChild(place);
+    info.appendChild(date);
+
+    card.appendChild(info);
+    pastEventsList.appendChild(card);
+  });
+}
 // ========================================
 // 📝 MEMORY
 // ========================================
