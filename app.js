@@ -1810,7 +1810,35 @@ function renderEventMemoryList() {
 card.addEventListener("click", () => {
 
   currentEventMemory = event;
+const eventMemoryData = JSON.parse(
+  localStorage.getItem("treasure-event-memories") || "{}"
+);
 
+const eventKey =
+  `${event.date}_${event.name}_${event.place}`;
+
+const savedMemory =
+  eventMemoryData[eventKey] || {};
+
+if (eventMemoryVisual) {
+  eventMemoryVisual.value =
+    savedMemory.visual || "";
+}
+
+if (eventMemoryStage) {
+  eventMemoryStage.value =
+    savedMemory.stage || "";
+}
+
+if (eventMemoryMoment) {
+  eventMemoryMoment.value =
+    savedMemory.moment || "";
+}
+
+if (eventMemoryThoughts) {
+  eventMemoryThoughts.value =
+    savedMemory.thoughts || "";
+}
   if (eventMemoryDetailDate) {
     eventMemoryDetailDate.textContent =
       (event.date || "").replaceAll("-", ".");
