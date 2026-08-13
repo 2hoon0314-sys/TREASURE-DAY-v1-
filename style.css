@@ -3080,3 +3080,170 @@ body {
 .photo-memory-grid .memory-card:active {
   transform: scale(0.96);
 }
+/* ========================================
+   📸 PHOTO MEMORY DETAIL PAGE
+======================================== */
+
+#photo-memory-detail-page {
+  min-height: 100vh;
+  padding: 28px 18px 150px;
+  box-sizing: border-box;
+
+  background:
+    radial-gradient(circle, rgba(255,255,255,0.95) 5px, transparent 6px)
+    0 0 / 44px 44px,
+    #dcecff;
+}
+
+
+/* 全体カード */
+.photo-memory-detail {
+  width: 100%;
+  max-width: 620px;
+  margin: 0 auto;
+
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 34px;
+
+  padding: 24px 20px 28px;
+  box-sizing: border-box;
+
+  box-shadow:
+    0 14px 35px rgba(112, 145, 195, 0.16);
+}
+
+
+/* ← 戻る */
+.photo-memory-detail-back {
+  border: none;
+  background: #edf4ff;
+
+  color: #7894c2;
+  font-weight: 800;
+  font-size: 14px;
+
+  padding: 12px 18px;
+  margin-bottom: 22px;
+
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+
+/* メイン写真 */
+.photo-memory-detail-image {
+  width: 100%;
+  max-height: 65vh;
+
+  object-fit: contain;
+  display: block;
+
+  background: #f3f7ff;
+
+  border-radius: 26px;
+
+  box-shadow:
+    0 10px 26px rgba(100, 125, 170, 0.12);
+}
+
+
+/* タイトル */
+#photo-memory-detail-title {
+  margin: 22px 4px 8px;
+
+  font-size: 25px;
+  line-height: 1.35;
+  font-weight: 900;
+
+  color: #18233b;
+}
+
+
+/* キャプション */
+#photo-memory-detail-text {
+  margin: 0 4px 22px;
+
+  white-space: pre-wrap;
+
+  font-size: 16px;
+  line-height: 1.8;
+
+  color: #59677d;
+}
+
+
+/* アクションボタンエリア */
+.photo-memory-detail-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr 54px 54px;
+  gap: 9px;
+
+  margin-top: 22px;
+}
+
+
+/* ボタン共通 */
+.photo-memory-detail-actions button {
+  min-height: 52px;
+
+  border: none;
+  border-radius: 18px;
+
+  background: #edf4ff;
+  color: #7894c2;
+
+  font-size: 14px;
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+
+/* タップ時 */
+.photo-memory-detail-actions button:active,
+.photo-memory-detail-back:active {
+  transform: scale(0.96);
+}
+
+
+/* 編集だけ少し目立たせる */
+#photo-memory-detail-edit {
+  background: #7fa6e5;
+  color: white;
+}
+
+
+/* 削除 */
+#photo-memory-detail-delete {
+  background: #f5f7fb;
+  color: #8a94a8;
+}
+
+
+/* スマホ */
+@media (max-width: 480px) {
+
+  #photo-memory-detail-page {
+    padding:
+      22px 14px
+      calc(150px + env(safe-area-inset-bottom));
+  }
+
+  .photo-memory-detail {
+    padding: 18px 16px 24px;
+    border-radius: 28px;
+  }
+
+  .photo-memory-detail-image {
+    border-radius: 22px;
+  }
+
+  #photo-memory-detail-title {
+    font-size: 23px;
+  }
+
+  .photo-memory-detail-actions {
+    grid-template-columns:
+      1fr 1fr 48px 48px;
+  }
+}
