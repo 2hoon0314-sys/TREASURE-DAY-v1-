@@ -2081,3 +2081,56 @@ body.light-mode .plan-item button {
   line-height: 1;
   margin-bottom: 2px;
 }
+/* 💎 NAV アイコンを大きく */
+.bottom-nav .nav-btn span {
+  font-size: 24px;
+  line-height: 1;
+  display: block;
+}
+
+/* 💎 NAV 文字 */
+.bottom-nav .nav-btn small {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+}
+/* 💎 NAV タップアニメーション */
+.bottom-nav .nav-btn {
+  transition:
+    transform 0.15s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.bottom-nav .nav-btn:active {
+  transform: scale(0.94);
+}
+/* 💎 選択中タブのダイヤ */
+.bottom-nav .nav-btn {
+  position: relative;
+}
+
+.bottom-nav .nav-btn.active::after {
+  content: "💎";
+  position: absolute;
+  top: 6px;
+  right: 8px;
+
+  font-size: 12px;
+  line-height: 1;
+}
+/* 💎 BOTTOM NAV 最終調整 */
+.bottom-nav {
+  bottom: 18px;
+  padding: 8px;
+}
+
+.bottom-nav .nav-btn {
+  min-height: 72px;
+  padding: 8px 3px;
+}
+
+/* ナビに本文が隠れないようにする */
+body {
+  padding-bottom: 110px;
+}
