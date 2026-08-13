@@ -474,6 +474,14 @@ if (notificationSetting) {
     window.scrollTo(0, 0);
   });
 }
+const backToSettingsBtn = document.getElementById("back-to-settings-btn");
+
+if (backToSettingsBtn) {
+  backToSettingsBtn.addEventListener("click", () => {
+    showPage("settings");
+    window.scrollTo(0, 0);
+  });
+}
 const pastEventsBtn = document.getElementById("past-events-btn");
 
 if (pastEventsBtn) {
