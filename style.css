@@ -2802,3 +2802,34 @@ body {
 .event-memory-photo-input {
   display: none;
 }
+.event-memory-photo-item {
+    position: relative;
+    width: 100%;
+    margin-bottom: 14px;
+}
+
+.event-memory-photo-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 24px;
+}
+
+.event-memory-photo-delete {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 34px;
+    height: 34px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    color: #7894c7;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 34px;
+    text-align: center;
+    padding: 0;
+    cursor: pointer;
+    z-index: 2;
+}
