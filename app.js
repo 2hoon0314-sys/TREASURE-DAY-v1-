@@ -1819,7 +1819,18 @@ const eventKey =
 
 const savedMemory =
   eventMemoryData[eventKey] || {};
+if (eventMemoryPhotoPreview) {
+  eventMemoryPhotoPreview.innerHTML = "";
 
+  const savedPhotos = savedMemory.photos || [];
+
+  savedPhotos.forEach((photoSrc) => {
+    const img = document.createElement("img");
+    img.src = photoSrc;
+    img.alt = "EVENT MEMORY";
+    eventMemoryPhotoPreview.appendChild(img);
+  });
+}
 if (eventMemoryVisual) {
   eventMemoryVisual.value =
     savedMemory.visual || "";
@@ -1954,7 +1965,9 @@ if (backToEventMemoryBtn) {
 
 if (saveEventMemoryBtn) {
   saveEventMemoryBtn.addEventListener("click", () => {
-
+const eventMemoryPhotos = Array.from(
+  eventMemoryPhotoPreview.querySelectorAll("img")
+).map(img => img.src);
     if (!currentEventMemory) return;
 
     const eventMemoryData = JSON.parse(
@@ -1968,7 +1981,8 @@ if (saveEventMemoryBtn) {
       visual: eventMemoryVisual ? eventMemoryVisual.value : "",
       stage: eventMemoryStage ? eventMemoryStage.value : "",
       moment: eventMemoryMoment ? eventMemoryMoment.value : "",
-      thoughts: eventMemoryThoughts ? eventMemoryThoughts.value : ""
+      thoughts: eventMemoryThoughts ? eventMemoryThoughts.value : "",
+photos: eventMemoryPhotos
     };
 
     localStorage.setItem(
