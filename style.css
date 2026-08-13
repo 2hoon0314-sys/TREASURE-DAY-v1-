@@ -1463,3 +1463,28 @@ body.light-mode .plan-item button {
 
   box-shadow: 0 12px 30px rgba(90, 130, 180, 0.08);
 }
+/* 📚 過去イベントボタン */
+#past-events-btn {
+  width: 100%;
+  margin-top: 22px;
+  padding: 16px 20px;
+
+  border: none;
+  border-radius: 22px;
+
+  background: #eef5ff;
+  color: #5f7fa8;
+
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+
+  box-shadow: 0 6px 18px rgba(90, 130, 180, 0.10);
+
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#past-events-btn:active {
+  transform: scale(0.98);
+}
