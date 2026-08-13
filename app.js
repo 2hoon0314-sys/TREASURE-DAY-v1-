@@ -806,7 +806,7 @@ if (photoMemoryDetailUp) {
     openPhotoMemoryDetail(currentPhotoMemoryIndex);
   });
 }
-// ⬇️ PHOTO MEMORY を1つ下へ
+// ⬇️ PHOTO MEMORY を次の写真の下へ
 const photoMemoryDetailDown =
   document.getElementById("photo-memory-detail-down");
 
@@ -816,13 +816,23 @@ if (photoMemoryDetailDown) {
 
     const index = currentPhotoMemoryIndex;
 
-    // 一番下なら何もしない
-    if (index >= memories.length - 1) return;
+    // 今より下にある「写真付きMEMORY」を探す
+    let nextPhotoIndex = -1;
 
-    [memories[index], memories[index + 1]] =
-      [memories[index + 1], memories[index]];
+    for (let i = index + 1; i < memories.length; i++) {
+      if (memories[i].photoKey || memories[i].photo) {
+        nextPhotoIndex = i;
+        break;
+      }
+    }
 
-    currentPhotoMemoryIndex = index + 1;
+    // 下に写真がなければ何もしない
+    if (nextPhotoIndex === -1) return;
+
+    [memories[index], memories[nextPhotoIndex]] =
+      [memories[nextPhotoIndex], memories[index]];
+
+    currentPhotoMemoryIndex = nextPhotoIndex;
 
     localStorage.setItem(
       "treasure-memories",
