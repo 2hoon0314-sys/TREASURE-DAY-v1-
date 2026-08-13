@@ -1715,3 +1715,23 @@ body.light-mode .plan-item button {
 
   object-fit: cover;
 }
+/* MEMORY 操作ボタン */
+#memory-list button {
+  border: none;
+  background: #eef5ff;
+  color: #6f8fb8;
+
+  padding: 8px 12px;
+  margin: 10px 6px 0 0;
+
+  border-radius: 999px;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+#memory-list button:active {
+  transform: scale(0.96);
+}
