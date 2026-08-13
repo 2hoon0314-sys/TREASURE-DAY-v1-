@@ -2145,13 +2145,4 @@ body {
 .bottom-nav {
   bottom: calc(18px + env(safe-area-inset-bottom));
 }
-/* 💎 メイン画面をBOTTOM NAVの上に収める */
-#home-page,
-#plan-page,
-#memory-page,
-#settings-page,
-#past-events-page {
-  box-sizing: border-box;
-  min-height: calc(100vh - 120px);
-  padding-bottom: 180px !important;
-}
+
