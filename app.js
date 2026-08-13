@@ -1864,6 +1864,21 @@ const backToEventMemoryBtn =
   document.getElementById("back-to-event-memory-btn");
 
 let currentEventMemory = null;
+// EVENT MEMORY 入力欄
+const eventMemoryVisual =
+  document.getElementById("event-memory-visual");
+
+const eventMemoryStage =
+  document.getElementById("event-memory-stage");
+
+const eventMemoryMoment =
+  document.getElementById("event-memory-moment");
+
+const eventMemoryThoughts =
+  document.getElementById("event-memory-thoughts");
+
+const saveEventMemoryBtn =
+  document.getElementById("save-event-memory-btn");
 if (backToEventMemoryBtn) {
   backToEventMemoryBtn.addEventListener("click", () => {
 
