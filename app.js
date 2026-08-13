@@ -1222,27 +1222,3 @@ if (e.target === deleteBtn || e.target === editBtn) return;
   tdRenderPlanEvents();
   tdUpdateNextEvent();
 })();
-// ========================================
-// 📚 PAST EVENTS ページ切り替え
-// ========================================
-
-const pastEventsBtn = document.getElementById("past-events-btn");
-const backToPlanBtn = document.getElementById("back-to-plan-btn");
-const pastEventsPage = document.getElementById("past-events-page");
-const planPage = document.getElementById("plan-page");
-
-if (pastEventsBtn && pastEventsPage && planPage) {
-  pastEventsBtn.addEventListener("click", () => {
-    planPage.style.display = "none";
-    pastEventsPage.style.display = "block";
-    window.scrollTo(0, 0);
-  });
-}
-
-if (backToPlanBtn && pastEventsPage && planPage) {
-  backToPlanBtn.addEventListener("click", () => {
-    pastEventsPage.style.display = "none";
-    planPage.style.display = "block";
-    window.scrollTo(0, 0);
-  });
-}
