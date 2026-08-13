@@ -2833,3 +2833,41 @@ body {
     cursor: pointer;
     z-index: 2;
 }
+/* ============================= */
+/* 💎 EVENT MEMORY SAVED TOAST */
+/* ============================= */
+
+#event-memory-saved-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 110px;
+  transform: translate(-50%, 20px);
+
+  padding: 12px 22px;
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.95);
+  color: #7894c7;
+
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 1px;
+
+  box-shadow: 0 8px 24px rgba(120, 148, 199, 0.22);
+
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease,
+    visibility 0.3s ease;
+
+  z-index: 9999;
+  pointer-events: none;
+}
+
+#event-memory-saved-toast.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+}
