@@ -1510,11 +1510,17 @@ const eventMemoryTab =
 const treasureDiaryTab =
   document.getElementById("treasure-diary-tab");
 
+const photoMemoryTab =
+  document.getElementById("photo-memory-tab");
+
 const eventMemoryArea =
   document.getElementById("event-memory-area");
 
 const treasureDiaryArea =
   document.getElementById("treasure-diary-area");
+
+const photoMemoryArea =
+  document.getElementById("photo-memory-area");
 
 
 function switchMemoryMode(mode) {
@@ -1522,28 +1528,42 @@ function switchMemoryMode(mode) {
   if (
     !eventMemoryTab ||
     !treasureDiaryTab ||
+    !photoMemoryTab ||
     !eventMemoryArea ||
-    !treasureDiaryArea
+    !treasureDiaryArea ||
+    !photoMemoryArea
   ) {
     return;
   }
 
   const isEvent = mode === "event";
+  const isDiary = mode === "diary";
+  const isPhoto = mode === "photo";
 
   eventMemoryTab.classList.toggle("active", isEvent);
-  treasureDiaryTab.classList.toggle("active", !isEvent);
+  treasureDiaryTab.classList.toggle("active", isDiary);
+  photoMemoryTab.classList.toggle("active", isPhoto);
 
   eventMemoryArea.classList.toggle("active", isEvent);
-  treasureDiaryArea.classList.toggle("active", !isEvent);
+  treasureDiaryArea.classList.toggle("active", isDiary);
+  photoMemoryArea.classList.toggle("active", isPhoto);
+
+  // PHOTO MEMORYには今style="display:none;"があるのでここで切替
+  photoMemoryArea.style.display =
+    isPhoto ? "block" : "none";
 
   localStorage.setItem(
     "treasure-memory-mode",
-    isEvent ? "event" : "diary"
+    mode
   );
 }
 
 
-if (eventMemoryTab && treasureDiaryTab) {
+if (
+  eventMemoryTab &&
+  treasureDiaryTab &&
+  photoMemoryTab
+) {
 
   eventMemoryTab.addEventListener("click", () => {
     switchMemoryMode("event");
@@ -1553,10 +1573,14 @@ if (eventMemoryTab && treasureDiaryTab) {
     switchMemoryMode("diary");
   });
 
-  const savedMemoryMode =
-    localStorage.getItem("treasure-memory-mode") || "event";
+  photoMemoryTab.addEventListener("click", () => {
+    switchMemoryMode("photo");
+  });
 
-  switchMemoryMode(savedMemoryMode);
+  const savedMemoryMode =
+    localStorage.getItem("treasure-memory-mode");
+
+  switchMemoryMode(savedMemoryMode || "event");
 }
 // ========================================
 // 💎 TREASURE DIARY
