@@ -1546,3 +1546,15 @@ body.light-mode .plan-item button {
   font-weight: 800;
   letter-spacing: 1px;
 }
+#past-events-page .plan-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+#past-events-page .past-badge {
+  margin-bottom: 18px;
+}
+
+#past-events-page .plan-item > div:not(.past-badge) {
+  width: 100%;
+}
