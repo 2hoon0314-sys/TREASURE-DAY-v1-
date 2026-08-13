@@ -383,6 +383,7 @@ const planPage = document.getElementById("plan-page");
 const memoryPage = document.getElementById("memory-page");
 const settingsPage = document.getElementById("settings-page");
 const pastEventsPage = document.getElementById("past-events-page");
+const notificationPage = document.getElementById("notification-page");
 function showPage(pageName) {
 
   if (homePage) {
@@ -407,6 +408,10 @@ function showPage(pageName) {
 if (pastEventsPage) {
   pastEventsPage.style.display =
     pageName === "past-events" ? "block" : "none";
+}
+  if (notificationPage) {
+  notificationPage.style.display =
+    pageName === "notifications" ? "block" : "none";
 }
   if (homeTab) {
     homeTab.classList.toggle(
@@ -459,6 +464,14 @@ if (memoryTab) {
 if (settingsTab) {
   settingsTab.addEventListener("click", () => {
     showPage("settings");
+  });
+}
+const notificationSetting = document.getElementById("notification-setting");
+
+if (notificationSetting) {
+  notificationSetting.addEventListener("click", () => {
+    showPage("notifications");
+    window.scrollTo(0, 0);
   });
 }
 const pastEventsBtn = document.getElementById("past-events-btn");
