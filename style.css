@@ -1444,3 +1444,22 @@ body.light-mode .plan-item button {
 #plan-page #plan-list .plan-item.past-event * {
   color: #8d99aa;
 }
+/* 📚 PAST EVENTS PAGE */
+#past-events-page {
+  min-height: 100vh;
+  padding: 28px 18px 120px;
+  background:
+    radial-gradient(circle, rgba(255,255,255,0.95) 3px, transparent 4px) 0 0 / 44px 44px,
+    #dfeeff;
+}
+
+#past-events-page .card {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 28px 22px 34px;
+
+  background: rgba(255,255,255,0.96);
+  border-radius: 28px;
+
+  box-shadow: 0 12px 30px rgba(90, 130, 180, 0.08);
+}
