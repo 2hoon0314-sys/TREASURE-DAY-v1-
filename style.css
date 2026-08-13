@@ -2531,3 +2531,24 @@ body {
 .diary-favorite-btn:not(:empty) {
   font-weight: 800;
 }
+/* ========================================
+   ✏️ TREASURE DIARY EDIT BUTTON
+======================================== */
+
+.diary-edit-btn {
+  padding: 7px 13px;
+  border: none;
+  border-radius: 999px;
+
+  background: #eef4ff;
+  color: #7897c2;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.diary-edit-btn:active {
+  transform: scale(0.95);
+}
