@@ -1824,12 +1824,28 @@ if (eventMemoryPhotoPreview) {
 
   const savedPhotos = await loadEventPhotos(eventKey);
 
-  savedPhotos.forEach((photoSrc) => {
-    const img = document.createElement("img");
-    img.src = photoSrc;
-    img.alt = "EVENT MEMORY";
-    eventMemoryPhotoPreview.appendChild(img);
+savedPhotos.forEach((photoSrc) => {
+  const photoItem = document.createElement("div");
+  photoItem.className = "event-memory-photo-item";
+
+  const img = document.createElement("img");
+  img.src = photoSrc;
+  img.alt = "EVENT MEMORY";
+
+  const deleteBtn = document.createElement("button");
+  deleteBtn.type = "button";
+  deleteBtn.className = "event-memory-photo-delete";
+  deleteBtn.textContent = "×";
+
+  deleteBtn.addEventListener("click", () => {
+    photoItem.remove();
   });
+
+  photoItem.appendChild(img);
+  photoItem.appendChild(deleteBtn);
+
+  eventMemoryPhotoPreview.appendChild(photoItem);
+});  
 }
 if (eventMemoryVisual) {
   eventMemoryVisual.value =
