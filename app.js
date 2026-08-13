@@ -1558,3 +1558,111 @@ if (eventMemoryTab && treasureDiaryTab) {
 
   switchMemoryMode(savedMemoryMode);
 }
+// ========================================
+// 💎 TREASURE DIARY
+// ========================================
+
+const diaryText = document.getElementById("diary-text");
+const saveDiaryBtn = document.getElementById("save-diary");
+const diaryList = document.getElementById("diary-list");
+
+let diaryPosts = [];
+
+try {
+  diaryPosts =
+    JSON.parse(
+      localStorage.getItem("treasure-diary") || "[]"
+    );
+} catch (e) {
+  diaryPosts = [];
+}
+
+
+function renderDiaryPosts() {
+
+  if (!diaryList) return;
+
+  diaryList.innerHTML = "";
+
+  diaryPosts.forEach((post, index) => {
+
+    const card = document.createElement("div");
+    card.className = "diary-post";
+
+    const date = document.createElement("div");
+    date.className = "diary-post-date";
+    date.textContent = post.date;
+
+    const text = document.createElement("p");
+    text.className = "diary-post-text";
+    text.textContent = post.text;
+
+    const actions = document.createElement("div");
+    actions.className = "diary-post-actions";
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.type = "button";
+    deleteBtn.textContent = "削除";
+
+    deleteBtn.addEventListener("click", () => {
+
+      diaryPosts.splice(index, 1);
+
+      localStorage.setItem(
+        "treasure-diary",
+        JSON.stringify(diaryPosts)
+      );
+
+      renderDiaryPosts();
+    });
+
+    actions.appendChild(deleteBtn);
+
+    card.appendChild(date);
+    card.appendChild(text);
+    card.appendChild(actions);
+
+    diaryList.appendChild(card);
+  });
+}
+
+
+if (saveDiaryBtn && diaryText) {
+
+  saveDiaryBtn.addEventListener("click", () => {
+
+    const text = diaryText.value.trim();
+
+    if (!text) return;
+
+    const now = new Date();
+
+    const dateText =
+      now.getFullYear() +
+      "." +
+      String(now.getMonth() + 1).padStart(2, "0") +
+      "." +
+      String(now.getDate()).padStart(2, "0") +
+      " " +
+      String(now.getHours()).padStart(2, "0") +
+      ":" +
+      String(now.getMinutes()).padStart(2, "0");
+
+    diaryPosts.unshift({
+      text: text,
+      date: dateText
+    });
+
+    localStorage.setItem(
+      "treasure-diary",
+      JSON.stringify(diaryPosts)
+    );
+
+    diaryText.value = "";
+
+    renderDiaryPosts();
+  });
+}
+
+
+renderDiaryPosts();
