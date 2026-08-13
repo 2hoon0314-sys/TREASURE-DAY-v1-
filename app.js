@@ -730,7 +730,7 @@ if (changePhoto) {
 
     card.appendChild(title);
     card.appendChild(text);
-    if (memory.photo) {
+if (memory.photoKey || memory.photo) {
   card.appendChild(photo);
 }
     card.appendChild(actions);
