@@ -1529,3 +1529,20 @@ body.light-mode .plan-item button {
 #back-to-plan-btn:active {
   transform: scale(0.97);
 }
+/* 💎 PAST badge */
+.past-badge {
+  display: inline-block;
+  width: fit-content;
+
+  background: #e7f1ff;
+  color: #6f8fb8;
+
+  padding: 6px 12px;
+  margin-bottom: 14px;
+
+  border-radius: 999px;
+
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
