@@ -1807,9 +1807,77 @@ function renderEventMemoryList() {
     card.appendChild(name);
     card.appendChild(place);
     card.appendChild(arrow);
+card.addEventListener("click", () => {
 
+  currentEventMemory = event;
+
+  if (eventMemoryDetailDate) {
+    eventMemoryDetailDate.textContent =
+      (event.date || "").replaceAll("-", ".");
+  }
+
+  if (eventMemoryDetailName) {
+    eventMemoryDetailName.textContent =
+      event.name || "TREASURE EVENT 💎";
+  }
+
+  if (eventMemoryDetailPlace) {
+    eventMemoryDetailPlace.textContent =
+      event.place ? `📍 ${event.place}` : "";
+  }
+
+  const memoryPage =
+    document.getElementById("memory-page");
+
+  if (memoryPage) {
+    memoryPage.style.display = "none";
+  }
+
+  if (eventMemoryDetailPage) {
+    eventMemoryDetailPage.style.display = "block";
+  }
+
+  window.scrollTo(0, 0);
+});
     eventMemoryList.appendChild(card);
   });
 }
 
 renderEventMemoryList();
+// ========================================
+// 🎤 EVENT MEMORY DETAIL OPEN
+// ========================================
+
+const eventMemoryDetailPage =
+  document.getElementById("event-memory-detail-page");
+
+const eventMemoryDetailDate =
+  document.getElementById("event-memory-detail-date");
+
+const eventMemoryDetailName =
+  document.getElementById("event-memory-detail-name");
+
+const eventMemoryDetailPlace =
+  document.getElementById("event-memory-detail-place");
+
+const backToEventMemoryBtn =
+  document.getElementById("back-to-event-memory-btn");
+
+let currentEventMemory = null;
+if (backToEventMemoryBtn) {
+  backToEventMemoryBtn.addEventListener("click", () => {
+
+    if (eventMemoryDetailPage) {
+      eventMemoryDetailPage.style.display = "none";
+    }
+
+    const memoryPage =
+      document.getElementById("memory-page");
+
+    if (memoryPage) {
+      memoryPage.style.display = "block";
+    }
+
+    window.scrollTo(0, 0);
+  });
+}
