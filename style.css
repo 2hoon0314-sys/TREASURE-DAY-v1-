@@ -2139,5 +2139,9 @@ body {
 #memory-page,
 #settings-page,
 #past-events-page {
-  padding-bottom: 150px !important;
+  padding-bottom: 220px !important;
+}
+/* 💎 BOTTOM NAV 位置の微調整 */
+.bottom-nav {
+  bottom: calc(18px + env(safe-area-inset-bottom));
 }
