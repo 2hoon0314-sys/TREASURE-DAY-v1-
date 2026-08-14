@@ -644,7 +644,7 @@ if (photoMemoryTags) {
   // PHOTO MEMORYモードへ
   switchMemoryMode("photo");
 
-  // タグで絞り込んで再表示
+
 
 
   window.scrollTo(0, 0);
