@@ -3423,3 +3423,35 @@ body {
 
   cursor: pointer;
 }
+/* ========================================
+   🎧 PHOTO MEMORY SONG
+======================================== */
+
+.photo-memory-song-card {
+  margin: 18px 0 22px;
+  padding: 16px 18px;
+
+  border: 1.5px solid #c7ddff;
+  border-radius: 20px;
+
+  background: #f5f9ff;
+
+  box-shadow:
+    0 5px 14px rgba(113, 151, 208, 0.08);
+}
+
+.photo-memory-song-label {
+  margin-bottom: 7px;
+
+  color: #7b9dcc;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+#photo-memory-song-title {
+  color: #17233d;
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.4;
+}
