@@ -636,7 +636,7 @@ async function openPhotoMemoryDetail(index) {
   if (detailPage) {
     detailPage.style.display = "block";
   }
-
+renderPhotoMemoryComments();
   window.scrollTo(0, 0);
 }
 
@@ -853,6 +853,88 @@ if (photoMemoryDetailDown) {
 
     renderMemories();
     openPhotoMemoryDetail(currentPhotoMemoryIndex);
+  });
+}
+// ========================================
+// 💬 PHOTO MEMORY 追記コメント
+// ========================================
+
+const photoMemoryCommentAdd =
+  document.getElementById("photo-memory-comment-add");
+
+const photoMemoryCommentsList =
+  document.getElementById("photo-memory-comments-list");
+
+function renderPhotoMemoryComments() {
+  if (!photoMemoryCommentsList) return;
+
+  photoMemoryCommentsList.innerHTML = "";
+
+  if (currentPhotoMemoryIndex === null) return;
+
+  const memory = memories[currentPhotoMemoryIndex];
+  if (!memory) return;
+
+  const comments = memory.comments || [];
+
+  comments.forEach((comment) => {
+    const item = document.createElement("div");
+    item.className = "photo-memory-comment-item";
+
+    const text = document.createElement("p");
+    text.textContent = comment.text || "";
+
+    const date = document.createElement("span");
+    date.textContent = comment.date || "";
+
+    item.appendChild(text);
+    item.appendChild(date);
+
+    photoMemoryCommentsList.appendChild(item);
+  });
+}
+
+if (photoMemoryCommentAdd) {
+  photoMemoryCommentAdd.addEventListener("click", () => {
+    if (currentPhotoMemoryIndex === null) return;
+
+    const memory = memories[currentPhotoMemoryIndex];
+    if (!memory) return;
+
+    const newComment = prompt(
+      "この思い出に感想を追加💎"
+    );
+
+    if (!newComment || !newComment.trim()) return;
+
+    if (!Array.isArray(memory.comments)) {
+      memory.comments = [];
+    }
+
+    const now = new Date();
+
+    const dateText =
+      now.getFullYear() +
+      "." +
+      String(now.getMonth() + 1).padStart(2, "0") +
+      "." +
+      String(now.getDate()).padStart(2, "0") +
+      " " +
+      String(now.getHours()).padStart(2, "0") +
+      ":" +
+      String(now.getMinutes()).padStart(2, "0");
+
+    memory.comments.push({
+      text: newComment.trim(),
+      date: dateText
+    });
+
+    localStorage.setItem(
+      "treasure-memories",
+      JSON.stringify(memories)
+    );
+
+    renderPhotoMemoryComments();
   });
 }
 async function renderMemories() {
