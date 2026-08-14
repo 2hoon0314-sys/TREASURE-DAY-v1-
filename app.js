@@ -622,7 +622,9 @@ if (photoMemoryTags) {
     tagButton.type = "button";
     tagButton.className = "photo-memory-tag";
     tagButton.textContent = `#${tag}`;
-
+tagButton.addEventListener("click", () => {
+  alert(`#${tag} のPHOTO MEMORYを表示する機能をこれからつなぐよ💎`);
+});
     photoMemoryTags.appendChild(tagButton);
   });
 }
