@@ -645,7 +645,7 @@ if (photoMemoryTags) {
   switchMemoryMode("photo");
 
   // タグで絞り込んで再表示
-  renderMemories();
+
 
   window.scrollTo(0, 0);
 });
