@@ -610,7 +610,22 @@ async function openPhotoMemoryDetail(index) {
     detailText.textContent =
       memory.text || "";
   }
+// 🏷️ ハッシュタグ表示
+if (photoMemoryTags) {
+  photoMemoryTags.innerHTML = "";
 
+  const tags = memory.tags || [];
+
+  tags.forEach((tag) => {
+    const tagButton = document.createElement("button");
+
+    tagButton.type = "button";
+    tagButton.className = "photo-memory-tag";
+    tagButton.textContent = `#${tag}`;
+
+    photoMemoryTags.appendChild(tagButton);
+  });
+}
   // 写真
   if (detailImage) {
     let photoSrc = "";
@@ -696,7 +711,18 @@ if (photoMemoryDetailEdit) {
     );
 
     if (newText === null) return;
+const newTags = prompt(
+  "ハッシュタグを編集（スペース区切り）",
+  (memory.tags || []).join(" ")
+);
 
+if (newTags === null) return;
+
+memory.tags = newTags
+  .trim()
+  .split(/\s+/)
+  .filter(Boolean)
+  .map(tag => tag.replace(/^#/, ""));
     memory.title =
       newTitle.trim() || "PHOTO MEMORY 💎";
 
