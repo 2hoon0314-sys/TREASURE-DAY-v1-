@@ -670,6 +670,8 @@ if (photoMemoryDetailBackBtn) {
     }
   );
 }
+const photoMemoryTags =
+  document.getElementById("photo-memory-tags");
 // ✏️ PHOTO MEMORY 詳細ページから編集
 const photoMemoryDetailEdit =
   document.getElementById("photo-memory-detail-edit");
