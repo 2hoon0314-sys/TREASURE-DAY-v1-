@@ -3342,3 +3342,84 @@ body {
   font-size: 12px;
   font-weight: 600;
 }
+/* ========================================
+   🏷️ PHOTO MEMORY ハッシュタグ
+======================================== */
+
+.photo-memory-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  margin: 18px 0 22px;
+}
+
+/* 個別タグ */
+.photo-memory-tag {
+  padding: 8px 13px;
+
+  border: 1.5px solid #c7ddff;
+  border-radius: 999px;
+
+  background: #eef5ff;
+  color: #6f92c9;
+
+  font-size: 13px;
+  font-weight: 800;
+
+  box-shadow:
+    0 4px 10px rgba(113, 151, 208, 0.08);
+
+  cursor: pointer;
+}
+
+.photo-memory-tag:active {
+  transform: scale(0.96);
+}
+
+/* ========================================
+   🏷️ タグ絞り込み中
+======================================== */
+
+.photo-memory-filter {
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+
+  margin: 12px 0 18px;
+  padding: 11px 14px;
+
+  border: 1.5px solid #c7ddff;
+  border-radius: 18px;
+
+  background: #f3f8ff;
+
+  box-shadow:
+    0 5px 14px rgba(113, 151, 208, 0.08);
+}
+
+#photo-memory-filter-label {
+  color: #6f92c9;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+#photo-memory-filter-clear {
+  flex-shrink: 0;
+
+  padding: 7px 11px;
+
+  border: none;
+  border-radius: 999px;
+
+  background: #ffffff;
+  color: #8ba6cf;
+
+  font-size: 12px;
+  font-weight: 800;
+
+  box-shadow:
+    0 3px 8px rgba(113, 151, 208, 0.08);
+
+  cursor: pointer;
+}
