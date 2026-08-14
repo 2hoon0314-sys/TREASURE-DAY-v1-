@@ -1333,7 +1333,8 @@ saveMemoryBtn.addEventListener("click", async () => {
 
     const text =
       memoryText ? memoryText.value.trim() : "";
-
+const song =
+  memorySong ? memorySong.value.trim() : "";
     if (title === "" && text === "") {
       alert("思い出を書いてね💎");
       return;
@@ -1367,6 +1368,7 @@ if (
 memories.unshift({
   title: title || "TREASURE MEMORY 💎",
   text: text,
+  song: song,
   photoKey: photoKey
 });
 
@@ -1382,6 +1384,9 @@ memories.unshift({
     if (memoryText) {
       memoryText.value = "";
     }
+  if (memorySong) {
+  memorySong.value = "";
+}
 if (memoryPhoto) {
   memoryPhoto.value = "";
 }
