@@ -1018,6 +1018,25 @@ async function renderMemories() {
   if (!memoryList) return;
 
   memoryList.innerHTML = "";
+  const photoMemoryFilter =
+  document.getElementById("photo-memory-filter");
+
+const photoMemoryFilterLabel =
+  document.getElementById("photo-memory-filter-label");
+
+const photoMemoryFilterClear =
+  document.getElementById("photo-memory-filter-clear");
+
+if (photoMemoryFilter && photoMemoryFilterLabel) {
+  if (activePhotoMemoryTag) {
+    photoMemoryFilter.style.display = "flex";
+    photoMemoryFilterLabel.textContent =
+      `🏷️ #${activePhotoMemoryTag} のMEMORY`;
+  } else {
+    photoMemoryFilter.style.display = "none";
+    photoMemoryFilterLabel.textContent = "";
+  }
+}
 const memoryEntries = memories
   .map((memory, index) => [index, memory])
   .filter(([index, memory]) => {
@@ -1214,6 +1233,16 @@ function resizeMemoryPhoto(file) {
     };
 
     reader.readAsDataURL(file);
+  });
+}
+const photoMemoryFilterClearBtn =
+  document.getElementById("photo-memory-filter-clear");
+
+if (photoMemoryFilterClearBtn) {
+  photoMemoryFilterClearBtn.addEventListener("click", async () => {
+    activePhotoMemoryTag = null;
+    await renderMemories();
+    window.scrollTo(0, 0);
   });
 }
 // ========================================
