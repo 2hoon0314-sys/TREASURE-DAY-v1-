@@ -622,8 +622,27 @@ if (photoMemoryTags) {
     tagButton.type = "button";
     tagButton.className = "photo-memory-tag";
     tagButton.textContent = `#${tag}`;
-tagButton.addEventListener("click", () => {
-  alert(`#${tag} のPHOTO MEMORYを表示する機能をこれからつなぐよ💎`);
+tagButton.addEventListener("click", async () => {
+  activePhotoMemoryTag = tag;
+
+  const detailPage =
+    document.getElementById("photo-memory-detail-page");
+
+  const memoryPage =
+    document.getElementById("memory-page");
+
+  if (detailPage) {
+    detailPage.style.display = "none";
+  }
+
+  if (memoryPage) {
+    memoryPage.style.display = "block";
+  }
+
+  switchMemoryMode("photo");
+  await renderMemories();
+
+  window.scrollTo(0, 0);
 });
     photoMemoryTags.appendChild(tagButton);
   });
