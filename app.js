@@ -556,7 +556,8 @@ const memoryTitle =
 
 const memoryText =
   document.getElementById("memory-text");
-
+const memorySong =
+  document.getElementById("memory-song");
 const saveMemoryBtn =
   document.getElementById("save-memory");
 const memoryPhoto =
