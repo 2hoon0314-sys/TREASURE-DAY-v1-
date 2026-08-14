@@ -967,12 +967,20 @@ if (photoMemoryCommentAdd) {
     renderPhotoMemoryComments();
   });
 }
+let activePhotoMemoryTag = null;
 async function renderMemories() {
   if (!memoryList) return;
 
   memoryList.innerHTML = "";
+const memoryEntries = memories
+  .map((memory, index) => [index, memory])
+  .filter(([index, memory]) => {
+    if (!activePhotoMemoryTag) return true;
 
-  for (const [index, memory] of memories.entries()) {
+    const tags = memory.tags || [];
+    return tags.includes(activePhotoMemoryTag);
+  });
+for (const [index, memory] of memoryEntries) {
     const card = document.createElement("div");
     card.className = "memory-card";
 card.addEventListener("click", () => {
