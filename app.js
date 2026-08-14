@@ -611,6 +611,22 @@ async function openPhotoMemoryDetail(index) {
     detailText.textContent =
       memory.text || "";
   }
+  // 🎧 MEMORY SONG表示
+const songCard =
+  document.getElementById("photo-memory-song-card");
+
+const songTitle =
+  document.getElementById("photo-memory-song-title");
+
+if (songCard && songTitle) {
+  if (memory.song) {
+    songTitle.textContent = memory.song;
+    songCard.style.display = "block";
+  } else {
+    songTitle.textContent = "";
+    songCard.style.display = "none";
+  }
+}
 // 🏷️ ハッシュタグ表示
 if (photoMemoryTags) {
   photoMemoryTags.innerHTML = "";
