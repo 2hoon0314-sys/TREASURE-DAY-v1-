@@ -622,6 +622,33 @@ if (photoMemoryTags) {
     tagButton.type = "button";
     tagButton.className = "photo-memory-tag";
     tagButton.textContent = `#${tag}`;
+    tagButton.addEventListener("click", () => {
+  activePhotoMemoryTag = tag;
+
+  // 詳細ページを閉じる
+  const detailPage =
+    document.getElementById("photo-memory-detail-page");
+
+  if (detailPage) {
+    detailPage.style.display = "none";
+  }
+
+  // MEMORYページを表示
+  const memoryPage =
+    document.getElementById("memory-page");
+
+  if (memoryPage) {
+    memoryPage.style.display = "block";
+  }
+
+  // PHOTO MEMORYモードへ
+  switchMemoryMode("photo");
+
+  // タグで絞り込んで再表示
+  renderMemories();
+
+  window.scrollTo(0, 0);
+});
 tagButton.addEventListener("click", async () => {
   activePhotoMemoryTag = tag;
 
