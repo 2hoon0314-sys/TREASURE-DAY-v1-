@@ -3247,3 +3247,98 @@ body {
       1fr 1fr 48px 48px;
   }
 }
+/* ========================================
+   💬 PHOTO MEMORY 追記コメント
+======================================== */
+
+.photo-memory-comments {
+  margin-top: 26px;
+  padding-top: 18px;
+  border-top: 3px dotted #c9dcff;
+}
+
+/* 「みんなの感想（追記）」見出し */
+.photo-memory-comments::before {
+  content: "💭 みんなの感想（追記）";
+  display: block;
+  margin-bottom: 14px;
+
+  color: #7f9dcc;
+  font-size: 14px;
+  font-weight: 800;
+  text-align: center;
+  letter-spacing: 0.04em;
+}
+
+/* ＋ 感想を追加 */
+#photo-memory-comment-add {
+  width: 100%;
+  margin: 0 0 16px;
+  padding: 12px 16px;
+
+  border: 2px solid #a8c8f7;
+  border-radius: 999px;
+
+  background: #ffffff;
+  color: #78a2df;
+
+  font-size: 14px;
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+/* 追記一覧 */
+#photo-memory-comments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* 1件ずつの追記カード */
+.photo-memory-comment-item {
+  position: relative;
+
+  padding: 15px 16px 13px;
+  border: 2px solid #d9e8ff;
+  border-radius: 18px;
+
+  background: linear-gradient(
+    135deg,
+    #ffffff 0%,
+    #f4f8ff 100%
+  );
+
+  box-shadow:
+    0 6px 16px rgba(111, 151, 211, 0.08);
+}
+
+/* 左上のハート */
+.photo-memory-comment-item::before {
+  content: "♥";
+  position: absolute;
+  left: -8px;
+  top: -11px;
+
+  color: #bfd8ff;
+  font-size: 20px;
+}
+
+/* コメント本文 */
+.photo-memory-comment-item p {
+  margin: 0 0 8px;
+
+  color: #17233d;
+  font-size: 15px;
+  line-height: 1.65;
+  font-weight: 600;
+}
+
+/* 日時 */
+.photo-memory-comment-item span {
+  display: block;
+
+  color: #9aaac3;
+  font-size: 12px;
+  font-weight: 600;
+}
