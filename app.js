@@ -2558,7 +2558,10 @@ if (eventMemoryThoughts) {
     eventMemoryDetailName.textContent =
       event.name || "TREASURE EVENT 💎";
   }
-
+if (eventMemoryDetailSong) {
+  eventMemoryDetailSong.textContent =
+    savedMemory.song || "";
+}
   if (eventMemoryDetailPlace) {
     eventMemoryDetailPlace.textContent =
       event.place ? `📍 ${event.place}` : "";
