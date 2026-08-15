@@ -2545,6 +2545,10 @@ if (eventMemoryThoughts) {
   eventMemoryThoughts.value =
     savedMemory.thoughts || "";
 }
+  if (eventMemorySong) {
+  eventMemorySong.value =
+    savedMemory.song || "";
+}
   if (eventMemoryDetailDate) {
     eventMemoryDetailDate.textContent =
       (event.date || "").replaceAll("-", ".");
