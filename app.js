@@ -629,6 +629,29 @@ if (songCard && songTitle) {
     songCard.style.display = "none";
   }
 }
+  // 🔗 RELATED LINK表示
+const linkCard =
+  document.getElementById("photo-memory-link-card");
+
+const linkAnchor =
+  document.getElementById("photo-memory-link-anchor");
+
+if (linkCard && linkAnchor) {
+  if (memory.link) {
+    let url = memory.link.trim();
+
+    if (!/^https?:\/\//i.test(url)) {
+      url = "https://" + url;
+    }
+
+    linkAnchor.href = url;
+    linkAnchor.textContent = "🔗 LINKを開く";
+    linkCard.style.display = "block";
+  } else {
+    linkAnchor.removeAttribute("href");
+    linkCard.style.display = "none";
+  }
+}
 // 🏷️ ハッシュタグ表示
 if (photoMemoryTags) {
   photoMemoryTags.innerHTML = "";
