@@ -2683,7 +2683,9 @@ if (editEventMemoryBtn) {
     if (eventMemoryThoughts) {
       eventMemoryThoughts.value = savedMemory.thoughts || "";
     }
-
+if (eventMemorySong) {
+  eventMemorySong.value = savedMemory.song || "";
+}
     if (eventMemoryPhotoPreview) {
       eventMemoryPhotoPreview.innerHTML = "";
 
