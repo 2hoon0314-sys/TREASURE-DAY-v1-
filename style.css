@@ -3455,3 +3455,61 @@ body {
   font-weight: 800;
   line-height: 1.4;
 }
+/* ==============================
+   🎧 PHOTO MEMORY - MEMORY SONG
+============================== */
+
+.photo-memory-compose label[for="memory-song"] {
+  display: block;
+  margin: 28px 8px 10px;
+  color: #7d9bc9;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+/* 🎧 タイトルをちょっと可愛く */
+.photo-memory-compose label[for="memory-song"]::after {
+  content: "  ♫";
+  color: #a8c8f4;
+}
+
+/* 曲名入力欄 */
+#memory-song {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 58px;
+  padding: 0 22px;
+
+  border: 1.5px solid #d7e6fb;
+  border-radius: 24px;
+
+  background: linear-gradient(
+    135deg,
+    #f7fbff 0%,
+    #eef5ff 100%
+  );
+
+  color: #26344f;
+  font-size: 16px;
+  font-weight: 700;
+
+  box-shadow:
+    0 8px 22px rgba(123, 159, 214, 0.10),
+    inset 0 1px 0 rgba(255,255,255,0.9);
+}
+
+#memory-song::placeholder {
+  color: #a8b8cf;
+  font-weight: 600;
+}
+
+/* タップした時もかわいく */
+#memory-song:focus {
+  outline: none;
+  border-color: #9fc2f3;
+  background: #ffffff;
+  box-shadow:
+    0 0 0 4px rgba(159, 194, 243, 0.16),
+    0 8px 22px rgba(123, 159, 214, 0.12);
+}
