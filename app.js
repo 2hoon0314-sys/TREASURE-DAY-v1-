@@ -1353,7 +1353,9 @@ saveMemoryBtn.addEventListener("click", async () => {
       memoryText ? memoryText.value.trim() : "";
 const song =
   memorySong ? memorySong.value.trim() : "";
-    if (title === "" && text === "") {
+const link =
+  memoryLink ? memoryLink.value.trim() : ""; 
+  if (title === "" && text === "") {
       alert("思い出を書いてね💎");
       return;
     }
