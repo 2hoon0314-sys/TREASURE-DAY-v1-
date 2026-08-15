@@ -3549,3 +3549,41 @@ label[for="memory-song"] {
   border-color: #9fc3f4;
   background: #fff;
 }
+/* 🎧 PHOTO MEMORY SONG */
+.memory-song-label {
+  display: block;
+  margin: 26px 0 22px;
+  padding: 18px 20px;
+  border: 2px solid #d8e8ff;
+  border-radius: 26px;
+  background: linear-gradient(135deg, #f8fbff, #eef5ff);
+  color: #7695c5;
+  font-weight: 800;
+  box-shadow: 0 8px 22px rgba(126, 164, 220, 0.10);
+}
+
+.memory-song-input {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 10px;
+  padding: 14px 16px;
+
+  border: 0;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.85);
+
+  color: #243451;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.memory-song-input::placeholder {
+  color: #a5b6cf;
+  font-weight: 600;
+}
+
+.memory-song-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(151, 190, 242, 0.18);
+}
