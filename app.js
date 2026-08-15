@@ -1048,6 +1048,27 @@ editCommentBtn.addEventListener("click", () => {
 });
 
 item.appendChild(editCommentBtn);
+    // 🗑️ 感想を削除
+const deleteCommentBtn = document.createElement("button");
+deleteCommentBtn.type = "button";
+deleteCommentBtn.textContent = "削除";
+
+deleteCommentBtn.addEventListener("click", () => {
+  const ok = confirm("この感想を削除する？💎");
+
+  if (!ok) return;
+
+  memory.comments.splice(index, 1);
+
+  localStorage.setItem(
+    "treasure-memories",
+    JSON.stringify(memories)
+  );
+
+  renderPhotoMemoryComments();
+});
+
+item.appendChild(deleteCommentBtn);
     photoMemoryCommentsList.appendChild(item);
   });
 }
