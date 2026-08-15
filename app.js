@@ -1048,7 +1048,7 @@ editCommentBtn.addEventListener("click", () => {
   renderPhotoMemoryComments();
 });
 
-item.appendChild(editCommentBtn);
+
     // 🗑️ 感想を削除
 const deleteCommentBtn = document.createElement("button");
 deleteCommentBtn.type = "button";
@@ -1070,7 +1070,14 @@ deleteCommentBtn.addEventListener("click", () => {
   renderPhotoMemoryComments();
 });
 
-item.appendChild(deleteCommentBtn);
+// ✏️🗑️ 編集・削除ボタンをまとめる
+const commentActions = document.createElement("div");
+commentActions.className = "photo-memory-comment-actions";
+
+commentActions.appendChild(editCommentBtn);
+commentActions.appendChild(deleteCommentBtn);
+
+item.appendChild(commentActions);
     photoMemoryCommentsList.appendChild(item);
   });
 }
