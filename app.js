@@ -1133,12 +1133,26 @@ if (memory.photoKey) {
       );
 
       if (newText === null) return;
+const newSong = prompt(
+  "MEMORY SONGを編集\n※空欄で削除",
+  memory.song || ""
+);
 
+if (newSong === null) return;
+
+const newLink = prompt(
+  "RELATED LINKを編集\n※空欄で削除",
+  memory.link || ""
+);
+
+if (newLink === null) return;
       memory.title =
         newTitle.trim() || "TREASURE MEMORY 💎";
 
       memory.text = newText.trim();
-// 📸 写真をあとから追加・変更
+memory.song = newSong.trim();
+memory.link = newLink.trim();
+      // 📸 写真をあとから追加・変更
 const changePhoto = confirm("写真を追加・変更する？📸");
 
 if (changePhoto) {
