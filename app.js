@@ -1389,6 +1389,7 @@ memories.unshift({
   title: title || "TREASURE MEMORY 💎",
   text: text,
   song: song,
+ link: link, 
   photoKey: photoKey
 });
 
