@@ -1024,6 +1024,7 @@ function renderPhotoMemoryComments() {
 // ✏️ 感想を編集
 const editCommentBtn = document.createElement("button");
 editCommentBtn.type = "button";
+ editCommentBtn.className = "photo-memory-comment-edit";   
 editCommentBtn.textContent = "編集";
 
 editCommentBtn.addEventListener("click", () => {
@@ -1051,7 +1052,8 @@ item.appendChild(editCommentBtn);
     // 🗑️ 感想を削除
 const deleteCommentBtn = document.createElement("button");
 deleteCommentBtn.type = "button";
-deleteCommentBtn.textContent = "削除";
+deleteCommentBtn.className = "photo-memory-comment-delete";
+deleteCommentBtn.textContent = "🗑️ 削除";
 
 deleteCommentBtn.addEventListener("click", () => {
   const ok = confirm("この感想を削除する？💎");
