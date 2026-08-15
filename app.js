@@ -1009,7 +1009,7 @@ function renderPhotoMemoryComments() {
 
   const comments = memory.comments || [];
 
-  comments.forEach((comment) => {
+  comments.forEach((comment, index) => {
     const item = document.createElement("div");
     item.className = "photo-memory-comment-item";
 
@@ -1021,7 +1021,33 @@ function renderPhotoMemoryComments() {
 
     item.appendChild(text);
     item.appendChild(date);
+// ✏️ 感想を編集
+const editCommentBtn = document.createElement("button");
+editCommentBtn.type = "button";
+editCommentBtn.textContent = "編集";
 
+editCommentBtn.addEventListener("click", () => {
+  const newText = prompt(
+    "感想を編集💎",
+    comment.text || ""
+  );
+
+  if (newText === null) return;
+
+  const trimmedText = newText.trim();
+  if (!trimmedText) return;
+
+  memory.comments[index].text = trimmedText;
+
+  localStorage.setItem(
+    "treasure-memories",
+    JSON.stringify(memories)
+  );
+
+  renderPhotoMemoryComments();
+});
+
+item.appendChild(editCommentBtn);
     photoMemoryCommentsList.appendChild(item);
   });
 }
