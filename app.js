@@ -2594,7 +2594,8 @@ const eventMemoryDetailDate =
 
 const eventMemoryDetailName =
   document.getElementById("event-memory-detail-name");
-
+const eventMemoryDetailSong =
+  document.getElementById("event-memory-detail-song");
 const eventMemoryDetailPlace =
   document.getElementById("event-memory-detail-place");
 
