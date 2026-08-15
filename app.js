@@ -801,7 +801,20 @@ if (photoMemoryDetailEdit) {
     );
 
     if (newText === null) return;
-const newTags = prompt(
+const newSong = prompt(
+  "MEMORY SONGを編集\n※空欄で削除",
+  memory.song || ""
+);
+
+if (newSong === null) return;
+
+const newLink = prompt(
+  "RELATED LINKを編集\n※空欄で削除",
+  memory.link || ""
+);
+
+if (newLink === null) return;
+    const newTags = prompt(
   "ハッシュタグを編集（スペース区切り）",
   (memory.tags || []).join(" ")
 );
