@@ -1408,6 +1408,9 @@ memories.unshift({
   if (memorySong) {
   memorySong.value = "";
 }
+if (memoryLink) {
+  memoryLink.value = "";
+}  
 if (memoryPhoto) {
   memoryPhoto.value = "";
 }
