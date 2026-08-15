@@ -3513,3 +3513,39 @@ body {
     0 0 0 4px rgba(159, 194, 243, 0.16),
     0 8px 22px rgba(123, 159, 214, 0.12);
 }
+label[for="memory-song"] {
+  display: block;
+  margin: 28px 8px 10px;
+  color: #7d9bc9;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+#memory-song {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 60px;
+  padding: 0 22px;
+
+  border: 2px solid #cfe2ff;
+  border-radius: 24px;
+
+  background: #f5f9ff;
+
+  color: #26344f;
+  font-size: 16px;
+  font-weight: 700;
+
+  box-shadow: 0 8px 20px rgba(120, 160, 215, 0.12);
+}
+
+#memory-song::placeholder {
+  color: #9fb0c8;
+}
+
+#memory-song:focus {
+  outline: none;
+  border-color: #9fc3f4;
+  background: #fff;
+}
