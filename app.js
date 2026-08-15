@@ -2474,7 +2474,8 @@ if (hasSavedMemory && eventMemoryViewPage) {
 
   eventMemoryViewThoughts.textContent =
     savedMemory.thoughts || "";
-
+eventMemoryViewSong.textContent =
+  savedMemory.song || "";
   eventMemoryViewPhotos.innerHTML = "";
 
   viewPhotos.forEach((photoSrc) => {
@@ -2634,7 +2635,8 @@ const eventMemoryViewMoment =
 
 const eventMemoryViewThoughts =
   document.getElementById("event-memory-view-thoughts");
-
+const eventMemoryViewSong =
+  document.getElementById("event-memory-view-song");
 const editEventMemoryBtn =
   document.getElementById("edit-event-memory-btn");
 
