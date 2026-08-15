@@ -2723,6 +2723,8 @@ const eventMemoryMoment =
 
 const eventMemoryThoughts =
   document.getElementById("event-memory-thoughts");
+const eventMemorySong =
+  document.getElementById("event-memory-song");
 const eventMemoryPhoto =
   document.getElementById("event-memory-photo");
 
