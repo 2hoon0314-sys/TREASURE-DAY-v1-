@@ -1120,6 +1120,7 @@ if (memory.photoKey) {
     editBtn.textContent = "編集";
 
     editBtn.addEventListener("click", () => {
+alert("最新版JSです！");    
       const newTitle = prompt(
         "タイトルを編集",
         memory.title || ""
