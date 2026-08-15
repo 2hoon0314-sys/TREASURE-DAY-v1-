@@ -830,7 +830,8 @@ memory.tags = newTags
       newTitle.trim() || "PHOTO MEMORY 💎";
 
     memory.text = newText.trim();
-
+memory.song = newSong.trim();
+memory.link = newLink.trim();
     localStorage.setItem(
       "treasure-memories",
       JSON.stringify(memories)
