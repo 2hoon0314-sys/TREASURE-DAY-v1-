@@ -2228,7 +2228,8 @@ const treasureDiaryTab =
 
 const photoMemoryTab =
   document.getElementById("photo-memory-tab");
-
+const seatMemoryTab =
+  document.getElementById("seat-memory-tab");
 const eventMemoryArea =
   document.getElementById("event-memory-area");
 
@@ -2237,7 +2238,8 @@ const treasureDiaryArea =
 
 const photoMemoryArea =
   document.getElementById("photo-memory-area");
-
+const seatMemoryArea =
+  document.getElementById("seat-memory-area");
 
 function switchMemoryMode(mode) {
 
@@ -2255,15 +2257,15 @@ function switchMemoryMode(mode) {
   const isEvent = mode === "event";
   const isDiary = mode === "diary";
   const isPhoto = mode === "photo";
-
+const isSeat = mode === "seat";
   eventMemoryTab.classList.toggle("active", isEvent);
   treasureDiaryTab.classList.toggle("active", isDiary);
   photoMemoryTab.classList.toggle("active", isPhoto);
-
+seatMemoryTab.classList.toggle("active", isSeat);
   eventMemoryArea.classList.toggle("active", isEvent);
   treasureDiaryArea.classList.toggle("active", isDiary);
   photoMemoryArea.classList.toggle("active", isPhoto);
-
+seatMemoryArea.classList.toggle("active", isSeat);
   // PHOTO MEMORYには今style="display:none;"があるのでここで切替
   photoMemoryArea.style.display =
     isPhoto ? "block" : "none";
@@ -2273,7 +2275,11 @@ function switchMemoryMode(mode) {
     mode
   );
 }
-
+if (seatMemoryTab) {
+  seatMemoryTab.addEventListener("click", () => {
+    switchMemoryMode("seat");
+  });
+}
 
 if (
   eventMemoryTab &&
