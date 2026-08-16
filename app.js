@@ -2331,7 +2331,7 @@ let seatMemories = JSON.parse(
 );
 const seatMemoryList =
   document.getElementById("seat-memory-list");
-
+let seatMemorySortMode = "new";
 function renderSeatMemories() {
   if (!seatMemoryList) return;
 
@@ -2346,9 +2346,36 @@ function renderSeatMemories() {
     return;
   }
 
-const sortedSeatMemories = [...seatMemories].sort((a, b) => {
-  return new Date(b.date) - new Date(a.date);
-});
+let sortedSeatMemories = [...seatMemories];
+
+if (seatMemorySortMode === "new") {
+  // 新しい順
+  sortedSeatMemories.sort((a, b) => {
+    return new Date(b.date) - new Date(a.date);
+  });
+}
+
+if (seatMemorySortMode === "old") {
+  // 古い順
+  sortedSeatMemories.sort((a, b) => {
+    return new Date(a.date) - new Date(b.date);
+  });
+}
+
+if (seatMemorySortMode === "tour") {
+  // ツアー・公演名ごとにまとめる
+  sortedSeatMemories.sort((a, b) => {
+    const eventA = (a.eventName || "").toLowerCase();
+    const eventB = (b.eventName || "").toLowerCase();
+
+    if (eventA !== eventB) {
+      return eventA.localeCompare(eventB);
+    }
+
+    // 同じツアー内では新しい日付を上
+    return new Date(b.date) - new Date(a.date);
+  });
+}
 
 sortedSeatMemories.forEach((memory) => {
     const card = document.createElement("div");
