@@ -272,7 +272,72 @@
   <p class="memory-section-description">
     今までの座席と思い出をコレクションしよう💎
   </p>
+<div class="seat-memory-form">
 
+  <input
+    id="seat-memory-event"
+    class="input"
+    type="text"
+    placeholder="公演名 🎤"
+  >
+
+  <input
+    id="seat-memory-date"
+    class="input"
+    type="date"
+  >
+
+  <input
+    id="seat-memory-venue"
+    class="input"
+    type="text"
+    placeholder="会場名 🏟️"
+  >
+
+  <input
+    id="seat-memory-seat"
+    class="input"
+    type="text"
+    placeholder="座席 例：502ゲート 26列 31番 💺"
+  >
+
+  <textarea
+    id="seat-memory-note"
+    class="input"
+    rows="4"
+    placeholder="見え方・感想を書こう ✨"
+  ></textarea>
+<!-- 📸 座席からの写真 -->
+<div class="seat-memory-photo-area">
+  <label for="seat-memory-photo">📸 座席からの写真</label>
+  <input
+    id="seat-memory-photo"
+    type="file"
+    accept="image/*"
+  >
+</div>
+
+<!-- ⭐ 神席度 -->
+<div class="seat-memory-rating">
+  <label for="seat-memory-rating">⭐ 神席度</label>
+  <select id="seat-memory-rating" class="input">
+    <option value="1">⭐</option>
+    <option value="2">⭐⭐</option>
+    <option value="3">⭐⭐⭐</option>
+    <option value="4">⭐⭐⭐⭐</option>
+    <option value="5">⭐⭐⭐⭐⭐ 神席！！</option>
+  </select>
+</div>
+
+<!-- 💎 保存 -->
+<button
+  id="seat-memory-save"
+  class="primary"
+  type="button"
+>
+  SEATを保存 💺💎
+</button>
+</div>
   <div class="seat-memory-empty">
     💺 ここに座席の思い出が増えていくよ
   </div>
