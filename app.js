@@ -2325,6 +2325,17 @@ function renderSeatMemories() {
           ${memory.note}
         </div>
       ` : ""}
+      ${memory.photos && memory.photos.length ? `
+  <div class="seat-memory-card-photos">
+    ${memory.photos.map((photo) => `
+      <img
+        src="${photo}"
+        class="seat-memory-card-photo"
+        alt="座席からの写真"
+      >
+    `).join("")}
+  </div>
+` : ""}
     `;
 
     seatMemoryList.appendChild(card);
@@ -2337,8 +2348,7 @@ renderSeatMemories();
 // ================================
 
 if (seatMemorySave) {
-  seatMemorySave.addEventListener("click", () => {
-
+ seatMemorySave.addEventListener("click", async () => {
     const eventName = seatMemoryEvent.value.trim();
     const date = seatMemoryDate.value;
     const venue = seatMemoryVenue.value.trim();
