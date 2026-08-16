@@ -2370,7 +2370,7 @@ const photos = await Promise.all(
       seat,
       note,
       rating,
-      photo: "",
+ photos,
       createdAt: new Date().toISOString()
     };
 
