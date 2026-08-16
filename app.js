@@ -2397,7 +2397,7 @@ renderSeatMemories();
     seatMemorySeat.value = "";
     seatMemoryNote.value = "";
     seatMemoryRating.value = "1";
-
+seatMemoryPhoto.value = "";
     alert("SEAT MEMORYに保存したよ💺💎");
   });
 }
