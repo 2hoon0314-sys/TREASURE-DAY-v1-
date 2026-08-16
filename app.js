@@ -2405,9 +2405,35 @@ if (seatMemorySortMode === "tour") {
       dateButton.className = "seat-tour-date";
       dateButton.textContent = `📅 ${memory.date || "日付なし"}`;
 dateButton.addEventListener("click", () => {
-  seatMemorySortMode = "new";
+ seatMemorySortMode = "new";
+renderSeatMemories();
+
+const backButton = document.createElement("button");
+backButton.type = "button";
+backButton.className = "seat-tour-back-btn";
+backButton.textContent = "← ツアー一覧に戻る";
+
+backButton.addEventListener("click", () => {
+  seatMemorySortMode = "tour";
+
+  document
+    .querySelectorAll(".seat-memory-sort-btn")
+    .forEach((btn) => {
+      btn.classList.toggle(
+        "active",
+        btn.dataset.sort === "tour"
+      );
+    });
+
   renderSeatMemories();
 
+  seatMemoryList.scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
+});
+
+seatMemoryList.prepend(backButton);
   setTimeout(() => {
     const cards = document.querySelectorAll(".seat-memory-card");
 
