@@ -2501,16 +2501,18 @@ seatMemoryPhoto.value = "";
 }
 function switchMemoryMode(mode) {
 
-  if (
-    !eventMemoryTab ||
-    !treasureDiaryTab ||
-    !photoMemoryTab ||
-    !eventMemoryArea ||
-    !treasureDiaryArea ||
-    !photoMemoryArea
-  ) {
-    return;
-  }
+if (
+  !eventMemoryTab ||
+  !treasureDiaryTab ||
+  !photoMemoryTab ||
+  !seatMemoryTab ||
+  !eventMemoryArea ||
+  !treasureDiaryArea ||
+  !photoMemoryArea ||
+  !seatMemoryArea
+) {
+  return;
+}
 
   const isEvent = mode === "event";
   const isDiary = mode === "diary";
