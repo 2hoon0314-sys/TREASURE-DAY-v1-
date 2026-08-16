@@ -3941,3 +3941,26 @@ label[for="memory-song"] {
   transform: scale(1.01);
   transition: 0.25s ease;
 }
+/* 💎 ツアー一覧に戻る */
+.seat-tour-back-btn {
+  display: block;
+  width: fit-content;
+
+  margin: 4px 0 18px;
+  padding: 10px 16px;
+
+  border: 2px solid #d7e5ff;
+  border-radius: 999px;
+
+  background: #f4f8ff;
+  color: #7897c7;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.seat-tour-back-btn:active {
+  transform: scale(0.97);
+}
