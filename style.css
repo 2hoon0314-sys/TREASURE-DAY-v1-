@@ -3849,3 +3849,10 @@ label[for="memory-song"] {
   font-weight: 700;
   font-size: 14px;
 }
+/* 🔗 関連リンク */
+.memory-link-label {
+    color: #7897c7 !important;
+    font-weight: 700 !important;
+    font-size: 15px !important;
+    letter-spacing: 0.02em !important;
+}
