@@ -2382,16 +2382,11 @@ function renderSeatMemories() {
           ${memory.note}
         </div>
       ` : ""}
-      ${memory.photos && memory.photos.length ? `
-  <div class="seat-memory-card-photos">
-    ${memory.photos.map((photo) => `
-      <img
-        src="${photo}"
-        class="seat-memory-card-photo"
-        alt="座席からの写真"
-      >
-    `).join("")}
-  </div>
+     ${memory.photoCount > 0 ? `
+  <div
+    class="seat-memory-card-photos"
+    id="seat-photos-${memory.photoKey}"
+  ></div>
 ` : ""}
     `;
 
@@ -2417,19 +2412,14 @@ const photoFiles = Array.from(seatMemoryPhoto.files).slice(0, 3);
       alert("公演名を入力してね💎");
       return;
     }
-const photos = await Promise.all(
-  photoFiles.map((file) => {
-    return new Promise((resolve) => {
-      const reader = new FileReader();
+const memoryId =
+  Date.now().toString() +
+  "-" +
+  Math.random().toString(36).slice(2);
 
-      reader.onload = () => {
-        resolve(reader.result);
-      };
-
-      reader.readAsDataURL(file);
-    });
-  })
-);
+if (photoFiles.length > 0) {
+  await saveSeatPhotos(memoryId, photoFiles);
+}
     const newSeatMemory = {
       eventName,
       date,
@@ -2437,7 +2427,8 @@ const photos = await Promise.all(
       seat,
       note,
       rating,
- photos,
+ photoKey: memoryId,
+photoCount: photoFiles.length,,
       createdAt: new Date().toISOString()
     };
 
