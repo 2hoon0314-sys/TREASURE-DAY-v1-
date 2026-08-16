@@ -2278,7 +2278,9 @@ async function saveSeatPhotos(memoryId, files) {
     );
 
     const store = transaction.objectStore(seatPhotoStoreName);
-
+for (let i = 0; i < 3; i++) {
+  store.delete(`${memoryId}-${i}`);
+}
     // 最大3枚まで保存
     Array.from(files)
       .slice(0, 3)
