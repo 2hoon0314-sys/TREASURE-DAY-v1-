@@ -2478,7 +2478,7 @@ if (photoFiles.length > 0) {
       note,
       rating,
  photoKey: memoryId,
-photoCount: photoFiles.length,,
+photoCount: photoFiles.length,
       createdAt: new Date().toISOString()
     };
 
