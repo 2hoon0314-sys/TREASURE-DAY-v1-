@@ -3673,3 +3673,32 @@ label[for="memory-song"] {
   color: #37445a;
   white-space: pre-wrap;
 }
+/* ========================================
+   💺 SEAT MEMORY PHOTO GALLERY
+======================================== */
+
+.seat-memory-card-photos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.seat-memory-card-photo {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 16px;
+  display: block;
+}
+
+/* 1枚だけのときは大きめ */
+.seat-memory-card-photos img:only-child {
+  grid-column: 1 / -1;
+  aspect-ratio: 16 / 10;
+}
+
+/* 2枚のとき */
+.seat-memory-card-photos:has(img:nth-child(2):last-child) {
+  grid-template-columns: repeat(2, 1fr);
+}
