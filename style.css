@@ -3799,3 +3799,10 @@ label[for="memory-song"] {
 
   box-shadow: 0 6px 14px rgba(120, 164, 230, 0.18);
 }
+/* 📸 座席からの写真 */
+.seat-memory-photo-area > label {
+  color: #7897c7;
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.02em;
+}
