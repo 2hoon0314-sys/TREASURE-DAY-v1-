@@ -2270,6 +2270,53 @@ const seatMemorySave =
 let seatMemories = JSON.parse(
   localStorage.getItem("treasure-seat-memories") || "[]"
 );
+// ================================
+// 💺 SEAT MEMORY 保存
+// ================================
+
+if (seatMemorySave) {
+  seatMemorySave.addEventListener("click", () => {
+
+    const eventName = seatMemoryEvent.value.trim();
+    const date = seatMemoryDate.value;
+    const venue = seatMemoryVenue.value.trim();
+    const seat = seatMemorySeat.value.trim();
+    const note = seatMemoryNote.value.trim();
+    const rating = seatMemoryRating.value;
+
+    if (!eventName) {
+      alert("公演名を入力してね💎");
+      return;
+    }
+
+    const newSeatMemory = {
+      eventName,
+      date,
+      venue,
+      seat,
+      note,
+      rating,
+      photo: "",
+      createdAt: new Date().toISOString()
+    };
+
+    seatMemories.unshift(newSeatMemory);
+
+    localStorage.setItem(
+      "treasure-seat-memories",
+      JSON.stringify(seatMemories)
+    );
+
+    seatMemoryEvent.value = "";
+    seatMemoryDate.value = "";
+    seatMemoryVenue.value = "";
+    seatMemorySeat.value = "";
+    seatMemoryNote.value = "";
+    seatMemoryRating.value = "1";
+
+    alert("SEAT MEMORYに保存したよ💺💎");
+  });
+}
 function switchMemoryMode(mode) {
 
   if (
