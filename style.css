@@ -3806,3 +3806,10 @@ label[for="memory-song"] {
   font-size: 15px;
   letter-spacing: 0.02em;
 }
+/* SEAT MEMORY ラベル強制統一 */
+#seat-memory-area .seat-memory-photo-area > label,
+#seat-memory-area .seat-memory-rating > label {
+  color: #7897c7 !important;
+  font-weight: 700 !important;
+  font-size: 15px !important;
+}
