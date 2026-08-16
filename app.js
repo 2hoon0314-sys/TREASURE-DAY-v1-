@@ -2350,7 +2350,19 @@ const photoFiles = Array.from(seatMemoryPhoto.files).slice(0, 3);
       alert("公演名を入力してね💎");
       return;
     }
+const photos = await Promise.all(
+  photoFiles.map((file) => {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
 
+      reader.onload = () => {
+        resolve(reader.result);
+      };
+
+      reader.readAsDataURL(file);
+    });
+  })
+);
     const newSeatMemory = {
       eventName,
       date,
