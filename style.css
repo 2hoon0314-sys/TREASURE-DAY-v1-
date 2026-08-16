@@ -3856,3 +3856,34 @@ label[for="memory-song"] {
     font-size: 15px !important;
     letter-spacing: 0.02em !important;
 }
+/* ================================
+   💺 SEAT MEMORY 並び替えタブ
+================================ */
+
+.seat-memory-sort {
+  display: flex;
+  gap: 8px;
+  margin: 14px 0 20px;
+  padding: 6px;
+  background: #f3f7ff;
+  border: 2px solid #d7e5ff;
+  border-radius: 999px;
+}
+
+.seat-memory-sort-btn {
+  flex: 1;
+  padding: 10px 4px;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: #7897c7;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.seat-memory-sort-btn.active {
+  background: #ffffff;
+  color: #5f83bd;
+  box-shadow: 0 3px 10px rgba(120, 164, 230, 0.18);
+}
