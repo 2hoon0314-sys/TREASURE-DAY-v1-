@@ -2407,9 +2407,39 @@ function renderSeatMemories() {
 ` : ""}
     `;
 
-    seatMemoryList.appendChild(card);
-    const deleteBtn = card.querySelector(".seat-memory-delete-btn");
+seatMemoryList.appendChild(card);
 
+// ✏️ SEAT MEMORY 編集
+const editBtn = card.querySelector(".seat-memory-edit-btn");
+
+if (editBtn) {
+  editBtn.addEventListener("click", () => {
+    seatMemoryEvent.value = memory.eventName || "";
+    seatMemoryDate.value = memory.date || "";
+    seatMemoryVenue.value = memory.venue || "";
+    seatMemorySeat.value = memory.seat || "";
+    seatMemoryNote.value = memory.note || "";
+    seatMemoryRating.value = memory.rating || "1";
+
+    // 写真は今あるものをそのまま保持
+    seatMemoryPhoto.value = "";
+
+    // どのSEAT MEMORYを編集中か記録
+    seatMemorySave.dataset.editingId =
+      memory.photoKey || memory.createdAt;
+
+    // 保存ボタンを編集モードに
+    seatMemorySave.textContent = "変更を保存 💺💎";
+
+    // 入力欄まで戻る
+    seatMemoryEvent.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+  });
+}
+
+const deleteBtn = card.querySelector(".seat-memory-delete-btn");
 if (deleteBtn) {
   deleteBtn.addEventListener("click", () => {
     const ok = confirm("このSEAT MEMORYを削除する？💺");
@@ -2499,14 +2529,53 @@ const photoFiles = Array.from(seatMemoryPhoto.files).slice(0, 3);
       alert("公演名を入力してね💎");
       return;
     }
-const memoryId =
+   const editingId = seatMemorySave.dataset.editingId;
+
+   if (editingId) {
+  const target = seatMemories.find(
+    (item) =>
+      item.photoKey === editingId ||
+      item.createdAt === editingId
+  );
+
+  if (target) {
+    target.eventName = eventName;
+    target.date = date;
+    target.venue = venue;
+    target.seat = seat;
+    target.note = note;
+    target.rating = rating;
+
+    localStorage.setItem(
+      "treasure-seat-memories",
+      JSON.stringify(seatMemories)
+    );
+
+    delete seatMemorySave.dataset.editingId;
+    seatMemorySave.textContent = "SEATを保存 💺💎";
+
+    seatMemoryEvent.value = "";
+    seatMemoryDate.value = "";
+    seatMemoryVenue.value = "";
+    seatMemorySeat.value = "";
+    seatMemoryNote.value = "";
+    seatMemoryRating.value = "1";
+    seatMemoryPhoto.value = "";
+
+    renderSeatMemories();
+
+    alert("SEAT MEMORYを更新したよ💺💎");
+    return;
+  }
+}
+  const memoryId =
   Date.now().toString() +
-  "-" +
+  "_" +
   Math.random().toString(36).slice(2);
 
 if (photoFiles.length > 0) {
   await saveSeatPhotos(memoryId, photoFiles);
-}
+} 
     const newSeatMemory = {
       eventName,
       date,
