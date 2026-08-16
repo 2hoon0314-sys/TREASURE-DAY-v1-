@@ -2368,7 +2368,7 @@ if (seatMemorySave) {
       "treasure-seat-memories",
       JSON.stringify(seatMemories)
     );
-
+renderSeatMemories();
     seatMemoryEvent.value = "";
     seatMemoryDate.value = "";
     seatMemoryVenue.value = "";
