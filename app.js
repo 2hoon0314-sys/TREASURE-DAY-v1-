@@ -2240,6 +2240,34 @@ const photoMemoryArea =
   document.getElementById("photo-memory-area");
 const seatMemoryArea =
   document.getElementById("seat-memory-area");
+// ========================================
+// 📸 SEAT MEMORY PHOTO DATABASE
+// ========================================
+
+const seatPhotoDBName = "treasure-seat-photo-db";
+const seatPhotoStoreName = "seat-photos";
+
+function openSeatPhotoDB() {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open(seatPhotoDBName, 1);
+
+    request.onupgradeneeded = () => {
+      const db = request.result;
+
+      if (!db.objectStoreNames.contains(seatPhotoStoreName)) {
+        db.createObjectStore(seatPhotoStoreName);
+      }
+    };
+
+    request.onsuccess = () => {
+      resolve(request.result);
+    };
+
+    request.onerror = () => {
+      reject(request.error);
+    };
+  });
+}
 const seatMemoryEvent =
   document.getElementById("seat-memory-event");
 
