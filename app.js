@@ -2345,7 +2345,7 @@ if (seatMemorySave) {
     const seat = seatMemorySeat.value.trim();
     const note = seatMemoryNote.value.trim();
     const rating = seatMemoryRating.value;
-const photoFile = seatMemoryPhoto.files[0];
+const photoFiles = Array.from(seatMemoryPhoto.files).slice(0, 3);
     if (!eventName) {
       alert("公演名を入力してね💎");
       return;
