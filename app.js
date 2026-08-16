@@ -2268,6 +2268,35 @@ function openSeatPhotoDB() {
     };
   });
 }
+async function saveSeatPhotos(memoryId, files) {
+  const db = await openSeatPhotoDB();
+
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction(
+      seatPhotoStoreName,
+      "readwrite"
+    );
+
+    const store = transaction.objectStore(seatPhotoStoreName);
+
+    // 最大3枚まで保存
+    Array.from(files)
+      .slice(0, 3)
+      .forEach((file, index) => {
+        store.put(file, `${memoryId}-${index}`);
+      });
+
+    transaction.oncomplete = () => {
+      db.close();
+      resolve();
+    };
+
+    transaction.onerror = () => {
+      db.close();
+      reject(transaction.error);
+    };
+  });
+}
 const seatMemoryEvent =
   document.getElementById("seat-memory-event");
 
