@@ -2548,6 +2548,13 @@ const photoFiles = Array.from(seatMemoryPhoto.files).slice(0, 3);
     target.note = note;
     target.rating = rating;
 if (photoFiles.length > 0) {
+  if (!target.photoKey) {
+    target.photoKey =
+      Date.now().toString() +
+      "_" +
+      Math.random().toString(36).slice(2);
+  }
+
   await saveSeatPhotos(target.photoKey, photoFiles);
   target.photoCount = photoFiles.length;
 }
