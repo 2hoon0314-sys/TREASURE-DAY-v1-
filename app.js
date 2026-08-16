@@ -2382,6 +2382,23 @@ function renderSeatMemories() {
           ${memory.note}
         </div>
       ` : ""}
+<div class="seat-memory-card-actions">
+  <button
+    type="button"
+    class="seat-memory-edit-btn"
+    data-id="${memory.photoKey}"
+  >
+    ✏️ 編集
+  </button>
+
+  <button
+    type="button"
+    class="seat-memory-delete-btn"
+    data-id="${memory.photoKey}"
+  >
+    🗑️ 削除
+  </button>
+</div>      
      ${memory.photoCount > 0 ? `
   <div
     class="seat-memory-card-photos"
