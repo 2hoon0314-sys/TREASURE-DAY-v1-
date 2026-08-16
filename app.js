@@ -2408,6 +2408,26 @@ function renderSeatMemories() {
     `;
 
     seatMemoryList.appendChild(card);
+    const deleteBtn = card.querySelector(".seat-memory-delete-btn");
+
+if (deleteBtn) {
+  deleteBtn.addEventListener("click", () => {
+    const ok = confirm("このSEAT MEMORYを削除する？💺");
+
+    if (!ok) return;
+
+    seatMemories = seatMemories.filter(
+      (item) => item.photoKey !== memory.photoKey
+    );
+
+    localStorage.setItem(
+      "treasure-seat-memories",
+      JSON.stringify(seatMemories)
+    );
+
+    renderSeatMemories();
+  });
+}
  if (memory.photoCount > 0 && memory.photoKey) {
   loadSeatPhotos(memory);
 }
