@@ -2376,7 +2376,70 @@ if (seatMemorySortMode === "tour") {
     return new Date(b.date) - new Date(a.date);
   });
 }
+if (seatMemorySortMode === "tour") {
+  const tourGroups = {};
 
+  sortedSeatMemories.forEach((memory) => {
+    const tourName = memory.eventName || "EVENT";
+
+    if (!tourGroups[tourName]) {
+      tourGroups[tourName] = [];
+    }
+
+    tourGroups[tourName].push(memory);
+  });
+
+  Object.entries(tourGroups).forEach(([tourName, memories]) => {
+    const group = document.createElement("div");
+    group.className = "seat-tour-group";
+
+    const title = document.createElement("div");
+    title.className = "seat-tour-title";
+    title.textContent = `💎 ${tourName}`;
+
+    group.appendChild(title);
+
+    memories.forEach((memory) => {
+      const dateButton = document.createElement("button");
+      dateButton.type = "button";
+      dateButton.className = "seat-tour-date";
+      dateButton.textContent = `📅 ${memory.date || "日付なし"}`;
+dateButton.addEventListener("click", () => {
+  seatMemorySortMode = "new";
+  renderSeatMemories();
+
+  setTimeout(() => {
+    const cards = document.querySelectorAll(".seat-memory-card");
+
+    const targetCard = [...cards].find((card) => {
+      return (
+        card.textContent.includes(memory.eventName || "") &&
+        card.textContent.includes(memory.date || "")
+      );
+    });
+
+    if (targetCard) {
+      targetCard.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+      });
+
+      targetCard.classList.add("seat-memory-highlight");
+
+      setTimeout(() => {
+        targetCard.classList.remove("seat-memory-highlight");
+      }, 1500);
+    }
+  }, 50);
+});
+      group.appendChild(dateButton);
+    });
+
+    seatMemoryList.appendChild(group);
+  });
+
+  return;
+}
 sortedSeatMemories.forEach((memory) => {
     const card = document.createElement("div");
     card.className = "seat-memory-card";
