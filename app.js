@@ -2496,6 +2496,22 @@ if (deleteBtn) {
 }
   });
 }
+const seatMemorySortButtons =
+  document.querySelectorAll(".seat-memory-sort-btn");
+
+seatMemorySortButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    seatMemorySortMode = button.dataset.sort;
+
+    seatMemorySortButtons.forEach((btn) => {
+      btn.classList.remove("active");
+    });
+
+    button.classList.add("active");
+
+    renderSeatMemories();
+  });
+});
 async function loadSeatPhotos(memory) {
   if (!memory.photoKey || !memory.photoCount) return;
 
