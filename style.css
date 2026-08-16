@@ -3702,3 +3702,39 @@ label[for="memory-song"] {
 .seat-memory-card-photos:has(img:nth-child(2):last-child) {
   grid-template-columns: repeat(2, 1fr);
 }
+/* ========================================
+   💺 SEAT MEMORY ACTION BUTTONS
+======================================== */
+
+.seat-memory-card-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.seat-memory-edit-btn,
+.seat-memory-delete-btn {
+  border: 1.5px solid #cfe0ff;
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-size: 14px;
+  font-weight: 700;
+  background: #ffffff;
+  color: #6f8fbe;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(120, 160, 220, 0.08);
+}
+
+.seat-memory-edit-btn:active,
+.seat-memory-delete-btn:active {
+  transform: scale(0.97);
+}
+
+.seat-memory-edit-btn {
+  background: #edf5ff;
+}
+
+.seat-memory-delete-btn {
+  background: #f8f8fb;
+  color: #8b97aa;
+}
