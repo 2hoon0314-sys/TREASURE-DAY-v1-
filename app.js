@@ -2545,7 +2545,10 @@ const photoFiles = Array.from(seatMemoryPhoto.files).slice(0, 3);
     target.seat = seat;
     target.note = note;
     target.rating = rating;
-
+if (photoFiles.length > 0) {
+  await saveSeatPhotos(target.photoKey, photoFiles);
+  target.photoCount = photoFiles.length;
+}
     localStorage.setItem(
       "treasure-seat-memories",
       JSON.stringify(seatMemories)
