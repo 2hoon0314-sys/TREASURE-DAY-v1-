@@ -2240,7 +2240,36 @@ const photoMemoryArea =
   document.getElementById("photo-memory-area");
 const seatMemoryArea =
   document.getElementById("seat-memory-area");
+const seatMemoryEvent =
+  document.getElementById("seat-memory-event");
 
+const seatMemoryDate =
+  document.getElementById("seat-memory-date");
+
+const seatMemoryVenue =
+  document.getElementById("seat-memory-venue");
+
+const seatMemorySeat =
+  document.getElementById("seat-memory-seat");
+
+const seatMemoryNote =
+  document.getElementById("seat-memory-note");
+
+const seatMemoryPhoto =
+  document.getElementById("seat-memory-photo");
+
+const seatMemoryRating =
+  document.getElementById("seat-memory-rating");
+
+const seatMemorySave =
+  document.getElementById("seat-memory-save");
+// ================================
+// 💺 SEAT MEMORY データ
+// ================================
+
+let seatMemories = JSON.parse(
+  localStorage.getItem("treasure-seat-memories") || "[]"
+);
 function switchMemoryMode(mode) {
 
   if (
