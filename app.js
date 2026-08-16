@@ -2270,6 +2270,68 @@ const seatMemorySave =
 let seatMemories = JSON.parse(
   localStorage.getItem("treasure-seat-memories") || "[]"
 );
+const seatMemoryList =
+  document.getElementById("seat-memory-list");
+
+function renderSeatMemories() {
+  if (!seatMemoryList) return;
+
+  seatMemoryList.innerHTML = "";
+
+  if (seatMemories.length === 0) {
+    seatMemoryList.innerHTML = `
+      <div class="seat-memory-empty">
+        💺 ここに座席の思い出が増えていくよ
+      </div>
+    `;
+    return;
+  }
+
+  seatMemories.forEach((memory) => {
+    const card = document.createElement("div");
+    card.className = "seat-memory-card";
+
+    const stars = "⭐".repeat(Number(memory.rating) || 1);
+
+    card.innerHTML = `
+      <div class="seat-memory-card-event">
+        💎 ${memory.eventName || "EVENT"}
+      </div>
+
+      ${memory.date ? `
+        <div class="seat-memory-card-date">
+          📅 ${memory.date}
+        </div>
+      ` : ""}
+
+      ${memory.venue ? `
+        <div class="seat-memory-card-venue">
+          🏟️ ${memory.venue}
+        </div>
+      ` : ""}
+
+      ${memory.seat ? `
+        <div class="seat-memory-card-seat">
+          💺 ${memory.seat}
+        </div>
+      ` : ""}
+
+      <div class="seat-memory-card-rating">
+        ${stars}
+      </div>
+
+      ${memory.note ? `
+        <div class="seat-memory-card-note">
+          ${memory.note}
+        </div>
+      ` : ""}
+    `;
+
+    seatMemoryList.appendChild(card);
+  });
+}
+
+renderSeatMemories();
 // ================================
 // 💺 SEAT MEMORY 保存
 // ================================
