@@ -2391,9 +2391,59 @@ function renderSeatMemories() {
     `;
 
     seatMemoryList.appendChild(card);
+ if (memory.photoCount > 0 && memory.photoKey) {
+  loadSeatPhotos(memory);
+}
   });
 }
+async function loadSeatPhotos(memory) {
+  if (!memory.photoKey || !memory.photoCount) return;
 
+  const container = document.getElementById(
+    `seat-photos-${memory.photoKey}`
+  );
+
+  if (!container) return;
+
+  try {
+    const db = await openSeatPhotoDB();
+
+    const transaction = db.transaction(
+      seatPhotoStoreName,
+      "readonly"
+    );
+
+    const store = transaction.objectStore(seatPhotoStoreName);
+
+    for (let i = 0; i < memory.photoCount; i++) {
+      const request = store.get(`${memory.photoKey}-${i}`);
+
+      request.onsuccess = () => {
+        const file = request.result;
+        if (!file) return;
+
+        const imageUrl = URL.createObjectURL(file);
+
+        const img = document.createElement("img");
+        img.src = imageUrl;
+        img.className = "seat-memory-card-photo";
+        img.alt = "座席からの写真";
+
+        img.onload = () => {
+          URL.revokeObjectURL(imageUrl);
+        };
+
+        container.appendChild(img);
+      };
+    }
+
+    transaction.oncomplete = () => {
+      db.close();
+    };
+  } catch (error) {
+    console.error("SEAT MEMORY写真の読み込みに失敗:", error);
+  }
+}
 renderSeatMemories();
 // ================================
 // 💺 SEAT MEMORY 保存
