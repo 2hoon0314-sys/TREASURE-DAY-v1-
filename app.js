@@ -2346,7 +2346,11 @@ function renderSeatMemories() {
     return;
   }
 
-  seatMemories.forEach((memory) => {
+const sortedSeatMemories = [...seatMemories].sort((a, b) => {
+  return new Date(b.date) - new Date(a.date);
+});
+
+sortedSeatMemories.forEach((memory) => {
     const card = document.createElement("div");
     card.className = "seat-memory-card";
 
