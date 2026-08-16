@@ -3752,10 +3752,17 @@ label[for="memory-song"] {
   letter-spacing: 0.02em;
 }
 
-/* 神席度 */
-.seat-memory-rating-label {
-  margin-top: 14px;
+/* ⭐ 神席度 */
+.seat-memory-rating {
+    margin-top: 24px;
 }
+
+.seat-memory-rating > label {
+    color: #7897c7;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+}、
 
 /* RELATED LINK */
 .photo-memory-link-label {
