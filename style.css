@@ -3738,3 +3738,64 @@ label[for="memory-song"] {
   background: #f8f8fb;
   color: #8b97aa;
 }
+/* ========================================
+   💎 MEMORY 共通ラベル調整
+======================================== */
+
+.seat-memory-photo-label,
+.seat-memory-rating-label,
+.photo-memory-link-label,
+.photo-memory-song-label {
+  color: #7897c7;
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.02em;
+}
+
+/* 神席度 */
+.seat-memory-rating-label {
+  margin-top: 14px;
+}
+
+/* RELATED LINK */
+.photo-memory-link-label {
+  color: #7897c7;
+}
+
+/* LINKを開く */
+.photo-memory-link-anchor {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+
+  color: #6f91c7;
+  font-weight: 700;
+  text-decoration: none;
+
+  background: #eef5ff;
+  border: 1.5px solid #cfe0ff;
+  border-radius: 999px;
+  padding: 8px 14px;
+}
+
+.photo-memory-link-anchor:active {
+  transform: scale(0.98);
+}
+
+/* SEAT MEMORY 保存ボタン */
+#seat-memory-save {
+  width: 100%;
+  margin-top: 16px;
+  padding: 14px 18px;
+
+  border: none;
+  border-radius: 999px;
+
+  background: #78a4e6;
+  color: white;
+  font-size: 16px;
+  font-weight: 800;
+
+  box-shadow: 0 6px 14px rgba(120, 164, 230, 0.18);
+}
