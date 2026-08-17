@@ -1826,6 +1826,7 @@ homeTodayOpen.addEventListener("click", () => {
 
 const finalSong =
   getTodaySong() === "???" ? drawTodaySong() : getTodaySong();
+updateTodayTreasure();
   todayDetail.classList.add("active");
   document.body.style.overflow = "hidden";
 
