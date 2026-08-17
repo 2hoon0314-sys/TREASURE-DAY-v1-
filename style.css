@@ -4286,3 +4286,109 @@ label[for="memory-song"] {
     transform: scale(1);
   }
 }
+/* ========================================
+   💎 MEMBER BOOK ENTRY
+======================================== */
+
+.member-book-entry {
+  margin: 24px 0 30px;
+}
+
+.member-book-entry-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+  padding: 0 6px;
+  color: #7898cc;
+}
+
+.member-book-entry-head > span {
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
+.member-book-entry-head small {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  opacity: 0.75;
+}
+
+.member-book-open {
+  width: 100%;
+  min-height: 92px;
+  border: 1.5px solid #c9daf5;
+  border-radius: 28px;
+  padding: 18px 20px;
+
+  display: flex;
+  align-items: center;
+  gap: 15px;
+
+  background:
+    radial-gradient(circle at 88% 20%, rgba(164, 199, 246, 0.22), transparent 28%),
+    linear-gradient(135deg, #ffffff 0%, #f3f8ff 100%);
+
+  box-shadow:
+    0 10px 28px rgba(99, 135, 190, 0.10),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+
+  color: #22365f;
+  text-align: left;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.member-book-open:active {
+  transform: scale(0.98);
+  box-shadow:
+    0 5px 15px rgba(99, 135, 190, 0.08);
+}
+
+.member-book-icon {
+  width: 54px;
+  height: 54px;
+  flex: 0 0 54px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 18px;
+  background: #e4efff;
+
+  font-size: 27px;
+}
+
+.member-book-text {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.member-book-text strong {
+  font-size: 19px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+}
+
+.member-book-text small {
+  color: #8092b1;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.member-book-arrow {
+  flex: 0 0 auto;
+  color: #82a5dc;
+  font-size: 24px;
+  font-weight: 800;
+}
