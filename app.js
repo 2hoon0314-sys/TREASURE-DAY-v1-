@@ -1899,7 +1899,9 @@ if (bonusDrawBtn && bonusResult) {
 
         bonusResult.textContent =
           `✨💎 LUCKY MEMBER : ${selectedMember} 💎✨`;
-
+bonusResult.classList.remove("is-winner");
+void bonusResult.offsetWidth;
+bonusResult.classList.add("is-winner");
         bonusDrawBtn.disabled = false;
       }
     }, 90);
