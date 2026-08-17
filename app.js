@@ -1784,13 +1784,37 @@ if (
   todayDetailMember &&
   todayDetailSong
 ) {
-  homeTodayOpen.addEventListener("click", () => {
-    todayDetailMember.textContent = getTodayMember();
-    todayDetailSong.textContent = getTodaySong();
+homeTodayOpen.addEventListener("click", () => {
+  const finalMember = getTodayMember();
+  const finalSong = getTodaySong();
 
-    todayDetail.classList.add("active");
-    document.body.style.overflow = "hidden";
-  });
+  todayDetail.classList.add("active");
+  document.body.style.overflow = "hidden";
+
+  todayDetailMember.textContent = "WHO'S TODAY...?";
+  todayDetailSong.textContent = "🎲 SELECTING...";
+
+  let shuffleCount = 0;
+
+  const memberShuffle = setInterval(() => {
+    const randomMember =
+      todayMembers[Math.floor(Math.random() * todayMembers.length)];
+
+    todayDetailMember.textContent = randomMember;
+
+    shuffleCount++;
+
+    if (shuffleCount >= 18) {
+      clearInterval(memberShuffle);
+
+      todayDetailMember.textContent = `✨ ${finalMember} ✨`;
+
+      setTimeout(() => {
+        todayDetailSong.textContent = `🎧 ${finalSong}`;
+      }, 500);
+    }
+  }, 90);
+});
 
   todayClose.addEventListener("click", () => {
     todayDetail.classList.remove("active");
