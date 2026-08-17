@@ -4174,3 +4174,91 @@ label[for="memory-song"] {
   font-weight: 900;
   box-shadow: 0 12px 28px rgba(79, 124, 190, .22);
 }
+/* =====================================
+   🎲 BONUS DRAW DETAIL
+===================================== */
+
+.bonus-detail {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #dfeeff;
+  overflow-y: auto;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transition: opacity 0.3s ease;
+}
+
+.bonus-detail.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.bonus-detail-inner {
+  min-height: 100%;
+  padding: 120px 36px 160px;
+  text-align: center;
+}
+
+.bonus-close {
+  position: fixed;
+  top: 45px;
+  left: 36px;
+  z-index: 10001;
+
+  border: none;
+  background: white;
+  padding: 14px 22px;
+  border-radius: 999px;
+
+  font-weight: 700;
+  color: #7898c9;
+}
+
+.bonus-detail-kicker {
+  margin-bottom: 35px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  color: #7898c9;
+}
+
+.bonus-detail-card {
+  background: white;
+  border-radius: 36px;
+  padding: 55px 25px;
+  margin-bottom: 30px;
+}
+
+.bonus-detail-icon {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+.bonus-detail-title {
+  font-weight: 800;
+  color: #7898c9;
+  margin-bottom: 30px;
+}
+
+.bonus-detail-result {
+  font-size: 36px;
+  font-weight: 900;
+  color: #26395e;
+}
+
+.bonus-draw-button {
+  width: 100%;
+  border: none;
+  border-radius: 999px;
+  padding: 22px;
+
+  background: #7fa7e5;
+  color: white;
+
+  font-size: 20px;
+  font-weight: 800;
+}
