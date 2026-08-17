@@ -1877,14 +1877,33 @@ if (bonusOpen && bonusDetail && bonusClose) {
   });
 if (bonusDrawBtn && bonusResult) {
   bonusDrawBtn.addEventListener("click", () => {
-    const randomIndex =
-      Math.floor(Math.random() * todayMembers.length);
 
-    const selectedMember =
-      todayMembers[randomIndex];
+    bonusDrawBtn.disabled = true;
 
-    bonusResult.textContent =
-      `💎 LUCKY MEMBER : ${selectedMember}`;
+    let shuffleCount = 0;
+
+    const memberShuffle = setInterval(() => {
+      const randomMember =
+        todayMembers[Math.floor(Math.random() * todayMembers.length)];
+
+      bonusResult.textContent =
+        `🎲 ${randomMember}`;
+
+      shuffleCount++;
+
+      if (shuffleCount >= 18) {
+        clearInterval(memberShuffle);
+
+        const selectedMember =
+          todayMembers[Math.floor(Math.random() * todayMembers.length)];
+
+        bonusResult.textContent =
+          `✨💎 LUCKY MEMBER : ${selectedMember} 💎✨`;
+
+        bonusDrawBtn.disabled = false;
+      }
+    }, 90);
+
   });
 }
   bonusClose.addEventListener("click", () => {
