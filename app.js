@@ -1935,28 +1935,62 @@ if (bonusDrawBtn && bonusResult) {
 
     let shuffleCount = 0;
 
-    const memberShuffle = setInterval(() => {
-      const randomMember =
-        todayMembers[Math.floor(Math.random() * todayMembers.length)];
+    const bonusTypes = [
+      "💌 MESSAGE",
+      "📸 MISSION",
+      "💎 TREASURE LUCK",
+      "✨ SPECIAL BONUS"
+    ];
 
-      bonusResult.textContent =
-        `🎲 ${randomMember}`;
+    const bonusShuffle = setInterval(() => {
+      const randomType =
+        bonusTypes[Math.floor(Math.random() * bonusTypes.length)];
+
+      bonusResult.textContent = `🎲 ${randomType}`;
 
       shuffleCount++;
 
       if (shuffleCount >= 18) {
-        clearInterval(memberShuffle);
+        clearInterval(bonusShuffle);
 
-        const selectedMember =
-          todayMembers[Math.floor(Math.random() * todayMembers.length)];
+        const roll = Math.random() * 100;
 
-        bonusResult.textContent =
-          `✨💎 LUCKY MEMBER : ${selectedMember} 💎✨`;
-bonusResult.classList.remove("is-winner");
-void bonusResult.offsetWidth;
-bonusResult.classList.add("is-winner");
+        let finalResult = "";
+
+        if (roll < 35) {
+          const message =
+            bonusMessages[Math.floor(Math.random() * bonusMessages.length)];
+
+          finalResult = `💌 MESSAGE\n\n${message}`;
+
+        } else if (roll < 65) {
+          const mission =
+            bonusMissions[Math.floor(Math.random() * bonusMissions.length)];
+
+          finalResult = `📸 MISSION\n\n${mission}`;
+
+        } else if (roll < 90) {
+          const luck =
+            bonusLuck[Math.floor(Math.random() * bonusLuck.length)];
+
+          finalResult = `💎 TREASURE LUCK\n\n${luck}`;
+
+        } else {
+          const special =
+            bonusSpecials[Math.floor(Math.random() * bonusSpecials.length)];
+
+          finalResult = `✨ SPECIAL BONUS ✨\n\n${special}`;
+        }
+
+        bonusResult.textContent = finalResult;
+
+        bonusResult.classList.remove("is-winner");
+        void bonusResult.offsetWidth;
+        bonusResult.classList.add("is-winner");
+
         bonusDrawBtn.disabled = false;
       }
+
     }, 90);
 
   });
