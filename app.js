@@ -1861,7 +1861,7 @@ updateTodayTreasure();
   });
 }
 // =====================================
-// 🎲 BONUS DRAW
+// 🎲 BONUS DRAW 🎁
 // =====================================
 
 const bonusOpen = document.getElementById("today-bonus-btn");
