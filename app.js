@@ -1623,7 +1623,66 @@ if (memberSelect) {
 
 updateHomeMember();
 
+// ======================================
+// 🎲 TODAY'S TREASURE
+// ======================================
 
+const todayMembers = [
+  "HYUNSUK",
+  "JIHOON",
+  "YOSHI",
+  "JUNKYU",
+  "JAEHYUK",
+  "ASAHI",
+  "DOYOUNG",
+  "HARUTO",
+  "JEONGWOO",
+  "JUNGHWAN"
+];
+// 今日の日付を YYYY-MM-DD で取得
+function getTodayKey() {
+  const now = new Date();
+
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+}
+
+// 今日の公式メンバーを取得
+function getTodayMember() {
+  const today = getTodayKey();
+
+  const savedDate = localStorage.getItem("treasure-today-date");
+  const savedMember = localStorage.getItem("treasure-today-member");
+
+  // 今日すでに引いていたら、その結果を返す
+  if (savedDate === today && savedMember) {
+    return savedMember;
+  }
+
+  // 今日初めてなら10人から抽選
+  const randomIndex = Math.floor(Math.random() * todayMembers.length);
+  const selectedMember = todayMembers[randomIndex];
+
+  // 今日の結果を保存
+  localStorage.setItem("treasure-today-date", today);
+  localStorage.setItem("treasure-today-member", selectedMember);
+
+  return selectedMember;
+}
+function updateTodayTreasure() {
+  const todayMemberElement = document.getElementById("today-member");
+
+  if (!todayMemberElement) return;
+
+  const member = getTodayMember();
+
+  todayMemberElement.textContent = member;
+}
+
+updateTodayTreasure();
 // ========================================
 // 🎉 TREASURE DAY 設定
 // ========================================
