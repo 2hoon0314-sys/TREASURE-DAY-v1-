@@ -1860,7 +1860,27 @@ updateTodayTreasure();
     document.body.style.overflow = "";
   });
 }
+// =====================================
+// 🎲 BONUS DRAW
+// =====================================
 
+const bonusOpen = document.querySelector(".today-bonus");
+const bonusDetail = document.getElementById("bonus-detail");
+const bonusClose = document.querySelector(".bonus-close");
+
+if (bonusOpen && bonusDetail && bonusClose) {
+
+  bonusOpen.addEventListener("click", () => {
+    bonusDetail.classList.add("active");
+    document.body.style.overflow = "hidden";
+  });
+
+  bonusClose.addEventListener("click", () => {
+    bonusDetail.classList.remove("active");
+    document.body.style.overflow = "";
+  });
+
+}
 // ========================================
 // 🎉 TREASURE DAY 設定
 // ========================================
