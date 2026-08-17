@@ -1673,7 +1673,7 @@ function getTodayMember() {
   return selectedMember;
 }
 function updateTodayTreasure() {
-  const todayMemberElement = document.getElementById("today-member");
+  const todayMemberElement = document.getElementById("home-today-member");
 
   if (!todayMemberElement) return;
 
