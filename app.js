@@ -1867,14 +1867,26 @@ updateTodayTreasure();
 const bonusOpen = document.getElementById("today-bonus-btn");
 const bonusDetail = document.getElementById("bonus-detail");
 const bonusClose = document.querySelector(".bonus-close");
-
+const bonusDrawBtn = document.querySelector(".bonus-draw-button");
+const bonusResult = document.getElementById("bonus-result");
 if (bonusOpen && bonusDetail && bonusClose) {
 
   bonusOpen.addEventListener("click", () => {
     bonusDetail.classList.add("active");
     document.body.style.overflow = "hidden";
   });
+if (bonusDrawBtn && bonusResult) {
+  bonusDrawBtn.addEventListener("click", () => {
+    const randomIndex =
+      Math.floor(Math.random() * todayMembers.length);
 
+    const selectedMember =
+      todayMembers[randomIndex];
+
+    bonusResult.textContent =
+      `💎 LUCKY MEMBER : ${selectedMember}`;
+  });
+}
   bonusClose.addEventListener("click", () => {
     bonusDetail.classList.remove("active");
     document.body.style.overflow = "";
