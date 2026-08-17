@@ -1727,15 +1727,41 @@ function getTodayMember() {
 
   return selectedMember;
 }
-function updateTodayTreasure() {
-  const todayMemberElement = document.getElementById("home-today-member");
+function getTodaySong() {
+  const today = getTodayKey();
 
-  if (!todayMemberElement) return;
+  const savedDate = localStorage.getItem("treasure-today-song-date");
+  const savedSong = localStorage.getItem("treasure-today-song");
+
+  if (savedDate === today && savedSong) {
+    return savedSong;
+  }
+
+  const randomIndex = Math.floor(Math.random() * todaySongs.length);
+  const selectedSong = todaySongs[randomIndex];
+
+  localStorage.setItem("treasure-today-song-date", today);
+  localStorage.setItem("treasure-today-song", selectedSong);
+
+  return selectedSong;
+}
+function updateTodayTreasure() {
+  const todayMemberElement =
+    document.getElementById("home-today-member");
+
+  const todaySongElement =
+    document.getElementById("home-today-song");
+
+  if (!todayMemberElement || !todaySongElement) return;
 
   const member = getTodayMember();
+  const song = getTodaySong();
 
   todayMemberElement.textContent = member;
+  todaySongElement.textContent = song;
 }
+
+updateTodayTreasure();
 
 updateTodayTreasure();
 // ========================================
