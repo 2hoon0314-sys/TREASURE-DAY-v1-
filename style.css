@@ -4262,3 +4262,27 @@ label[for="memory-song"] {
   font-size: 20px;
   font-weight: 800;
 }
+/* BONUS DRAW 当選演出 */
+.bonus-detail-result.is-winner {
+  animation: bonusWinnerPop 0.65s ease;
+}
+
+@keyframes bonusWinnerPop {
+  0% {
+    transform: scale(0.75);
+    opacity: 0.4;
+  }
+
+  55% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+
+  75% {
+    transform: scale(0.96);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
