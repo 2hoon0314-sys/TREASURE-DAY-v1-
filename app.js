@@ -1880,6 +1880,43 @@ const bonusMessages = [
   "小さないいことがたくさん見つかる日になりますように✨",
   "会いたい気持ちも今日のパワーに変えちゃお💎"
 ];
+const bonusMissions = [
+  "TREASUREの曲を1曲フルで聴く🎧",
+  "今日の推しの写真を1枚見る📸",
+  "好きなTREASUREのMVを1本見る🎬",
+  "推しの好きなところを1個思い出す💎",
+  "今日の気分に合うTREASUREの曲を選ぶ🎶",
+  "カメラロールから懐かしいTREASURE写真を発掘する📱",
+  "推しの動画を1本だけ見る👀",
+  "TREASUREの曲をシャッフルして最初に出た曲を聴く🎧",
+  "今日いちばん見たいメンバーの写真を探す🔎",
+  "過去のライブ写真を1枚見返す📸",
+  "TREASUREに一言メッセージを考える💌",
+  "今日の推し活を1枚写真に残す✨",
+  "好きなステージを1本見る🔥",
+  "TREASUREの好きな歌詞をひとつ思い出す🎤",
+  "今日のラッキーメンバーを決める🎲"
+];
+const bonusLuck = [
+  "💎 DIAMOND DAY｜今日はキラキラ最強DAY！",
+  "🩵 BLUE DAY｜ゆったり自分のペースが吉",
+  "✨ SHINING DAY｜嬉しいことが起こるかも！",
+  "🔥 GOING CRAZY DAY｜全力で楽しんだもん勝ち！",
+  "🌈 BEAUTIFUL DAY｜素敵なものに出会えそう",
+  "🌻 HELLO DAY｜新しい出会いや発見に期待！",
+  "🎧 MUSIC DAY｜TREASUREを聴くと運気UP",
+  "📸 MEMORY DAY｜今日の思い出を残すと◎",
+  "💌 LOVE DAY｜推しから幸せをもらえる日",
+  "👑 TREASURE DAY｜今日は全部うまくいく予感！"
+];
+const bonusSpecials = [
+  "👑 SUPER TREASURE DAY｜今日は超ラッキーDAY！",
+  "💎 DOUBLE TREASURE｜ラッキーメンバーを2人GET！",
+  "🎧 TREASURE TIME｜好きな曲を3曲連続で聴こう！",
+  "📸 MEMORY BONUS｜お気に入りのTREASURE写真を1枚保存！",
+  "💌 LOVE BONUS｜今日の推しに一言メッセージを残そう！",
+  "✨ WISH BONUS｜TREASUREに叶えてほしい願いを1つ決めよう！"
+];
 const bonusOpen = document.getElementById("today-bonus-btn");
 const bonusDetail = document.getElementById("bonus-detail");
 const bonusClose = document.querySelector(".bonus-close");
