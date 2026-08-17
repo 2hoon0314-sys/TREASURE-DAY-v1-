@@ -1709,42 +1709,78 @@ function getTodayKey() {
 function getTodayMember() {
   const today = getTodayKey();
 
-  const savedDate = localStorage.getItem("treasure-today-date");
-  const savedMember = localStorage.getItem("treasure-today-member");
+  const savedDate =
+    localStorage.getItem("treasure-today-date");
 
-  // 今日すでに引いていたら、その結果を返す
+  const savedMember =
+    localStorage.getItem("treasure-today-member");
+
   if (savedDate === today && savedMember) {
     return savedMember;
   }
 
-  // 今日初めてなら10人から抽選
-  const randomIndex = Math.floor(Math.random() * todayMembers.length);
-  const selectedMember = todayMembers[randomIndex];
+  return "???";
+}
+function drawTodayMember() {
+  const today = getTodayKey();
 
-  // 今日の結果を保存
-  localStorage.setItem("treasure-today-date", today);
-  localStorage.setItem("treasure-today-member", selectedMember);
+  const randomIndex =
+    Math.floor(Math.random() * todayMembers.length);
+
+  const selectedMember =
+    todayMembers[randomIndex];
+
+  localStorage.setItem(
+    "treasure-today-date",
+    today
+  );
+
+  localStorage.setItem(
+    "treasure-today-member",
+    selectedMember
+  );
 
   return selectedMember;
 }
 function getTodaySong() {
   const today = getTodayKey();
 
-  const savedDate = localStorage.getItem("treasure-today-song-date");
-  const savedSong = localStorage.getItem("treasure-today-song");
+  const savedDate =
+    localStorage.getItem("treasure-today-song-date");
+
+  const savedSong =
+    localStorage.getItem("treasure-today-song");
 
   if (savedDate === today && savedSong) {
     return savedSong;
   }
 
-  const randomIndex = Math.floor(Math.random() * todaySongs.length);
-  const selectedSong = todaySongs[randomIndex];
+  return "???";
+}
+function drawTodaySong() {
+  const today = getTodayKey();
 
-  localStorage.setItem("treasure-today-song-date", today);
-  localStorage.setItem("treasure-today-song", selectedSong);
+  const randomIndex =
+    Math.floor(Math.random() * todaySongs.length);
+
+  const selectedSong =
+    todaySongs[randomIndex];
+
+  localStorage.setItem(
+    "treasure-today-song-date",
+    today
+  );
+
+  localStorage.setItem(
+    "treasure-today-song",
+    selectedSong
+  );
 
   return selectedSong;
 }
+ 
+
+
 function updateTodayTreasure() {
   const todayMemberElement =
     document.getElementById("home-today-member");
