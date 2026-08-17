@@ -2002,6 +2002,27 @@ if (bonusDrawBtn && bonusResult) {
 
 }
 // ========================================
+// 📖 MEMBER BOOK
+// ========================================
+
+const memberBookOpen = document.getElementById("member-book-open");
+const memberBookDetail = document.getElementById("member-book-detail");
+const memberBookClose = document.getElementById("member-book-close");
+
+if (memberBookOpen && memberBookDetail) {
+  memberBookOpen.addEventListener("click", () => {
+    memberBookDetail.classList.add("active");
+    document.body.style.overflow = "hidden";
+  });
+}
+
+if (memberBookClose && memberBookDetail) {
+  memberBookClose.addEventListener("click", () => {
+    memberBookDetail.classList.remove("active");
+    document.body.style.overflow = "";
+  });
+}
+// ========================================
 // 🎉 TREASURE DAY 設定
 // ========================================
 
