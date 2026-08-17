@@ -1762,8 +1762,42 @@ function updateTodayTreasure() {
 }
 
 updateTodayTreasure();
+const homeTodayOpen =
+  document.getElementById("home-today-open");
 
-updateTodayTreasure();
+const todayDetail =
+  document.getElementById("today-detail");
+
+const todayClose =
+  document.getElementById("today-close");
+
+const todayDetailMember =
+  document.getElementById("today-detail-member");
+
+const todayDetailSong =
+  document.getElementById("today-detail-song");
+
+if (
+  homeTodayOpen &&
+  todayDetail &&
+  todayClose &&
+  todayDetailMember &&
+  todayDetailSong
+) {
+  homeTodayOpen.addEventListener("click", () => {
+    todayDetailMember.textContent = getTodayMember();
+    todayDetailSong.textContent = getTodaySong();
+
+    todayDetail.classList.add("active");
+    document.body.style.overflow = "hidden";
+  });
+
+  todayClose.addEventListener("click", () => {
+    todayDetail.classList.remove("active");
+    document.body.style.overflow = "";
+  });
+}
+
 // ========================================
 // 🎉 TREASURE DAY 設定
 // ========================================
