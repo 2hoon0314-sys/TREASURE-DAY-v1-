@@ -1821,9 +1821,11 @@ if (
   todayDetailSong
 ) {
 homeTodayOpen.addEventListener("click", () => {
-  const finalMember = getTodayMember();
-  const finalSong = getTodaySong();
+  const finalMember =
+  getTodayMember() === "???" ? drawTodayMember() : getTodayMember();
 
+const finalSong =
+  getTodaySong() === "???" ? drawTodaySong() : getTodaySong();
   todayDetail.classList.add("active");
   document.body.style.overflow = "hidden";
 
