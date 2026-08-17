@@ -1863,7 +1863,23 @@ updateTodayTreasure();
 // =====================================
 // 🎲 BONUS DRAW 🎁
 // =====================================
-
+const bonusMessages = [
+  "今日もTREASUREと一緒にファイティン💎",
+  "今日は好きなものをいっぱい見て過ごそ🩵",
+  "推しは今日もあなたの味方🫶",
+  "今日もいいことありますように✨",
+  "無理しすぎ禁止！TREASUREで充電しよ🔋",
+  "今日のあなたも最高〜！💎",
+  "ちょっと疲れたら推し補給しよ🎧",
+  "今日も自分のペースでいこ〜！",
+  "TREASURE DAYへようこそ💎 今日も楽しもう！",
+  "今日の推し活が最高の思い出になりますように📸",
+  "今日もTREASUREからいっぱいパワーもらおう💎",
+  "好きな曲を聴いて気分上げてこ〜🎶",
+  "今日頑張った分だけ推し補給してよし！🫶",
+  "小さないいことがたくさん見つかる日になりますように✨",
+  "会いたい気持ちも今日のパワーに変えちゃお💎"
+];
 const bonusOpen = document.getElementById("today-bonus-btn");
 const bonusDetail = document.getElementById("bonus-detail");
 const bonusClose = document.querySelector(".bonus-close");
