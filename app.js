@@ -1864,7 +1864,7 @@ updateTodayTreasure();
 // 🎲 BONUS DRAW
 // =====================================
 
-const bonusOpen = document.querySelector(".today-bonus");
+const bonusOpen = document.getElementById("today-bonus-btn");
 const bonusDetail = document.getElementById("bonus-detail");
 const bonusClose = document.querySelector(".bonus-close");
 
