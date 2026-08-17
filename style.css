@@ -4538,3 +4538,10 @@ label[for="memory-song"] {
 .member-card:active {
   transform: scale(0.98);
 }
+.member-card-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+}
