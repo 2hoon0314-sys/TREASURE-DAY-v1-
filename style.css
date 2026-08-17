@@ -3964,3 +3964,105 @@ label[for="memory-song"] {
 .seat-tour-back-btn:active {
   transform: scale(0.97);
 }
+/* ==============================
+   🎲 TODAY CARD
+============================== */
+
+.home-today-card {
+  margin: 22px 0;
+  padding: 22px;
+  border: 2px solid #d7e5ff;
+  border-radius: 28px;
+  background: linear-gradient(
+    145deg,
+    #ffffff 0%,
+    #f3f7ff 100%
+  );
+  box-shadow: 0 10px 25px rgba(90, 130, 190, 0.08);
+}
+
+.home-today-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+
+  font-size: 20px;
+  font-weight: 800;
+  color: #6f8fc6;
+}
+
+.home-today-date {
+  font-size: 12px;
+  font-weight: 600;
+  color: #9badca;
+}
+
+.home-today-preview {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.home-today-item {
+  min-width: 0;
+  padding: 16px 10px;
+  border-radius: 20px;
+  background: #edf4ff;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+
+  text-align: center;
+}
+
+.home-today-label {
+  font-size: 11px;
+  font-weight: 800;
+  color: #8ca4cb;
+  letter-spacing: 0.5px;
+}
+
+.home-today-item strong {
+  max-width: 100%;
+  font-size: 15px;
+  color: #263653;
+
+  overflow-wrap: anywhere;
+}
+
+.home-today-message {
+  margin-top: 14px;
+  padding: 14px;
+
+  border-radius: 18px;
+  background: #ffffff;
+
+  text-align: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: #6e83a8;
+}
+
+.home-today-open {
+  width: 100%;
+  margin-top: 14px;
+  padding: 14px;
+
+  border: none;
+  border-radius: 999px;
+
+  background: #82a6e2;
+  color: #ffffff;
+
+  font-size: 14px;
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+.home-today-open:active {
+  transform: scale(0.98);
+}
