@@ -5216,3 +5216,128 @@ label[for="memory-song"] {
   font-size: 11px;
   font-weight: 900;
 }
+/* =========================================
+   📸 JIHOON VISUAL EDIT MODAL
+========================================= */
+
+.jihoon-visual-edit-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1600;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+
+  padding: 20px;
+
+  background: rgba(35, 65, 110, 0.18);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transition: 0.25s ease;
+}
+
+.jihoon-visual-edit-modal.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.jihoon-visual-edit-sheet {
+  width: 100%;
+  max-width: 520px;
+
+  padding: 26px 22px 30px;
+
+  background: rgba(255, 255, 255, 0.97);
+  border: 1px solid rgba(130, 170, 225, 0.35);
+  border-radius: 34px;
+
+  box-shadow: 0 20px 60px rgba(65, 100, 160, 0.22);
+
+  text-align: center;
+
+  transform: translateY(40px);
+  transition: transform 0.25s ease;
+}
+
+.jihoon-visual-edit-modal.active .jihoon-visual-edit-sheet {
+  transform: translateY(0);
+}
+
+.jihoon-visual-edit-kicker {
+  margin-bottom: 8px;
+
+  color: #83a5d2;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+}
+
+.jihoon-visual-edit-sheet h2 {
+  margin: 0 0 20px;
+
+  color: #243f70;
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.jihoon-visual-edit-preview {
+  width: 170px;
+  aspect-ratio: 3 / 4;
+
+  margin: 0 auto 24px;
+
+  overflow: hidden;
+
+  border-radius: 26px;
+
+  box-shadow: 0 10px 30px rgba(70, 105, 160, 0.18);
+}
+
+.jihoon-visual-edit-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.jihoon-visual-edit-actions {
+  display: grid;
+  gap: 10px;
+}
+
+.jihoon-visual-edit-actions button,
+.jihoon-visual-edit-cancel {
+  width: 100%;
+
+  padding: 15px 16px;
+
+  border: 0;
+  border-radius: 18px;
+
+  font-weight: 900;
+  letter-spacing: 0.03em;
+}
+
+.jihoon-visual-edit-actions button {
+  background: #e8f1ff;
+  color: #315b91;
+}
+
+#jihoonVisualDelete {
+  background: #fff0f0;
+  color: #c85b68;
+}
+
+.jihoon-visual-edit-cancel {
+  margin-top: 14px;
+
+  background: #f3f5f8;
+  color: #8490a1;
+}
