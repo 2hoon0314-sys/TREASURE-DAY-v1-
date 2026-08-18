@@ -4003,49 +4003,243 @@ if (jihoonVisualClose && jihoonVisualBook) {
   });
 }
 // =========================================
-// 📸 JIHOON VISUAL ADD
+// 📸 JIHOON VISUAL BOOK - IndexedDB SAVE
 // =========================================
 
 const jihoonVisualAdd = document.getElementById("jihoonVisualAdd");
 const jihoonVisualInput = document.getElementById("jihoonVisualInput");
 const jihoonVisualGrid = document.getElementById("jihoonVisualGrid");
 
+const JIHOON_VISUAL_DB_NAME = "treasure-day-visual-db";
+const JIHOON_VISUAL_DB_VERSION = 1;
+const JIHOON_VISUAL_STORE = "jihoonVisuals";
 
-if (jihoonVisualAdd && jihoonVisualInput) {
-  jihoonVisualAdd.addEventListener("click", () => {
-    jihoonVisualInput.click();
+let jihoonVisualDB;
+
+
+// =========================================
+// IndexedDB OPEN
+// =========================================
+
+function openJihoonVisualDB() {
+  return new Promise((resolve, reject) => {
+
+    const request = indexedDB.open(
+      JIHOON_VISUAL_DB_NAME,
+      JIHOON_VISUAL_DB_VERSION
+    );
+
+    request.onupgradeneeded = (event) => {
+      const db = event.target.result;
+
+      if (!db.objectStoreNames.contains(JIHOON_VISUAL_STORE)) {
+        db.createObjectStore(
+          JIHOON_VISUAL_STORE,
+          {
+            keyPath: "id",
+            autoIncrement: true
+          }
+        );
+      }
+    };
+
+    request.onsuccess = (event) => {
+      jihoonVisualDB = event.target.result;
+      resolve(jihoonVisualDB);
+    };
+
+    request.onerror = () => {
+      reject(request.error);
+    };
+
   });
 }
 
 
-if (jihoonVisualInput && jihoonVisualGrid) {
-  jihoonVisualInput.addEventListener("change", () => {
+// =========================================
+// 写真保存
+// =========================================
+
+function saveJihoonVisual(file) {
+  return new Promise((resolve, reject) => {
+
+    if (!jihoonVisualDB) {
+      reject(new Error("Database is not ready"));
+      return;
+    }
+
+    const transaction = jihoonVisualDB.transaction(
+      JIHOON_VISUAL_STORE,
+      "readwrite"
+    );
+
+    const store = transaction.objectStore(JIHOON_VISUAL_STORE);
+
+    const data = {
+      image: file,
+      createdAt: Date.now()
+    };
+
+    const request = store.add(data);
+
+    request.onsuccess = () => {
+      resolve(request.result);
+    };
+
+    request.onerror = () => {
+      reject(request.error);
+    };
+
+  });
+}
+
+
+// =========================================
+// 写真一覧取得
+// =========================================
+
+function getJihoonVisuals() {
+  return new Promise((resolve, reject) => {
+
+    if (!jihoonVisualDB) {
+      resolve([]);
+      return;
+    }
+
+    const transaction = jihoonVisualDB.transaction(
+      JIHOON_VISUAL_STORE,
+      "readonly"
+    );
+
+    const store = transaction.objectStore(JIHOON_VISUAL_STORE);
+
+    const request = store.getAll();
+
+    request.onsuccess = () => {
+      resolve(request.result || []);
+    };
+
+    request.onerror = () => {
+      reject(request.error);
+    };
+
+  });
+}
+
+
+// =========================================
+// 写真カード作成
+// =========================================
+
+function createJihoonVisualCard(item) {
+
+  if (!jihoonVisualGrid) return;
+
+  const card = document.createElement("div");
+  card.className = "jihoon-visual-card";
+
+  const img = document.createElement("img");
+
+  const imageURL = URL.createObjectURL(item.image);
+
+  img.src = imageURL;
+  img.alt = "JIHOON VISUAL";
+
+  img.onload = () => {
+    URL.revokeObjectURL(imageURL);
+  };
+
+  card.appendChild(img);
+
+  jihoonVisualGrid.prepend(card);
+}
+
+
+// =========================================
+// 保存済み写真を表示
+// =========================================
+
+async function loadJihoonVisuals() {
+
+  if (!jihoonVisualGrid) return;
+
+  jihoonVisualGrid.innerHTML = "";
+
+  try {
+
+    const visuals = await getJihoonVisuals();
+
+    visuals
+      .sort((a, b) => a.createdAt - b.createdAt)
+      .forEach((item) => {
+        createJihoonVisualCard(item);
+      });
+
+  } catch (error) {
+    console.error("JIHOON VISUAL LOAD ERROR:", error);
+  }
+
+}
+
+
+// =========================================
+// ＋ ADD VISUAL
+// =========================================
+
+if (jihoonVisualAdd && jihoonVisualInput) {
+
+  jihoonVisualAdd.addEventListener("click", () => {
+    jihoonVisualInput.click();
+  });
+
+}
+
+
+// =========================================
+// 写真選択
+// =========================================
+
+if (jihoonVisualInput) {
+
+  jihoonVisualInput.addEventListener("change", async () => {
 
     const file = jihoonVisualInput.files[0];
 
     if (!file) return;
 
+    try {
 
-    const reader = new FileReader();
+      const id = await saveJihoonVisual(file);
 
-    reader.onload = () => {
+      createJihoonVisualCard({
+        id: id,
+        image: file,
+        createdAt: Date.now()
+      });
 
-      const card = document.createElement("div");
-      card.className = "jihoon-visual-card";
+    } catch (error) {
 
-      const img = document.createElement("img");
-      img.src = reader.result;
-      img.alt = "JIHOON VISUAL";
+      console.error("JIHOON VISUAL SAVE ERROR:", error);
 
-      card.appendChild(img);
-      jihoonVisualGrid.prepend(card);
+      alert("写真の保存に失敗しました🥲");
 
-    };
+    }
 
-    reader.readAsDataURL(file);
-
-    // 同じ写真を続けて選べるようにリセット
     jihoonVisualInput.value = "";
 
   });
+
 }
+
+
+// =========================================
+// 初期化
+// =========================================
+
+openJihoonVisualDB()
+  .then(() => {
+    loadJihoonVisuals();
+  })
+  .catch((error) => {
+    console.error("JIHOON VISUAL DB ERROR:", error);
+  });
