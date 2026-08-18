@@ -3969,3 +3969,36 @@ if (jihoonBookClose && jihoonBookDetail) {
     document.body.style.overflow = "hidden";
   });
 }
+// =========================================
+// 📸 JIHOON VISUAL BOOK OPEN / CLOSE
+// =========================================
+
+const jihoonVisualBook = document.getElementById("jihoonVisualBook");
+const jihoonVisualClose = document.querySelector(".jihoon-visual-close");
+const jihoonMenuCards = document.querySelectorAll(".jihoon-book-menu-card");
+
+
+// 📸 VISUAL BOOKを開く
+if (jihoonMenuCards[0] && jihoonVisualBook) {
+  jihoonMenuCards[0].addEventListener("click", () => {
+
+    jihoonVisualBook.classList.add("active");
+    jihoonVisualBook.scrollTop = 0;
+
+    document.body.style.overflow = "hidden";
+
+  });
+}
+
+
+// ← JIHOON BOOKへ戻る
+if (jihoonVisualClose && jihoonVisualBook) {
+  jihoonVisualClose.addEventListener("click", () => {
+
+    jihoonVisualBook.classList.remove("active");
+
+    // 後ろのJIHOON BOOKはそのまま開いておく
+    document.body.style.overflow = "hidden";
+
+  });
+}
