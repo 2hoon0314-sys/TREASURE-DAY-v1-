@@ -405,14 +405,16 @@
       </p>
     </div>
 
-    <div class="jihoon-hair-filter">
-      <button type="button">ALL</button>
-      <button type="button">🖤 BLACK</button>
-      <button type="button">🤎 BROWN</button>
-      <button type="button">❤️ RED</button>
-      <button type="button">🩷 PINK</button>
-      <button type="button">💛 BLONDE</button>
-    </div>
+<div class="jihoon-hair-filter">
+  <button type="button" class="active" data-hair="ALL">ALL</button>
+  <button type="button" data-hair="BLACK">🖤 BLACK</button>
+  <button type="button" data-hair="BROWN">🤎 BROWN</button>
+  <button type="button" data-hair="RED">❤️ RED</button>
+  <button type="button" data-hair="PINK">🩷 PINK</button>
+  <button type="button" data-hair="BLONDE">💛 BLONDE</button>
+  <button type="button" data-hair="GRAY">🩶 GRAY</button>
+  <button type="button" data-hair="OTHER">✨ OTHER</button>
+</div>
 
     <div class="jihoon-visual-empty">
       <div class="jihoon-visual-empty-icon">📸</div>
@@ -441,6 +443,66 @@
   </div>
 
 </section>  
+ <!-- =========================================
+     🎨 JIHOON HAIR COLOR SELECT
+========================================= -->
+<div id="jihoonHairModal" class="jihoon-hair-modal">
+
+  <div class="jihoon-hair-modal-card">
+
+    <div class="jihoon-hair-modal-icon">🎨</div>
+
+    <p class="jihoon-hair-modal-small">
+      VISUAL TAG
+    </p>
+
+    <h3>
+      このジフンは何髪？🐶
+    </h3>
+
+    <div class="jihoon-hair-options">
+
+      <button type="button" data-hair="BLACK">
+        🖤 BLACK
+      </button>
+
+      <button type="button" data-hair="BROWN">
+        🤎 BROWN
+      </button>
+
+      <button type="button" data-hair="RED">
+        ❤️ RED
+      </button>
+
+      <button type="button" data-hair="PINK">
+        🩷 PINK
+      </button>
+
+      <button type="button" data-hair="BLONDE">
+        💛 BLONDE
+      </button>
+
+      <button type="button" data-hair="GRAY">
+        🩶 GRAY
+      </button>
+
+      <button type="button" data-hair="OTHER">
+        ✨ OTHER
+      </button>
+
+    </div>
+
+    <button
+      type="button"
+      id="jihoonHairCancel"
+      class="jihoon-hair-cancel"
+    >
+      CANCEL
+    </button>
+
+  </div>
+
+</div> 
 <!-- 🎲 BONUS DRAW DETAIL -->
 <div class="bonus-detail" id="bonus-detail">
 
