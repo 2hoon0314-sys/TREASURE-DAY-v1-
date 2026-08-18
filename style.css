@@ -5029,3 +5029,190 @@ label[for="memory-song"] {
 
   object-fit: cover;
 }
+/* =========================================
+   🎨 JIHOON HAIR COLOR TAG
+========================================= */
+
+.jihoon-hair-filter button.active {
+  background: #cfe2ff;
+  border-color: #9ebfe9;
+  color: #254a80;
+
+  box-shadow:
+    0 7px 18px rgba(67, 104, 157, 0.14);
+}
+
+
+/* 写真カードの髪色タグ */
+.jihoon-visual-hair-tag {
+  position: absolute;
+  left: 9px;
+  bottom: 9px;
+
+  padding: 6px 9px;
+
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  color: #294979;
+
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.03em;
+
+  box-shadow: 0 4px 12px rgba(35, 66, 110, 0.15);
+}
+
+
+/* =========================================
+   🎨 HAIR SELECT MODAL
+========================================= */
+
+.jihoon-hair-modal {
+  position: fixed;
+  inset: 0;
+
+  z-index: 1600;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+
+  padding: 20px;
+
+  background: rgba(34, 59, 98, 0.22);
+
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s ease;
+}
+
+.jihoon-hair-modal.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+
+.jihoon-hair-modal-card {
+  width: min(100%, 520px);
+
+  padding: 25px 20px 20px;
+
+  border-radius: 32px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(247, 251, 255, 0.98),
+      rgba(234, 244, 255, 0.98)
+    );
+
+  border: 1px solid rgba(126, 165, 218, 0.3);
+
+  text-align: center;
+
+  box-shadow:
+    0 20px 50px rgba(39, 72, 119, 0.22),
+    inset 0 1px 0 rgba(255,255,255,0.95);
+}
+
+
+.jihoon-hair-modal-icon {
+  width: 58px;
+  height: 58px;
+
+  margin: 0 auto 12px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 20px;
+
+  background: #dfeaff;
+
+  font-size: 26px;
+}
+
+
+.jihoon-hair-modal-small {
+  margin: 0 0 5px;
+
+  color: #87a3c8;
+
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+}
+
+
+.jihoon-hair-modal-card h3 {
+  margin: 0 0 19px;
+
+  color: #243f73;
+
+  font-size: 22px;
+  font-weight: 950;
+}
+
+
+.jihoon-hair-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 9px;
+}
+
+
+.jihoon-hair-options button {
+  appearance: none;
+  -webkit-appearance: none;
+
+  border: 1px solid rgba(111, 153, 210, 0.25);
+
+  background: rgba(255,255,255,0.88);
+
+  color: #345582;
+
+  padding: 13px 8px;
+
+  border-radius: 17px;
+
+  font-size: 11px;
+  font-weight: 900;
+
+  box-shadow: 0 5px 13px rgba(62, 97, 145, 0.07);
+}
+
+
+.jihoon-hair-options button:active {
+  transform: scale(0.97);
+}
+
+
+.jihoon-hair-cancel {
+  appearance: none;
+  -webkit-appearance: none;
+
+  margin-top: 15px;
+
+  border: 0;
+  background: transparent;
+
+  color: #8aa1c0;
+
+  padding: 8px 15px;
+
+  font-size: 11px;
+  font-weight: 900;
+}
