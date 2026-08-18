@@ -4002,3 +4002,50 @@ if (jihoonVisualClose && jihoonVisualBook) {
 
   });
 }
+// =========================================
+// 📸 JIHOON VISUAL ADD
+// =========================================
+
+const jihoonVisualAdd = document.getElementById("jihoonVisualAdd");
+const jihoonVisualInput = document.getElementById("jihoonVisualInput");
+const jihoonVisualGrid = document.getElementById("jihoonVisualGrid");
+
+
+if (jihoonVisualAdd && jihoonVisualInput) {
+  jihoonVisualAdd.addEventListener("click", () => {
+    jihoonVisualInput.click();
+  });
+}
+
+
+if (jihoonVisualInput && jihoonVisualGrid) {
+  jihoonVisualInput.addEventListener("change", () => {
+
+    const file = jihoonVisualInput.files[0];
+
+    if (!file) return;
+
+
+    const reader = new FileReader();
+
+    reader.onload = () => {
+
+      const card = document.createElement("div");
+      card.className = "jihoon-visual-card";
+
+      const img = document.createElement("img");
+      img.src = reader.result;
+      img.alt = "JIHOON VISUAL";
+
+      card.appendChild(img);
+      jihoonVisualGrid.prepend(card);
+
+    };
+
+    reader.readAsDataURL(file);
+
+    // 同じ写真を続けて選べるようにリセット
+    jihoonVisualInput.value = "";
+
+  });
+}
