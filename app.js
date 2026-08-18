@@ -3945,3 +3945,27 @@ async function loadEventPhotos(eventKey) {
     };
   });
 }
+// ========================================
+// 🐶 JIHOON BOOK OPEN / CLOSE
+// ========================================
+
+const memberCards = document.querySelectorAll(".member-card");
+const jihoonBookDetail = document.getElementById("jihoon-book-detail");
+const jihoonBookClose = document.querySelector(".jihoon-book-close");
+
+if (memberCards[1] && jihoonBookDetail) {
+  memberCards[1].addEventListener("click", () => {
+    jihoonBookDetail.classList.add("active");
+    document.body.style.overflow = "hidden";
+    jihoonBookDetail.scrollTop = 0;
+  });
+}
+
+if (jihoonBookClose && jihoonBookDetail) {
+  jihoonBookClose.addEventListener("click", () => {
+    jihoonBookDetail.classList.remove("active");
+
+    // MEMBER BOOKは開いたままにする
+    document.body.style.overflow = "hidden";
+  });
+}
