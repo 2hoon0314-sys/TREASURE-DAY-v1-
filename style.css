@@ -5226,10 +5226,10 @@ label[for="memory-song"] {
   z-index: 1600;
 
   display: flex;
-  align-items: flex-end;
-  justify-content: center;
+align-items: flex-start;
+justify-content: center;
 
-  padding: 20px;
+padding: 120px 20px 160px;
 
   background: rgba(35, 65, 110, 0.18);
   backdrop-filter: blur(8px);
@@ -5238,7 +5238,8 @@ label[for="memory-song"] {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-
+overflow-y: auto;
+-webkit-overflow-scrolling: touch;
   transition: 0.25s ease;
 }
 
@@ -5251,7 +5252,7 @@ label[for="memory-song"] {
 .jihoon-visual-edit-sheet {
   width: 100%;
   max-width: 520px;
-
+flex-shrink: 0;
   padding: 26px 22px 30px;
 
   background: rgba(255, 255, 255, 0.97);
