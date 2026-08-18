@@ -4994,3 +4994,38 @@ label[for="memory-song"] {
 .jihoon-visual-add:active {
   transform: scale(0.97);
 }
+/* =========================================
+   📸 JIHOON VISUAL GRID
+========================================= */
+
+.jihoon-visual-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+
+  margin-top: 18px;
+}
+
+.jihoon-visual-card {
+  position: relative;
+
+  overflow: hidden;
+
+  aspect-ratio: 3 / 4;
+
+  border-radius: 22px;
+
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(111, 153, 210, 0.25);
+
+  box-shadow: 0 8px 20px rgba(69, 104, 151, 0.1);
+}
+
+.jihoon-visual-card img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+}
