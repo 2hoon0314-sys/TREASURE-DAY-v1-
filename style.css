@@ -5342,3 +5342,43 @@ flex-shrink: 0;
   background: #f3f5f8;
   color: #8490a1;
 }
+/* =========================================
+   📸 JIHOON VISUAL EDIT - iPhone FIX
+========================================= */
+
+.jihoon-visual-edit-modal {
+  z-index: 9999;
+
+  padding:
+    calc(env(safe-area-inset-top) + 30px)
+    18px
+    calc(env(safe-area-inset-bottom) + 30px);
+
+  align-items: center;
+
+  overflow: hidden;
+}
+
+
+/* 白いEDITカード自体をスクロール */
+.jihoon-visual-edit-sheet {
+  width: 100%;
+  max-width: 520px;
+
+  max-height: calc(
+    100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 60px
+  );
+
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+
+  flex-shrink: 0;
+
+  overscroll-behavior: contain;
+}
+
+
+/* 下までちゃんと余白を作る */
+.jihoon-visual-edit-cancel {
+  margin-bottom: 20px;
+}
