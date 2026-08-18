@@ -4748,3 +4748,249 @@ label[for="memory-song"] {
 .jihoon-book-menu-card:active {
   transform: scale(0.985);
 }
+/* =========================================
+   📸 JIHOON VISUAL BOOK
+========================================= */
+
+.jihoon-visual-book {
+  position: fixed;
+  inset: 0;
+  z-index: 1400;
+
+  background:
+    radial-gradient(circle at 15% 8%, rgba(214, 232, 255, 0.95), transparent 34%),
+    radial-gradient(circle at 90% 28%, rgba(232, 242, 255, 0.95), transparent 34%),
+    linear-gradient(180deg, #eef6ff 0%, #e8f2ff 55%, #f7faff 100%);
+
+  padding: 28px 18px 140px;
+
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transition:
+    opacity 0.25s ease,
+    visibility 0.25s ease;
+}
+
+
+/* 開いた状態 */
+.jihoon-visual-book.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+
+/* 中身 */
+.jihoon-visual-inner {
+  width: min(100%, 680px);
+  margin: 0 auto;
+}
+
+
+/* ← JIHOON BOOK */
+.jihoon-visual-close {
+  appearance: none;
+  -webkit-appearance: none;
+
+  border: 1px solid rgba(113, 154, 211, 0.28);
+  background: rgba(255, 255, 255, 0.9);
+
+  color: #29497d;
+
+  padding: 11px 16px;
+  margin-bottom: 20px;
+
+  border-radius: 999px;
+
+  font-size: 13px;
+  font-weight: 900;
+
+  box-shadow: 0 8px 20px rgba(75, 110, 160, 0.1);
+}
+
+
+/* 📸 VISUAL BOOK */
+.jihoon-visual-kicker {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 8px 13px;
+  margin-bottom: 12px;
+
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(118, 158, 215, 0.22);
+
+  color: #6689bb;
+
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
+
+/* タイトル部分 */
+.jihoon-visual-header {
+  padding: 22px 4px 16px;
+}
+
+.jihoon-visual-small {
+  margin: 0 0 8px;
+
+  color: #87a2c8;
+
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+}
+
+.jihoon-visual-header h2 {
+  margin: 0;
+
+  color: #243f73;
+
+  font-size: clamp(34px, 10vw, 52px);
+  line-height: 0.95;
+  font-weight: 1000;
+  letter-spacing: -0.025em;
+}
+
+.jihoon-visual-header > p:last-child {
+  margin: 15px 0 0;
+
+  color: #7895bd;
+
+  font-size: 13px;
+  font-weight: 750;
+  line-height: 1.7;
+}
+
+
+/* 髪色フィルター */
+.jihoon-hair-filter {
+  display: flex;
+  gap: 8px;
+
+  overflow-x: auto;
+
+  margin: 14px -18px 22px;
+  padding: 2px 18px 8px;
+
+  scrollbar-width: none;
+}
+
+.jihoon-hair-filter::-webkit-scrollbar {
+  display: none;
+}
+
+.jihoon-hair-filter button {
+  flex: 0 0 auto;
+
+  appearance: none;
+  -webkit-appearance: none;
+
+  border: 1px solid rgba(112, 153, 210, 0.27);
+  background: rgba(255, 255, 255, 0.88);
+
+  color: #395a8d;
+
+  padding: 10px 14px;
+
+  border-radius: 999px;
+
+  font-size: 11px;
+  font-weight: 900;
+
+  box-shadow: 0 5px 14px rgba(67, 102, 151, 0.07);
+}
+
+
+/* 空のVISUAL BOOK */
+.jihoon-visual-empty {
+  min-height: 300px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  padding: 38px 22px;
+
+  text-align: center;
+
+  background: rgba(255, 255, 255, 0.92);
+
+  border: 1px solid rgba(111, 153, 210, 0.28);
+  border-radius: 30px;
+
+  box-shadow:
+    0 14px 32px rgba(70, 105, 153, 0.10),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+.jihoon-visual-empty-icon {
+  width: 72px;
+  height: 72px;
+
+  display: grid;
+  place-items: center;
+
+  margin-bottom: 18px;
+
+  border-radius: 24px;
+
+  background: #e5efff;
+
+  font-size: 31px;
+}
+
+.jihoon-visual-empty strong {
+  color: #243f73;
+
+  font-size: 18px;
+  font-weight: 950;
+  letter-spacing: 0.04em;
+}
+
+.jihoon-visual-empty p {
+  margin: 10px 0 22px;
+
+  color: #8aa1c1;
+
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.7;
+}
+
+
+/* ADD VISUAL */
+.jihoon-visual-add {
+  appearance: none;
+  -webkit-appearance: none;
+
+  border: 0;
+
+  padding: 13px 22px;
+
+  border-radius: 999px;
+
+  background: #dceaff;
+
+  color: #31588f;
+
+  font-size: 12px;
+  font-weight: 950;
+  letter-spacing: 0.05em;
+
+  box-shadow: 0 7px 18px rgba(73, 110, 163, 0.12);
+}
+
+.jihoon-visual-add:active {
+  transform: scale(0.97);
+}
