@@ -4060,7 +4060,7 @@ function openJihoonVisualDB() {
 // 写真保存
 // =========================================
 
-function saveJihoonVisual(file) {
+function saveJihoonVisual(file, hairColor) {
   return new Promise((resolve, reject) => {
 
     if (!jihoonVisualDB) {
@@ -4077,6 +4077,7 @@ function saveJihoonVisual(file) {
 
     const data = {
       image: file,
+      hairColor: hairColor,
       createdAt: Date.now()
     };
 
@@ -4092,7 +4093,6 @@ function saveJihoonVisual(file) {
 
   });
 }
-
 
 // =========================================
 // 写真一覧取得
@@ -4138,6 +4138,10 @@ function createJihoonVisualCard(item) {
   const card = document.createElement("div");
   card.className = "jihoon-visual-card";
 
+  const hairColor = item.hairColor || "UNTAGGED";
+
+  card.dataset.hair = hairColor;
+
   const img = document.createElement("img");
 
   const imageURL = URL.createObjectURL(item.image);
@@ -4149,7 +4153,27 @@ function createJihoonVisualCard(item) {
     URL.revokeObjectURL(imageURL);
   };
 
+
+  const hairTag = document.createElement("div");
+  hairTag.className = "jihoon-visual-hair-tag";
+
+  const hairLabels = {
+    BLACK: "🖤 BLACK",
+    BROWN: "🤎 BROWN",
+    RED: "❤️ RED",
+    PINK: "🩷 PINK",
+    BLONDE: "💛 BLONDE",
+    GRAY: "🩶 GRAY",
+    OTHER: "✨ OTHER",
+    UNTAGGED: "💎 UNTAGGED"
+  };
+
+  hairTag.textContent =
+    hairLabels[hairColor] || "✨ OTHER";
+
+
   card.appendChild(img);
+  card.appendChild(hairTag);
 
   jihoonVisualGrid.prepend(card);
 }
@@ -4196,36 +4220,94 @@ if (jihoonVisualAdd && jihoonVisualInput) {
 
 
 // =========================================
-// 写真選択
+// 🎨 JIHOON HAIR COLOR SELECT
 // =========================================
 
+const jihoonHairModal =
+  document.getElementById("jihoonHairModal");
+
+const jihoonHairButtons =
+  document.querySelectorAll(".jihoon-hair-options button");
+
+const jihoonHairCancel =
+  document.getElementById("jihoonHairCancel");
+
+let pendingJihoonVisualFile = null;
+
+
+// 写真を選んだら髪色選択へ
 if (jihoonVisualInput) {
 
-  jihoonVisualInput.addEventListener("change", async () => {
+  jihoonVisualInput.addEventListener("change", () => {
 
     const file = jihoonVisualInput.files[0];
 
     if (!file) return;
 
+    pendingJihoonVisualFile = file;
+
+    if (jihoonHairModal) {
+      jihoonHairModal.classList.add("active");
+    }
+
+  });
+
+}
+
+
+// 髪色を選択 → 保存
+jihoonHairButtons.forEach((button) => {
+
+  button.addEventListener("click", async () => {
+
+    if (!pendingJihoonVisualFile) return;
+
+    const hairColor = button.dataset.hair;
+
     try {
 
-      const id = await saveJihoonVisual(file);
+      const id = await saveJihoonVisual(
+        pendingJihoonVisualFile,
+        hairColor
+      );
 
       createJihoonVisualCard({
         id: id,
-        image: file,
+        image: pendingJihoonVisualFile,
+        hairColor: hairColor,
         createdAt: Date.now()
       });
 
     } catch (error) {
 
-      console.error("JIHOON VISUAL SAVE ERROR:", error);
+      console.error(
+        "JIHOON VISUAL SAVE ERROR:",
+        error
+      );
 
       alert("写真の保存に失敗しました🥲");
 
     }
 
+    pendingJihoonVisualFile = null;
     jihoonVisualInput.value = "";
+
+    jihoonHairModal.classList.remove("active");
+
+  });
+
+});
+
+
+// CANCEL
+if (jihoonHairCancel) {
+
+  jihoonHairCancel.addEventListener("click", () => {
+
+    pendingJihoonVisualFile = null;
+    jihoonVisualInput.value = "";
+
+    jihoonHairModal.classList.remove("active");
 
   });
 
@@ -4243,3 +4325,44 @@ openJihoonVisualDB()
   .catch((error) => {
     console.error("JIHOON VISUAL DB ERROR:", error);
   });
+// =========================================
+// 🎨 JIHOON HAIR FILTER
+// =========================================
+
+const jihoonHairFilters =
+  document.querySelectorAll(".jihoon-hair-filter button");
+
+
+jihoonHairFilters.forEach((button) => {
+
+  button.addEventListener("click", () => {
+
+    const selectedHair = button.dataset.hair;
+
+    jihoonHairFilters.forEach((filterButton) => {
+      filterButton.classList.remove("active");
+    });
+
+    button.classList.add("active");
+
+
+    const cards =
+      document.querySelectorAll(".jihoon-visual-card");
+
+
+    cards.forEach((card) => {
+
+      if (
+        selectedHair === "ALL" ||
+        card.dataset.hair === selectedHair
+      ) {
+        card.style.display = "";
+      } else {
+        card.style.display = "none";
+      }
+
+    });
+
+  });
+
+});
