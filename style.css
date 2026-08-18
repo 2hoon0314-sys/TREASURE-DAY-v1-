@@ -5382,3 +5382,65 @@ flex-shrink: 0;
 .jihoon-visual-edit-cancel {
   margin-bottom: 20px;
 }
+/* =========================================
+   📸 JIHOON VISUAL EDIT - COMPACT FIX
+========================================= */
+
+.jihoon-visual-edit-modal {
+  padding:
+    calc(env(safe-area-inset-top) + 18px)
+    18px
+    calc(env(safe-area-inset-bottom) + 115px);
+
+  align-items: center;
+}
+
+
+/* EDITカードを画面内に収める */
+.jihoon-visual-edit-sheet {
+  padding: 20px 18px 18px;
+
+  max-height: none;
+  overflow: visible;
+
+  border-radius: 30px;
+}
+
+
+/* タイトル周りを少しだけコンパクトに */
+.jihoon-visual-edit-kicker {
+  margin-bottom: 5px;
+}
+
+.jihoon-visual-edit-sheet h2 {
+  margin-bottom: 14px;
+  font-size: 19px;
+}
+
+
+/* 写真を少しだけ小さく */
+.jihoon-visual-edit-preview {
+  width: 145px;
+  margin-bottom: 16px;
+  border-radius: 22px;
+}
+
+
+/* ボタンの間隔を縮める */
+.jihoon-visual-edit-actions {
+  gap: 8px;
+}
+
+.jihoon-visual-edit-actions button {
+  padding: 12px 14px;
+  border-radius: 16px;
+}
+
+
+/* CANCELも必ず見える位置へ */
+.jihoon-visual-edit-cancel {
+  margin-top: 8px;
+  margin-bottom: 0;
+
+  padding: 11px 14px;
+}
