@@ -4152,7 +4152,10 @@ function createJihoonVisualCard(item) {
   img.onload = () => {
     URL.revokeObjectURL(imageURL);
   };
-
+// 📸 写真タップ → EDIT画面を開く
+card.addEventListener("click", () => {
+  openJihoonVisualEdit(item);
+});
 
   const hairTag = document.createElement("div");
   hairTag.className = "jihoon-visual-hair-tag";
@@ -4177,7 +4180,78 @@ function createJihoonVisualCard(item) {
 
   jihoonVisualGrid.prepend(card);
 }
+// =========================================
+// 📸 JIHOON VISUAL EDIT OPEN / CLOSE
+// =========================================
 
+const jihoonVisualEditModal =
+  document.getElementById("jihoonVisualEditModal");
+
+const jihoonVisualEditImage =
+  document.getElementById("jihoonVisualEditImage");
+
+const jihoonVisualEditCancel =
+  document.getElementById("jihoonVisualEditCancel");
+
+let currentJihoonVisualItem = null;
+let currentJihoonVisualPreviewURL = null;
+
+
+// EDIT画面を開く
+function openJihoonVisualEdit(item) {
+
+  if (
+    !jihoonVisualEditModal ||
+    !jihoonVisualEditImage
+  ) {
+    return;
+  }
+
+  currentJihoonVisualItem = item;
+
+  // 前のプレビューURLが残っていたら解放
+  if (currentJihoonVisualPreviewURL) {
+    URL.revokeObjectURL(currentJihoonVisualPreviewURL);
+  }
+
+  currentJihoonVisualPreviewURL =
+    URL.createObjectURL(item.image);
+
+  jihoonVisualEditImage.src =
+    currentJihoonVisualPreviewURL;
+
+  jihoonVisualEditModal.classList.add("active");
+}
+
+
+// EDIT画面を閉じる
+function closeJihoonVisualEdit() {
+
+  if (!jihoonVisualEditModal) return;
+
+  jihoonVisualEditModal.classList.remove("active");
+
+  if (currentJihoonVisualPreviewURL) {
+    URL.revokeObjectURL(currentJihoonVisualPreviewURL);
+    currentJihoonVisualPreviewURL = null;
+  }
+
+  jihoonVisualEditImage.src = "";
+  currentJihoonVisualItem = null;
+}
+
+
+// CANCEL
+if (jihoonVisualEditCancel) {
+
+  jihoonVisualEditCancel.addEventListener(
+    "click",
+    () => {
+      closeJihoonVisualEdit();
+    }
+  );
+
+}
 
 // =========================================
 // 保存済み写真を表示
