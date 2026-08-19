@@ -6054,3 +6054,91 @@ flex-shrink: 0;
   font-weight: 900;
   letter-spacing: 0.12em;
 }
+/* =========================================
+   🌱 GROWTH HISTORY DETAIL PAGE
+========================================= */
+
+.jihoon-growth-detail-page {
+  position: fixed;
+  inset: 0;
+
+  z-index: 1550;
+
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+
+  padding: 46px 20px 150px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #eef6ff 0%,
+      #f7fbff 45%,
+      #ffffff 100%
+    );
+}
+
+.jihoon-growth-detail-back {
+  appearance: none;
+  border: 0;
+
+  padding: 14px 20px;
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.96);
+
+  color: #315d91;
+  font-size: 14px;
+  font-weight: 900;
+
+  box-shadow:
+    0 8px 22px rgba(70, 110, 170, 0.12);
+}
+
+.jihoon-growth-detail-inner {
+  width: 100%;
+  max-width: 520px;
+
+  margin: 54px auto 0;
+
+  text-align: center;
+}
+
+.jihoon-growth-detail-kicker {
+  margin-bottom: 14px;
+
+  color: #7da1cf;
+
+  font-size: 14px;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+}
+
+.jihoon-growth-detail-year {
+  margin-bottom: 10px;
+
+  color: #244a7c;
+
+  font-size: 56px;
+  font-weight: 950;
+  line-height: 1;
+}
+
+.jihoon-growth-detail-inner h2 {
+  margin: 0;
+
+  color: #244a7c;
+
+  font-size: 28px;
+  font-weight: 950;
+}
+
+.jihoon-growth-detail-subtitle {
+  margin-top: 16px;
+
+  color: #819abd;
+
+  font-size: 15px;
+  line-height: 1.7;
+  font-weight: 700;
+}
