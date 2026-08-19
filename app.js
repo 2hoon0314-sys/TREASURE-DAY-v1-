@@ -4425,7 +4425,7 @@ await renderJihoonGrowth2020Visuals();
         );
   }
 });
-
+}
 if (jihoonGrowth2020VisualDelete) {
   jihoonGrowth2020VisualDelete.addEventListener(
     "click",
