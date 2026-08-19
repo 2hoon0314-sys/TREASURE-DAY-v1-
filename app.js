@@ -5783,6 +5783,45 @@ function escapeJihoonSongHTML(text) {
 
 // 最初の表示
 renderJihoonSongs();
+// ========================================
+// 🫶 JIHOON CHEMISTRY
+// ========================================
+
+const jihoonChemistryOpen =
+  document.getElementById("jihoonChemistryOpen");
+
+const jihoonChemistryPage =
+  document.getElementById("jihoonChemistryPage");
+
+const jihoonChemistryBack =
+  document.getElementById("jihoonChemistryBack");
+
+if (jihoonChemistryOpen && jihoonChemistryPage) {
+  jihoonChemistryOpen.addEventListener("click", () => {
+    const jihoonPage = document.getElementById("jihoonPage");
+
+    if (jihoonPage) {
+      jihoonPage.style.display = "none";
+    }
+
+    jihoonChemistryPage.style.display = "block";
+    window.scrollTo(0, 0);
+  });
+}
+
+if (jihoonChemistryBack && jihoonChemistryPage) {
+  jihoonChemistryBack.addEventListener("click", () => {
+    const jihoonPage = document.getElementById("jihoonPage");
+
+    jihoonChemistryPage.style.display = "none";
+
+    if (jihoonPage) {
+      jihoonPage.style.display = "block";
+    }
+
+    window.scrollTo(0, 0);
+  });
+}
 // =========================================
 // 📸 JIHOON VISUAL BOOK - IndexedDB SAVE
 // =========================================
