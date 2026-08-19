@@ -331,7 +331,11 @@
         <span>→</span>
       </button>
 
-      <button type="button" class="jihoon-book-menu-card">
+     <button
+  type="button"
+  class="jihoon-book-menu-item"
+  id="jihoonVisualRankingOpen"
+>
         <span class="jihoon-book-menu-icon">👑</span>
         <div>
           <strong>MY VISUAL RANKING</strong>
@@ -615,7 +619,46 @@
 
 </div>  
 </header>
+<!-- =========================================
+     👑 JIHOON VISUAL RANKING
+========================================= -->
 
+<section
+  id="jihoonVisualRankingPage"
+  class="jihoon-visual-ranking-page"
+  style="display: none;"
+>
+  <button
+    type="button"
+    id="jihoonVisualRankingBack"
+    class="jihoon-visual-ranking-back"
+  >
+    ← JIHOON BOOKに戻る
+  </button>
+
+  <div class="jihoon-visual-ranking-inner">
+
+    <div class="jihoon-visual-ranking-kicker">
+      👑 MY VISUAL RANKING
+    </div>
+
+    <h2>
+      ジフンの好きなビジュアルランキング 🐶
+    </h2>
+
+    <p>
+      お気に入りのジフンを<br>
+      自分だけのランキングにしよう 💎
+    </p>
+
+    <div
+      id="jihoonVisualRankingList"
+      class="jihoon-visual-ranking-list"
+    >
+    </div>
+
+  </div>
+</section>
 
 
 </main>
