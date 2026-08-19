@@ -4226,44 +4226,75 @@ function saveJihoonGrowth2020Visuals(items) {
 }
 
 if (jihoonGrowth2020VisualSave) {
-  jihoonGrowth2020VisualSave.addEventListener("click", () => {
 
-    const imageData =
-      jihoonGrowth2020VisualPreviewImage.src;
+  jihoonGrowth2020VisualSave.addEventListener(
+    "click",
+    async () => {
 
-    if (!imageData) {
-      alert("先に写真を選んでね 📸");
-      return;
+      const imageData =
+        jihoonGrowth2020VisualPreviewImage.src;
+
+      if (!imageData) {
+        alert("先に写真を選んでね 📸");
+        return;
+      }
+
+      const newItem = {
+        id: Date.now(),
+
+        imageData: imageData,
+
+        hairColor:
+          jihoonGrowth2020VisualHair?.value ||
+          "OTHER",
+
+        memo:
+          jihoonGrowth2020VisualMemo?.value.trim() ||
+          "",
+
+        createdAt: Date.now()
+      };
+
+      try {
+
+        await saveJihoonGrowth2020Visual(
+          newItem
+        );
+
+        await renderJihoonGrowth2020Visuals();
+
+        jihoonGrowth2020VisualModal.style.display =
+          "none";
+
+        jihoonGrowth2020VisualInput.value = "";
+
+        jihoonGrowth2020VisualPreviewImage.src =
+          "";
+
+        jihoonGrowth2020VisualPreview.style.display =
+          "none";
+
+        if (jihoonGrowth2020VisualMemo) {
+          jihoonGrowth2020VisualMemo.value =
+            "";
+        }
+
+        document.body.style.overflow =
+          "hidden";
+
+      } catch (error) {
+
+        console.error(
+          "2020 VISUAL SAVE ERROR",
+          error
+        );
+
+        alert(
+          "保存に失敗しました😭"
+        );
+      }
     }
-
-    const items = getJihoonGrowth2020Visuals();
-
-    const newItem = {
-      id: Date.now(),
-      imageData: imageData,
-      hairColor:
-        jihoonGrowth2020VisualHair?.value || "OTHER",
-      memo:
-        jihoonGrowth2020VisualMemo?.value.trim() || "",
-      createdAt: Date.now()
-    };
-
-    items.unshift(newItem);
-
-    saveJihoonGrowth2020Visuals(items);
-renderJihoonGrowth2020Visuals();
-    jihoonGrowth2020VisualModal.style.display = "none";
-
-    jihoonGrowth2020VisualInput.value = "";
-    jihoonGrowth2020VisualPreviewImage.src = "";
-    jihoonGrowth2020VisualPreview.style.display = "none";
-
-    if (jihoonGrowth2020VisualMemo) {
-      jihoonGrowth2020VisualMemo.value = "";
-    }
-
-    document.body.style.overflow = "hidden";
-  });
+  );
 }
 // =========================================
 // 🖼️ 2020 VISUAL RENDER
@@ -4272,10 +4303,17 @@ renderJihoonGrowth2020Visuals();
 const jihoonGrowth2020VisualGrid =
   document.getElementById("jihoonGrowth2020VisualGrid");
 
-function renderJihoonGrowth2020Visuals() {
+async function renderJihoonGrowth2020Visuals() {
   if (!jihoonGrowth2020VisualGrid) return;
 
-  const items = getJihoonGrowth2020Visuals();
+  const items =
+  await getJihoonGrowth2020Visuals();
+
+items.sort(
+  (a, b) =>
+    (b.createdAt || 0) -
+    (a.createdAt || 0)
+);
 
   // まだ何も保存されてないとき
   if (items.length === 0) {
