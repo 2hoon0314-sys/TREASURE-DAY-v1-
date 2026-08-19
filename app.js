@@ -794,33 +794,75 @@ tagButton.addEventListener("click", async () => {
 renderPhotoMemoryComments();
   window.scrollTo(0, 0);
 }
+let photoMemoryReturnTarget = "photo";
 
-
-// ← PHOTO MEMORYに戻る
+// ← PHOTO MEMORY DETAILから戻る
 const photoMemoryDetailBackBtn =
-  document.getElementById("photo-memory-detail-back");
+  document.getElementById(
+    "photo-memory-detail-back"
+  );
 
 if (photoMemoryDetailBackBtn) {
+
   photoMemoryDetailBackBtn.addEventListener(
     "click",
-    () => {
+    async () => {
+
       const detailPage =
         document.getElementById(
           "photo-memory-detail-page"
         );
 
       const memoryPage =
-        document.getElementById("memory-page");
+        document.getElementById(
+          "memory-page"
+        );
+
 
       if (detailPage) {
-        detailPage.style.display = "none";
+        detailPage.style.display =
+          "none";
       }
 
-      if (memoryPage) {
-        memoryPage.style.display = "block";
+
+      // 🐶 JIHOON MEMORIESから来た場合
+      if (
+        photoMemoryReturnTarget ===
+        "jihoon"
+      ) {
+
+        if (jihoonMemoriesPage) {
+
+          jihoonMemoriesPage.style.display =
+            "block";
+
+          jihoonMemoriesPage.scrollTop =
+            0;
+
+          await renderJihoonMemories();
+        }
+
+        document.body.style.overflow =
+          "hidden";
+
+      } else {
+
+        // 通常PHOTO MEMORYから来た場合
+        if (memoryPage) {
+          memoryPage.style.display =
+            "block";
+        }
+
+        switchMemoryMode("photo");
+
+        document.body.style.overflow =
+          "";
       }
 
-      switchMemoryMode("photo");
+
+      photoMemoryReturnTarget =
+        "photo";
+
       window.scrollTo(0, 0);
     }
   );
