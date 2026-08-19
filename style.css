@@ -5573,3 +5573,92 @@ flex-shrink: 0;
   font-weight: 800;
   letter-spacing: 0.08em;
 }
+/* ========================================
+   👑 JIHOON VISUAL RANKING
+======================================== */
+
+.jihoon-visual-ranking-page {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+
+  display: none;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+
+  padding: 24px 20px 130px;
+
+  background:
+    radial-gradient(
+      circle at top,
+      rgba(205, 225, 255, 0.9),
+      rgba(239, 246, 255, 0.96) 45%,
+      rgba(255, 255, 255, 0.98) 100%
+    );
+}
+
+.jihoon-visual-ranking-inner {
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.jihoon-visual-ranking-back {
+  border: 0;
+  background: rgba(255, 255, 255, 0.88);
+
+  padding: 12px 18px;
+  margin-bottom: 28px;
+
+  border-radius: 999px;
+
+  color: #355b8c;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+
+  box-shadow:
+    0 8px 24px rgba(80, 120, 180, 0.10),
+    inset 0 0 0 1px rgba(130, 170, 220, 0.22);
+}
+
+.jihoon-visual-ranking-kicker {
+  text-align: center;
+
+  color: #6f93c4;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+
+  margin-bottom: 10px;
+}
+
+.jihoon-visual-ranking-title {
+  text-align: center;
+
+  color: #244a7c;
+  font-size: 27px;
+  font-weight: 900;
+  letter-spacing: 0.03em;
+
+  margin: 0 0 12px;
+}
+
+.jihoon-visual-ranking-text {
+  text-align: center;
+
+  color: #8098b8;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.8;
+
+  margin: 0 0 30px;
+}
+
+.jihoon-visual-ranking-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  width: 100%;
+}
