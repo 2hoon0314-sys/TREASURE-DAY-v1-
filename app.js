@@ -4252,8 +4252,7 @@ if (
     "click",
     async () => {
 
-      jihoonBookDetail.classList.remove("active");
-
+      // 🐶 JIHOON BOOKは閉じない！
       jihoonMemoriesPage.style.display =
         "block";
 
@@ -4266,7 +4265,6 @@ if (
     }
   );
 }
-
 
 // ========================================
 // ← BACK TO JIHOON BOOK
