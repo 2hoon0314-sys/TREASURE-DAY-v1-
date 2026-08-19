@@ -4002,6 +4002,35 @@ if (jihoonVisualClose && jihoonVisualBook) {
 
   });
 }
+// ========================================
+// 👑 JIHOON VISUAL RANKING OPEN / CLOSE
+// ========================================
+
+const jihoonVisualRankingOpen =
+  document.getElementById("jihoonVisualRankingOpen");
+
+const jihoonVisualRankingPage =
+  document.getElementById("jihoonVisualRankingPage");
+
+const jihoonVisualRankingBack =
+  document.getElementById("jihoonVisualRankingBack");
+
+if (jihoonVisualRankingOpen && jihoonVisualRankingPage) {
+  jihoonVisualRankingOpen.addEventListener("click", () => {
+    jihoonVisualRankingPage.style.display = "block";
+    jihoonVisualRankingPage.scrollTop = 0;
+    document.body.style.overflow = "hidden";
+  });
+}
+
+if (jihoonVisualRankingBack && jihoonVisualRankingPage) {
+  jihoonVisualRankingBack.addEventListener("click", () => {
+    jihoonVisualRankingPage.style.display = "none";
+
+    // 後ろのJIHOON BOOKはそのまま開いておく
+    document.body.style.overflow = "hidden";
+  });
+}
 // =========================================
 // 📸 JIHOON VISUAL BOOK - IndexedDB SAVE
 // =========================================
