@@ -4422,10 +4422,9 @@ await renderJihoonGrowth2020Visuals();
         alert(
           "保存に失敗しました😭"
         );
-      }
-    }
-  );
-}
+  }
+});
+
 if (jihoonGrowth2020VisualDelete) {
   jihoonGrowth2020VisualDelete.addEventListener(
     "click",
