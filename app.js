@@ -560,6 +560,11 @@ const memorySong =
   document.getElementById("memory-song");
 const memoryLink =
   document.getElementById("memory-link");
+const memoryMember =
+  document.getElementById("memory-member");
+
+const memoryTagsInput =
+  document.getElementById("memory-tags");
 const saveMemoryBtn =
   document.getElementById("save-memory");
 const memoryPhoto =
@@ -1463,6 +1468,19 @@ const song =
   memorySong ? memorySong.value.trim() : "";
 const link =
   memoryLink ? memoryLink.value.trim() : ""; 
+  const member =
+  memoryMember ? memoryMember.value : "";
+
+const tags =
+  memoryTagsInput
+    ? memoryTagsInput.value
+        .trim()
+        .split(/\s+/)
+        .filter(Boolean)
+        .map((tag) =>
+          tag.replace(/^#/, "")
+        )
+    : [];
   if (title === "" && text === "") {
       alert("思い出を書いてね💎");
       return;
@@ -1494,10 +1512,20 @@ if (
 
 // 💎 MEMORY本体には写真ではなくキーだけ保存
 memories.unshift({
-  title: title || "TREASURE MEMORY 💎",
+  title:
+    title ||
+    "TREASURE MEMORY 💎",
+
   text: text,
+
   song: song,
- link: link, 
+
+  link: link,
+
+  member: member,
+
+  tags: tags,
+
   photoKey: photoKey
 });
 
@@ -1518,7 +1546,15 @@ memories.unshift({
 }
 if (memoryLink) {
   memoryLink.value = "";
-}  
+}
+
+if (memoryMember) {
+  memoryMember.value = "";
+}
+
+if (memoryTagsInput) {
+  memoryTagsInput.value = "";
+}
 if (memoryPhoto) {
   memoryPhoto.value = "";
 }
