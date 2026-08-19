@@ -4386,6 +4386,80 @@ if (jihoonVisualEditCancel) {
 
 }
 // =========================================
+// 🎨 JIHOON VISUAL CHANGE HAIR COLOR
+// =========================================
+
+const JIHOON_HAIR_OPTIONS = [
+  ["BLACK", "🖤 BLACK"],
+  ["BROWN", "🤎 BROWN"],
+  ["RED", "❤️ RED"],
+  ["PINK", "💗 PINK"],
+  ["BLONDE", "💛 BLONDE"],
+  ["GRAY", "🩶 GRAY"],
+  ["OTHER", "✨ OTHER"],
+  ["UNTAGGED", "💎 UNTAGGED"]
+];
+
+if (jihoonVisualChangeHair) {
+
+  jihoonVisualChangeHair.addEventListener("click", async () => {
+
+    if (!currentJihoonVisualItem) return;
+
+    const optionText = JIHOON_HAIR_OPTIONS
+      .map((option, index) => {
+        return `${index + 1}. ${option[1]}`;
+      })
+      .join("\n");
+
+    const selected = prompt(
+      `CHANGE HAIR COLOR 🎨\n\n${optionText}\n\n番号を入力してね！`
+    );
+
+    if (selected === null) return;
+
+    const index = Number(selected) - 1;
+
+    if (
+      !Number.isInteger(index) ||
+      index < 0 ||
+      index >= JIHOON_HAIR_OPTIONS.length
+    ) {
+      alert("1〜8の番号を入力してね 💎");
+      return;
+    }
+
+    const newHairColor =
+      JIHOON_HAIR_OPTIONS[index][0];
+
+    currentJihoonVisualItem.hairColor =
+      newHairColor;
+
+    try {
+
+      await updateJihoonVisual(
+        currentJihoonVisualItem
+      );
+
+      closeJihoonVisualEdit();
+
+      await loadJihoonVisuals();
+
+    } catch (error) {
+
+      console.error(
+        "JIHOON HAIR COLOR UPDATE ERROR:",
+        error
+      );
+
+      alert("髪色の変更に失敗しました🥲");
+
+    }
+
+  });
+
+}
+// =========================================
 // ♡ JIHOON VISUAL FAVORITE
 // =========================================
 
