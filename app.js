@@ -4070,6 +4070,47 @@ if (jihoonBookDetail) {
     document.body.style.overflow = "hidden";
   });
 }
+// ==========================================
+// 💎 GROWTH HISTORY 2020 OPEN / BACK
+// ==========================================
+
+const jihoonGrowth2020Open =
+  document.getElementById("jihoonGrowth2020Open");
+
+const jihoonGrowth2020Page =
+  document.getElementById("jihoonGrowth2020Page");
+
+const jihoonGrowth2020Back =
+  document.getElementById("jihoonGrowth2020Back");
+
+if (
+  jihoonGrowth2020Open &&
+  jihoonGrowth2020Page &&
+  jihoonGrowth2020Back
+) {
+
+  jihoonGrowth2020Open.addEventListener("click", () => {
+
+    jihoonGrowthHistoryPage.style.display = "none";
+
+    jihoonGrowth2020Page.style.display = "block";
+    jihoonGrowth2020Page.scrollTop = 0;
+
+    document.body.style.overflow = "hidden";
+  });
+
+
+  jihoonGrowth2020Back.addEventListener("click", () => {
+
+    jihoonGrowth2020Page.style.display = "none";
+
+    jihoonGrowthHistoryPage.style.display = "block";
+    jihoonGrowthHistoryPage.scrollTop = 0;
+
+    document.body.style.overflow = "hidden";
+  });
+
+}
 // =========================================
 // 📸 JIHOON VISUAL BOOK - IndexedDB SAVE
 // =========================================
