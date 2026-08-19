@@ -4204,25 +4204,121 @@ const jihoonGrowth2020VisualHair =
 const jihoonGrowth2020VisualMemo =
   document.getElementById("jihoonGrowth2020VisualMemo");
 
-const JIHOON_GROWTH_2020_KEY =
-  "treasure-day-jihoon-growth-2020";
+// =========================================
+// 💾 2020 VISUAL - IndexedDB
+// =========================================
 
-function getJihoonGrowth2020Visuals() {
-  try {
-    return JSON.parse(
-      localStorage.getItem(JIHOON_GROWTH_2020_KEY) || "[]"
+const JIHOON_GROWTH_2020_DB_NAME =
+  "treasure-day-jihoon-growth-2020-db";
+
+const JIHOON_GROWTH_2020_DB_VERSION = 1;
+
+const JIHOON_GROWTH_2020_STORE =
+  "visuals";
+
+let jihoonGrowth2020DB;
+
+
+function openJihoonGrowth2020DB() {
+  return new Promise((resolve, reject) => {
+
+    const request = indexedDB.open(
+      JIHOON_GROWTH_2020_DB_NAME,
+      JIHOON_GROWTH_2020_DB_VERSION
     );
-  } catch (error) {
-    console.error("2020 VISUAL LOAD ERROR", error);
-    return [];
-  }
+
+    request.onupgradeneeded = (event) => {
+      const db = event.target.result;
+
+      if (
+        !db.objectStoreNames.contains(
+          JIHOON_GROWTH_2020_STORE
+        )
+      ) {
+        db.createObjectStore(
+          JIHOON_GROWTH_2020_STORE,
+          {
+            keyPath: "id"
+          }
+        );
+      }
+    };
+
+    request.onsuccess = (event) => {
+      jihoonGrowth2020DB =
+        event.target.result;
+
+      resolve(jihoonGrowth2020DB);
+    };
+
+    request.onerror = () => {
+      reject(request.error);
+    };
+  });
 }
 
-function saveJihoonGrowth2020Visuals(items) {
-  localStorage.setItem(
-    JIHOON_GROWTH_2020_KEY,
-    JSON.stringify(items)
-  );
+
+async function getJihoonGrowth2020Visuals() {
+
+  if (!jihoonGrowth2020DB) {
+    await openJihoonGrowth2020DB();
+  }
+
+  return new Promise((resolve, reject) => {
+
+    const transaction =
+      jihoonGrowth2020DB.transaction(
+        JIHOON_GROWTH_2020_STORE,
+        "readonly"
+      );
+
+    const store =
+      transaction.objectStore(
+        JIHOON_GROWTH_2020_STORE
+      );
+
+    const request = store.getAll();
+
+    request.onsuccess = () => {
+      resolve(request.result || []);
+    };
+
+    request.onerror = () => {
+      reject(request.error);
+    };
+  });
+}
+
+
+async function saveJihoonGrowth2020Visual(item) {
+
+  if (!jihoonGrowth2020DB) {
+    await openJihoonGrowth2020DB();
+  }
+
+  return new Promise((resolve, reject) => {
+
+    const transaction =
+      jihoonGrowth2020DB.transaction(
+        JIHOON_GROWTH_2020_STORE,
+        "readwrite"
+      );
+
+    const store =
+      transaction.objectStore(
+        JIHOON_GROWTH_2020_STORE
+      );
+
+    const request = store.put(item);
+
+    request.onsuccess = () => {
+      resolve();
+    };
+
+    request.onerror = () => {
+      reject(request.error);
+    };
+  });
 }
 
 if (jihoonGrowth2020VisualSave) {
