@@ -4264,8 +4264,10 @@ async function loadJihoonVisualRanking() {
 
       const rank = document.createElement("div");
       rank.className = "jihoon-visual-ranking-number";
-      rank.textContent = `#${index + 1}`;
+     const rankLabels = ["🥇 1ST", "🥈 2ND", "🥉 3RD"];
 
+rank.textContent =
+  rankLabels[index] || `#${index + 1}`;
       const img = document.createElement("img");
       img.alt = "JIHOON VISUAL";
       img.loading = "lazy";
