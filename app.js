@@ -4325,6 +4325,8 @@ const jihoonVisualFavorite =
 
 const jihoonVisualChangeHair =
   document.getElementById("jihoonVisualChangeHair");
+const jihoonVisualDelete =
+  document.getElementById("jihoonVisualDelete");
 let currentJihoonVisualItem = null;
 
 
@@ -4491,7 +4493,36 @@ function updateJihoonVisual(item) {
 
   });
 }
+// ==============================
+// 🗑️ JIHOON VISUAL DELETE
+// ==============================
 
+function deleteJihoonVisual(item) {
+  return new Promise((resolve, reject) => {
+
+    if (!jihoonVisualDB || !item) {
+      reject(new Error("Database or item is not ready"));
+      return;
+    }
+
+    const transaction = jihoonVisualDB.transaction(
+      JIHOON_VISUAL_STORE,
+      "readwrite"
+    );
+
+    const store = transaction.objectStore(JIHOON_VISUAL_STORE);
+    const request = store.delete(item.id);
+
+    request.onsuccess = () => {
+      resolve();
+    };
+
+    request.onerror = () => {
+      reject(request.error);
+    };
+
+  });
+}
 
 if (jihoonVisualFavorite) {
 
