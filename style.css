@@ -6517,7 +6517,7 @@ flex-shrink: 0;
    🗑 2020 VISUAL DELETE BUTTON
 ========================================= */
 
-#jihoonGrowth2020VisualDelete {
+.jihoon-growth-visual-delete {
   width: 100%;
 margin: 6px 0 18px;
   padding: 14px 18px;
@@ -6537,7 +6537,7 @@ margin: 6px 0 18px;
   -webkit-tap-highlight-color: transparent;
 }
 
-#jihoonGrowth2020VisualDelete:active {
+.jihoon-growth-visual-delete:active {
   transform: scale(0.98);
 }
 #jihoonGrowth2020VisualCancel {
