@@ -385,7 +385,39 @@ const settingsPage = document.getElementById("settings-page");
 const pastEventsPage = document.getElementById("past-events-page");
 const notificationPage = document.getElementById("notification-page");
 function showPage(pageName) {
+// ========================================
+// 📱 下タブ移動時：MEMBER系画面を全部閉じる
+// ========================================
 
+const openMemberBook =
+  document.getElementById("member-book-detail");
+
+if (openMemberBook) {
+  openMemberBook.classList.remove("active");
+}
+
+const openJihoonBook =
+  document.getElementById("jihoon-book-detail");
+
+if (openJihoonBook) {
+  openJihoonBook.classList.remove("active");
+}
+
+const openJihoonMemories =
+  document.getElementById("jihoonMemoriesPage");
+
+if (openJihoonMemories) {
+  openJihoonMemories.style.display = "none";
+}
+
+const openJihoonChemistry =
+  document.getElementById("jihoonChemistryPage");
+
+if (openJihoonChemistry) {
+  openJihoonChemistry.style.display = "none";
+}
+
+document.body.style.overflow = "";
   if (homePage) {
     homePage.style.display =
       pageName === "home" ? "block" : "none";
