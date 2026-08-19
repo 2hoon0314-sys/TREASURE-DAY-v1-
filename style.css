@@ -6260,3 +6260,193 @@ flex-shrink: 0;
   font-weight: 700;
   line-height: 1.5;
 }
+/* =========================================
+   📸 2020 VISUAL ADD MODAL
+========================================= */
+
+.jihoon-growth-visual-modal {
+  position: fixed;
+  inset: 0;
+
+  z-index: 1700;
+
+  display: none;
+  align-items: flex-start;
+  justify-content: center;
+
+  padding: 90px 20px 170px;
+
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+
+  background: rgba(34, 59, 98, 0.22);
+
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.jihoon-growth-visual-modal-card {
+  width: min(100%, 520px);
+
+  padding: 28px 20px 24px;
+
+  border: 1px solid rgba(126, 165, 218, 0.25);
+  border-radius: 32px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(248, 252, 255, 0.98),
+      rgba(235, 245, 255, 0.98)
+    );
+
+  box-shadow:
+    0 22px 55px rgba(39, 72, 119, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+
+  text-align: center;
+}
+
+.jihoon-growth-visual-modal-kicker {
+  margin-bottom: 10px;
+
+  color: #7da1cf;
+
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+}
+
+.jihoon-growth-visual-modal-card h3 {
+  margin: 0 0 22px;
+
+  color: #244a7c;
+
+  font-size: 23px;
+  font-weight: 950;
+}
+
+.jihoon-growth-visual-select {
+  appearance: none;
+
+  width: 100%;
+  min-height: 54px;
+
+  border: 1px solid rgba(125, 166, 218, 0.30);
+  border-radius: 20px;
+
+  background: #eaf3ff;
+
+  color: #315d91;
+
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.jihoon-growth-visual-preview {
+  margin-top: 16px;
+
+  overflow: hidden;
+
+  border-radius: 24px;
+  background: #eef6ff;
+}
+
+.jihoon-growth-visual-preview img {
+  display: block;
+
+  width: 100%;
+  max-height: 360px;
+
+  object-fit: cover;
+}
+
+.jihoon-growth-visual-field {
+  margin-top: 18px;
+
+  text-align: left;
+}
+
+.jihoon-growth-visual-field label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #617fa8;
+
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
+.jihoon-growth-visual-field select,
+.jihoon-growth-visual-field textarea {
+  width: 100%;
+
+  border: 1px solid rgba(125, 166, 218, 0.28);
+  border-radius: 18px;
+
+  background: rgba(255, 255, 255, 0.94);
+
+  color: #345582;
+
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+
+  box-sizing: border-box;
+}
+
+.jihoon-growth-visual-field select {
+  height: 50px;
+
+  padding: 0 14px;
+}
+
+.jihoon-growth-visual-field textarea {
+  min-height: 100px;
+
+  padding: 14px;
+
+  resize: vertical;
+}
+
+.jihoon-growth-visual-save {
+  appearance: none;
+
+  width: 100%;
+  min-height: 54px;
+
+  margin-top: 22px;
+
+  border: 0;
+  border-radius: 20px;
+
+  background: #dcecff;
+
+  color: #315d91;
+
+  font-size: 14px;
+  font-weight: 950;
+
+  box-shadow:
+    0 8px 18px rgba(70, 110, 170, 0.12);
+}
+
+.jihoon-growth-visual-cancel {
+  appearance: none;
+
+  width: 100%;
+
+  margin-top: 10px;
+  padding: 13px;
+
+  border: 0;
+
+  background: transparent;
+
+  color: #8aa1c0;
+
+  font-size: 12px;
+  font-weight: 900;
+}
