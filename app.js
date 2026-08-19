@@ -4360,9 +4360,10 @@ if (jihoonGrowth2020VisualSave) {
     "click",
     async () => {
 
+      try {
+
       const imageData =
         jihoonGrowth2020VisualPreviewImage.src;
-
       if (!imageData) {
         alert("先に写真を選んでね 📸");
         return;
