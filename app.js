@@ -4143,16 +4143,17 @@ function createJihoonVisualCard(item) {
 
   card.dataset.hair = hairColor;
 
-  const img = document.createElement("img");
+const img = document.createElement("img");
 
-  const imageURL = URL.createObjectURL(item.image);
+img.alt = "JIHOON VISUAL";
 
-  img.src = imageURL;
-  img.alt = "JIHOON VISUAL";
+const reader = new FileReader();
 
-  img.onload = () => {
-    URL.revokeObjectURL(imageURL);
-  };
+reader.onload = () => {
+  img.src = reader.result;
+};
+
+reader.readAsDataURL(item.image);
 // 📸 写真タップ → EDIT画面を開く
 card.addEventListener("click", () => {
   openJihoonVisualEdit(item);
