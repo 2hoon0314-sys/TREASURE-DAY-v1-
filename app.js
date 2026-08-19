@@ -4199,7 +4199,7 @@ const jihoonVisualFavorite =
 const jihoonVisualChangeHair =
   document.getElementById("jihoonVisualChangeHair");
 let currentJihoonVisualItem = null;
-let currentJihoonVisualPreviewURL = null;
+
 
 
 // EDIT画面を開く
@@ -4231,12 +4231,13 @@ if (jihoonVisualFavorite) {
     URL.revokeObjectURL(currentJihoonVisualPreviewURL);
   }
 
-  currentJihoonVisualPreviewURL =
-    URL.createObjectURL(item.image);
+const reader = new FileReader();
 
-  jihoonVisualEditImage.src =
-    currentJihoonVisualPreviewURL;
+reader.onload = () => {
+  jihoonVisualEditImage.src = reader.result;
+};
 
+reader.readAsDataURL(item.image);
   jihoonVisualEditModal.classList.add("active");
 }
 
@@ -4248,10 +4249,6 @@ function closeJihoonVisualEdit() {
 
   jihoonVisualEditModal.classList.remove("active");
 
-  if (currentJihoonVisualPreviewURL) {
-    URL.revokeObjectURL(currentJihoonVisualPreviewURL);
-    currentJihoonVisualPreviewURL = null;
-  }
 
   jihoonVisualEditImage.src = "";
   currentJihoonVisualItem = null;
