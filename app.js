@@ -4191,10 +4191,7 @@ delete jihoonGrowth2020VisualSave.dataset.editId;
 
 jihoonGrowth2020VisualSave.textContent = "💎 SAVE";
 
-if (jihoonGrowth2020VisualDelete) {
-  jihoonGrowth2020VisualDelete.style.display = "none";
-  delete jihoonGrowth2020VisualDelete.dataset.deleteId;
-}
+
     document.body.style.overflow = "hidden";
   });
 }
