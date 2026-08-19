@@ -6548,3 +6548,414 @@ margin: 6px 0 18px;
   position: relative;
   z-index: 5;
 }
+/* =========================================
+   🎧 JIHOON'S SONG
+========================================= */
+
+.jihoon-song-page {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+
+  padding: 42px 20px 150px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #edf5ff 0%,
+      #f6faff 48%,
+      #ffffff 100%
+    );
+
+  color: #244a7c;
+}
+
+
+/* ← BACK */
+.jihoon-song-back {
+  appearance: none;
+
+  border: 0;
+  padding: 0;
+
+  background: transparent;
+  color: #6e91bb;
+
+  font-size: 14px;
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+
+/* 中身 */
+.jihoon-song-inner {
+  width: 100%;
+  max-width: 680px;
+
+  margin: 42px auto 0;
+}
+
+
+/* KICKER */
+.jihoon-song-kicker {
+  margin-bottom: 14px;
+
+  text-align: center;
+
+  color: #6f96c5;
+
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+}
+
+
+/* TITLE */
+.jihoon-song-inner h2 {
+  margin: 0 auto 12px;
+
+  text-align: center;
+
+  color: #244a7c;
+
+  font-size: 28px;
+  line-height: 1.35;
+  font-weight: 950;
+}
+
+
+/* SUBTITLE */
+.jihoon-song-subtitle {
+  margin: 0 auto 30px;
+
+  text-align: center;
+
+  color: #7895bd;
+
+  font-size: 14px;
+  line-height: 1.75;
+  font-weight: 650;
+}
+
+
+/* =========================================
+   🎵 ADD FORM
+========================================= */
+
+.jihoon-song-form {
+  width: 100%;
+  max-width: 420px;
+
+  margin: 0 auto 34px;
+  padding: 22px;
+
+  border-radius: 28px;
+
+  background: rgba(255, 255, 255, 0.94);
+
+  box-shadow:
+    0 14px 34px rgba(70, 110, 170, 0.12),
+    inset 0 0 0 1px rgba(140, 180, 230, 0.18);
+}
+
+
+.jihoon-song-field {
+  margin-bottom: 18px;
+}
+
+
+.jihoon-song-field label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #5279a9;
+
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
+
+.jihoon-song-field input,
+.jihoon-song-field textarea {
+  width: 100%;
+
+  border: 1px solid rgba(130, 170, 220, 0.24);
+  border-radius: 18px;
+
+  padding: 14px 16px;
+
+  background: #f5f9ff;
+  color: #315d91;
+
+  font-family: inherit;
+  font-size: 15px;
+
+  outline: none;
+}
+
+
+.jihoon-song-field textarea {
+  resize: vertical;
+}
+
+
+.jihoon-song-field input::placeholder,
+.jihoon-song-field textarea::placeholder {
+  color: #a2b7d2;
+}
+
+
+/* SAVE / UPDATE */
+.jihoon-song-save {
+  width: 100%;
+  min-height: 54px;
+
+  margin-top: 4px;
+
+  border: 0;
+  border-radius: 20px;
+
+  background: #dcecff;
+  color: #315d91;
+
+  font-size: 14px;
+  font-weight: 950;
+
+  box-shadow:
+    0 8px 18px rgba(70, 110, 170, 0.12);
+
+  cursor: pointer;
+}
+
+
+.jihoon-song-save:active {
+  transform: scale(0.98);
+}
+
+
+/* CANCEL */
+.jihoon-song-cancel {
+  width: 100%;
+
+  margin-top: 12px;
+  padding: 12px;
+
+  border: 0;
+
+  background: transparent;
+  color: #8aa1c0;
+
+  font-size: 13px;
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+
+/* =========================================
+   🎧 SONG LIST
+========================================= */
+
+.jihoon-song-list {
+  width: 100%;
+  max-width: 420px;
+
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+
+/* EMPTY */
+.jihoon-song-empty {
+  padding: 34px 20px;
+
+  border-radius: 28px;
+
+  background: rgba(255, 255, 255, 0.82);
+
+  text-align: center;
+
+  box-shadow:
+    0 12px 30px rgba(70, 110, 170, 0.08);
+}
+
+
+.jihoon-song-empty span {
+  display: block;
+
+  margin-bottom: 10px;
+
+  font-size: 34px;
+}
+
+
+.jihoon-song-empty strong {
+  display: block;
+
+  margin-bottom: 6px;
+
+  color: #315d91;
+
+  font-size: 16px;
+}
+
+
+.jihoon-song-empty small {
+  color: #89a3c3;
+
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+
+/* =========================================
+   💿 SONG CARD
+========================================= */
+
+.jihoon-song-card {
+  position: relative;
+
+  width: 100%;
+
+  padding: 20px;
+
+  border-radius: 26px;
+
+  background: rgba(255, 255, 255, 0.94);
+
+  box-shadow:
+    0 12px 30px rgba(70, 110, 170, 0.11),
+    inset 0 0 0 1px rgba(140, 180, 230, 0.16);
+}
+
+
+/* ⭐️ 選ばれたJIHOON'S SONG */
+.jihoon-song-card.is-favorite {
+  background:
+    linear-gradient(
+      135deg,
+      #ffffff 0%,
+      #eef6ff 55%,
+      #e0efff 100%
+    );
+
+  box-shadow:
+    0 14px 34px rgba(72, 118, 175, 0.16),
+    inset 0 0 0 1px rgba(120, 165, 220, 0.3);
+}
+
+
+/* FAVORITE BUTTON */
+.jihoon-song-favorite {
+  margin-bottom: 14px;
+  padding: 8px 13px;
+
+  border: 1px solid rgba(130, 170, 220, 0.25);
+  border-radius: 999px;
+
+  background: #f1f7ff;
+  color: #6587b2;
+
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+
+  cursor: pointer;
+}
+
+
+.jihoon-song-card.is-favorite
+.jihoon-song-favorite {
+  background: #dcecff;
+  color: #315d91;
+}
+
+
+/* 曲名 */
+.jihoon-song-card-title {
+  margin-bottom: 10px;
+
+  color: #244a7c;
+
+  font-size: 19px;
+  line-height: 1.45;
+  font-weight: 950;
+
+  word-break: break-word;
+}
+
+
+/* NOTE */
+.jihoon-song-card p {
+  margin: 0;
+
+  color: #6685aa;
+
+  font-size: 14px;
+  line-height: 1.7;
+
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+
+.jihoon-song-no-note {
+  color: #a2b3c8 !important;
+
+  font-size: 12px !important;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+
+/* =========================================
+   ✏️ EDIT / 🗑 DELETE
+========================================= */
+
+.jihoon-song-actions {
+  display: flex;
+  gap: 8px;
+
+  margin-top: 18px;
+}
+
+
+.jihoon-song-actions button {
+  flex: 1;
+
+  min-height: 42px;
+
+  border: 0;
+  border-radius: 16px;
+
+  font-size: 12px;
+  font-weight: 850;
+
+  cursor: pointer;
+}
+
+
+.jihoon-song-actions button:first-child {
+  background: #edf5ff;
+  color: #5279a9;
+}
+
+
+.jihoon-song-actions button:last-child {
+  background: #fff1f4;
+  color: #b66a7a;
+}
+
+
+.jihoon-song-actions button:active {
+  transform: scale(0.97);
+}
