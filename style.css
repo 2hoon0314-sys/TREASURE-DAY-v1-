@@ -5815,3 +5815,16 @@ flex-shrink: 0;
   text-align: center;
   margin-bottom: 16px !important;
 }
+.jihoon-visual-ranking-title {
+  margin: 0 auto 12px !important;
+
+  text-align: center !important;
+
+  color: #244a7c !important;
+
+  font-size: 25px !important;
+  line-height: 1.4 !important;
+  font-weight: 900 !important;
+
+  letter-spacing: 0.02em;
+}
