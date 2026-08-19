@@ -4020,6 +4020,7 @@ if (jihoonVisualRankingOpen && jihoonVisualRankingPage) {
   jihoonVisualRankingOpen.addEventListener("click", () => {
     jihoonVisualRankingPage.style.display = "block";
     jihoonVisualRankingPage.scrollTop = 0;
+  loadJihoonVisualRanking();
     document.body.style.overflow = "hidden";
   });
 }
@@ -4238,6 +4239,49 @@ function getJihoonVisuals() {
 async function getJihoonFavoriteVisuals() {
   const visuals = await getJihoonVisuals();
   return visuals.filter(item => item.favorite === true);
+}
+// =====================================
+// 👑 VISUAL RANKING 表示
+// =====================================
+
+async function loadJihoonVisualRanking() {
+  if (!jihoonVisualRankingList) return;
+
+  jihoonVisualRankingList.innerHTML = "";
+
+  try {
+    const favorites = await getJihoonFavoriteVisuals();
+
+    if (favorites.length === 0) {
+      jihoonVisualRankingList.innerHTML =
+        '<div class="jihoon-ranking-empty">♡ FAVORITEした写真がまだありません</div>';
+      return;
+    }
+
+    favorites.forEach((item, index) => {
+      const card = document.createElement("div");
+      card.className = "jihoon-visual-ranking-item";
+
+      const rank = document.createElement("div");
+      rank.className = "jihoon-visual-ranking-number";
+      rank.textContent = `#${index + 1}`;
+
+      const img = document.createElement("img");
+      img.alt = "JIHOON VISUAL";
+      img.loading = "lazy";
+      img.decoding = "async";
+
+      if (item.imageData) {
+        img.src = item.imageData;
+      }
+
+      card.appendChild(rank);
+      card.appendChild(img);
+      jihoonVisualRankingList.appendChild(card);
+    });
+  } catch (error) {
+    console.error("JIHOON VISUAL RANKING LOAD ERROR:", error);
+  }
 }
 // =========================================
 // 🔄 旧VISUALデータを新形式へ移行
