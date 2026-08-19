@@ -6555,7 +6555,7 @@ margin: 6px 0 18px;
 .jihoon-song-page {
   position: fixed;
   inset: 0;
-  z-index: 120;
+z-index: 1400;
 
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
