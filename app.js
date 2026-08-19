@@ -4567,6 +4567,49 @@ if (jihoonVisualFavorite) {
   );
 
 }
+// ==============================
+// 🗑️ JIHOON VISUAL DELETE CLICK
+// ==============================
+
+if (jihoonVisualDelete) {
+
+  jihoonVisualDelete.addEventListener(
+    "click",
+    async () => {
+
+      if (!currentJihoonVisualItem) return;
+
+      const ok = confirm(
+        "このジフンをVISUAL BOOKから削除しますか？🥲"
+      );
+
+      if (!ok) return;
+
+      try {
+
+        await deleteJihoonVisual(
+          currentJihoonVisualItem
+        );
+
+        closeJihoonVisualEdit();
+
+        await loadJihoonVisuals();
+
+      } catch (error) {
+
+        console.error(
+          "JIHOON VISUAL DELETE ERROR:",
+          error
+        );
+
+        alert("削除に失敗しました🥲");
+
+      }
+
+    }
+  );
+
+}
 // =========================================
 // 保存済み写真を表示
 // =========================================
