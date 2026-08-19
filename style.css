@@ -5662,3 +5662,54 @@ flex-shrink: 0;
 
   width: 100%;
 }
+/* ========================================
+   👑 VISUAL RANKING CARD
+======================================== */
+
+.jihoon-visual-ranking-item {
+  position: relative;
+
+  width: 88%;
+  max-width: 360px;
+
+  margin: 0 auto 22px;
+  padding: 14px;
+
+  background: rgba(255, 255, 255, 0.92);
+
+  border-radius: 28px;
+
+  box-shadow:
+    0 14px 34px rgba(70, 110, 170, 0.14),
+    inset 0 0 0 1px rgba(140, 180, 230, 0.2);
+}
+
+.jihoon-visual-ranking-item img {
+  display: block;
+
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+
+  border-radius: 22px;
+}
+
+.jihoon-visual-ranking-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 58px;
+  height: 38px;
+
+  margin-bottom: 10px;
+  padding: 0 14px;
+
+  border-radius: 999px;
+
+  background: rgba(223, 235, 255, 0.95);
+
+  color: #315b91;
+  font-size: 16px;
+  font-weight: 900;
+}
