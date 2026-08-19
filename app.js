@@ -4453,6 +4453,48 @@ items.sort(
       </article>
     `)
     .join("");
+const cards =
+  jihoonGrowth2020VisualGrid.querySelectorAll(
+    ".jihoon-growth-visual-card"
+  );
+
+cards.forEach((card) => {
+  card.addEventListener("click", async () => {
+
+    const id = Number(card.dataset.id);
+
+    const items =
+      await getJihoonGrowth2020Visuals();
+
+    const item =
+      items.find((visual) => visual.id === id);
+
+    if (!item) return;
+
+    jihoonGrowth2020VisualModal.style.display = "flex";
+jihoonGrowth2020VisualModal.scrollTop = 0;
+
+jihoonGrowth2020VisualPreviewImage.src = item.imageData;
+jihoonGrowth2020VisualPreview.style.display = "block";
+
+if (jihoonGrowth2020VisualHair) {
+  jihoonGrowth2020VisualHair.value =
+    item.hairColor || "OTHER";
+}
+
+if (jihoonGrowth2020VisualMemo) {
+  jihoonGrowth2020VisualMemo.value =
+    item.memo || "";
+}
+
+jihoonGrowth2020VisualSave.textContent = "💎 UPDATE";
+
+jihoonGrowth2020VisualSave.dataset.editId =
+  String(item.id);
+
+document.body.style.overflow = "hidden";
+  });
+});
 }
 // =========================================
 // 📸 JIHOON VISUAL BOOK - IndexedDB SAVE
