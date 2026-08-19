@@ -4016,6 +4016,14 @@ const jihoonVisualRankingBack =
   document.getElementById("jihoonVisualRankingBack");
 const jihoonVisualRankingList =
   document.getElementById("jihoonVisualRankingList");
+const jihoonGrowthHistoryOpen =
+  document.getElementById("jihoonGrowthHistoryOpen");
+
+const jihoonGrowthHistoryPage =
+  document.getElementById("jihoonGrowthHistoryPage");
+
+const jihoonGrowthHistoryBack =
+  document.getElementById("jihoonGrowthHistoryBack");
 if (jihoonVisualRankingOpen && jihoonVisualRankingPage) {
   jihoonVisualRankingOpen.addEventListener("click", () => {
     jihoonVisualRankingPage.style.display = "block";
@@ -4030,6 +4038,36 @@ if (jihoonVisualRankingBack && jihoonVisualRankingPage) {
     jihoonVisualRankingPage.style.display = "none";
 
     // 後ろのJIHOON BOOKはそのまま開いておく
+    document.body.style.overflow = "hidden";
+  });
+}
+// =========================================
+// 🌱 GROWTH HISTORY OPEN / BACK
+// =========================================
+
+if (
+  jihoonGrowthHistoryOpen &&
+  jihoonGrowthHistoryPage &&
+  jihoonGrowthHistoryBack
+) {
+  jihoonGrowthHistoryOpen.addEventListener("click", () => {
+    if (jihoonBookPage) {
+      jihoonBookPage.style.display = "none";
+    }
+
+    jihoonGrowthHistoryPage.style.display = "block";
+    jihoonGrowthHistoryPage.scrollTop = 0;
+
+    document.body.style.overflow = "hidden";
+  });
+
+  jihoonGrowthHistoryBack.addEventListener("click", () => {
+    jihoonGrowthHistoryPage.style.display = "none";
+
+    if (jihoonBookPage) {
+      jihoonBookPage.style.display = "block";
+    }
+
     document.body.style.overflow = "hidden";
   });
 }
