@@ -5796,30 +5796,35 @@ const jihoonChemistryPage =
 const jihoonChemistryBack =
   document.getElementById("jihoonChemistryBack");
 
-if (jihoonChemistryOpen && jihoonChemistryPage) {
+if (
+  jihoonChemistryOpen &&
+  jihoonChemistryPage &&
+  jihoonBookDetail
+) {
   jihoonChemistryOpen.addEventListener("click", () => {
-    const jihoonPage = document.getElementById("jihoonPage");
 
-    if (jihoonPage) {
-      jihoonPage.style.display = "none";
-    }
+    jihoonBookDetail.classList.remove("active");
 
     jihoonChemistryPage.style.display = "block";
-    window.scrollTo(0, 0);
+    jihoonChemistryPage.scrollTop = 0;
+
+    document.body.style.overflow = "hidden";
   });
 }
 
-if (jihoonChemistryBack && jihoonChemistryPage) {
+if (
+  jihoonChemistryBack &&
+  jihoonChemistryPage &&
+  jihoonBookDetail
+) {
   jihoonChemistryBack.addEventListener("click", () => {
-    const jihoonPage = document.getElementById("jihoonPage");
 
     jihoonChemistryPage.style.display = "none";
 
-    if (jihoonPage) {
-      jihoonPage.style.display = "block";
-    }
+    jihoonBookDetail.classList.add("active");
+    jihoonBookDetail.scrollTop = 0;
 
-    window.scrollTo(0, 0);
+    document.body.style.overflow = "hidden";
   });
 }
 // =========================================
