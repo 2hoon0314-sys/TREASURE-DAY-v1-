@@ -4095,7 +4095,7 @@ if (
 
     jihoonGrowth2020Page.style.display = "block";
     jihoonGrowth2020Page.scrollTop = 0;
-
+renderJihoonGrowth2020Visuals();
     document.body.style.overflow = "hidden";
   });
 
@@ -4190,6 +4190,135 @@ if (jihoonGrowth2020VisualCancel && jihoonGrowth2020VisualModal) {
 
     document.body.style.overflow = "hidden";
   });
+}
+// =========================================
+// 💾 2020 VISUAL SAVE
+// =========================================
+
+const jihoonGrowth2020VisualSave =
+  document.getElementById("jihoonGrowth2020VisualSave");
+
+const jihoonGrowth2020VisualHair =
+  document.getElementById("jihoonGrowth2020VisualHair");
+
+const jihoonGrowth2020VisualMemo =
+  document.getElementById("jihoonGrowth2020VisualMemo");
+
+const JIHOON_GROWTH_2020_KEY =
+  "treasure-day-jihoon-growth-2020";
+
+function getJihoonGrowth2020Visuals() {
+  try {
+    return JSON.parse(
+      localStorage.getItem(JIHOON_GROWTH_2020_KEY) || "[]"
+    );
+  } catch (error) {
+    console.error("2020 VISUAL LOAD ERROR", error);
+    return [];
+  }
+}
+
+function saveJihoonGrowth2020Visuals(items) {
+  localStorage.setItem(
+    JIHOON_GROWTH_2020_KEY,
+    JSON.stringify(items)
+  );
+}
+
+if (jihoonGrowth2020VisualSave) {
+  jihoonGrowth2020VisualSave.addEventListener("click", () => {
+
+    const imageData =
+      jihoonGrowth2020VisualPreviewImage.src;
+
+    if (!imageData) {
+      alert("先に写真を選んでね 📸");
+      return;
+    }
+
+    const items = getJihoonGrowth2020Visuals();
+
+    const newItem = {
+      id: Date.now(),
+      imageData: imageData,
+      hairColor:
+        jihoonGrowth2020VisualHair?.value || "OTHER",
+      memo:
+        jihoonGrowth2020VisualMemo?.value.trim() || "",
+      createdAt: Date.now()
+    };
+
+    items.unshift(newItem);
+
+    saveJihoonGrowth2020Visuals(items);
+renderJihoonGrowth2020Visuals();
+    jihoonGrowth2020VisualModal.style.display = "none";
+
+    jihoonGrowth2020VisualInput.value = "";
+    jihoonGrowth2020VisualPreviewImage.src = "";
+    jihoonGrowth2020VisualPreview.style.display = "none";
+
+    if (jihoonGrowth2020VisualMemo) {
+      jihoonGrowth2020VisualMemo.value = "";
+    }
+
+    document.body.style.overflow = "hidden";
+  });
+}
+// =========================================
+// 🖼️ 2020 VISUAL RENDER
+// =========================================
+
+const jihoonGrowth2020VisualGrid =
+  document.getElementById("jihoonGrowth2020VisualGrid");
+
+function renderJihoonGrowth2020Visuals() {
+  if (!jihoonGrowth2020VisualGrid) return;
+
+  const items = getJihoonGrowth2020Visuals();
+
+  // まだ何も保存されてないとき
+  if (items.length === 0) {
+    jihoonGrowth2020VisualGrid.innerHTML = `
+      <div class="jihoon-growth-visual-empty">
+        <span>📷</span>
+        <strong>まだ写真がありません</strong>
+        <small>好きな2020ジフンを追加してみよう 🐶</small>
+      </div>
+    `;
+    return;
+  }
+
+  // 保存済み写真を表示
+  jihoonGrowth2020VisualGrid.innerHTML = items
+    .map((item) => `
+      <article
+        class="jihoon-growth-visual-card"
+        data-id="${item.id}"
+      >
+        <div class="jihoon-growth-visual-photo">
+          <img
+            src="${item.imageData}"
+            alt="2020 JIHOON"
+          >
+        </div>
+
+        <div class="jihoon-growth-visual-info">
+          <span class="jihoon-growth-visual-hair">
+            ${item.hairColor || "OTHER"}
+          </span>
+
+          ${
+            item.memo
+              ? `<p>${item.memo}</p>`
+              : `<p class="jihoon-growth-visual-no-note">
+                   NO NOTE
+                 </p>`
+          }
+        </div>
+      </article>
+    `)
+    .join("");
 }
 // =========================================
 // 📸 JIHOON VISUAL BOOK - IndexedDB SAVE
