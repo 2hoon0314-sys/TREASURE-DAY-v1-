@@ -4335,29 +4335,30 @@ if (jihoonGrowth2020VisualSave) {
         return;
       }
 
-      const newItem = {
-        id: Date.now(),
+ const editId =
+  jihoonGrowth2020VisualSave.dataset.editId
+    ? Number(jihoonGrowth2020VisualSave.dataset.editId)
+    : null;
 
-        imageData: imageData,
+const itemToSave = {
+  id: editId || Date.now(),
+  imageData: imageData,
+  hairColor:
+    jihoonGrowth2020VisualHair?.value || "OTHER",
+  memo:
+    jihoonGrowth2020VisualMemo?.value.trim() || "",
+  createdAt: editId
+    ? (
+        (await getJihoonGrowth2020Visuals())
+          .find((item) => item.id === editId)
+          ?.createdAt || Date.now()
+      )
+    : Date.now()
+};
 
-        hairColor:
-          jihoonGrowth2020VisualHair?.value ||
-          "OTHER",
+await saveJihoonGrowth2020Visual(itemToSave);
 
-        memo:
-          jihoonGrowth2020VisualMemo?.value.trim() ||
-          "",
-
-        createdAt: Date.now()
-      };
-
-      try {
-
-        await saveJihoonGrowth2020Visual(
-          newItem
-        );
-
-        await renderJihoonGrowth2020Visuals();
+await renderJihoonGrowth2020Visuals();
 
         jihoonGrowth2020VisualModal.style.display =
           "none";
