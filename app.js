@@ -4296,7 +4296,6 @@ async function getJihoonGrowth2020Visuals() {
 }
 
 
-async function saveJihoonGrowth2020Visual(item) {
 async function deleteJihoonGrowth2020Visual(id) {
   if (!jihoonGrowth2020DB) {
     await openJihoonGrowth2020DB();
@@ -4325,12 +4324,13 @@ async function deleteJihoonGrowth2020Visual(id) {
     };
   });
 }
+
+async function saveJihoonGrowth2020Visual(item) {
   if (!jihoonGrowth2020DB) {
     await openJihoonGrowth2020DB();
   }
 
   return new Promise((resolve, reject) => {
-
     const transaction =
       jihoonGrowth2020DB.transaction(
         JIHOON_GROWTH_2020_STORE,
