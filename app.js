@@ -4051,10 +4051,9 @@ if (
   jihoonGrowthHistoryBack
 ) {
   jihoonGrowthHistoryOpen.addEventListener("click", () => {
-    if (jihoonBookPage) {
-      jihoonBookPage.style.display = "none";
-    }
-
+if (jihoonBookDetail) {
+  jihoonBookDetail.classList.remove("active");
+}
     jihoonGrowthHistoryPage.style.display = "block";
     jihoonGrowthHistoryPage.scrollTop = 0;
 
@@ -4064,9 +4063,9 @@ if (
   jihoonGrowthHistoryBack.addEventListener("click", () => {
     jihoonGrowthHistoryPage.style.display = "none";
 
-    if (jihoonBookPage) {
-      jihoonBookPage.style.display = "block";
-    }
+if (jihoonBookDetail) {
+  jihoonBookDetail.classList.add("active");
+}
 
     document.body.style.overflow = "hidden";
   });
