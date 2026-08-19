@@ -5078,11 +5078,12 @@ label[for="memory-song"] {
   z-index: 1600;
 
   display: flex;
-  align-items: flex-end;
+  align-items: flex-start;
   justify-content: center;
 
-  padding: 20px;
-
+  padding: 100px 20px 170px;
+overflow-y: auto;
+-webkit-overflow-scrolling: touch;
   background: rgba(34, 59, 98, 0.22);
 
   backdrop-filter: blur(8px);
