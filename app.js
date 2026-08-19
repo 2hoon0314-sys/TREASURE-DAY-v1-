@@ -4338,27 +4338,22 @@ if (jihoonMemoriesAdd) {
 
 
       // MEMORYページを表示
-      if (memoryPage) {
-        memoryPage.style.display =
-          "block";
-      }
+// MEMORYページへ正式に切り替え
+showPage("memory");
 
+// PHOTO MEMORYタブへ
+switchMemoryMode("photo");
 
-      // PHOTO MEMORYタブへ
-      switchMemoryMode("photo");
+// MEMBERはJIHOONで自動セット
+if (memoryMember) {
+  memoryMember.value =
+    "JIHOON";
+}
 
+document.body.style.overflow =
+  "";
 
-      // MEMBERはJIHOONで自動セット
-      if (memoryMember) {
-        memoryMember.value =
-          "JIHOON";
-      }
-
-
-      document.body.style.overflow =
-        "";
-
-      window.scrollTo(0, 0);
+window.scrollTo(0, 0);
     }
   );
 }
@@ -4550,19 +4545,20 @@ async function renderJihoonMemories() {
 
 
     // PHOTO MEMORY詳細を共用
-    card.addEventListener(
-      "click",
-      () => {
+card.addEventListener(
+  "click",
+  async () => {
 
-        jihoonMemoriesPage.style.display =
-          "none";
+    photoMemoryReturnTarget =
+      "jihoon";
 
-        photoMemoryReturnTarget =
-          "jihoon";
+    await openPhotoMemoryDetail(index);
 
-        openPhotoMemoryDetail(index);
-      }
-    );
+    // 詳細を開いてからJIHOON MEMORIESを隠す
+    jihoonMemoriesPage.style.display =
+      "none";
+  }
+);
 
 
     jihoonMemoriesList.appendChild(
