@@ -4203,7 +4203,7 @@ const jihoonGrowth2020VisualHair =
 
 const jihoonGrowth2020VisualMemo =
   document.getElementById("jihoonGrowth2020VisualMemo");
-
+let jihoonGrowth2020EditingId = null;
 // =========================================
 // 💾 2020 VISUAL - IndexedDB
 // =========================================
