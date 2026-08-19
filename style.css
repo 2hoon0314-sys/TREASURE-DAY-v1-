@@ -6519,7 +6519,7 @@ flex-shrink: 0;
 
 #jihoonGrowth2020VisualDelete {
   width: 100%;
-  margin-top: 14px;
+  margin: 14px 0 18px;
   padding: 14px 18px;
 
   border: none;
@@ -6539,4 +6539,12 @@ flex-shrink: 0;
 
 #jihoonGrowth2020VisualDelete:active {
   transform: scale(0.98);
+}
+#jihoonGrowth2020VisualCancel {
+  display: block;
+  width: 100%;
+  margin-top: 18px !important;
+  padding: 14px !important;
+  position: relative;
+  z-index: 5;
 }
