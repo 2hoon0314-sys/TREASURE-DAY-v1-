@@ -4060,32 +4060,111 @@ function openJihoonVisualDB() {
 // 写真保存
 // =========================================
 
-function saveJihoonVisual(file, hairColor) {
+// =========================================
+// 📸 画像を安定保存用DataURLへ変換
+// =========================================
+
+function jihoonImageToDataURL(file) {
   return new Promise((resolve, reject) => {
 
-    if (!jihoonVisualDB) {
-      reject(new Error("Database is not ready"));
-      return;
-    }
+    const reader = new FileReader();
+
+    reader.onload = () => {
+
+      const img = new Image();
+
+      img.onload = () => {
+
+        const MAX_SIZE = 1600;
+
+        let width = img.naturalWidth;
+        let height = img.naturalHeight;
+
+        if (width > height && width > MAX_SIZE) {
+          height = Math.round(height * MAX_SIZE / width);
+          width = MAX_SIZE;
+        } else if (height >= width && height > MAX_SIZE) {
+          width = Math.round(width * MAX_SIZE / height);
+          height = MAX_SIZE;
+        }
+
+        const canvas = document.createElement("canvas");
+
+        canvas.width = width;
+        canvas.height = height;
+
+        const ctx = canvas.getContext("2d");
+
+        if (!ctx) {
+          reject(new Error("Canvas is not available"));
+          return;
+        }
+
+        ctx.drawImage(img, 0, 0, width, height);
+
+        const imageData =
+          canvas.toDataURL("image/jpeg", 0.86);
+
+        resolve(imageData);
+
+      };
+
+      img.onerror = () => {
+        reject(new Error("Image decode failed"));
+      };
+
+      img.src = reader.result;
+
+    };
+
+    reader.onerror = () => {
+      reject(reader.error);
+    };
+
+    reader.readAsDataURL(file);
+
+  });
+}
+
+
+// =========================================
+// 📸 写真保存
+// =========================================
+
+async function saveJihoonVisual(file, hairColor) {
+
+  if (!jihoonVisualDB) {
+    throw new Error("Database is not ready");
+  }
+
+  const imageData =
+    await jihoonImageToDataURL(file);
+
+  return new Promise((resolve, reject) => {
 
     const transaction = jihoonVisualDB.transaction(
       JIHOON_VISUAL_STORE,
       "readwrite"
     );
 
-    const store = transaction.objectStore(JIHOON_VISUAL_STORE);
+    const store =
+      transaction.objectStore(JIHOON_VISUAL_STORE);
 
-const data = {
-  image: file,
-  hairColor: hairColor,
-  favorite: false,
-  createdAt: Date.now()
-};
+    const data = {
+      imageData: imageData,
+      hairColor: hairColor,
+      favorite: false,
+      createdAt: Date.now()
+    };
 
     const request = store.add(data);
 
     request.onsuccess = () => {
-      resolve(request.result);
+
+      data.id = request.result;
+
+      resolve(data);
+
     };
 
     request.onerror = () => {
@@ -4094,7 +4173,6 @@ const data = {
 
   });
 }
-
 // =========================================
 // 写真一覧取得
 // =========================================
@@ -4127,7 +4205,49 @@ function getJihoonVisuals() {
   });
 }
 
+// =========================================
+// 🔄 旧VISUALデータを新形式へ移行
+// =========================================
 
+async function migrateLegacyJihoonVisuals() {
+
+  const visuals = await getJihoonVisuals();
+
+  for (const item of visuals) {
+
+    // すでに新形式なら何もしない
+    if (item.imageData) continue;
+
+    // 旧形式の画像がなければスキップ
+    if (!item.image) continue;
+
+    try {
+
+      const imageData =
+        await jihoonImageToDataURL(item.image);
+
+      const updatedItem = {
+        ...item,
+        imageData: imageData
+      };
+
+      // 旧Blob/Fileは保存データから外す
+      delete updatedItem.image;
+
+      await updateJihoonVisual(updatedItem);
+
+    } catch (error) {
+
+      console.error(
+        "JIHOON VISUAL MIGRATION ERROR:",
+        item.id,
+        error
+      );
+
+    }
+
+  }
+}
 // =========================================
 // 写真カード作成
 // =========================================
@@ -4147,10 +4267,11 @@ const img = document.createElement("img");
 
 img.alt = "JIHOON VISUAL";
 img.decoding = "async";
+img.loading = "lazy";
 
-const imageURL = URL.createObjectURL(item.image);
-
-img.src = imageURL;
+if (item.imageData) {
+  img.src = item.imageData;
+}
 // 📸 写真タップ → EDIT画面を開く
 card.addEventListener("click", () => {
   openJihoonVisualEdit(item);
@@ -4197,7 +4318,6 @@ const jihoonVisualFavorite =
 const jihoonVisualChangeHair =
   document.getElementById("jihoonVisualChangeHair");
 let currentJihoonVisualItem = null;
-let currentJihoonVisualPreviewURL = null;
 
 
 // EDIT画面を開く
@@ -4226,15 +4346,8 @@ if (jihoonVisualFavorite) {
 }
 
 
-if (currentJihoonVisualPreviewURL) {
-  URL.revokeObjectURL(currentJihoonVisualPreviewURL);
-}
-
-currentJihoonVisualPreviewURL =
-  URL.createObjectURL(item.image);
-
 jihoonVisualEditImage.src =
-  currentJihoonVisualPreviewURL;
+  item.imageData || "";
 
 jihoonVisualEditModal.classList.add("active");
 }
@@ -4247,10 +4360,7 @@ function closeJihoonVisualEdit() {
 
   jihoonVisualEditModal.classList.remove("active");
 
-if (currentJihoonVisualPreviewURL) {
-  URL.revokeObjectURL(currentJihoonVisualPreviewURL);
-  currentJihoonVisualPreviewURL = null;
-}
+
   jihoonVisualEditImage.src = "";
   currentJihoonVisualItem = null;
 }
@@ -4431,17 +4541,13 @@ jihoonHairButtons.forEach((button) => {
 
     try {
 
-      const id = await saveJihoonVisual(
-        pendingJihoonVisualFile,
-        hairColor
-      );
+const savedItem =
+  await saveJihoonVisual(
+    pendingJihoonVisualFile,
+    hairColor
+  );
 
-      createJihoonVisualCard({
-        id: id,
-        image: pendingJihoonVisualFile,
-        hairColor: hairColor,
-        createdAt: Date.now()
-      });
+createJihoonVisualCard(savedItem);
 
     } catch (error) {
 
@@ -4484,11 +4590,20 @@ if (jihoonHairCancel) {
 // =========================================
 
 openJihoonVisualDB()
-  .then(() => {
-    loadJihoonVisuals();
+  .then(async () => {
+
+    // 旧写真を一度だけ新形式へ移行
+    await migrateLegacyJihoonVisuals();
+
+    // 移行後のデータを表示
+    await loadJihoonVisuals();
+
   })
   .catch((error) => {
-    console.error("JIHOON VISUAL DB ERROR:", error);
+    console.error(
+      "JIHOON VISUAL DB ERROR:",
+      error
+    );
   });
 // =========================================
 // 🎨 JIHOON HAIR FILTER
