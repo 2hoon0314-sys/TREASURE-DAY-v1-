@@ -4298,12 +4298,12 @@ controls.className = "jihoon-visual-ranking-controls";
 
 const upButton = document.createElement("button");
 upButton.type = "button";
-upButton.textContent = "↑";
+upButton.textContent = "↑  UP";
 upButton.className = "jihoon-ranking-move-button";
 
 const downButton = document.createElement("button");
 downButton.type = "button";
-downButton.textContent = "↓";
+downButton.textContent = "DOWN  ↓";
 downButton.className = "jihoon-ranking-move-button";
 
 controls.appendChild(upButton);
