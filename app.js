@@ -581,6 +581,51 @@ try {
   memories = [];
 }
 // ========================================
+// 🐶 OLD PHOTO MEMORY MEMBER MIGRATION
+// 既存データ救済
+// ========================================
+
+let jihoonMemoryMigrationChanged = false;
+
+memories.forEach((memory) => {
+
+  // すでにMEMBER指定済みなら触らない
+  if (memory.member) return;
+
+  const tags =
+    Array.isArray(memory.tags)
+      ? memory.tags
+      : [];
+
+  const normalizedTags =
+    tags.map((tag) =>
+      String(tag)
+        .replace(/^#/, "")
+        .trim()
+        .toUpperCase()
+    );
+
+  // 既存タグにJIHOON / ジフンがあれば自動認定
+  if (
+    normalizedTags.includes("JIHOON") ||
+    tags.some((tag) =>
+      String(tag)
+        .replace(/^#/, "")
+        .trim() === "ジフン"
+    )
+  ) {
+    memory.member = "JIHOON";
+    jihoonMemoryMigrationChanged = true;
+  }
+});
+
+if (jihoonMemoryMigrationChanged) {
+  localStorage.setItem(
+    "treasure-memories",
+    JSON.stringify(memories)
+  );
+}
+// ========================================
 // 📸 PHOTO MEMORY DETAIL
 // ========================================
 
@@ -825,7 +870,40 @@ if (newLink === null) return;
 );
 
 if (newTags === null) return;
+const newMember = prompt(
+  "MEMBERを編集\n" +
+  "HYUNSUK / JIHOON / YOSHI / JUNKYU / JAEHYUK / ASAHI / DOYOUNG / HARUTO / JEONGWOO / JUNGHWAN\n" +
+  "※空欄でMEMBER指定なし",
+  memory.member || ""
+);
 
+if (newMember === null) return;
+
+const normalizedMember =
+  newMember
+    .trim()
+    .toUpperCase();
+
+const validMembers = [
+  "",
+  "HYUNSUK",
+  "JIHOON",
+  "YOSHI",
+  "JUNKYU",
+  "JAEHYUK",
+  "ASAHI",
+  "DOYOUNG",
+  "HARUTO",
+  "JEONGWOO",
+  "JUNGHWAN"
+];
+
+if (!validMembers.includes(normalizedMember)) {
+  alert("MEMBER名を確認してね💎");
+  return;
+}
+
+memory.member = normalizedMember;
 memory.tags = newTags
   .trim()
   .split(/\s+/)
@@ -4037,6 +4115,361 @@ if (jihoonVisualClose && jihoonVisualBook) {
     document.body.style.overflow = "hidden";
 
   });
+}
+// ========================================
+// 📷 JIHOON MEMORIES
+// PHOTO MEMORY LINK VIEW
+// ========================================
+
+const jihoonMemoriesOpen =
+  document.getElementById("jihoonMemoriesOpen");
+
+const jihoonMemoriesPage =
+  document.getElementById("jihoonMemoriesPage");
+
+const jihoonMemoriesBack =
+  document.getElementById("jihoonMemoriesBack");
+
+const jihoonMemoriesAdd =
+  document.getElementById("jihoonMemoriesAdd");
+
+const jihoonMemoriesList =
+  document.getElementById("jihoonMemoriesList");
+
+
+// ========================================
+// 📷 OPEN
+// ========================================
+
+if (
+  jihoonMemoriesOpen &&
+  jihoonMemoriesPage &&
+  jihoonBookDetail
+) {
+
+  jihoonMemoriesOpen.addEventListener(
+    "click",
+    async () => {
+
+      jihoonBookDetail.classList.remove("active");
+
+      jihoonMemoriesPage.style.display =
+        "block";
+
+      jihoonMemoriesPage.scrollTop = 0;
+
+      await renderJihoonMemories();
+
+      document.body.style.overflow =
+        "hidden";
+    }
+  );
+}
+
+
+// ========================================
+// ← BACK TO JIHOON BOOK
+// ========================================
+
+if (
+  jihoonMemoriesBack &&
+  jihoonMemoriesPage &&
+  jihoonBookDetail
+) {
+
+  jihoonMemoriesBack.addEventListener(
+    "click",
+    () => {
+
+      jihoonMemoriesPage.style.display =
+        "none";
+
+      jihoonBookDetail.classList.add("active");
+
+      jihoonBookDetail.scrollTop = 0;
+
+      document.body.style.overflow =
+        "hidden";
+    }
+  );
+}
+
+
+// ========================================
+// ＋ ADD JIHOON MEMORY
+// PHOTO MEMORYへ移動
+// ========================================
+
+if (jihoonMemoriesAdd) {
+
+  jihoonMemoriesAdd.addEventListener(
+    "click",
+    () => {
+
+      const memoryPage =
+        document.getElementById("memory-page");
+
+
+      // JIHOON MEMORYを閉じる
+      if (jihoonMemoriesPage) {
+        jihoonMemoriesPage.style.display =
+          "none";
+      }
+
+
+      // JIHOON BOOKも閉じる
+      if (jihoonBookDetail) {
+        jihoonBookDetail.classList.remove(
+          "active"
+        );
+      }
+
+
+      // MEMBER BOOKも閉じる
+      const memberBookDetail =
+        document.getElementById(
+          "member-book-detail"
+        );
+
+      if (memberBookDetail) {
+        memberBookDetail.classList.remove(
+          "active"
+        );
+      }
+
+
+      // MEMORYページを表示
+      if (memoryPage) {
+        memoryPage.style.display =
+          "block";
+      }
+
+
+      // PHOTO MEMORYタブへ
+      switchMemoryMode("photo");
+
+
+      // MEMBERはJIHOONで自動セット
+      if (memoryMember) {
+        memoryMember.value =
+          "JIHOON";
+      }
+
+
+      document.body.style.overflow =
+        "";
+
+      window.scrollTo(0, 0);
+    }
+  );
+}
+
+
+// ========================================
+// 🐶 JIHOON MEMORY RENDER
+// ========================================
+
+async function renderJihoonMemories() {
+
+  if (!jihoonMemoriesList) return;
+
+
+  jihoonMemoriesList.innerHTML = "";
+
+
+  const jihoonEntries =
+    memories
+      .map(
+        (memory, index) => ({
+          memory,
+          index
+        })
+      )
+      .filter(
+        ({ memory }) =>
+          String(
+            memory.member || ""
+          ).toUpperCase() ===
+          "JIHOON"
+      );
+
+
+  if (jihoonEntries.length === 0) {
+
+    jihoonMemoriesList.innerHTML = `
+      <div class="jihoon-memories-empty">
+        <span>📷</span>
+
+        <strong>
+          まだJIHOON MEMORYがありません
+        </strong>
+
+        <small>
+          PHOTO MEMORYでMEMBERを
+          JIHOONにして投稿してみよう 🐶💎
+        </small>
+      </div>
+    `;
+
+    return;
+  }
+
+
+  for (
+    const { memory, index }
+    of jihoonEntries
+  ) {
+
+    const card =
+      document.createElement("article");
+
+    card.className =
+      "jihoon-memory-card";
+
+
+    // ===============================
+    // 📸 PHOTO
+    // ===============================
+
+    if (
+      memory.photoKey ||
+      memory.photo
+    ) {
+
+      const image =
+        document.createElement("img");
+
+      image.alt =
+        memory.title ||
+        "JIHOON MEMORY";
+
+
+      if (memory.photoKey) {
+
+        try {
+
+          image.src =
+            await loadPhotoMemoryImage(
+              memory.photoKey
+            );
+
+        } catch (error) {
+
+          console.error(
+            "JIHOON MEMORY IMAGE LOAD ERROR",
+            error
+          );
+
+          image.src = "";
+
+        }
+
+      } else {
+
+        // 古いPHOTO MEMORY救済
+        image.src =
+          memory.photo || "";
+
+      }
+
+
+      if (image.src) {
+        card.appendChild(image);
+      }
+    }
+
+
+    // ===============================
+    // 💎 INFO
+    // ===============================
+
+    const body =
+      document.createElement("div");
+
+    body.className =
+      "jihoon-memory-card-body";
+
+
+    const title =
+      document.createElement("strong");
+
+    title.textContent =
+      memory.title ||
+      "JIHOON MEMORY 💎";
+
+
+    body.appendChild(title);
+
+
+    if (memory.text) {
+
+      const text =
+        document.createElement("p");
+
+      text.textContent =
+        memory.text;
+
+      body.appendChild(text);
+    }
+
+
+    // ===============================
+    // 🏷 TAGS
+    // ===============================
+
+    if (
+      Array.isArray(memory.tags) &&
+      memory.tags.length > 0
+    ) {
+
+      const tags =
+        document.createElement("div");
+
+      tags.className =
+        "jihoon-memory-tags";
+
+
+      memory.tags.forEach(
+        (tag) => {
+
+          const span =
+            document.createElement("span");
+
+          span.textContent =
+            "#" + tag;
+
+          tags.appendChild(span);
+        }
+      );
+
+
+      body.appendChild(tags);
+    }
+
+
+    card.appendChild(body);
+
+
+    // PHOTO MEMORY詳細を共用
+    card.addEventListener(
+      "click",
+      () => {
+
+        jihoonMemoriesPage.style.display =
+          "none";
+
+        photoMemoryReturnTarget =
+          "jihoon";
+
+        openPhotoMemoryDetail(index);
+      }
+    );
+
+
+    jihoonMemoriesList.appendChild(
+      card
+    );
+  }
 }
 // ========================================
 // 👑 JIHOON VISUAL RANKING OPEN / CLOSE
