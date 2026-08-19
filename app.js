@@ -5827,6 +5827,121 @@ if (
     document.body.style.overflow = "hidden";
   });
 }
+// ========================================
+// 🫶 JIHOON CHEMISTRY DETAIL
+// ========================================
+
+const jihoonChemistryCards =
+  document.querySelectorAll(".jihoon-chemistry-card");
+
+const jihoonChemistryJunkyuPage =
+  document.getElementById("jihoonChemistryJunkyuPage");
+
+const jihoonChemistryYoshiPage =
+  document.getElementById("jihoonChemistryYoshiPage");
+
+const jihoonChemistryJunkyuBack =
+  document.getElementById("jihoonChemistryJunkyuBack");
+
+const jihoonChemistryYoshiBack =
+  document.getElementById("jihoonChemistryYoshiBack");
+
+
+// ========================================
+// 🐨 JUNKYU / 🐯 YOSHI OPEN
+// ========================================
+
+jihoonChemistryCards.forEach((card) => {
+
+  card.addEventListener("click", () => {
+
+    const chemistry =
+      card.dataset.chemistry;
+
+    jihoonChemistryPage.style.display =
+      "none";
+
+
+    if (
+      chemistry === "JUNKYU" &&
+      jihoonChemistryJunkyuPage
+    ) {
+
+      jihoonChemistryJunkyuPage.style.display =
+        "block";
+
+      jihoonChemistryJunkyuPage.scrollTop = 0;
+    }
+
+
+    if (
+      chemistry === "YOSHI" &&
+      jihoonChemistryYoshiPage
+    ) {
+
+      jihoonChemistryYoshiPage.style.display =
+        "block";
+
+      jihoonChemistryYoshiPage.scrollTop = 0;
+    }
+
+
+    document.body.style.overflow =
+      "hidden";
+  });
+});
+
+
+// ========================================
+// ← CHEMISTRYに戻る
+// ========================================
+
+if (
+  jihoonChemistryJunkyuBack &&
+  jihoonChemistryJunkyuPage
+) {
+
+  jihoonChemistryJunkyuBack.addEventListener(
+    "click",
+    () => {
+
+      jihoonChemistryJunkyuPage.style.display =
+        "none";
+
+      jihoonChemistryPage.style.display =
+        "block";
+
+      jihoonChemistryPage.scrollTop = 0;
+
+      document.body.style.overflow =
+        "hidden";
+    }
+  );
+}
+
+
+if (
+  jihoonChemistryYoshiBack &&
+  jihoonChemistryYoshiPage
+) {
+
+  jihoonChemistryYoshiBack.addEventListener(
+    "click",
+    () => {
+
+      jihoonChemistryYoshiPage.style.display =
+        "none";
+
+      jihoonChemistryPage.style.display =
+        "block";
+
+      jihoonChemistryPage.scrollTop = 0;
+
+      document.body.style.overflow =
+        "hidden";
+    }
+  );
+}
 // =========================================
 // 📸 JIHOON VISUAL BOOK - IndexedDB SAVE
 // =========================================
