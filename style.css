@@ -5476,3 +5476,100 @@ flex-shrink: 0;
 .jihoon-visual-favorite-badge.show {
   display: grid;
 }
+/* ========================================
+   🎨 JIHOON HAIR CHANGE MODAL
+======================================== */
+
+.jihoon-hair-change-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  display: none;
+  align-items: center;
+  justify-content: center;
+
+  padding: 24px;
+  background: rgba(40, 58, 88, 0.35);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+}
+
+.jihoon-hair-change-modal.active {
+  display: flex;
+}
+
+.jihoon-hair-change-sheet {
+  width: min(100%, 390px);
+  padding: 28px 22px 20px;
+
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(177, 205, 244, 0.7);
+  border-radius: 30px;
+
+  box-shadow:
+    0 20px 50px rgba(43, 70, 112, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+
+  text-align: center;
+}
+
+.jihoon-hair-change-kicker {
+  margin-bottom: 8px;
+
+  color: #5278ad;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+}
+
+.jihoon-hair-change-sheet h3 {
+  margin: 0 0 22px;
+
+  color: #234777;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.jihoon-hair-change-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.jihoon-hair-change-grid button {
+  min-height: 52px;
+  padding: 10px 8px;
+
+  border: 1px solid #d8e6f8;
+  border-radius: 18px;
+
+  background: #f6faff;
+  color: #34577f;
+
+  font-size: 13px;
+  font-weight: 800;
+
+  box-shadow: 0 5px 12px rgba(70, 102, 145, 0.07);
+}
+
+.jihoon-hair-change-grid button:active {
+  transform: scale(0.97);
+  background: #eaf3ff;
+}
+
+.jihoon-hair-change-cancel {
+  width: 100%;
+  margin-top: 18px;
+  padding: 13px;
+
+  border: 0;
+  border-radius: 17px;
+
+  background: #edf4ff;
+  color: #6685ad;
+
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
