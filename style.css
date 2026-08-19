@@ -5684,14 +5684,19 @@ flex-shrink: 0;
     inset 0 0 0 1px rgba(140, 180, 230, 0.2);
 }
 
-.jihoon-visual-ranking-item img {
-  display: block;
+.jihoon-visual-ranking-list .jihoon-visual-ranking-item img {
+  display: block !important;
 
-  width: 100%;
-  aspect-ratio: 3 / 4;
-  object-fit: cover;
+  width: 220px !important;
+  height: 290px !important;
 
-  border-radius: 22px;
+  max-width: 220px !important;
+
+  margin: 0 auto !important;
+
+  object-fit: cover !important;
+
+  border-radius: 22px !important;
 }
 
 .jihoon-visual-ranking-number {
