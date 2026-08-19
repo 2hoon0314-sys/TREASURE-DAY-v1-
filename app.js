@@ -5342,6 +5342,448 @@ setupJihoonGrowthYear(2024);
 setupJihoonGrowthYear(2025);
 setupJihoonGrowthYear(2026);
 // =========================================
+// 🎧 JIHOON'S SONG
+// =========================================
+
+const jihoonSongOpen =
+  document.getElementById("jihoonSongOpen");
+
+const jihoonSongPage =
+  document.getElementById("jihoonSongPage");
+
+const jihoonSongBack =
+  document.getElementById("jihoonSongBack");
+
+const jihoonSongTitle =
+  document.getElementById("jihoonSongTitle");
+
+const jihoonSongMemo =
+  document.getElementById("jihoonSongMemo");
+
+const jihoonSongSave =
+  document.getElementById("jihoonSongSave");
+
+const jihoonSongCancel =
+  document.getElementById("jihoonSongCancel");
+
+const jihoonSongList =
+  document.getElementById("jihoonSongList");
+
+
+let jihoonSongs = [];
+
+try {
+  jihoonSongs =
+    JSON.parse(
+      localStorage.getItem("treasure-jihoon-songs")
+    ) || [];
+} catch (error) {
+  jihoonSongs = [];
+}
+
+
+// =========================================
+// 🎧 OPEN / BACK
+// =========================================
+
+if (
+  jihoonSongOpen &&
+  jihoonSongPage &&
+  jihoonBookDetail
+) {
+  jihoonSongOpen.addEventListener("click", () => {
+
+    jihoonBookDetail.classList.remove("active");
+
+    jihoonSongPage.style.display = "block";
+    jihoonSongPage.scrollTop = 0;
+
+    renderJihoonSongs();
+
+    document.body.style.overflow = "hidden";
+  });
+}
+
+
+if (
+  jihoonSongBack &&
+  jihoonSongPage &&
+  jihoonBookDetail
+) {
+  jihoonSongBack.addEventListener("click", () => {
+
+    jihoonSongPage.style.display = "none";
+
+    jihoonBookDetail.classList.add("active");
+    jihoonBookDetail.scrollTop = 0;
+
+    resetJihoonSongForm();
+
+    document.body.style.overflow = "hidden";
+  });
+}
+
+
+// =========================================
+// 💾 SAVE / UPDATE
+// =========================================
+
+if (jihoonSongSave) {
+
+  jihoonSongSave.addEventListener("click", () => {
+
+    const title =
+      jihoonSongTitle?.value.trim() || "";
+
+    const memo =
+      jihoonSongMemo?.value.trim() || "";
+
+    if (!title) {
+      alert("曲名を入力してね 🎧");
+      return;
+    }
+
+
+    const editId =
+      jihoonSongSave.dataset.editId
+        ? Number(jihoonSongSave.dataset.editId)
+        : null;
+
+
+    if (editId) {
+
+      const item =
+        jihoonSongs.find(
+          (song) => song.id === editId
+        );
+
+      if (!item) return;
+
+      item.title = title;
+      item.memo = memo;
+
+    } else {
+
+      jihoonSongs.unshift({
+        id: Date.now(),
+        title,
+        memo,
+        favorite: false,
+        createdAt: Date.now()
+      });
+    }
+
+
+    saveJihoonSongs();
+
+    renderJihoonSongs();
+
+    resetJihoonSongForm();
+  });
+}
+
+
+// =========================================
+// ❌ CANCEL EDIT
+// =========================================
+
+if (jihoonSongCancel) {
+
+  jihoonSongCancel.addEventListener(
+    "click",
+    () => {
+      resetJihoonSongForm();
+    }
+  );
+}
+
+
+// =========================================
+// 💎 LOCAL STORAGE SAVE
+// =========================================
+
+function saveJihoonSongs() {
+
+  localStorage.setItem(
+    "treasure-jihoon-songs",
+    JSON.stringify(jihoonSongs)
+  );
+}
+
+
+// =========================================
+// 🔄 FORM RESET
+// =========================================
+
+function resetJihoonSongForm() {
+
+  if (jihoonSongTitle) {
+    jihoonSongTitle.value = "";
+  }
+
+  if (jihoonSongMemo) {
+    jihoonSongMemo.value = "";
+  }
+
+  if (jihoonSongSave) {
+    delete jihoonSongSave.dataset.editId;
+    jihoonSongSave.textContent =
+      "💎 SAVE SONG";
+  }
+
+  if (jihoonSongCancel) {
+    jihoonSongCancel.style.display =
+      "none";
+  }
+}
+
+
+// =========================================
+// 🎧 SONG LIST RENDER
+// =========================================
+
+function renderJihoonSongs() {
+
+  if (!jihoonSongList) return;
+
+
+  if (jihoonSongs.length === 0) {
+
+    jihoonSongList.innerHTML = `
+      <div class="jihoon-song-empty">
+        <span>🎧</span>
+        <strong>まだ曲がありません</strong>
+        <small>
+          ジフンを思い浮かべる曲を追加してみよう 🐶
+        </small>
+      </div>
+    `;
+
+    return;
+  }
+
+
+  const sortedSongs =
+    [...jihoonSongs].sort(
+      (a, b) => {
+
+        if (a.favorite !== b.favorite) {
+          return Number(b.favorite) -
+                 Number(a.favorite);
+        }
+
+        return (
+          (b.createdAt || 0) -
+          (a.createdAt || 0)
+        );
+      }
+    );
+
+
+  jihoonSongList.innerHTML =
+    sortedSongs
+      .map(
+        (song) => `
+          <article
+            class="jihoon-song-card ${
+              song.favorite
+                ? "is-favorite"
+                : ""
+            }"
+            data-id="${song.id}"
+          >
+
+            <button
+              type="button"
+              class="jihoon-song-favorite"
+              data-action="favorite"
+            >
+              ${
+                song.favorite
+                  ? "⭐️ JIHOON'S SONG"
+                  : "☆ FAVORITE"
+              }
+            </button>
+
+            <div class="jihoon-song-card-title">
+              🎧 ${escapeJihoonSongHTML(song.title)}
+            </div>
+
+            ${
+              song.memo
+                ? `
+                  <p>
+                    ${escapeJihoonSongHTML(song.memo)}
+                  </p>
+                `
+                : `
+                  <p class="jihoon-song-no-note">
+                    NO NOTE
+                  </p>
+                `
+            }
+
+            <div class="jihoon-song-actions">
+
+              <button
+                type="button"
+                data-action="edit"
+              >
+                ✏️ EDIT
+              </button>
+
+              <button
+                type="button"
+                data-action="delete"
+              >
+                🗑 DELETE
+              </button>
+
+            </div>
+
+          </article>
+        `
+      )
+      .join("");
+
+
+  const cards =
+    jihoonSongList.querySelectorAll(
+      ".jihoon-song-card"
+    );
+
+
+  cards.forEach((card) => {
+
+    const id =
+      Number(card.dataset.id);
+
+
+    card.addEventListener(
+      "click",
+      (event) => {
+
+        const button =
+          event.target.closest(
+            "button[data-action]"
+          );
+
+        if (!button) return;
+
+
+        const action =
+          button.dataset.action;
+
+
+        // ⭐️ FAVORITE
+        if (action === "favorite") {
+
+          jihoonSongs.forEach(
+            (song) => {
+              song.favorite =
+                song.id === id
+                  ? !song.favorite
+                  : false;
+            }
+          );
+
+          saveJihoonSongs();
+
+          renderJihoonSongs();
+
+          return;
+        }
+
+
+        // ✏️ EDIT
+        if (action === "edit") {
+
+          const song =
+            jihoonSongs.find(
+              (item) => item.id === id
+            );
+
+          if (!song) return;
+
+
+          if (jihoonSongTitle) {
+            jihoonSongTitle.value =
+              song.title || "";
+          }
+
+          if (jihoonSongMemo) {
+            jihoonSongMemo.value =
+              song.memo || "";
+          }
+
+          if (jihoonSongSave) {
+
+            jihoonSongSave.dataset.editId =
+              String(song.id);
+
+            jihoonSongSave.textContent =
+              "💎 UPDATE SONG";
+          }
+
+          if (jihoonSongCancel) {
+            jihoonSongCancel.style.display =
+              "block";
+          }
+
+          jihoonSongPage.scrollTop = 0;
+
+          return;
+        }
+
+
+        // 🗑 DELETE
+        if (action === "delete") {
+
+          const ok =
+            confirm(
+              "この曲を削除する？🎧"
+            );
+
+          if (!ok) return;
+
+
+          jihoonSongs =
+            jihoonSongs.filter(
+              (song) =>
+                song.id !== id
+            );
+
+
+          saveJihoonSongs();
+
+          renderJihoonSongs();
+
+          resetJihoonSongForm();
+        }
+      }
+    );
+  });
+}
+
+
+// =========================================
+// 🛡 HTML ESCAPE
+// =========================================
+
+function escapeJihoonSongHTML(text) {
+
+  return String(text)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+
+// 最初の表示
+renderJihoonSongs();
+// =========================================
 // 📸 JIHOON VISUAL BOOK - IndexedDB SAVE
 // =========================================
 
