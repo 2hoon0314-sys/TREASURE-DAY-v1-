@@ -885,25 +885,48 @@ if (photoMemoryDetailBackBtn) {
 
 
       // 🐶 JIHOON MEMORIESから来た場合
-      if (
-        photoMemoryReturnTarget ===
-        "jihoon"
-      ) {
+ if (
+  photoMemoryReturnTarget ===
+  "jihoon"
+) {
 
-        if (jihoonMemoriesPage) {
+  // 💎 MEMBER BOOKを復活
+  const memberBookDetail =
+    document.getElementById(
+      "member-book-detail"
+    );
 
-          jihoonMemoriesPage.style.display =
-            "block";
+  if (memberBookDetail) {
+    memberBookDetail.classList.add(
+      "active"
+    );
+  }
 
-          jihoonMemoriesPage.scrollTop =
-            0;
+  // 🐶 JIHOON BOOKを復活
+  const jihoonBookDetail =
+    document.getElementById(
+      "jihoon-book-detail"
+    );
 
-          await renderJihoonMemories();
-        }
+  if (jihoonBookDetail) {
+    jihoonBookDetail.classList.add(
+      "active"
+    );
+  }
 
-        document.body.style.overflow =
-          "hidden";
+  // 📷 JIHOON MEMORIESを復活
+  if (jihoonMemoriesPage) {
 
+    jihoonMemoriesPage.style.display =
+      "block";
+
+    jihoonMemoriesPage.scrollTop = 0;
+
+    await renderJihoonMemories();
+  }
+
+  document.body.style.overflow =
+    "hidden";
       } else {
 
         // 通常PHOTO MEMORYから来た場合
