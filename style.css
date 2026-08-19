@@ -7600,3 +7600,519 @@ z-index: 1400;
 .jihoon-chemistry-memory-cancel:active {
   transform: scale(0.98);
 }
+/* =========================================================
+   💎 JIHOON PAGE FINAL POLISH
+   MEMORIES / CHEMISTRY / DETAIL PAGE
+========================================================= */
+
+
+/* =========================================================
+   📷 JIHOON MEMORIES PAGE
+========================================================= */
+
+.jihoon-memories-page {
+  position: fixed;
+  inset: 0;
+  z-index: 1450;
+
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+
+  padding:
+    calc(34px + env(safe-area-inset-top))
+    20px
+    calc(150px + env(safe-area-inset-bottom));
+
+  background:
+    linear-gradient(
+      180deg,
+      #edf5ff 0%,
+      #f5f9ff 45%,
+      #ffffff 100%
+    );
+
+  color: #244a7c;
+}
+
+
+/* =========================================================
+   ← BACK
+========================================================= */
+
+.jihoon-memories-back,
+.jihoon-chemistry-back,
+.jihoon-chemistry-detail-back {
+  appearance: none;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 44px;
+
+  padding: 10px 16px;
+
+  border: 1px solid rgba(130, 170, 220, 0.18);
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.88);
+  color: #6f91ba;
+
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 900;
+
+  box-shadow:
+    0 8px 22px rgba(70, 110, 170, 0.08);
+
+  cursor: pointer;
+
+  -webkit-tap-highlight-color: transparent;
+}
+
+
+.jihoon-memories-back:active,
+.jihoon-chemistry-back:active,
+.jihoon-chemistry-detail-back:active {
+  transform: scale(0.97);
+}
+
+
+/* =========================================================
+   📷 MEMORIES INNER
+========================================================= */
+
+.jihoon-memories-inner {
+  width: 100%;
+  max-width: 680px;
+
+  margin: 38px auto 0;
+}
+
+
+.jihoon-memories-kicker {
+  margin-bottom: 12px;
+
+  text-align: center;
+
+  color: #7096c4;
+
+  font-size: 13px;
+  font-weight: 950;
+  letter-spacing: 0.13em;
+}
+
+
+.jihoon-memories-inner > h2 {
+  margin: 0 auto 12px;
+
+  text-align: center;
+
+  color: #244a7c;
+
+  font-size: 28px;
+  line-height: 1.35;
+  font-weight: 950;
+}
+
+
+.jihoon-memories-subtitle {
+  margin: 0 auto 24px;
+
+  text-align: center;
+
+  color: #819bbb;
+
+  font-size: 14px;
+  line-height: 1.8;
+  font-weight: 650;
+}
+
+
+/* =========================================================
+   🔗 PHOTO MEMORY LINK INFO
+========================================================= */
+
+.jihoon-memories-info {
+  width: 100%;
+  max-width: 430px;
+
+  margin: 0 auto 20px;
+  padding: 17px 18px;
+
+  border:
+    1px solid
+    rgba(130, 170, 220, 0.16);
+
+  border-radius: 22px;
+
+  background:
+    rgba(255, 255, 255, 0.76);
+
+  text-align: center;
+
+  box-shadow:
+    0 10px 28px rgba(70, 110, 170, 0.07);
+}
+
+
+.jihoon-memories-info > span {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #6088b8;
+
+  font-size: 11px;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+}
+
+
+.jihoon-memories-info > p {
+  margin: 0;
+
+  color: #8ca3bf;
+
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+
+/* =========================================================
+   ＋ ADD JIHOON MEMORY
+========================================================= */
+
+.jihoon-memories-add {
+  appearance: none;
+
+  display: block;
+
+  width: 100%;
+  max-width: 430px;
+
+  min-height: 56px;
+
+  margin: 0 auto 28px;
+  padding: 14px 20px;
+
+  border: 0;
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #dcecff,
+      #cfe4ff
+    );
+
+  color: #315f94;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 950;
+
+  box-shadow:
+    0 10px 25px rgba(70, 115, 175, 0.12);
+
+  cursor: pointer;
+
+  -webkit-tap-highlight-color: transparent;
+}
+
+
+.jihoon-memories-add:active {
+  transform: scale(0.98);
+}
+
+
+/* =========================================================
+   📷 JIHOON MEMORY LIST
+========================================================= */
+
+.jihoon-memories-list {
+  width: 100%;
+  max-width: 520px;
+
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 16px;
+}
+
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.jihoon-memories-empty {
+  grid-column: 1 / -1;
+
+  width: 100%;
+
+  padding: 38px 22px;
+
+  border:
+    1px dashed
+    rgba(120, 165, 220, 0.28);
+
+  border-radius: 28px;
+
+  background:
+    rgba(255, 255, 255, 0.72);
+
+  text-align: center;
+}
+
+
+.jihoon-memories-empty > span {
+  display: block;
+
+  margin-bottom: 10px;
+
+  font-size: 34px;
+}
+
+
+.jihoon-memories-empty > strong {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #315f94;
+
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+
+.jihoon-memories-empty > small {
+  display: block;
+
+  color: #8ba4c2;
+
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+
+/* =========================================================
+   📸 MEMORY CARD
+========================================================= */
+
+.jihoon-memory-card {
+  overflow: hidden;
+
+  min-width: 0;
+
+  border:
+    1px solid
+    rgba(130, 170, 220, 0.13);
+
+  border-radius: 25px;
+
+  background:
+    rgba(255, 255, 255, 0.95);
+
+  box-shadow:
+    0 12px 30px rgba(65, 105, 165, 0.10);
+
+  cursor: pointer;
+
+  -webkit-tap-highlight-color: transparent;
+}
+
+
+.jihoon-memory-card:active {
+  transform: scale(0.98);
+}
+
+
+.jihoon-memory-card > img {
+  display: block;
+
+  width: 100%;
+
+  aspect-ratio: 4 / 5;
+
+  object-fit: cover;
+
+  background: #edf4fc;
+}
+
+
+/* 写真がないMEMORYも高さが崩れにくい */
+.jihoon-memory-card:not(:has(> img)) {
+  padding-top: 8px;
+}
+
+
+/* =========================================================
+   MEMORY CARD BODY
+========================================================= */
+
+.jihoon-memory-card-body {
+  padding: 14px 14px 16px;
+
+  text-align: left;
+}
+
+
+.jihoon-memory-card-body > strong {
+  display: block;
+
+  overflow-wrap: anywhere;
+
+  color: #315d91;
+
+  font-size: 14px;
+  line-height: 1.45;
+  font-weight: 950;
+}
+
+
+.jihoon-memory-card-body > p {
+  display: -webkit-box;
+
+  overflow: hidden;
+
+  margin: 8px 0 0;
+
+  color: #7893b3;
+
+  font-size: 12px;
+  line-height: 1.65;
+
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+
+  overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   🏷️ JIHOON MEMORY TAGS
+========================================================= */
+
+.jihoon-memory-tags {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 5px;
+
+  margin-top: 11px;
+}
+
+
+.jihoon-memory-tags > span {
+  display: inline-flex;
+  align-items: center;
+
+  max-width: 100%;
+
+  padding: 5px 8px;
+
+  border-radius: 999px;
+
+  background: #edf5ff;
+  color: #668ab6;
+
+  font-size: 9px;
+  line-height: 1;
+  font-weight: 850;
+
+  overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   🫶 CHEMISTRY FINAL POLISH
+========================================================= */
+
+.jihoon-chemistry-page,
+.jihoon-chemistry-detail-page {
+  padding-top:
+    calc(34px + env(safe-area-inset-top));
+
+  padding-bottom:
+    calc(150px + env(safe-area-inset-bottom));
+}
+
+
+.jihoon-chemistry-card,
+.jihoon-chemistry-memory-card,
+.jihoon-chemistry-add,
+.jihoon-chemistry-memory-save,
+.jihoon-chemistry-memory-delete {
+  -webkit-tap-highlight-color: transparent;
+}
+
+
+.jihoon-chemistry-card,
+.jihoon-chemistry-memory-card {
+  transition:
+    transform 0.14s ease,
+    box-shadow 0.14s ease;
+}
+
+
+.jihoon-chemistry-memory-card img {
+  background: #edf4fc;
+}
+
+
+/* =========================================================
+   💎 JIHOON DETAIL PAGE COMMON POLISH
+========================================================= */
+
+.jihoon-memories-page,
+.jihoon-chemistry-page,
+.jihoon-chemistry-detail-page {
+  overscroll-behavior-y: contain;
+}
+
+
+/* =========================================================
+   📱 SMALL iPHONE
+========================================================= */
+
+@media (max-width: 390px) {
+
+  .jihoon-memories-page {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+
+  .jihoon-memories-inner > h2 {
+    font-size: 25px;
+  }
+
+
+  .jihoon-memories-list {
+    gap: 12px;
+  }
+
+
+  .jihoon-memory-card {
+    border-radius: 21px;
+  }
+
+
+  .jihoon-memory-card-body {
+    padding: 12px 11px 14px;
+  }
+
+
+  .jihoon-memory-card-body > strong {
+    font-size: 13px;
+  }
+
+
+  .jihoon-memory-card-body > p {
+    font-size: 11px;
+  }
+}
