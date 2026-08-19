@@ -4226,10 +4226,7 @@ if (jihoonVisualFavorite) {
     isFavorite
   );
 }
-  // 前のプレビューURLが残っていたら解放
-  if (currentJihoonVisualPreviewURL) {
-    URL.revokeObjectURL(currentJihoonVisualPreviewURL);
-  }
+
 
 const reader = new FileReader();
 
