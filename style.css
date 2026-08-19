@@ -5735,3 +5735,53 @@ flex-shrink: 0;
     0 16px 38px rgba(88, 124, 180, 0.16),
     0 0 26px rgba(255, 221, 120, 0.18);
 }
+/* 👑 MY VISUAL RANKING 上部デザイン */
+.jihoon-visual-ranking-page {
+  padding: 38px 20px 150px;
+}
+
+.jihoon-visual-ranking-page h2 {
+  margin: 20px auto 8px;
+
+  text-align: center;
+  font-size: 27px;
+  line-height: 1.35;
+  font-weight: 900;
+
+  color: #182f57;
+
+  word-break: keep-all;
+  overflow-wrap: normal;
+}
+
+.jihoon-visual-ranking-page h2::before {
+  content: "👑";
+  display: block;
+
+  margin-bottom: 8px;
+
+  font-size: 28px;
+}
+
+.jihoon-visual-ranking-page p {
+  margin: 0 auto 24px;
+
+  text-align: center;
+  font-size: 15px;
+  line-height: 1.7;
+  font-weight: 600;
+
+  color: #7895bd;
+}
+
+/* ランキング一覧 */
+.jihoon-visual-ranking-list {
+  width: 100%;
+  max-width: 390px;
+
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
