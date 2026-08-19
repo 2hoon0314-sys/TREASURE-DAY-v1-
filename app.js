@@ -4296,7 +4296,7 @@ async function getJihoonGrowth2020Visuals() {
 }
 
 
-async function saveJihoonGrowth2020Visual(item) {
+
 async function deleteJihoonGrowth2020Visual(id) {
   if (!jihoonGrowth2020DB) {
     await openJihoonGrowth2020DB();
