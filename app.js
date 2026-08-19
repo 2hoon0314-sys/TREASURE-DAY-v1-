@@ -5942,6 +5942,549 @@ if (
     }
   );
 }
+// ========================================
+// 🫶 CHEMISTRY MEMORY ENGINE
+// JUNKYU / YOSHI 共通
+// ========================================
+
+const jihoonChemistryJunkyuAdd =
+  document.getElementById("jihoonChemistryJunkyuAdd");
+
+const jihoonChemistryYoshiAdd =
+  document.getElementById("jihoonChemistryYoshiAdd");
+
+const jihoonChemistryJunkyuMemoryList =
+  document.getElementById("jihoonChemistryJunkyuMemoryList");
+
+const jihoonChemistryYoshiMemoryList =
+  document.getElementById("jihoonChemistryYoshiMemoryList");
+
+const jihoonChemistryMemoryModal =
+  document.getElementById("jihoonChemistryMemoryModal");
+
+const jihoonChemistryMemoryTitle =
+  document.getElementById("jihoonChemistryMemoryTitle");
+
+const jihoonChemistryMemoryInput =
+  document.getElementById("jihoonChemistryMemoryInput");
+
+const jihoonChemistryMemorySelect =
+  document.getElementById("jihoonChemistryMemorySelect");
+
+const jihoonChemistryMemoryPreview =
+  document.getElementById("jihoonChemistryMemoryPreview");
+
+const jihoonChemistryMemoryPreviewImage =
+  document.getElementById("jihoonChemistryMemoryPreviewImage");
+
+const jihoonChemistryMemoryMemo =
+  document.getElementById("jihoonChemistryMemoryMemo");
+
+const jihoonChemistryMemorySave =
+  document.getElementById("jihoonChemistryMemorySave");
+
+const jihoonChemistryMemoryDelete =
+  document.getElementById("jihoonChemistryMemoryDelete");
+
+const jihoonChemistryMemoryCancel =
+  document.getElementById("jihoonChemistryMemoryCancel");
+
+
+let currentJihoonChemistry = null;
+let currentJihoonChemistryImage = null;
+
+
+// ========================================
+// 💾 LOCAL STORAGE
+// ========================================
+
+let jihoonChemistryMemories = [];
+
+try {
+
+  jihoonChemistryMemories =
+    JSON.parse(
+      localStorage.getItem(
+        "treasure-jihoon-chemistry-memories"
+      )
+    ) || [];
+
+} catch (error) {
+
+  jihoonChemistryMemories = [];
+}
+
+
+function saveJihoonChemistryMemories() {
+
+  localStorage.setItem(
+    "treasure-jihoon-chemistry-memories",
+    JSON.stringify(jihoonChemistryMemories)
+  );
+}
+
+
+// ========================================
+// 🫶 ADD OPEN
+// ========================================
+
+function openJihoonChemistryMemoryModal(
+  chemistry
+) {
+
+  currentJihoonChemistry = chemistry;
+
+  delete jihoonChemistryMemorySave.dataset.editId;
+
+  currentJihoonChemistryImage = null;
+
+  jihoonChemistryMemoryInput.value = "";
+
+  jihoonChemistryMemoryMemo.value = "";
+
+  jihoonChemistryMemoryPreviewImage.src = "";
+
+  jihoonChemistryMemoryPreview.style.display =
+    "none";
+
+  jihoonChemistryMemorySave.textContent =
+    "💎 SAVE MEMORY";
+
+  jihoonChemistryMemoryDelete.style.display =
+    "none";
+
+  if (chemistry === "JUNKYU") {
+
+    jihoonChemistryMemoryTitle.textContent =
+      "トムジェリの思い出を追加 🐶🐨";
+
+  } else {
+
+    jihoonChemistryMemoryTitle.textContent =
+      "ヨシジフンの思い出を追加 🐯🐶";
+
+  }
+
+  jihoonChemistryMemoryModal.style.display =
+    "flex";
+
+  jihoonChemistryMemoryModal.scrollTop = 0;
+
+  document.body.style.overflow = "hidden";
+}
+
+
+if (jihoonChemistryJunkyuAdd) {
+
+  jihoonChemistryJunkyuAdd.addEventListener(
+    "click",
+    () => {
+      openJihoonChemistryMemoryModal(
+        "JUNKYU"
+      );
+    }
+  );
+}
+
+
+if (jihoonChemistryYoshiAdd) {
+
+  jihoonChemistryYoshiAdd.addEventListener(
+    "click",
+    () => {
+      openJihoonChemistryMemoryModal(
+        "YOSHI"
+      );
+    }
+  );
+}
+
+
+// ========================================
+// 📸 PHOTO SELECT
+// ========================================
+
+if (
+  jihoonChemistryMemorySelect &&
+  jihoonChemistryMemoryInput
+) {
+
+  jihoonChemistryMemorySelect.addEventListener(
+    "click",
+    () => {
+      jihoonChemistryMemoryInput.click();
+    }
+  );
+}
+
+
+if (jihoonChemistryMemoryInput) {
+
+  jihoonChemistryMemoryInput.addEventListener(
+    "change",
+    () => {
+
+      const file =
+        jihoonChemistryMemoryInput.files[0];
+
+      if (!file) return;
+
+      const reader = new FileReader();
+
+      reader.onload = () => {
+
+        currentJihoonChemistryImage =
+          reader.result;
+
+        jihoonChemistryMemoryPreviewImage.src =
+          reader.result;
+
+        jihoonChemistryMemoryPreview.style.display =
+          "block";
+      };
+
+      reader.readAsDataURL(file);
+    }
+  );
+}
+
+
+// ========================================
+// 💎 SAVE / UPDATE
+// ========================================
+
+if (jihoonChemistryMemorySave) {
+
+  jihoonChemistryMemorySave.addEventListener(
+    "click",
+    () => {
+
+      if (!currentJihoonChemistry) return;
+
+
+      const memo =
+        jihoonChemistryMemoryMemo.value.trim();
+
+
+      const editId =
+        jihoonChemistryMemorySave.dataset.editId
+          ? Number(
+              jihoonChemistryMemorySave.dataset.editId
+            )
+          : null;
+
+
+      if (editId) {
+
+        const item =
+          jihoonChemistryMemories.find(
+            (memory) =>
+              memory.id === editId
+          );
+
+        if (!item) return;
+
+        item.memo = memo;
+
+        if (currentJihoonChemistryImage) {
+
+          item.imageData =
+            currentJihoonChemistryImage;
+        }
+
+      } else {
+
+        if (!currentJihoonChemistryImage) {
+
+          alert("写真を選んでね 📸");
+
+          return;
+        }
+
+        jihoonChemistryMemories.unshift({
+          id: Date.now(),
+          chemistry:
+            currentJihoonChemistry,
+          imageData:
+            currentJihoonChemistryImage,
+          memo,
+          createdAt: Date.now()
+        });
+      }
+
+
+      saveJihoonChemistryMemories();
+
+      renderJihoonChemistryMemories();
+
+      closeJihoonChemistryMemoryModal();
+    }
+  );
+}
+
+
+// ========================================
+// ❌ CANCEL
+// ========================================
+
+if (jihoonChemistryMemoryCancel) {
+
+  jihoonChemistryMemoryCancel.addEventListener(
+    "click",
+    () => {
+
+      closeJihoonChemistryMemoryModal();
+
+    }
+  );
+}
+
+
+function closeJihoonChemistryMemoryModal() {
+
+  jihoonChemistryMemoryModal.style.display =
+    "none";
+
+  jihoonChemistryMemoryInput.value = "";
+
+  jihoonChemistryMemoryMemo.value = "";
+
+  jihoonChemistryMemoryPreviewImage.src = "";
+
+  jihoonChemistryMemoryPreview.style.display =
+    "none";
+
+  currentJihoonChemistryImage = null;
+
+  delete jihoonChemistryMemorySave.dataset.editId;
+
+  jihoonChemistryMemorySave.textContent =
+    "💎 SAVE MEMORY";
+
+  jihoonChemistryMemoryDelete.style.display =
+    "none";
+}
+
+
+// ========================================
+// 🖼️ RENDER
+// ========================================
+
+function renderJihoonChemistryMemories() {
+
+  renderJihoonChemistryMemoryList(
+    "JUNKYU",
+    jihoonChemistryJunkyuMemoryList
+  );
+
+  renderJihoonChemistryMemoryList(
+    "YOSHI",
+    jihoonChemistryYoshiMemoryList
+  );
+}
+
+
+function renderJihoonChemistryMemoryList(
+  chemistry,
+  list
+) {
+
+  if (!list) return;
+
+
+  const items =
+    jihoonChemistryMemories
+      .filter(
+        (memory) =>
+          memory.chemistry === chemistry
+      )
+      .sort(
+        (a, b) =>
+          (b.createdAt || 0) -
+          (a.createdAt || 0)
+      );
+
+
+  if (items.length === 0) {
+
+    list.innerHTML = `
+      <div class="jihoon-chemistry-empty">
+        <span>📸</span>
+        <strong>まだ思い出がありません</strong>
+        <small>
+          好きなケミを追加してみよう 💎
+        </small>
+      </div>
+    `;
+
+    return;
+  }
+
+
+  list.innerHTML =
+    items
+      .map(
+        (item) => `
+          <article
+            class="jihoon-chemistry-memory-card"
+            data-id="${item.id}"
+          >
+
+            <img
+              src="${item.imageData}"
+              alt="CHEMISTRY MEMORY"
+            >
+
+            ${
+              item.memo
+                ? `
+                  <p>
+                    ${escapeJihoonChemistryHTML(
+                      item.memo
+                    )}
+                  </p>
+                `
+                : `
+                  <p class="jihoon-chemistry-no-note">
+                    NO NOTE
+                  </p>
+                `
+            }
+
+          </article>
+        `
+      )
+      .join("");
+
+
+  const cards =
+    list.querySelectorAll(
+      ".jihoon-chemistry-memory-card"
+    );
+
+
+  cards.forEach((card) => {
+
+    card.addEventListener(
+      "click",
+      () => {
+
+        const id =
+          Number(card.dataset.id);
+
+        const item =
+          jihoonChemistryMemories.find(
+            (memory) =>
+              memory.id === id
+          );
+
+        if (!item) return;
+
+
+        currentJihoonChemistry =
+          item.chemistry;
+
+        currentJihoonChemistryImage =
+          item.imageData;
+
+
+        jihoonChemistryMemoryPreviewImage.src =
+          item.imageData;
+
+        jihoonChemistryMemoryPreview.style.display =
+          "block";
+
+        jihoonChemistryMemoryMemo.value =
+          item.memo || "";
+
+
+        jihoonChemistryMemorySave.dataset.editId =
+          String(item.id);
+
+        jihoonChemistryMemorySave.textContent =
+          "💎 UPDATE MEMORY";
+
+
+        jihoonChemistryMemoryDelete.dataset.deleteId =
+          String(item.id);
+
+        jihoonChemistryMemoryDelete.style.display =
+          "block";
+
+
+        jihoonChemistryMemoryModal.style.display =
+          "flex";
+
+        jihoonChemistryMemoryModal.scrollTop = 0;
+
+        document.body.style.overflow =
+          "hidden";
+      }
+    );
+  });
+}
+
+
+// ========================================
+// 🗑️ DELETE
+// ========================================
+
+if (jihoonChemistryMemoryDelete) {
+
+  jihoonChemistryMemoryDelete.addEventListener(
+    "click",
+    () => {
+
+      const id =
+        Number(
+          jihoonChemistryMemoryDelete.dataset.deleteId
+        );
+
+      if (!id) return;
+
+
+      const ok =
+        confirm(
+          "このCHEMISTRY MEMORYを削除する？🥲"
+        );
+
+      if (!ok) return;
+
+
+      jihoonChemistryMemories =
+        jihoonChemistryMemories.filter(
+          (memory) =>
+            memory.id !== id
+        );
+
+
+      saveJihoonChemistryMemories();
+
+      renderJihoonChemistryMemories();
+
+      closeJihoonChemistryMemoryModal();
+    }
+  );
+}
+
+
+// ========================================
+// 🛡 HTML ESCAPE
+// ========================================
+
+function escapeJihoonChemistryHTML(text) {
+
+  return String(text)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+
+// 最初の表示
+renderJihoonChemistryMemories();
 // =========================================
 // 📸 JIHOON VISUAL BOOK - IndexedDB SAVE
 // =========================================
