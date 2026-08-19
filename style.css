@@ -6513,3 +6513,30 @@ flex-shrink: 0;
   font-weight: 700;
   line-height: 1.5;
 }
+/* =========================================
+   🗑 2020 VISUAL DELETE BUTTON
+========================================= */
+
+#jihoonGrowth2020VisualDelete {
+  width: 100%;
+  margin-top: 14px;
+  padding: 14px 18px;
+
+  border: none;
+  border-radius: 18px;
+
+  background: #fff1f4;
+  color: #b66a7a;
+
+  font-size: 15px;
+  font-weight: 800;
+
+  box-shadow: 0 5px 14px rgba(180, 110, 130, 0.10);
+
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#jihoonGrowth2020VisualDelete:active {
+  transform: scale(0.98);
+}
