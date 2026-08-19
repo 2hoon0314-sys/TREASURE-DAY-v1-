@@ -489,10 +489,37 @@ if (planTab) {
 
 if (memoryTab) {
   memoryTab.addEventListener("click", () => {
+
+    // 📷 JIHOON MEMORIESを閉じる
+    const jihoonMemoriesPage =
+      document.getElementById("jihoonMemoriesPage");
+
+    if (jihoonMemoriesPage) {
+      jihoonMemoriesPage.style.display = "none";
+    }
+
+    // 🐶 JIHOON BOOKを閉じる
+    const jihoonBookDetail =
+      document.getElementById("jihoon-book-detail");
+
+    if (jihoonBookDetail) {
+      jihoonBookDetail.classList.remove("active");
+    }
+
+    // 💎 MEMBER BOOK詳細も閉じる
+    const memberBookDetail =
+      document.getElementById("member-book-detail");
+
+    if (memberBookDetail) {
+      memberBookDetail.classList.remove("active");
+    }
+
+    document.body.style.overflow = "";
+
     showPage("memory");
+    window.scrollTo(0, 0);
   });
 }
-
 if (settingsTab) {
   settingsTab.addEventListener("click", () => {
     showPage("settings");
