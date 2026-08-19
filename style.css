@@ -6142,3 +6142,121 @@ flex-shrink: 0;
   line-height: 1.7;
   font-weight: 700;
 }
+/* =========================================
+   📸 GROWTH HISTORY - 2020 VISUAL
+========================================= */
+
+.jihoon-growth-visual-section {
+  margin-top: 42px;
+  padding: 22px 18px 24px;
+
+  border: 1px solid rgba(135, 174, 220, 0.24);
+  border-radius: 28px;
+
+  background: rgba(255, 255, 255, 0.92);
+
+  box-shadow:
+    0 12px 28px rgba(70, 110, 170, 0.10);
+}
+
+.jihoon-growth-section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+
+  text-align: left;
+}
+
+.jihoon-growth-section-head small {
+  display: block;
+  margin-bottom: 5px;
+
+  color: #91a8c5;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+}
+
+.jihoon-growth-section-head h3 {
+  margin: 0;
+
+  color: #244a7c;
+  font-size: 20px;
+  font-weight: 950;
+}
+
+.jihoon-growth-visual-add {
+  appearance: none;
+  border: 1px solid rgba(125, 166, 218, 0.30);
+
+  min-width: 82px;
+  height: 40px;
+  padding: 0 14px;
+
+  border-radius: 999px;
+
+  background: #eaf3ff;
+
+  color: #315d91;
+  font-size: 12px;
+  font-weight: 900;
+
+  box-shadow:
+    0 6px 16px rgba(70, 110, 170, 0.10);
+}
+
+.jihoon-growth-section-caption {
+  margin: 14px 0 20px;
+
+  color: #8aa1bf;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.6;
+  text-align: left;
+}
+
+.jihoon-growth-visual-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.jihoon-growth-visual-empty {
+  grid-column: 1 / -1;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 180px;
+  padding: 24px 18px;
+
+  border: 1px dashed rgba(125, 166, 218, 0.36);
+  border-radius: 22px;
+
+  background: rgba(238, 246, 255, 0.72);
+
+  text-align: center;
+}
+
+.jihoon-growth-visual-empty span {
+  margin-bottom: 10px;
+  font-size: 28px;
+}
+
+.jihoon-growth-visual-empty strong {
+  color: #315d91;
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.jihoon-growth-visual-empty small {
+  margin-top: 7px;
+
+  color: #91a8c5;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.5;
+}
