@@ -4251,7 +4251,19 @@ async function loadJihoonVisualRanking() {
 
   try {
     const favorites = await getJihoonFavoriteVisuals();
+favorites.sort((a, b) => {
+  const orderA = a.rankOrder ?? Number.MAX_SAFE_INTEGER;
+  const orderB = b.rankOrder ?? Number.MAX_SAFE_INTEGER;
 
+  return orderA - orderB;
+});
+// 👑 まだ順位がない写真に初期順位をつける
+for (let i = 0; i < favorites.length; i++) {
+  if (favorites[i].rankOrder == null) {
+    favorites[i].rankOrder = i;
+    await updateJihoonVisual(favorites[i]);
+  }
+}    
     if (favorites.length === 0) {
       jihoonVisualRankingList.innerHTML =
         '<div class="jihoon-ranking-empty">♡ FAVORITEした写真がまだありません</div>';
@@ -4277,9 +4289,62 @@ rank.textContent =
         img.src = item.imageData;
       }
 
-      card.appendChild(rank);
-      card.appendChild(img);
-      jihoonVisualRankingList.appendChild(card);
+card.appendChild(rank);
+card.appendChild(img);
+
+// 👑 順位変更ボタン
+const controls = document.createElement("div");
+controls.className = "jihoon-visual-ranking-controls";
+
+const upButton = document.createElement("button");
+upButton.type = "button";
+upButton.textContent = "↑";
+upButton.className = "jihoon-ranking-move-button";
+
+const downButton = document.createElement("button");
+downButton.type = "button";
+downButton.textContent = "↓";
+downButton.className = "jihoon-ranking-move-button";
+
+controls.appendChild(upButton);
+controls.appendChild(downButton);
+// ↑ ひとつ上へ
+upButton.addEventListener("click", async () => {
+  if (index === 0) return;
+
+  const previousItem = favorites[index - 1];
+
+  const currentOrder = item.rankOrder ?? index;
+  const previousOrder = previousItem.rankOrder ?? index - 1;
+
+  item.rankOrder = previousOrder;
+  previousItem.rankOrder = currentOrder;
+
+  await updateJihoonVisual(item);
+  await updateJihoonVisual(previousItem);
+
+  loadJihoonVisualRanking();
+});
+
+// ↓ ひとつ下へ
+downButton.addEventListener("click", async () => {
+  if (index === favorites.length - 1) return;
+
+  const nextItem = favorites[index + 1];
+
+  const currentOrder = item.rankOrder ?? index;
+  const nextOrder = nextItem.rankOrder ?? index + 1;
+
+  item.rankOrder = nextOrder;
+  nextItem.rankOrder = currentOrder;
+
+  await updateJihoonVisual(item);
+  await updateJihoonVisual(nextItem);
+
+  loadJihoonVisualRanking();
+});
+card.appendChild(controls);
+jihoonVisualRankingList.appendChild(card);
     });
   } catch (error) {
     console.error("JIHOON VISUAL RANKING LOAD ERROR:", error);
