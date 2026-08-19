@@ -4146,14 +4146,11 @@ function createJihoonVisualCard(item) {
 const img = document.createElement("img");
 
 img.alt = "JIHOON VISUAL";
+img.decoding = "async";
 
-const reader = new FileReader();
+const imageURL = URL.createObjectURL(item.image);
 
-reader.onload = () => {
-  img.src = reader.result;
-};
-
-reader.readAsDataURL(item.image);
+img.src = imageURL;
 // 📸 写真タップ → EDIT画面を開く
 card.addEventListener("click", () => {
   openJihoonVisualEdit(item);
@@ -4200,7 +4197,7 @@ const jihoonVisualFavorite =
 const jihoonVisualChangeHair =
   document.getElementById("jihoonVisualChangeHair");
 let currentJihoonVisualItem = null;
-
+let currentJihoonVisualPreviewURL = null;
 
 
 // EDIT画面を開く
@@ -4229,14 +4226,17 @@ if (jihoonVisualFavorite) {
 }
 
 
-const reader = new FileReader();
+if (currentJihoonVisualPreviewURL) {
+  URL.revokeObjectURL(currentJihoonVisualPreviewURL);
+}
 
-reader.onload = () => {
-  jihoonVisualEditImage.src = reader.result;
-};
+currentJihoonVisualPreviewURL =
+  URL.createObjectURL(item.image);
 
-reader.readAsDataURL(item.image);
-  jihoonVisualEditModal.classList.add("active");
+jihoonVisualEditImage.src =
+  currentJihoonVisualPreviewURL;
+
+jihoonVisualEditModal.classList.add("active");
 }
 
 
@@ -4247,7 +4247,10 @@ function closeJihoonVisualEdit() {
 
   jihoonVisualEditModal.classList.remove("active");
 
-
+if (currentJihoonVisualPreviewURL) {
+  URL.revokeObjectURL(currentJihoonVisualPreviewURL);
+  currentJihoonVisualPreviewURL = null;
+}
   jihoonVisualEditImage.src = "";
   currentJihoonVisualItem = null;
 }
