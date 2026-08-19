@@ -5336,6 +5336,7 @@ function setupJihoonGrowthYear(year) {
 // =========================================
 
 setupJihoonGrowthYear(2021);
+setupJihoonGrowthYear(2022);
 // =========================================
 // 📸 JIHOON VISUAL BOOK - IndexedDB SAVE
 // =========================================
