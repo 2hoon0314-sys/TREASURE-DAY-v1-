@@ -4207,6 +4207,8 @@ const jihoonGrowth2020VisualHair =
 
 const jihoonGrowth2020VisualMemo =
   document.getElementById("jihoonGrowth2020VisualMemo");
+const jihoonGrowth2020VisualDelete =
+  document.getElementById("jihoonGrowth2020VisualDelete");
 let jihoonGrowth2020EditingId = null;
 // =========================================
 // 💾 2020 VISUAL - IndexedDB
