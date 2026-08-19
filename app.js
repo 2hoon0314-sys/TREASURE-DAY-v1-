@@ -4593,6 +4593,750 @@ document.body.style.overflow = "hidden";
 });
 }
 // =========================================
+// 🌱 JIHOON GROWTH YEAR VISUAL ENGINE
+// 2021〜2026 共通
+// =========================================
+
+function setupJihoonGrowthYear(year) {
+
+  const prefix = `jihoonGrowth${year}`;
+
+  const open =
+    document.getElementById(`${prefix}Open`);
+
+  const page =
+    document.getElementById(`${prefix}Page`);
+
+  const back =
+    document.getElementById(`${prefix}Back`);
+
+  const visualAdd =
+    document.getElementById(`${prefix}VisualAdd`);
+
+  const visualModal =
+    document.getElementById(`${prefix}VisualModal`);
+
+  const visualSelect =
+    document.getElementById(`${prefix}VisualSelect`);
+
+  const visualInput =
+    document.getElementById(`${prefix}VisualInput`);
+
+  const visualPreview =
+    document.getElementById(`${prefix}VisualPreview`);
+
+  const visualPreviewImage =
+    document.getElementById(`${prefix}VisualPreviewImage`);
+
+  const visualHair =
+    document.getElementById(`${prefix}VisualHair`);
+
+  const visualMemo =
+    document.getElementById(`${prefix}VisualMemo`);
+
+  const visualSave =
+    document.getElementById(`${prefix}VisualSave`);
+
+  const visualDelete =
+    document.getElementById(`${prefix}VisualDelete`);
+
+  const visualCancel =
+    document.getElementById(`${prefix}VisualCancel`);
+
+  const visualGrid =
+    document.getElementById(`${prefix}VisualGrid`);
+
+
+  // =========================================
+  // 🌱 YEAR PAGE OPEN / BACK
+  // =========================================
+
+  if (open && page && back) {
+
+    open.addEventListener("click", async () => {
+
+      if (jihoonGrowthHistoryPage) {
+        jihoonGrowthHistoryPage.style.display = "none";
+      }
+
+      page.style.display = "block";
+      page.scrollTop = 0;
+
+      await renderVisuals();
+
+      document.body.style.overflow = "hidden";
+    });
+
+
+    back.addEventListener("click", () => {
+
+      page.style.display = "none";
+
+      if (jihoonGrowthHistoryPage) {
+        jihoonGrowthHistoryPage.style.display = "block";
+        jihoonGrowthHistoryPage.scrollTop = 0;
+      }
+
+      document.body.style.overflow = "hidden";
+    });
+  }
+
+
+  // =========================================
+  // 📸 ADD MODAL
+  // =========================================
+
+  if (visualAdd && visualModal) {
+
+    visualAdd.addEventListener("click", () => {
+
+      delete visualSave?.dataset.editId;
+
+      if (visualSave) {
+        visualSave.textContent = "💎 SAVE";
+      }
+
+      if (visualDelete) {
+        visualDelete.style.display = "none";
+        delete visualDelete.dataset.deleteId;
+      }
+
+      if (visualInput) {
+        visualInput.value = "";
+      }
+
+      if (visualPreviewImage) {
+        visualPreviewImage.src = "";
+      }
+
+      if (visualPreview) {
+        visualPreview.style.display = "none";
+      }
+
+      if (visualMemo) {
+        visualMemo.value = "";
+      }
+
+      visualModal.style.display = "flex";
+      visualModal.scrollTop = 0;
+
+      document.body.style.overflow = "hidden";
+    });
+  }
+
+
+  // =========================================
+  // 📷 FILE SELECT
+  // =========================================
+
+  if (visualSelect && visualInput) {
+
+    visualSelect.addEventListener("click", () => {
+      visualInput.click();
+    });
+  }
+
+
+  if (
+    visualInput &&
+    visualPreview &&
+    visualPreviewImage
+  ) {
+
+    visualInput.addEventListener("change", () => {
+
+      const file = visualInput.files[0];
+
+      if (!file) return;
+
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        visualPreviewImage.src = reader.result;
+        visualPreview.style.display = "block";
+      };
+
+      reader.readAsDataURL(file);
+    });
+  }
+
+
+  // =========================================
+  // ❌ CANCEL
+  // =========================================
+
+  if (visualCancel && visualModal) {
+
+    visualCancel.addEventListener("click", () => {
+
+      visualModal.style.display = "none";
+
+      if (visualInput) {
+        visualInput.value = "";
+      }
+
+      if (visualPreviewImage) {
+        visualPreviewImage.src = "";
+      }
+
+      if (visualPreview) {
+        visualPreview.style.display = "none";
+      }
+
+      if (visualMemo) {
+        visualMemo.value = "";
+      }
+
+      if (visualSave) {
+        delete visualSave.dataset.editId;
+        visualSave.textContent = "💎 SAVE";
+      }
+
+      if (visualDelete) {
+        visualDelete.style.display = "none";
+        delete visualDelete.dataset.deleteId;
+      }
+
+      document.body.style.overflow = "";
+    });
+  }
+
+
+  // =========================================
+  // 💾 IndexedDB
+  // =========================================
+
+  const DB_NAME =
+    `treasure-day-jihoon-growth-${year}-db`;
+
+  const DB_VERSION = 1;
+
+  const STORE = "visuals";
+
+  let db = null;
+
+
+  function openDB() {
+
+    return new Promise((resolve, reject) => {
+
+      const request =
+        indexedDB.open(DB_NAME, DB_VERSION);
+
+      request.onupgradeneeded = (event) => {
+
+        const database =
+          event.target.result;
+
+        if (
+          !database.objectStoreNames.contains(STORE)
+        ) {
+
+          database.createObjectStore(
+            STORE,
+            {
+              keyPath: "id"
+            }
+          );
+        }
+      };
+
+
+      request.onsuccess = (event) => {
+
+        db = event.target.result;
+
+        resolve(db);
+      };
+
+
+      request.onerror = () => {
+
+        reject(request.error);
+      };
+    });
+  }
+
+
+  async function getVisuals() {
+
+    if (!db) {
+      await openDB();
+    }
+
+    return new Promise((resolve, reject) => {
+
+      const transaction =
+        db.transaction(
+          STORE,
+          "readonly"
+        );
+
+      const store =
+        transaction.objectStore(STORE);
+
+      const request =
+        store.getAll();
+
+      request.onsuccess = () => {
+        resolve(request.result || []);
+      };
+
+      request.onerror = () => {
+        reject(request.error);
+      };
+    });
+  }
+
+
+  async function saveVisual(item) {
+
+    if (!db) {
+      await openDB();
+    }
+
+    return new Promise((resolve, reject) => {
+
+      const transaction =
+        db.transaction(
+          STORE,
+          "readwrite"
+        );
+
+      const store =
+        transaction.objectStore(STORE);
+
+      const request =
+        store.put(item);
+
+      request.onsuccess = () => {
+        resolve();
+      };
+
+      request.onerror = () => {
+        reject(request.error);
+      };
+    });
+  }
+
+
+  async function deleteVisual(id) {
+
+    if (!db) {
+      await openDB();
+    }
+
+    return new Promise((resolve, reject) => {
+
+      const transaction =
+        db.transaction(
+          STORE,
+          "readwrite"
+        );
+
+      const store =
+        transaction.objectStore(STORE);
+
+      const request =
+        store.delete(id);
+
+      request.onsuccess = () => {
+        resolve();
+      };
+
+      request.onerror = () => {
+        reject(request.error);
+      };
+    });
+  }
+
+
+  // =========================================
+  // 💎 SAVE / UPDATE
+  // =========================================
+
+  if (visualSave) {
+
+    visualSave.addEventListener(
+      "click",
+      async () => {
+
+        try {
+
+          const imageData =
+            visualPreviewImage?.src || "";
+
+          if (!imageData) {
+
+            alert("先に写真を選んでね 📸");
+
+            return;
+          }
+
+
+          const editId =
+            visualSave.dataset.editId
+              ? Number(
+                  visualSave.dataset.editId
+                )
+              : null;
+
+
+          let createdAt =
+            Date.now();
+
+          if (editId) {
+
+            const existing =
+              (await getVisuals())
+                .find(
+                  (item) =>
+                    item.id === editId
+                );
+
+            createdAt =
+              existing?.createdAt ||
+              Date.now();
+          }
+
+
+          const itemToSave = {
+
+            id:
+              editId ||
+              Date.now(),
+
+            imageData,
+
+            hairColor:
+              visualHair?.value ||
+              "OTHER",
+
+            memo:
+              visualMemo?.value.trim() ||
+              "",
+
+            createdAt
+          };
+
+
+          await saveVisual(
+            itemToSave
+          );
+
+          await renderVisuals();
+
+
+          visualModal.style.display =
+            "none";
+
+
+          if (visualInput) {
+            visualInput.value = "";
+          }
+
+          if (visualPreviewImage) {
+            visualPreviewImage.src = "";
+          }
+
+          if (visualPreview) {
+            visualPreview.style.display =
+              "none";
+          }
+
+          if (visualMemo) {
+            visualMemo.value = "";
+          }
+
+          delete visualSave.dataset.editId;
+
+          visualSave.textContent =
+            "💎 SAVE";
+
+
+          if (visualDelete) {
+
+            visualDelete.style.display =
+              "none";
+
+            delete visualDelete.dataset.deleteId;
+          }
+
+
+          document.body.style.overflow =
+            "hidden";
+
+
+        } catch (error) {
+
+          console.error(
+            `${year} VISUAL SAVE ERROR`,
+            error
+          );
+
+          alert(
+            "保存に失敗しました😭"
+          );
+        }
+      }
+    );
+  }
+
+
+  // =========================================
+  // 🗑 DELETE
+  // =========================================
+
+  if (visualDelete) {
+
+    visualDelete.addEventListener(
+      "click",
+      async () => {
+
+        const id =
+          Number(
+            visualDelete.dataset.deleteId
+          );
+
+        if (!id) return;
+
+
+        const ok =
+          confirm(
+            `この${year} VISUALを削除する？🥲`
+          );
+
+        if (!ok) return;
+
+
+        try {
+
+          await deleteVisual(id);
+
+          await renderVisuals();
+
+          visualModal.style.display =
+            "none";
+
+
+          if (visualSave) {
+
+            delete visualSave.dataset.editId;
+
+            visualSave.textContent =
+              "💎 SAVE";
+          }
+
+
+          delete visualDelete.dataset.deleteId;
+
+          visualDelete.style.display =
+            "none";
+
+
+          if (visualInput) {
+            visualInput.value = "";
+          }
+
+          if (visualPreviewImage) {
+            visualPreviewImage.src = "";
+          }
+
+          if (visualPreview) {
+            visualPreview.style.display =
+              "none";
+          }
+
+          if (visualMemo) {
+            visualMemo.value = "";
+          }
+
+
+          document.body.style.overflow =
+            "hidden";
+
+
+        } catch (error) {
+
+          console.error(
+            `${year} VISUAL DELETE ERROR`,
+            error
+          );
+
+          alert(
+            "削除に失敗しました😭"
+          );
+        }
+      }
+    );
+  }
+
+
+  // =========================================
+  // 🖼️ RENDER
+  // =========================================
+
+  async function renderVisuals() {
+
+    if (!visualGrid) return;
+
+
+    const items =
+      await getVisuals();
+
+
+    items.sort(
+      (a, b) =>
+        (b.createdAt || 0) -
+        (a.createdAt || 0)
+    );
+
+
+    if (items.length === 0) {
+
+      visualGrid.innerHTML = `
+        <div class="jihoon-growth-visual-empty">
+          <span>📷</span>
+          <strong>まだ写真がありません</strong>
+          <small>
+            好きな${year}ジフンを追加してみよう 🐶
+          </small>
+        </div>
+      `;
+
+      return;
+    }
+
+
+    visualGrid.innerHTML =
+      items
+        .map(
+          (item) => `
+            <article
+              class="jihoon-growth-visual-card"
+              data-id="${item.id}"
+            >
+
+              <div class="jihoon-growth-visual-photo">
+
+                <img
+                  src="${item.imageData}"
+                  alt="${year} JIHOON"
+                >
+
+              </div>
+
+              <div class="jihoon-growth-visual-info">
+
+                <span class="jihoon-growth-visual-hair">
+                  ${item.hairColor || "OTHER"}
+                </span>
+
+                ${
+                  item.memo
+                    ? `<p>${item.memo}</p>`
+                    : `
+                      <p class="jihoon-growth-visual-no-note">
+                        NO NOTE
+                      </p>
+                    `
+                }
+
+              </div>
+
+            </article>
+          `
+        )
+        .join("");
+
+
+    const cards =
+      visualGrid.querySelectorAll(
+        ".jihoon-growth-visual-card"
+      );
+
+
+    cards.forEach((card) => {
+
+      card.addEventListener(
+        "click",
+        async () => {
+
+          const id =
+            Number(card.dataset.id);
+
+
+          const item =
+            (await getVisuals())
+              .find(
+                (visual) =>
+                  visual.id === id
+              );
+
+          if (!item) return;
+
+
+          visualModal.style.display =
+            "flex";
+
+          visualModal.scrollTop = 0;
+
+
+          visualPreviewImage.src =
+            item.imageData;
+
+          visualPreview.style.display =
+            "block";
+
+
+          if (visualHair) {
+
+            visualHair.value =
+              item.hairColor ||
+              "OTHER";
+          }
+
+
+          if (visualMemo) {
+
+            visualMemo.value =
+              item.memo ||
+              "";
+          }
+
+
+          visualSave.textContent =
+            "💎 UPDATE";
+
+          visualSave.dataset.editId =
+            String(item.id);
+
+
+          if (visualDelete) {
+
+            visualDelete.style.display =
+              "block";
+
+            visualDelete.dataset.deleteId =
+              String(item.id);
+          }
+
+
+          document.body.style.overflow =
+            "hidden";
+        }
+      );
+    });
+  }
+}
+
+
+// =========================================
+// 🌱 ACTIVE YEARS
+// =========================================
+
+setupJihoonGrowthYear(2021);
+// =========================================
 // 📸 JIHOON VISUAL BOOK - IndexedDB SAVE
 // =========================================
 
