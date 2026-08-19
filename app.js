@@ -4112,6 +4112,86 @@ if (
 
 }
 // =========================================
+// 📸 2020 VISUAL ADD MODAL
+// =========================================
+
+const jihoonGrowth2020VisualAdd =
+  document.getElementById("jihoonGrowth2020VisualAdd");
+
+const jihoonGrowth2020VisualModal =
+  document.getElementById("jihoonGrowth2020VisualModal");
+
+const jihoonGrowth2020VisualSelect =
+  document.getElementById("jihoonGrowth2020VisualSelect");
+
+const jihoonGrowth2020VisualInput =
+  document.getElementById("jihoonGrowth2020VisualInput");
+
+const jihoonGrowth2020VisualPreview =
+  document.getElementById("jihoonGrowth2020VisualPreview");
+
+const jihoonGrowth2020VisualPreviewImage =
+  document.getElementById("jihoonGrowth2020VisualPreviewImage");
+
+const jihoonGrowth2020VisualCancel =
+  document.getElementById("jihoonGrowth2020VisualCancel");
+
+
+// ＋ADD → モーダルを開く
+if (jihoonGrowth2020VisualAdd && jihoonGrowth2020VisualModal) {
+  jihoonGrowth2020VisualAdd.addEventListener("click", () => {
+    jihoonGrowth2020VisualModal.style.display = "flex";
+    jihoonGrowth2020VisualModal.scrollTop = 0;
+
+    document.body.style.overflow = "hidden";
+  });
+}
+
+
+// 「写真を選ぶ」→ ファイル選択
+if (jihoonGrowth2020VisualSelect && jihoonGrowth2020VisualInput) {
+  jihoonGrowth2020VisualSelect.addEventListener("click", () => {
+    jihoonGrowth2020VisualInput.click();
+  });
+}
+
+
+// 選んだ写真をプレビュー
+if (
+  jihoonGrowth2020VisualInput &&
+  jihoonGrowth2020VisualPreview &&
+  jihoonGrowth2020VisualPreviewImage
+) {
+  jihoonGrowth2020VisualInput.addEventListener("change", () => {
+    const file = jihoonGrowth2020VisualInput.files[0];
+
+    if (!file) return;
+
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      jihoonGrowth2020VisualPreviewImage.src = reader.result;
+      jihoonGrowth2020VisualPreview.style.display = "block";
+    };
+
+    reader.readAsDataURL(file);
+  });
+}
+
+
+// CANCEL → 閉じる
+if (jihoonGrowth2020VisualCancel && jihoonGrowth2020VisualModal) {
+  jihoonGrowth2020VisualCancel.addEventListener("click", () => {
+    jihoonGrowth2020VisualModal.style.display = "none";
+
+    jihoonGrowth2020VisualInput.value = "";
+    jihoonGrowth2020VisualPreviewImage.src = "";
+    jihoonGrowth2020VisualPreview.style.display = "none";
+
+    document.body.style.overflow = "hidden";
+  });
+}
+// =========================================
 // 📸 JIHOON VISUAL BOOK - IndexedDB SAVE
 // =========================================
 
