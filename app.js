@@ -4187,7 +4187,14 @@ if (jihoonGrowth2020VisualCancel && jihoonGrowth2020VisualModal) {
     jihoonGrowth2020VisualInput.value = "";
     jihoonGrowth2020VisualPreviewImage.src = "";
     jihoonGrowth2020VisualPreview.style.display = "none";
+delete jihoonGrowth2020VisualSave.dataset.editId;
 
+jihoonGrowth2020VisualSave.textContent = "💎 SAVE";
+
+if (jihoonGrowth2020VisualDelete) {
+  jihoonGrowth2020VisualDelete.style.display = "none";
+  delete jihoonGrowth2020VisualDelete.dataset.deleteId;
+}
     document.body.style.overflow = "hidden";
   });
 }
@@ -4291,7 +4298,34 @@ async function getJihoonGrowth2020Visuals() {
 
 
 async function saveJihoonGrowth2020Visual(item) {
+async function deleteJihoonGrowth2020Visual(id) {
+  if (!jihoonGrowth2020DB) {
+    await openJihoonGrowth2020DB();
+  }
 
+  return new Promise((resolve, reject) => {
+    const transaction =
+      jihoonGrowth2020DB.transaction(
+        JIHOON_GROWTH_2020_STORE,
+        "readwrite"
+      );
+
+    const store =
+      transaction.objectStore(
+        JIHOON_GROWTH_2020_STORE
+      );
+
+    const request = store.delete(id);
+
+    request.onsuccess = () => {
+      resolve();
+    };
+
+    request.onerror = () => {
+      reject(request.error);
+    };
+  });
+}
   if (!jihoonGrowth2020DB) {
     await openJihoonGrowth2020DB();
   }
@@ -4389,6 +4423,61 @@ await renderJihoonGrowth2020Visuals();
         alert(
           "保存に失敗しました😭"
         );
+      }
+    }
+  );
+}
+if (jihoonGrowth2020VisualDelete) {
+  jihoonGrowth2020VisualDelete.addEventListener(
+    "click",
+    async () => {
+      const id =
+        Number(
+          jihoonGrowth2020VisualDelete.dataset.deleteId
+        );
+
+      if (!id) return;
+
+      const ok =
+        confirm("この2020 VISUALを削除する？🥲");
+
+      if (!ok) return;
+
+      try {
+        await deleteJihoonGrowth2020Visual(id);
+
+        await renderJihoonGrowth2020Visuals();
+
+        jihoonGrowth2020VisualModal.style.display =
+          "none";
+
+        delete jihoonGrowth2020VisualSave.dataset.editId;
+        delete jihoonGrowth2020VisualDelete.dataset.deleteId;
+
+        jihoonGrowth2020VisualSave.textContent =
+          "💎 SAVE";
+
+        jihoonGrowth2020VisualDelete.style.display =
+          "none";
+
+        jihoonGrowth2020VisualInput.value = "";
+        jihoonGrowth2020VisualPreviewImage.src = "";
+        jihoonGrowth2020VisualPreview.style.display =
+          "none";
+
+        if (jihoonGrowth2020VisualMemo) {
+          jihoonGrowth2020VisualMemo.value = "";
+        }
+
+        document.body.style.overflow = "hidden";
+
+      } catch (error) {
+        console.error(
+          "2020 VISUAL DELETE ERROR",
+          error
+        );
+
+        alert("削除に失敗しました😭");
       }
     }
   );
@@ -4492,7 +4581,11 @@ jihoonGrowth2020VisualSave.textContent = "💎 UPDATE";
 
 jihoonGrowth2020VisualSave.dataset.editId =
   String(item.id);
-
+if (jihoonGrowth2020VisualDelete) {
+  jihoonGrowth2020VisualDelete.style.display = "block";
+  jihoonGrowth2020VisualDelete.dataset.deleteId =
+    String(item.id);
+}
 document.body.style.overflow = "hidden";
   });
 });
