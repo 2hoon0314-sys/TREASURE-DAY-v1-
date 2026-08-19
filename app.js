@@ -4549,18 +4549,23 @@ card.addEventListener(
   "click",
   async () => {
 
+    // 戻り先はJIHOON MEMORIES
     photoMemoryReturnTarget =
       "jihoon";
 
+    // HOME / MEMBER BOOK系を閉じて
+    // 正式にMEMORYページへ移動
+    showPage("memory");
+
+    // PHOTO MEMORYモードにする
+    switchMemoryMode("photo");
+
+    // その上で詳細を開く
     await openPhotoMemoryDetail(index);
 
-    // 詳細を開いてからJIHOON MEMORIESを隠す
-    jihoonMemoriesPage.style.display =
-      "none";
+    window.scrollTo(0, 0);
   }
 );
-
-
     jihoonMemoriesList.appendChild(
       card
     );
