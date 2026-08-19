@@ -6959,3 +6959,644 @@ z-index: 1400;
 .jihoon-song-actions button:active {
   transform: scale(0.97);
 }
+/* =========================================
+   🫶 JIHOON CHEMISTRY
+========================================= */
+
+.jihoon-chemistry-page,
+.jihoon-chemistry-detail-page {
+  position: fixed;
+  inset: 0;
+  z-index: 1400;
+
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+
+  padding: 42px 20px 150px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #edf5ff 0%,
+      #f6faff 48%,
+      #ffffff 100%
+    );
+
+  color: #244a7c;
+}
+
+
+/* =========================================
+   ← BACK
+========================================= */
+
+.jihoon-chemistry-back,
+.jihoon-chemistry-detail-back {
+  appearance: none;
+
+  border: 0;
+  padding: 0;
+
+  background: transparent;
+  color: #6e91bb;
+
+  font-size: 14px;
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+
+/* =========================================
+   CHEMISTRY LIST PAGE
+========================================= */
+
+.jihoon-chemistry-inner {
+  width: 100%;
+  max-width: 680px;
+
+  margin: 42px auto 0;
+}
+
+
+.jihoon-chemistry-kicker {
+  margin-bottom: 14px;
+
+  text-align: center;
+
+  color: #6f96c5;
+
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+}
+
+
+.jihoon-chemistry-inner h2 {
+  margin: 0 auto 12px;
+
+  text-align: center;
+
+  color: #244a7c;
+
+  font-size: 27px;
+  line-height: 1.35;
+  font-weight: 950;
+}
+
+
+.jihoon-chemistry-subtitle {
+  margin: 0 auto 30px;
+
+  text-align: center;
+
+  color: #7895bd;
+
+  font-size: 14px;
+  line-height: 1.7;
+  font-weight: 650;
+}
+
+
+/* =========================================
+   🫶 CHEMISTRY CARDS
+========================================= */
+
+.jihoon-chemistry-list {
+  width: 100%;
+  max-width: 420px;
+
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+
+.jihoon-chemistry-card {
+  appearance: none;
+
+  width: 100%;
+  min-height: 94px;
+
+  padding: 16px 18px;
+
+  border: 1px solid rgba(140, 180, 230, 0.2);
+  border-radius: 26px;
+
+  background: rgba(255, 255, 255, 0.94);
+
+  display: grid;
+  grid-template-columns: 58px 1fr auto;
+  align-items: center;
+  gap: 14px;
+
+  text-align: left;
+
+  box-shadow:
+    0 12px 30px rgba(70, 110, 170, 0.1);
+
+  cursor: pointer;
+}
+
+
+.jihoon-chemistry-card:active {
+  transform: scale(0.98);
+}
+
+
+.jihoon-chemistry-emoji {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 58px;
+  height: 58px;
+
+  border-radius: 20px;
+
+  background: #edf5ff;
+
+  font-size: 27px;
+}
+
+
+.jihoon-chemistry-card strong {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #315d91;
+
+  font-size: 15px;
+  font-weight: 950;
+}
+
+
+.jihoon-chemistry-card small {
+  color: #8aa3c2;
+
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+}
+
+
+/* =========================================
+   🐶 CHEMISTRY DETAIL
+========================================= */
+
+.jihoon-chemistry-detail-inner {
+  width: 100%;
+  max-width: 680px;
+
+  margin: 40px auto 0;
+
+  text-align: center;
+}
+
+
+.jihoon-chemistry-detail-kicker {
+  margin-bottom: 14px;
+
+  color: #6f96c5;
+
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+}
+
+
+.jihoon-chemistry-detail-emoji {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 92px;
+  height: 92px;
+
+  margin: 0 auto 18px;
+
+  border-radius: 30px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffffff,
+      #e8f3ff
+    );
+
+  font-size: 42px;
+
+  box-shadow:
+    0 14px 34px rgba(70, 110, 170, 0.12);
+}
+
+
+.jihoon-chemistry-detail-inner h2 {
+  margin: 0 auto 8px;
+
+  color: #244a7c;
+
+  font-size: 25px;
+  line-height: 1.4;
+  font-weight: 950;
+}
+
+
+.jihoon-chemistry-detail-name {
+  margin: 0 auto 12px;
+
+  color: #6588b4;
+
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
+
+.jihoon-chemistry-detail-caption {
+  margin: 0 auto 28px;
+
+  color: #829dbc;
+
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+
+/* =========================================
+   ＋ ADD MEMORY
+========================================= */
+
+.jihoon-chemistry-add {
+  width: 100%;
+  max-width: 420px;
+
+  min-height: 54px;
+
+  margin: 24px auto 0;
+
+  border: 0;
+  border-radius: 20px;
+
+  background: #dcecff;
+  color: #315d91;
+
+  font-size: 14px;
+  font-weight: 950;
+
+  box-shadow:
+    0 8px 20px rgba(70, 110, 170, 0.12);
+
+  cursor: pointer;
+}
+
+
+.jihoon-chemistry-add:active {
+  transform: scale(0.98);
+}
+
+
+/* =========================================
+   📸 MEMORY LIST
+========================================= */
+
+.jihoon-chemistry-memory-list {
+  width: 100%;
+  max-width: 420px;
+
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+
+.jihoon-chemistry-empty {
+  grid-column: 1 / -1;
+
+  padding: 34px 20px;
+
+  border-radius: 26px;
+
+  background: rgba(255, 255, 255, 0.86);
+
+  text-align: center;
+
+  box-shadow:
+    0 10px 28px rgba(70, 110, 170, 0.08);
+}
+
+
+.jihoon-chemistry-empty span {
+  display: block;
+
+  margin-bottom: 10px;
+
+  font-size: 34px;
+}
+
+
+.jihoon-chemistry-empty strong {
+  display: block;
+
+  margin-bottom: 6px;
+
+  color: #315d91;
+
+  font-size: 15px;
+}
+
+
+.jihoon-chemistry-empty small {
+  color: #89a3c3;
+
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+
+/* =========================================
+   🖼️ MEMORY CARD
+========================================= */
+
+.jihoon-chemistry-memory-card {
+  overflow: hidden;
+
+  border-radius: 24px;
+
+  background: rgba(255, 255, 255, 0.95);
+
+  box-shadow:
+    0 12px 28px rgba(70, 110, 170, 0.11);
+
+  cursor: pointer;
+}
+
+
+.jihoon-chemistry-memory-card:active {
+  transform: scale(0.98);
+}
+
+
+.jihoon-chemistry-memory-card img {
+  display: block;
+
+  width: 100%;
+  aspect-ratio: 4 / 5;
+
+  object-fit: cover;
+}
+
+
+.jihoon-chemistry-memory-card p {
+  margin: 0;
+
+  padding: 12px 12px 14px;
+
+  color: #6685aa;
+
+  font-size: 12px;
+  line-height: 1.6;
+
+  text-align: left;
+
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+
+.jihoon-chemistry-no-note {
+  color: #a3b4c9 !important;
+
+  font-size: 11px !important;
+  font-weight: 750;
+  letter-spacing: 0.06em;
+}
+
+
+/* =========================================
+   🫶 MEMORY ADD / EDIT MODAL
+========================================= */
+
+.jihoon-chemistry-memory-modal {
+  position: fixed;
+  inset: 0;
+
+  z-index: 1600;
+
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+
+  padding:
+    42px
+    18px
+    130px;
+
+  background:
+    rgba(227, 239, 255, 0.96);
+
+  align-items: flex-start;
+  justify-content: center;
+}
+
+
+.jihoon-chemistry-memory-modal-card {
+  width: 100%;
+  max-width: 420px;
+
+  margin: 30px auto 0;
+
+  padding: 24px;
+
+  border-radius: 30px;
+
+  background: rgba(255, 255, 255, 0.97);
+
+  box-shadow:
+    0 18px 48px rgba(70, 110, 170, 0.16);
+}
+
+
+.jihoon-chemistry-memory-kicker {
+  margin-bottom: 10px;
+
+  text-align: center;
+
+  color: #7094c0;
+
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+}
+
+
+.jihoon-chemistry-memory-modal-card h3 {
+  margin: 0 auto 22px;
+
+  text-align: center;
+
+  color: #315d91;
+
+  font-size: 20px;
+  line-height: 1.45;
+  font-weight: 950;
+}
+
+
+/* PHOTO SELECT */
+.jihoon-chemistry-memory-select {
+  width: 100%;
+  min-height: 50px;
+
+  border: 1px dashed rgba(105, 150, 205, 0.4);
+  border-radius: 18px;
+
+  background: #f1f7ff;
+  color: #5279a9;
+
+  font-size: 13px;
+  font-weight: 900;
+
+  cursor: pointer;
+}
+
+
+/* PREVIEW */
+.jihoon-chemistry-memory-preview {
+  overflow: hidden;
+
+  width: 100%;
+
+  margin-top: 16px;
+
+  border-radius: 22px;
+
+  background: #edf4fc;
+}
+
+
+.jihoon-chemistry-memory-preview img {
+  display: block;
+
+  width: 100%;
+  max-height: 480px;
+
+  object-fit: contain;
+}
+
+
+/* NOTE */
+.jihoon-chemistry-memory-field {
+  margin-top: 20px;
+}
+
+
+.jihoon-chemistry-memory-field label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #5279a9;
+
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
+
+.jihoon-chemistry-memory-field textarea {
+  width: 100%;
+
+  padding: 14px 16px;
+
+  border:
+    1px solid
+    rgba(130, 170, 220, 0.25);
+
+  border-radius: 18px;
+
+  background: #f5f9ff;
+  color: #315d91;
+
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.6;
+
+  resize: vertical;
+  outline: none;
+}
+
+
+.jihoon-chemistry-memory-field textarea::placeholder {
+  color: #a2b7d2;
+}
+
+
+/* SAVE */
+.jihoon-chemistry-memory-save {
+  width: 100%;
+  min-height: 54px;
+
+  margin-top: 20px;
+
+  border: 0;
+  border-radius: 20px;
+
+  background: #dcecff;
+  color: #315d91;
+
+  font-size: 14px;
+  font-weight: 950;
+
+  cursor: pointer;
+}
+
+
+/* DELETE */
+.jihoon-chemistry-memory-delete {
+  width: 100%;
+  min-height: 48px;
+
+  margin-top: 10px;
+
+  border: 0;
+  border-radius: 18px;
+
+  background: #fff0f3;
+  color: #b96d7d;
+
+  font-size: 13px;
+  font-weight: 900;
+
+  cursor: pointer;
+}
+
+
+/* CANCEL */
+.jihoon-chemistry-memory-cancel {
+  width: 100%;
+
+  margin-top: 10px;
+  padding: 12px;
+
+  border: 0;
+
+  background: transparent;
+  color: #899fb9;
+
+  font-size: 13px;
+  font-weight: 850;
+
+  cursor: pointer;
+}
+
+
+.jihoon-chemistry-memory-save:active,
+.jihoon-chemistry-memory-delete:active,
+.jihoon-chemistry-memory-cancel:active {
+  transform: scale(0.98);
+}
