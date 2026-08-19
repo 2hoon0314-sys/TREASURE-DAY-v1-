@@ -4014,7 +4014,8 @@ const jihoonVisualRankingPage =
 
 const jihoonVisualRankingBack =
   document.getElementById("jihoonVisualRankingBack");
-
+const jihoonVisualRankingList =
+  document.getElementById("jihoonVisualRankingList");
 if (jihoonVisualRankingOpen && jihoonVisualRankingPage) {
   jihoonVisualRankingOpen.addEventListener("click", () => {
     jihoonVisualRankingPage.style.display = "block";
@@ -4233,7 +4234,11 @@ function getJihoonVisuals() {
 
   });
 }
-
+// 👑 FAVORITEのジフンだけ取得
+async function getJihoonFavoriteVisuals() {
+  const visuals = await getJihoonVisuals();
+  return visuals.filter(item => item.favorite === true);
+}
 // =========================================
 // 🔄 旧VISUALデータを新形式へ移行
 // =========================================
