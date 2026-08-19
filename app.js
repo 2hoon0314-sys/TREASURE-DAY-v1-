@@ -4075,11 +4075,12 @@ function saveJihoonVisual(file, hairColor) {
 
     const store = transaction.objectStore(JIHOON_VISUAL_STORE);
 
-    const data = {
-      image: file,
-      hairColor: hairColor,
-      createdAt: Date.now()
-    };
+const data = {
+  image: file,
+  hairColor: hairColor,
+  favorite: false,
+  createdAt: Date.now()
+};
 
     const request = store.add(data);
 
@@ -4192,7 +4193,11 @@ const jihoonVisualEditImage =
 
 const jihoonVisualEditCancel =
   document.getElementById("jihoonVisualEditCancel");
+const jihoonVisualFavorite =
+  document.getElementById("jihoonVisualFavorite");
 
+const jihoonVisualChangeHair =
+  document.getElementById("jihoonVisualChangeHair");
 let currentJihoonVisualItem = null;
 let currentJihoonVisualPreviewURL = null;
 
@@ -4208,7 +4213,19 @@ function openJihoonVisualEdit(item) {
   }
 
   currentJihoonVisualItem = item;
+if (jihoonVisualFavorite) {
+  const isFavorite = item.favorite === true;
 
+  jihoonVisualFavorite.textContent =
+    isFavorite
+      ? "♥ FAVORITED"
+      : "♡ FAVORITE";
+
+  jihoonVisualFavorite.classList.toggle(
+    "active",
+    isFavorite
+  );
+}
   // 前のプレビューURLが残っていたら解放
   if (currentJihoonVisualPreviewURL) {
     URL.revokeObjectURL(currentJihoonVisualPreviewURL);
@@ -4252,7 +4269,83 @@ if (jihoonVisualEditCancel) {
   );
 
 }
+// =========================================
+// ♡ JIHOON VISUAL FAVORITE
+// =========================================
 
+function updateJihoonVisual(item) {
+  return new Promise((resolve, reject) => {
+
+    if (!jihoonVisualDB || !item) {
+      reject(new Error("Database or item is not ready"));
+      return;
+    }
+
+    const transaction = jihoonVisualDB.transaction(
+      JIHOON_VISUAL_STORE,
+      "readwrite"
+    );
+
+    const store =
+      transaction.objectStore(JIHOON_VISUAL_STORE);
+
+    const request = store.put(item);
+
+    request.onsuccess = () => {
+      resolve();
+    };
+
+    request.onerror = () => {
+      reject(request.error);
+    };
+
+  });
+}
+
+
+if (jihoonVisualFavorite) {
+
+  jihoonVisualFavorite.addEventListener(
+    "click",
+    async () => {
+
+      if (!currentJihoonVisualItem) return;
+
+      currentJihoonVisualItem.favorite =
+        currentJihoonVisualItem.favorite !== true;
+
+      try {
+
+        await updateJihoonVisual(
+          currentJihoonVisualItem
+        );
+
+        const isFavorite =
+          currentJihoonVisualItem.favorite === true;
+
+        jihoonVisualFavorite.textContent =
+          isFavorite
+            ? "♥ FAVORITED"
+            : "♡ FAVORITE";
+
+        jihoonVisualFavorite.classList.toggle(
+          "active",
+          isFavorite
+        );
+
+      } catch (error) {
+
+        console.error(
+          "JIHOON FAVORITE ERROR:",
+          error
+        );
+
+      }
+
+    }
+  );
+
+}
 // =========================================
 // 保存済み写真を表示
 // =========================================
