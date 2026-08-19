@@ -4291,14 +4291,22 @@ card.addEventListener("click", () => {
     UNTAGGED: "💎 UNTAGGED"
   };
 
-  hairTag.textContent =
-    hairLabels[hairColor] || "✨ OTHER";
+hairTag.textContent =
+  hairLabels[hairColor] || "✨ OTHER";
 
+const favoriteBadge = document.createElement("div");
+favoriteBadge.className = "jihoon-visual-favorite-badge";
 
-  card.appendChild(img);
-  card.appendChild(hairTag);
+if (item.favorite === true) {
+  favoriteBadge.textContent = "♥";
+  favoriteBadge.classList.add("show");
+}
 
-  jihoonVisualGrid.prepend(card);
+card.appendChild(img);
+card.appendChild(hairTag);
+card.appendChild(favoriteBadge);
+
+jihoonVisualGrid.prepend(card);
 }
 // =========================================
 // 📸 JIHOON VISUAL EDIT OPEN / CLOSE
