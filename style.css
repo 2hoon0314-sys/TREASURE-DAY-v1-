@@ -5108,7 +5108,9 @@ label[for="memory-song"] {
   width: min(100%, 520px);
 
   padding: 25px 20px 20px;
-
+max-height: 78vh;
+overflow-y: auto;
+-webkit-overflow-scrolling: touch;
   border-radius: 32px;
 
   background:
