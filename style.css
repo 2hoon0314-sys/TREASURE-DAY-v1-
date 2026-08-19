@@ -5444,3 +5444,35 @@ flex-shrink: 0;
 
   padding: 11px 14px;
 }
+/* =========================================
+   ♥ JIHOON VISUAL FAVORITE BADGE
+========================================= */
+
+.jihoon-visual-favorite-badge {
+  position: absolute;
+  top: 9px;
+  right: 9px;
+
+  width: 34px;
+  height: 34px;
+
+  display: none;
+  place-items: center;
+
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  color: #e06c9b;
+
+  font-size: 18px;
+  font-weight: 900;
+
+  box-shadow: 0 5px 14px rgba(60, 90, 140, 0.14);
+}
+
+.jihoon-visual-favorite-badge.show {
+  display: grid;
+}
