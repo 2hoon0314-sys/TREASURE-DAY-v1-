@@ -13151,9 +13151,9 @@ async function renderSharedChemistryMemories() {
     );
 
 
-    hyunsukChemistryMemoryList.appendChild(
-      article
-    );
+   currentSharedChemistryRenderTarget.appendChild(
+  article
+);
   }
 }
 
