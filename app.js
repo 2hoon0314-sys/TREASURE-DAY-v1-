@@ -4263,13 +4263,60 @@ if (hyunsukBookClose && hyunsukBookDetail) {
     }
   );
 }
+// ========================================
+// 📸 HYUNSUK VISUAL BOOK OPEN / CLOSE
+// ========================================
+
+const hyunsukVisualBook =
+  document.getElementById("hyunsukVisualBook");
+
+const hyunsukVisualBookOpen =
+  document.getElementById("hyunsukVisualBookOpen");
+
+const hyunsukVisualClose =
+  document.getElementById("hyunsukVisualClose");
+
+
+// 📸 HYUNSUK VISUAL BOOKを開く
+if (hyunsukVisualBookOpen && hyunsukVisualBook) {
+
+  hyunsukVisualBookOpen.addEventListener(
+    "click",
+    () => {
+
+      hyunsukVisualBook.classList.add("active");
+      hyunsukVisualBook.scrollTop = 0;
+
+      document.body.style.overflow = "hidden";
+    }
+  );
+}
+
+
+// ← HYUNSUK BOOKへ戻る
+if (hyunsukVisualClose && hyunsukVisualBook) {
+
+  hyunsukVisualClose.addEventListener(
+    "click",
+    () => {
+
+      hyunsukVisualBook.classList.remove("active");
+
+      // 後ろのHYUNSUK BOOKは開いたまま
+      document.body.style.overflow = "hidden";
+    }
+  );
+}
 // =========================================
 // 📸 JIHOON VISUAL BOOK OPEN / CLOSE
 // =========================================
 
 const jihoonVisualBook = document.getElementById("jihoonVisualBook");
 const jihoonVisualClose = document.querySelector(".jihoon-visual-close");
-const jihoonMenuCards = document.querySelectorAll(".jihoon-book-menu-card");
+const jihoonMenuCards =
+  jihoonBookDetail
+    ? jihoonBookDetail.querySelectorAll(".jihoon-book-menu-card")
+    : [];
 
 
 // 📸 VISUAL BOOKを開く
