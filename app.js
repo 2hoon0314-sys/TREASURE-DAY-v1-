@@ -4308,6 +4308,60 @@ if (hyunsukVisualClose && hyunsukVisualBook) {
     }
   );
 }
+// ========================================
+// 👑 HYUNSUK VISUAL RANKING OPEN / CLOSE
+// ========================================
+
+const hyunsukVisualRankingOpen =
+  document.getElementById("hyunsukVisualRankingOpen");
+
+const hyunsukVisualRankingPage =
+  document.getElementById("hyunsukVisualRankingPage");
+
+const hyunsukVisualRankingBack =
+  document.getElementById("hyunsukVisualRankingBack");
+
+
+// 👑 RANKINGを開く
+if (
+  hyunsukVisualRankingOpen &&
+  hyunsukVisualRankingPage
+) {
+
+  hyunsukVisualRankingOpen.addEventListener(
+    "click",
+    () => {
+
+      hyunsukVisualRankingPage.style.display =
+        "block";
+
+      hyunsukVisualRankingPage.scrollTop = 0;
+
+      document.body.style.overflow =
+        "hidden";
+    }
+  );
+}
+
+
+// ← HYUNSUK BOOKへ戻る
+if (
+  hyunsukVisualRankingBack &&
+  hyunsukVisualRankingPage
+) {
+
+  hyunsukVisualRankingBack.addEventListener(
+    "click",
+    () => {
+
+      hyunsukVisualRankingPage.style.display =
+        "none";
+
+      document.body.style.overflow =
+        "hidden";
+    }
+  );
+}
 // =========================================
 // 📸 JIHOON VISUAL BOOK OPEN / CLOSE
 // =========================================
