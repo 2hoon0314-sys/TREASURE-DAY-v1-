@@ -17264,114 +17264,127 @@ async function renderYoshiGrowthYearVisuals() {
     return;
   }
 
-
-  yoshiGrowthYearVisualGrid.innerHTML =
-    "";
-
+  yoshiGrowthYearVisualGrid.innerHTML = "";
 
   const items =
     await getYoshiGrowthVisuals(
       currentYoshiGrowthYear
     );
 
-
   if (items.length === 0) {
 
     yoshiGrowthYearVisualGrid.innerHTML = `
       <div class="jihoon-growth-visual-empty">
-        📸 まだ写真がありません
+        <span>📷</span>
+        <strong>まだ写真がありません</strong>
+        <small>
+          好きな${currentYoshiGrowthYear}ヨシを追加してみよう 🐯
+        </small>
       </div>
     `;
 
     return;
   }
 
+  const hairLabels = {
+    BLACK: "🖤 BLACK",
+    BROWN: "🤎 BROWN",
+    RED: "❤️ RED",
+    PINK: "🩷 PINK",
+    BLONDE: "💛 BLONDE",
+    GRAY: "🩶 GRAY",
+    OTHER: "✨ OTHER"
+  };
 
   items
     .sort(
       (a, b) =>
-        (b.createdAt || 0) -
-        (a.createdAt || 0)
+        (a.createdAt || 0) -
+        (b.createdAt || 0)
     )
     .forEach(item => {
 
       const card =
-        document.createElement(
-          "article"
-        );
+        document.createElement("article");
 
       card.className =
         "jihoon-growth-visual-card yoshi-growth-visual-card";
 
 
       const photo =
-        document.createElement(
-          "div"
-        );
+        document.createElement("div");
 
       photo.className =
         "jihoon-growth-visual-photo yoshi-growth-visual-photo";
 
 
       const img =
-        document.createElement(
-          "img"
-        );
+        document.createElement("img");
 
       img.src =
         item.imageData || "";
 
       img.alt =
-        `${currentYoshiGrowthYear} YOSHI`;
+        `${item.year} YOSHI`;
 
-      img.loading =
-        "lazy";
-
-      img.decoding =
-        "async";
-
+      img.loading = "lazy";
+      img.decoding = "async";
 
       photo.appendChild(img);
 
+
+      const info =
+        document.createElement("div");
+
+      info.className =
+        "jihoon-growth-visual-info";
+
+
+      const hair =
+        document.createElement("span");
+
+      hair.className =
+        "jihoon-growth-visual-hair";
+
+      hair.textContent =
+        hairLabels[item.hairColor] ||
+        "✨ OTHER";
+
+      info.appendChild(hair);
+
+
+      const memo =
+        document.createElement("p");
+
+      if (item.memo) {
+
+        memo.textContent =
+          item.memo;
+
+      } else {
+
+        memo.textContent =
+          "NO NOTE";
+
+        memo.className =
+          "jihoon-growth-visual-no-note";
+
+      }
+
+      info.appendChild(memo);
+
+
       card.appendChild(photo);
+      card.appendChild(info);
 
 
-      // 写真タップ → 削除確認
+      // 💎 写真タップ → 編集画面
       card.addEventListener(
         "click",
-        async () => {
+        () => {
 
-          const ok =
-            confirm(
-              "この写真を削除する？📸"
-            );
+          openYoshiGrowthEdit(item);
 
-
-          if (!ok) return;
-
-
-          try {
-
-            await deleteYoshiGrowthVisual(
-              item.id
-            );
-
-
-            await renderYoshiGrowthYearVisuals();
-
-
-          } catch (error) {
-
-            console.error(
-              "YOSHI GROWTH DELETE ERROR:",
-              error
-            );
-
-
-            alert(
-              "削除に失敗しました🥲"
-            );
-          }
         }
       );
 
@@ -17379,9 +17392,9 @@ async function renderYoshiGrowthYearVisuals() {
       yoshiGrowthYearVisualGrid.appendChild(
         card
       );
+
     });
 }
-
 
 // =====================================================
 // 🌱 GROWTH HISTORY OPEN
