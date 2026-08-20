@@ -1173,6 +1173,245 @@
 
 </div>
 </div>
+  <!-- =========================================
+     📸 HYUNSUK VISUAL BOOK
+========================================= -->
+
+<section id="hyunsukVisualBook" class="jihoon-visual-book">
+
+  <button
+    type="button"
+    class="jihoon-visual-close"
+    id="hyunsukVisualClose"
+  >
+    ← HYUNSUK BOOK
+  </button>
+
+  <div class="jihoon-visual-inner">
+
+    <div class="jihoon-visual-kicker">
+      📸 VISUAL BOOK
+    </div>
+
+    <div class="jihoon-visual-header">
+      <p class="jihoon-visual-small">
+        HYUNSUK VISUAL HISTORY
+      </p>
+
+      <h2>
+        MY HYUNSUK<br>VISUAL BOOK
+      </h2>
+
+      <p>
+        好きなヒョンソクのビジュを集めて、<br>
+        自分だけのVISUAL BOOKを育てる。
+      </p>
+    </div>
+
+    <div class="jihoon-hair-filter hyunsuk-hair-filter">
+      <button type="button" class="active" data-hair="ALL">ALL</button>
+      <button type="button" data-hair="BLACK">🖤 BLACK</button>
+      <button type="button" data-hair="BROWN">🤎 BROWN</button>
+      <button type="button" data-hair="RED">❤️ RED</button>
+      <button type="button" data-hair="PINK">🩷 PINK</button>
+      <button type="button" data-hair="BLONDE">💛 BLONDE</button>
+      <button type="button" data-hair="GRAY">🩶 GRAY</button>
+      <button type="button" data-hair="OTHER">✨ OTHER</button>
+    </div>
+
+    <div class="jihoon-visual-empty">
+
+      <div class="jihoon-visual-empty-icon">
+        📸
+      </div>
+
+      <strong>YOUR VISUAL BOOK</strong>
+
+      <p>
+        ここに好きなヒョンソクを<br>
+        どんどん集めていこう 💎
+      </p>
+
+      <button
+        type="button"
+        class="jihoon-visual-add"
+        id="hyunsukVisualAdd"
+      >
+        ＋ ADD VISUAL
+      </button>
+
+      <input
+        type="file"
+        id="hyunsukVisualInput"
+        accept="image/*"
+        hidden
+      >
+
+      <div
+        id="hyunsukVisualGrid"
+        class="jihoon-visual-grid"
+      ></div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================
+     🎨 HYUNSUK HAIR COLOR SELECT
+========================================= -->
+
+<div
+  id="hyunsukHairModal"
+  class="jihoon-hair-modal"
+>
+
+  <div class="jihoon-hair-modal-card">
+
+    <div class="jihoon-hair-modal-icon">
+      🎨
+    </div>
+
+    <p class="jihoon-hair-modal-small">
+      VISUAL TAG
+    </p>
+
+    <h3>
+      このヒョンソクは何髪？💎
+    </h3>
+
+    <div class="jihoon-hair-options">
+
+      <button type="button" data-hair="BLACK">🖤 BLACK</button>
+      <button type="button" data-hair="BROWN">🤎 BROWN</button>
+      <button type="button" data-hair="RED">❤️ RED</button>
+      <button type="button" data-hair="PINK">🩷 PINK</button>
+      <button type="button" data-hair="BLONDE">💛 BLONDE</button>
+      <button type="button" data-hair="GRAY">🩶 GRAY</button>
+      <button type="button" data-hair="OTHER">✨ OTHER</button>
+
+    </div>
+
+    <button
+      type="button"
+      id="hyunsukHairCancel"
+      class="jihoon-hair-cancel"
+    >
+      CANCEL
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- =========================================
+     📸 HYUNSUK VISUAL EDIT MODAL
+========================================= -->
+
+<div
+  class="jihoon-visual-edit-modal"
+  id="hyunsukVisualEditModal"
+>
+
+  <div class="jihoon-visual-edit-sheet">
+
+    <div class="jihoon-visual-edit-kicker">
+      📸 VISUAL EDIT
+    </div>
+
+    <h2>
+      このヒョンソクを編集する 💎
+    </h2>
+
+    <div class="jihoon-visual-edit-preview">
+      <img
+        id="hyunsukVisualEditImage"
+        alt="HYUNSUK VISUAL"
+      >
+    </div>
+
+    <div class="jihoon-visual-edit-actions">
+
+      <button
+        type="button"
+        id="hyunsukVisualFavorite"
+      >
+        ♡ FAVORITE
+      </button>
+
+      <button
+        type="button"
+        id="hyunsukVisualChangeHair"
+      >
+        🎨 CHANGE HAIR COLOR
+      </button>
+
+      <button
+        type="button"
+        id="hyunsukVisualDelete"
+      >
+        🗑️ DELETE
+      </button>
+
+    </div>
+
+    <button
+      type="button"
+      class="jihoon-visual-edit-cancel"
+      id="hyunsukVisualEditCancel"
+    >
+      CANCEL
+    </button>
+
+  </div>
+
+
+  <!-- 🎨 HYUNSUK HAIR CHANGE MODAL -->
+
+  <div
+    class="jihoon-hair-change-modal"
+    id="hyunsukHairChangeModal"
+  >
+
+    <div class="jihoon-hair-change-sheet">
+
+      <div class="jihoon-hair-change-kicker">
+        🎨 CHANGE HAIR COLOR
+      </div>
+
+      <h3>
+        このヒョンソクの髪色を選ぶ 💎
+      </h3>
+
+      <div class="jihoon-hair-change-grid">
+
+        <button type="button" data-hair="BLACK">🖤 BLACK</button>
+        <button type="button" data-hair="BROWN">🤎 BROWN</button>
+        <button type="button" data-hair="RED">❤️ RED</button>
+        <button type="button" data-hair="PINK">💗 PINK</button>
+        <button type="button" data-hair="BLONDE">💛 BLONDE</button>
+        <button type="button" data-hair="GRAY">🩶 GRAY</button>
+        <button type="button" data-hair="OTHER">✨ OTHER</button>
+        <button type="button" data-hair="UNTAGGED">💎 UNTAGGED</button>
+
+      </div>
+
+      <button
+        type="button"
+        class="jihoon-hair-change-cancel"
+        id="hyunsukHairChangeCancel"
+      >
+        CANCEL
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
 <!-- 🎲 BONUS DRAW DETAIL -->
 <div class="bonus-detail" id="bonus-detail">
 
