@@ -2012,6 +2012,251 @@
   </div>
 
 </div>
+  <!-- =========================================
+     📸 YOSHI VISUAL BOOK
+========================================= -->
+
+<section id="yoshiVisualBook" class="jihoon-visual-book">
+
+  <button
+    type="button"
+    class="jihoon-visual-close"
+    id="yoshiVisualClose"
+  >
+    ← YOSHI BOOK
+  </button>
+
+  <div class="jihoon-visual-inner">
+
+    <div class="jihoon-visual-kicker">
+      📸 VISUAL BOOK
+    </div>
+
+    <div class="jihoon-visual-header">
+
+      <p class="jihoon-visual-small">
+        YOSHI VISUAL HISTORY
+      </p>
+
+      <h2>
+        MY YOSHI<br>VISUAL BOOK
+      </h2>
+
+      <p>
+        好きなヨシのビジュを集めて、<br>
+        自分だけのVISUAL BOOKを育てる。
+      </p>
+
+    </div>
+
+    <div class="jihoon-hair-filter yoshi-hair-filter">
+
+      <button type="button" class="active" data-hair="ALL">ALL</button>
+      <button type="button" data-hair="BLACK">🖤 BLACK</button>
+      <button type="button" data-hair="BROWN">🤎 BROWN</button>
+      <button type="button" data-hair="RED">❤️ RED</button>
+      <button type="button" data-hair="PINK">🩷 PINK</button>
+      <button type="button" data-hair="BLONDE">💛 BLONDE</button>
+      <button type="button" data-hair="GRAY">🩶 GRAY</button>
+      <button type="button" data-hair="OTHER">✨ OTHER</button>
+
+    </div>
+
+    <div class="jihoon-visual-empty">
+
+      <div class="jihoon-visual-empty-icon">
+        📸
+      </div>
+
+      <strong>YOUR VISUAL BOOK</strong>
+
+      <p>
+        ここに好きなヨシを<br>
+        どんどん集めていこう 💎
+      </p>
+
+      <button
+        type="button"
+        class="jihoon-visual-add"
+        id="yoshiVisualAdd"
+      >
+        ＋ ADD VISUAL
+      </button>
+
+      <input
+        type="file"
+        id="yoshiVisualInput"
+        accept="image/*"
+        hidden
+      >
+
+      <div
+        id="yoshiVisualGrid"
+        class="jihoon-visual-grid"
+      ></div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================
+     🎨 YOSHI HAIR COLOR SELECT
+========================================= -->
+
+<div
+  id="yoshiHairModal"
+  class="jihoon-hair-modal"
+>
+
+  <div class="jihoon-hair-modal-card">
+
+    <div class="jihoon-hair-modal-icon">
+      🎨
+    </div>
+
+    <p class="jihoon-hair-modal-small">
+      VISUAL TAG
+    </p>
+
+    <h3>
+      このヨシは何髪？💎
+    </h3>
+
+    <div class="jihoon-hair-options">
+
+      <button type="button" data-hair="BLACK">🖤 BLACK</button>
+      <button type="button" data-hair="BROWN">🤎 BROWN</button>
+      <button type="button" data-hair="RED">❤️ RED</button>
+      <button type="button" data-hair="PINK">🩷 PINK</button>
+      <button type="button" data-hair="BLONDE">💛 BLONDE</button>
+      <button type="button" data-hair="GRAY">🩶 GRAY</button>
+      <button type="button" data-hair="OTHER">✨ OTHER</button>
+
+    </div>
+
+    <button
+      type="button"
+      id="yoshiHairCancel"
+      class="jihoon-hair-cancel"
+    >
+      CANCEL
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- =========================================
+     📸 YOSHI VISUAL EDIT MODAL
+========================================= -->
+
+<div
+  class="jihoon-visual-edit-modal"
+  id="yoshiVisualEditModal"
+>
+
+  <div class="jihoon-visual-edit-sheet">
+
+    <div class="jihoon-visual-edit-kicker">
+      📸 VISUAL EDIT
+    </div>
+
+    <h2>
+      このヨシを編集する 💎
+    </h2>
+
+    <div class="jihoon-visual-edit-preview">
+
+      <img
+        id="yoshiVisualEditImage"
+        alt="YOSHI VISUAL"
+      >
+
+    </div>
+
+    <div class="jihoon-visual-edit-actions">
+
+      <button
+        type="button"
+        id="yoshiVisualFavorite"
+      >
+        ♡ FAVORITE
+      </button>
+
+      <button
+        type="button"
+        id="yoshiVisualChangeHair"
+      >
+        🎨 CHANGE HAIR COLOR
+      </button>
+
+      <button
+        type="button"
+        id="yoshiVisualDelete"
+      >
+        🗑️ DELETE
+      </button>
+
+    </div>
+
+    <button
+      type="button"
+      class="jihoon-visual-edit-cancel"
+      id="yoshiVisualEditCancel"
+    >
+      CANCEL
+    </button>
+
+  </div>
+
+
+  <!-- 🎨 YOSHI HAIR CHANGE MODAL -->
+
+  <div
+    class="jihoon-hair-change-modal"
+    id="yoshiHairChangeModal"
+  >
+
+    <div class="jihoon-hair-change-sheet">
+
+      <div class="jihoon-hair-change-kicker">
+        🎨 CHANGE HAIR COLOR
+      </div>
+
+      <h3>
+        このヨシの髪色を選ぶ 💎
+      </h3>
+
+      <div class="jihoon-hair-change-grid">
+
+        <button type="button" data-hair="BLACK">🖤 BLACK</button>
+        <button type="button" data-hair="BROWN">🤎 BROWN</button>
+        <button type="button" data-hair="RED">❤️ RED</button>
+        <button type="button" data-hair="PINK">💗 PINK</button>
+        <button type="button" data-hair="BLONDE">💛 BLONDE</button>
+        <button type="button" data-hair="GRAY">🩶 GRAY</button>
+        <button type="button" data-hair="OTHER">✨ OTHER</button>
+        <button type="button" data-hair="UNTAGGED">💎 UNTAGGED</button>
+
+      </div>
+
+      <button
+        type="button"
+        class="jihoon-hair-change-cancel"
+        id="yoshiHairChangeCancel"
+      >
+        CANCEL
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
 <!-- 🎲 BONUS DRAW DETAIL -->
 <div class="bonus-detail" id="bonus-detail">
 
