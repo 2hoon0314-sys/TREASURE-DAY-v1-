@@ -17776,7 +17776,20 @@ document
 
         currentYoshiChemistryPartner =
           partner;
+// 💎 SHARED CHEMISTRYへ接続
+currentHyunsukChemistryPartner =
+  partner;
 
+currentHyunsukChemistryPairKey =
+  createChemistryPairKey(
+    "YOSHI",
+    partner
+  );
+
+currentSharedChemistryRenderTarget =
+  document.getElementById(
+    "yoshiChemistryMemoryList"
+  );
 
         if (yoshiChemistryDetailEmoji) {
           yoshiChemistryDetailEmoji.textContent =
@@ -17839,6 +17852,80 @@ if (
 
       yoshiChemistryPage.scrollTop =
         0;
+
+      document.body.style.overflow =
+        "hidden";
+    }
+  );
+}
+// =====================================================
+// 🐯 YOSHI CHEMISTRY → SHARED MEMORY MODAL
+// =====================================================
+
+if (yoshiChemistryAdd) {
+
+  yoshiChemistryAdd.addEventListener(
+    "click",
+    () => {
+
+      if (
+        !currentYoshiChemistryPartner
+      ) {
+        return;
+      }
+
+
+      currentHyunsukChemistryPairKey =
+        createChemistryPairKey(
+          "YOSHI",
+          currentYoshiChemistryPartner
+        );
+
+
+      currentSharedChemistryRenderTarget =
+        document.getElementById(
+          "yoshiChemistryMemoryList"
+        );
+
+
+      currentSharedChemistryImageData =
+        null;
+
+
+      delete hyunsukChemistryMemorySave
+        .dataset.editId;
+
+
+      hyunsukChemistryMemoryInput.value =
+        "";
+
+      hyunsukChemistryMemoryMemo.value =
+        "";
+
+      hyunsukChemistryMemoryPreviewImage.src =
+        "";
+
+      hyunsukChemistryMemoryPreview.style.display =
+        "none";
+
+      hyunsukChemistryMemoryDelete.style.display =
+        "none";
+
+
+      hyunsukChemistryMemorySave.textContent =
+        "💎 SAVE MEMORY";
+
+
+      hyunsukChemistryMemoryTitle.textContent =
+        `YOSHI × ${currentYoshiChemistryPartner} MEMORY`;
+
+
+      hyunsukChemistryMemoryModal.style.display =
+        "flex";
+
+      hyunsukChemistryMemoryModal.scrollTop =
+        0;
+
 
       document.body.style.overflow =
         "hidden";
