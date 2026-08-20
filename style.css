@@ -8519,3 +8519,28 @@ z-index: 1400;
 
   object-fit: contain;
 }
+/* =========================================
+   🐨 JUNKYU GROWTH VISUAL SIZE FIX
+========================================= */
+
+.junkyu-growth-visual-card {
+  width: 100% !important;
+  max-width: 240px !important;
+  margin: 0 auto 16px !important;
+}
+
+.junkyu-growth-visual-photo {
+  width: 100% !important;
+  height: 300px !important;
+  aspect-ratio: auto !important;
+  overflow: hidden !important;
+}
+
+.junkyu-growth-visual-photo img {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+}
