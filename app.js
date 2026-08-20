@@ -10608,6 +10608,18 @@ function createHyunsukGrowthCard(
   card.className =
     "jihoon-growth-visual-card";
 
+
+  // =========================
+  // 📸 PHOTO
+  // =========================
+
+  const photo =
+    document.createElement("div");
+
+  photo.className =
+    "jihoon-growth-visual-photo";
+
+
   const img =
     document.createElement("img");
 
@@ -10616,6 +10628,27 @@ function createHyunsukGrowthCard(
 
   img.alt =
     `${item.year} HYUNSUK`;
+
+  img.loading =
+    "lazy";
+
+  img.decoding =
+    "async";
+
+
+  photo.appendChild(img);
+
+
+  // =========================
+  // 💎 INFO
+  // =========================
+
+  const info =
+    document.createElement("div");
+
+  info.className =
+    "jihoon-growth-visual-info";
+
 
   const hair =
     document.createElement("span");
@@ -10630,6 +10663,7 @@ function createHyunsukGrowthCard(
     OTHER: "✨ OTHER"
   };
 
+
   hair.textContent =
     hairLabels[item.hairColor] ||
     "✨ OTHER";
@@ -10637,20 +10671,42 @@ function createHyunsukGrowthCard(
   hair.className =
     "jihoon-growth-visual-hair";
 
-  card.appendChild(img);
-  card.appendChild(hair);
 
+  info.appendChild(hair);
+
+
+  // =========================
+  // 📝 MEMO
+  // =========================
+
+  const memo =
+    document.createElement("p");
 
   if (item.memo) {
-
-    const memo =
-      document.createElement("p");
 
     memo.textContent =
       item.memo;
 
-    card.appendChild(memo);
+  } else {
+
+    memo.textContent =
+      "NO NOTE";
+
+    memo.className =
+      "jihoon-growth-visual-no-note";
   }
+
+
+  info.appendChild(memo);
+
+
+  // =========================
+  // CARD
+  // =========================
+
+  card.appendChild(photo);
+
+  card.appendChild(info);
 
 
   card.addEventListener(
@@ -10663,9 +10719,9 @@ function createHyunsukGrowthCard(
     }
   );
 
+
   return card;
 }
-
 
 // =========================================
 // 📚 RENDER CURRENT YEAR
