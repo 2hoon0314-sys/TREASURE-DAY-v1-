@@ -17061,7 +17061,9 @@ function yoshiGrowthImageToDataURL(file) {
 
 async function saveYoshiGrowthVisual(
   file,
-  year
+  year,
+  hairColor,
+  memo
 ) {
 
   if (!yoshiGrowthDB) {
@@ -17089,18 +17091,22 @@ async function saveYoshiGrowthVisual(
       );
 
 
-   const item = {
+  const item = {
 
   id:
     Date.now() +
-    Math.floor(
-      Math.random() * 1000
-    ),
+    Math.floor(Math.random() * 1000),
 
   year:
     String(year),
 
   imageData,
+
+  hairColor:
+    hairColor || "OTHER",
+
+  memo:
+    memo || "",
 
   createdAt:
     Date.now()
@@ -17125,7 +17131,32 @@ async function saveYoshiGrowthVisual(
   });
 }
 
+function updateYoshiGrowthVisual(item) {
 
+  return new Promise((resolve, reject) => {
+
+    const transaction =
+      yoshiGrowthDB.transaction(
+        YOSHI_GROWTH_STORE,
+        "readwrite"
+      );
+
+    const store =
+      transaction.objectStore(
+        YOSHI_GROWTH_STORE
+      );
+
+    const request =
+      store.put(item);
+
+    request.onsuccess =
+      () => resolve();
+
+    request.onerror =
+      () => reject(request.error);
+
+  });
+}
 // =====================================================
 // 📚 GET YEAR VISUALS
 // =====================================================
