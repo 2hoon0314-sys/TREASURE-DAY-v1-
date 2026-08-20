@@ -8145,3 +8145,204 @@ z-index: 1400;
   object-fit: cover !important;
   object-position: center !important;
 }
+/* =========================================================
+   🫶 CHEMISTRY MEMORY MODAL 最終デザイン修正
+========================================================= */
+
+.jihoon-chemistry-memory-modal {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 2000 !important;
+
+  display: flex;
+  align-items: flex-start !important;
+  justify-content: center !important;
+
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch;
+
+  padding:
+    calc(34px + env(safe-area-inset-top))
+    18px
+    calc(140px + env(safe-area-inset-bottom)) !important;
+
+  background: rgba(225, 238, 255, 0.96) !important;
+}
+
+.jihoon-chemistry-memory-modal-card {
+  width: 100% !important;
+  max-width: 420px !important;
+
+  margin: 28px auto 0 !important;
+  padding: 26px 22px 24px !important;
+
+  background: rgba(255, 255, 255, 0.98) !important;
+
+  border: 1px solid rgba(130, 170, 220, 0.16) !important;
+  border-radius: 30px !important;
+
+  box-shadow:
+    0 18px 48px rgba(70, 110, 170, 0.15) !important;
+
+  box-sizing: border-box !important;
+}
+
+.jihoon-chemistry-memory-kicker {
+  margin: 0 0 8px !important;
+
+  color: #7c9fc8 !important;
+
+  text-align: center !important;
+  font-size: 12px !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.12em !important;
+}
+
+.jihoon-chemistry-memory-modal-card h3 {
+  margin: 0 0 22px !important;
+
+  color: #244a7c !important;
+
+  text-align: center !important;
+  font-size: 21px !important;
+  line-height: 1.4 !important;
+  font-weight: 950 !important;
+}
+
+/* 📷 写真選択 */
+
+.jihoon-chemistry-memory-select {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  width: 100% !important;
+  min-height: 58px !important;
+
+  padding: 12px 16px !important;
+
+  border: 2px dashed #b8d2ef !important;
+  border-radius: 20px !important;
+
+  background: #f4f8ff !important;
+  color: #5279a9 !important;
+
+  font-family: inherit !important;
+  font-size: 15px !important;
+  font-weight: 900 !important;
+
+  box-sizing: border-box !important;
+}
+
+/* 📝 メモ */
+
+.jihoon-chemistry-memory-field {
+  width: 100% !important;
+  margin-top: 18px !important;
+}
+
+.jihoon-chemistry-memory-field label {
+  display: block !important;
+
+  margin: 0 0 8px !important;
+
+  color: #7091b9 !important;
+
+  font-size: 12px !important;
+  font-weight: 900 !important;
+}
+
+.jihoon-chemistry-memory-field textarea {
+  display: block !important;
+
+  width: 100% !important;
+  min-height: 120px !important;
+
+  padding: 16px !important;
+
+  border: 1px solid rgba(130, 170, 220, 0.20) !important;
+  border-radius: 20px !important;
+
+  background: #f4f8ff !important;
+  color: #315d91 !important;
+
+  font-family: inherit !important;
+  font-size: 15px !important;
+  line-height: 1.6 !important;
+
+  resize: vertical !important;
+  outline: none !important;
+
+  box-sizing: border-box !important;
+}
+
+.jihoon-chemistry-memory-field textarea::placeholder {
+  color: #a1b4cc !important;
+}
+
+/* 💎 SAVE */
+
+.jihoon-chemistry-memory-save {
+  width: 100% !important;
+  min-height: 58px !important;
+
+  margin-top: 20px !important;
+  padding: 14px 18px !important;
+
+  border: 0 !important;
+  border-radius: 22px !important;
+
+  background: #dcecff !important;
+  color: #315d91 !important;
+
+  font-family: inherit !important;
+  font-size: 16px !important;
+  font-weight: 950 !important;
+
+  box-shadow:
+    0 7px 18px rgba(70, 110, 170, 0.10) !important;
+}
+
+/* CANCEL */
+
+.jihoon-chemistry-memory-cancel {
+  display: block !important;
+
+  width: 100% !important;
+
+  margin-top: 8px !important;
+  padding: 14px !important;
+
+  border: 0 !important;
+  border-radius: 18px !important;
+
+  background: transparent !important;
+  color: #8ca2bd !important;
+
+  font-family: inherit !important;
+  font-size: 14px !important;
+  font-weight: 850 !important;
+}
+
+/* PREVIEW */
+
+.jihoon-chemistry-memory-preview {
+  overflow: hidden !important;
+
+  width: 100% !important;
+
+  margin-top: 16px !important;
+
+  border-radius: 22px !important;
+
+  background: #edf4fc !important;
+}
+
+.jihoon-chemistry-memory-preview img {
+  display: block !important;
+
+  width: 100% !important;
+  max-height: 380px !important;
+
+  object-fit: contain !important;
+}
