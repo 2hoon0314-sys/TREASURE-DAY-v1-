@@ -13070,8 +13070,8 @@ async function renderSharedChemistryMemories() {
   }
 
 
-  hyunsukChemistryMemoryList.innerHTML =
-    "";
+  currentSharedChemistryRenderTarget.innerHTML =
+  "";
 
 
   for (const item of items) {
