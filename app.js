@@ -16845,13 +16845,13 @@ const yoshiGrowthYearInfo = {
 // =====================================================
 
 const YOSHI_GROWTH_DB_NAME =
-  "treasure-day-yoshi-growth-db";
+  "treasure-day-yoshi-growth-v2-db";
 
 const YOSHI_GROWTH_DB_VERSION =
   1;
 
 const YOSHI_GROWTH_STORE =
-  "visuals";
+  "yoshi-growth-visuals";
 
 let yoshiGrowthDB = null;
 
@@ -16878,13 +16878,12 @@ function openYoshiGrowthDB() {
         )
       ) {
 
-        db.createObjectStore(
-          YOSHI_GROWTH_STORE,
-          {
-            keyPath: "id",
-            autoIncrement: true
-          }
-        );
+       db.createObjectStore(
+  YOSHI_GROWTH_STORE,
+  {
+    keyPath: "id"
+  }
+);
       }
     };
 
