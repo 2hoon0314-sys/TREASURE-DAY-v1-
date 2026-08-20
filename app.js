@@ -13443,3 +13443,1221 @@ if (yoshiBookClose && yoshiBookDetail) {
     }
   );
 }
+// ======================================================
+// 📸 MEMBER VISUAL BOOK 共通エンジン
+// YOSHI以降の量産用
+// ======================================================
+
+function setupMemberVisualBook(config) {
+
+  const {
+    key,
+    displayName,
+    japaneseName
+  } = config;
+
+  const cap =
+    key.charAt(0).toUpperCase() +
+    key.slice(1);
+
+
+  // =========================================
+  // DOM
+  // =========================================
+
+  const visualBook =
+    document.getElementById(
+      `${key}VisualBook`
+    );
+
+  const visualOpen =
+    document.getElementById(
+      `${key}VisualBookOpen`
+    );
+
+  const visualClose =
+    document.getElementById(
+      `${key}VisualClose`
+    );
+
+  const visualAdd =
+    document.getElementById(
+      `${key}VisualAdd`
+    );
+
+  const visualInput =
+    document.getElementById(
+      `${key}VisualInput`
+    );
+
+  const visualGrid =
+    document.getElementById(
+      `${key}VisualGrid`
+    );
+
+  const hairModal =
+    document.getElementById(
+      `${key}HairModal`
+    );
+
+  const hairCancel =
+    document.getElementById(
+      `${key}HairCancel`
+    );
+
+  const editModal =
+    document.getElementById(
+      `${key}VisualEditModal`
+    );
+
+  const editImage =
+    document.getElementById(
+      `${key}VisualEditImage`
+    );
+
+  const editCancel =
+    document.getElementById(
+      `${key}VisualEditCancel`
+    );
+
+  const favoriteButton =
+    document.getElementById(
+      `${key}VisualFavorite`
+    );
+
+  const changeHairButton =
+    document.getElementById(
+      `${key}VisualChangeHair`
+    );
+
+  const deleteButton =
+    document.getElementById(
+      `${key}VisualDelete`
+    );
+
+  const hairChangeModal =
+    document.getElementById(
+      `${key}HairChangeModal`
+    );
+
+  const hairChangeCancel =
+    document.getElementById(
+      `${key}HairChangeCancel`
+    );
+
+
+  // =========================================
+  // 💾 IndexedDB
+  // =========================================
+
+  const DB_NAME =
+    `treasure-day-${key}-visual-db`;
+
+  const DB_VERSION = 1;
+
+  const STORE_NAME =
+    `${key}Visuals`;
+
+  let visualDB = null;
+
+
+  function openDB() {
+
+    return new Promise(
+      (resolve, reject) => {
+
+        const request =
+          indexedDB.open(
+            DB_NAME,
+            DB_VERSION
+          );
+
+
+        request.onupgradeneeded =
+          event => {
+
+            const db =
+              event.target.result;
+
+            if (
+              !db.objectStoreNames.contains(
+                STORE_NAME
+              )
+            ) {
+
+              db.createObjectStore(
+                STORE_NAME,
+                {
+                  keyPath: "id",
+                  autoIncrement: true
+                }
+              );
+            }
+          };
+
+
+        request.onsuccess =
+          event => {
+
+            visualDB =
+              event.target.result;
+
+            resolve(visualDB);
+          };
+
+
+        request.onerror =
+          () => reject(
+            request.error
+          );
+      }
+    );
+  }
+
+
+  // =========================================
+  // 📸 IMAGE → DataURL
+  // =========================================
+
+  function imageToDataURL(file) {
+
+    return new Promise(
+      (resolve, reject) => {
+
+        const reader =
+          new FileReader();
+
+
+        reader.onload = () => {
+
+          const img =
+            new Image();
+
+
+          img.onload = () => {
+
+            const MAX_SIZE =
+              1600;
+
+            let width =
+              img.naturalWidth;
+
+            let height =
+              img.naturalHeight;
+
+
+            if (
+              width > height &&
+              width > MAX_SIZE
+            ) {
+
+              height =
+                Math.round(
+                  height *
+                  MAX_SIZE /
+                  width
+                );
+
+              width =
+                MAX_SIZE;
+
+            } else if (
+              height >= width &&
+              height > MAX_SIZE
+            ) {
+
+              width =
+                Math.round(
+                  width *
+                  MAX_SIZE /
+                  height
+                );
+
+              height =
+                MAX_SIZE;
+            }
+
+
+            const canvas =
+              document.createElement(
+                "canvas"
+              );
+
+            canvas.width =
+              width;
+
+            canvas.height =
+              height;
+
+
+            const ctx =
+              canvas.getContext("2d");
+
+            if (!ctx) {
+
+              reject(
+                new Error(
+                  "Canvas unavailable"
+                )
+              );
+
+              return;
+            }
+
+
+            ctx.drawImage(
+              img,
+              0,
+              0,
+              width,
+              height
+            );
+
+
+            resolve(
+              canvas.toDataURL(
+                "image/jpeg",
+                0.86
+              )
+            );
+          };
+
+
+          img.onerror =
+            reject;
+
+          img.src =
+            reader.result;
+        };
+
+
+        reader.onerror =
+          reject;
+
+        reader.readAsDataURL(
+          file
+        );
+      }
+    );
+  }
+
+
+  // =========================================
+  // 💾 SAVE
+  // =========================================
+
+  async function saveVisual(
+    file,
+    hairColor
+  ) {
+
+    const imageData =
+      await imageToDataURL(file);
+
+
+    return new Promise(
+      (resolve, reject) => {
+
+        const transaction =
+          visualDB.transaction(
+            STORE_NAME,
+            "readwrite"
+          );
+
+        const store =
+          transaction.objectStore(
+            STORE_NAME
+          );
+
+
+        const data = {
+
+          imageData,
+
+          hairColor,
+
+          favorite: false,
+
+          createdAt:
+            Date.now()
+
+        };
+
+
+        const request =
+          store.add(data);
+
+
+        request.onsuccess = () => {
+
+          data.id =
+            request.result;
+
+          resolve(data);
+        };
+
+
+        request.onerror =
+          () => reject(
+            request.error
+          );
+      }
+    );
+  }
+
+
+  // =========================================
+  // 📚 GET ALL
+  // =========================================
+
+  function getVisuals() {
+
+    return new Promise(
+      (resolve, reject) => {
+
+        if (!visualDB) {
+
+          resolve([]);
+
+          return;
+        }
+
+
+        const transaction =
+          visualDB.transaction(
+            STORE_NAME,
+            "readonly"
+          );
+
+        const store =
+          transaction.objectStore(
+            STORE_NAME
+          );
+
+        const request =
+          store.getAll();
+
+
+        request.onsuccess =
+          () => resolve(
+            request.result || []
+          );
+
+
+        request.onerror =
+          () => reject(
+            request.error
+          );
+      }
+    );
+  }
+
+
+  // =========================================
+  // ✏️ UPDATE
+  // =========================================
+
+  function updateVisual(item) {
+
+    return new Promise(
+      (resolve, reject) => {
+
+        const transaction =
+          visualDB.transaction(
+            STORE_NAME,
+            "readwrite"
+          );
+
+        const store =
+          transaction.objectStore(
+            STORE_NAME
+          );
+
+        const request =
+          store.put(item);
+
+
+        request.onsuccess =
+          () => resolve();
+
+
+        request.onerror =
+          () => reject(
+            request.error
+          );
+      }
+    );
+  }
+
+
+  // =========================================
+  // 🗑 DELETE
+  // =========================================
+
+  function deleteVisual(item) {
+
+    return new Promise(
+      (resolve, reject) => {
+
+        const transaction =
+          visualDB.transaction(
+            STORE_NAME,
+            "readwrite"
+          );
+
+        const store =
+          transaction.objectStore(
+            STORE_NAME
+          );
+
+        const request =
+          store.delete(item.id);
+
+
+        request.onsuccess =
+          () => resolve();
+
+
+        request.onerror =
+          () => reject(
+            request.error
+          );
+      }
+    );
+  }
+
+
+  // =========================================
+  // 📸 CARD
+  // =========================================
+
+  let currentItem = null;
+
+
+  function createVisualCard(item) {
+
+    if (!visualGrid) return;
+
+
+    const card =
+      document.createElement(
+        "div"
+      );
+
+    card.className =
+      `jihoon-visual-card ${key}-visual-card`;
+
+
+    const hairColor =
+      item.hairColor ||
+      "UNTAGGED";
+
+
+    card.dataset.hair =
+      hairColor;
+
+
+    const img =
+      document.createElement(
+        "img"
+      );
+
+    img.alt =
+      `${displayName} VISUAL`;
+
+    img.decoding =
+      "async";
+
+    img.loading =
+      "lazy";
+
+    img.src =
+      item.imageData || "";
+
+
+    const hairTag =
+      document.createElement(
+        "div"
+      );
+
+    hairTag.className =
+      "jihoon-visual-hair-tag";
+
+
+    const hairLabels = {
+
+      BLACK: "🖤 BLACK",
+
+      BROWN: "🤎 BROWN",
+
+      RED: "❤️ RED",
+
+      PINK: "🩷 PINK",
+
+      BLONDE: "💛 BLONDE",
+
+      GRAY: "🩶 GRAY",
+
+      OTHER: "✨ OTHER",
+
+      UNTAGGED:
+        "💎 UNTAGGED"
+
+    };
+
+
+    hairTag.textContent =
+      hairLabels[hairColor] ||
+      "✨ OTHER";
+
+
+    const favoriteBadge =
+      document.createElement(
+        "div"
+      );
+
+    favoriteBadge.className =
+      "jihoon-visual-favorite-badge";
+
+
+    if (
+      item.favorite === true
+    ) {
+
+      favoriteBadge.textContent =
+        "♥";
+
+      favoriteBadge.classList.add(
+        "show"
+      );
+    }
+
+
+    card.addEventListener(
+      "click",
+      () => {
+
+        openVisualEdit(
+          item
+        );
+      }
+    );
+
+
+    card.appendChild(img);
+
+    card.appendChild(
+      hairTag
+    );
+
+    card.appendChild(
+      favoriteBadge
+    );
+
+
+    visualGrid.prepend(
+      card
+    );
+  }
+
+
+  // =========================================
+  // 📚 LOAD
+  // =========================================
+
+  async function loadVisuals() {
+
+    if (!visualGrid) return;
+
+
+    visualGrid.innerHTML =
+      "";
+
+
+    const visuals =
+      await getVisuals();
+
+
+    visuals
+      .sort(
+        (a, b) =>
+          a.createdAt -
+          b.createdAt
+      )
+      .forEach(
+        item => {
+
+          createVisualCard(
+            item
+          );
+        }
+      );
+  }
+
+
+  // =========================================
+  // 📸 OPEN / CLOSE
+  // =========================================
+
+  if (
+    visualOpen &&
+    visualBook
+  ) {
+
+    visualOpen.addEventListener(
+      "click",
+      async () => {
+
+        visualBook.classList.add(
+          "active"
+        );
+
+        visualBook.scrollTop =
+          0;
+
+        await loadVisuals();
+
+        document.body.style.overflow =
+          "hidden";
+      }
+    );
+  }
+
+
+  if (
+    visualClose &&
+    visualBook
+  ) {
+
+    visualClose.addEventListener(
+      "click",
+      () => {
+
+        visualBook.classList.remove(
+          "active"
+        );
+
+        document.body.style.overflow =
+          "hidden";
+      }
+    );
+  }
+
+
+  // =========================================
+  // ＋ ADD VISUAL
+  // =========================================
+
+  if (
+    visualAdd &&
+    visualInput
+  ) {
+
+    visualAdd.addEventListener(
+      "click",
+      () => {
+
+        visualInput.click();
+      }
+    );
+  }
+
+
+  // =========================================
+  // 🎨 ADD HAIR
+  // =========================================
+
+  let pendingFile =
+    null;
+
+
+  const hairButtons =
+    hairModal
+      ? hairModal.querySelectorAll(
+          "[data-hair]"
+        )
+      : [];
+
+
+  if (visualInput) {
+
+    visualInput.addEventListener(
+      "change",
+      () => {
+
+        const file =
+          visualInput.files[0];
+
+
+        if (!file) return;
+
+
+        pendingFile =
+          file;
+
+
+        if (hairModal) {
+
+          hairModal.classList.add(
+            "active"
+          );
+        }
+      }
+    );
+  }
+
+
+  hairButtons.forEach(
+    button => {
+
+      button.addEventListener(
+        "click",
+        async () => {
+
+          if (!pendingFile) {
+            return;
+          }
+
+
+          try {
+
+            const savedItem =
+              await saveVisual(
+                pendingFile,
+                button.dataset.hair
+              );
+
+
+            createVisualCard(
+              savedItem
+            );
+
+
+          } catch (error) {
+
+            console.error(
+              `${displayName} VISUAL SAVE ERROR`,
+              error
+            );
+
+            alert(
+              "写真の保存に失敗しました🥲"
+            );
+          }
+
+
+          pendingFile =
+            null;
+
+
+          if (visualInput) {
+
+            visualInput.value =
+              "";
+          }
+
+
+          if (hairModal) {
+
+            hairModal.classList.remove(
+              "active"
+            );
+          }
+        }
+      );
+    }
+  );
+
+
+  // CANCEL
+
+  if (hairCancel) {
+
+    hairCancel.addEventListener(
+      "click",
+      () => {
+
+        pendingFile =
+          null;
+
+
+        if (visualInput) {
+
+          visualInput.value =
+            "";
+        }
+
+
+        if (hairModal) {
+
+          hairModal.classList.remove(
+            "active"
+          );
+        }
+      }
+    );
+  }
+
+
+  // =========================================
+  // ✏️ EDIT
+  // =========================================
+
+  function openVisualEdit(
+    item
+  ) {
+
+    if (
+      !editModal ||
+      !editImage
+    ) {
+      return;
+    }
+
+
+    currentItem =
+      item;
+
+
+    editImage.src =
+      item.imageData || "";
+
+
+    if (favoriteButton) {
+
+      const isFavorite =
+        item.favorite === true;
+
+
+      favoriteButton.textContent =
+        isFavorite
+          ? "♥ FAVORITED"
+          : "♡ FAVORITE";
+
+
+      favoriteButton.classList.toggle(
+        "active",
+        isFavorite
+      );
+    }
+
+
+    editModal.classList.add(
+      "active"
+    );
+  }
+
+
+  function closeVisualEdit() {
+
+    if (!editModal) return;
+
+
+    editModal.classList.remove(
+      "active"
+    );
+
+
+    if (editImage) {
+
+      editImage.src =
+        "";
+    }
+
+
+    currentItem =
+      null;
+  }
+
+
+  if (editCancel) {
+
+    editCancel.addEventListener(
+      "click",
+      closeVisualEdit
+    );
+  }
+
+
+  // =========================================
+  // ♡ FAVORITE
+  // =========================================
+
+  if (favoriteButton) {
+
+    favoriteButton.addEventListener(
+      "click",
+      async () => {
+
+        if (!currentItem) {
+          return;
+        }
+
+
+        currentItem.favorite =
+          currentItem.favorite !==
+          true;
+
+
+        await updateVisual(
+          currentItem
+        );
+
+
+        const isFavorite =
+          currentItem.favorite ===
+          true;
+
+
+        favoriteButton.textContent =
+          isFavorite
+            ? "♥ FAVORITED"
+            : "♡ FAVORITE";
+
+
+        favoriteButton.classList.toggle(
+          "active",
+          isFavorite
+        );
+
+
+        await loadVisuals();
+      }
+    );
+  }
+
+
+  // =========================================
+  // 🎨 CHANGE HAIR
+  // =========================================
+
+  const hairChangeButtons =
+    hairChangeModal
+      ? hairChangeModal.querySelectorAll(
+          "[data-hair]"
+        )
+      : [];
+
+
+  if (changeHairButton) {
+
+    changeHairButton.addEventListener(
+      "click",
+      () => {
+
+        if (
+          !currentItem ||
+          !hairChangeModal
+        ) {
+          return;
+        }
+
+
+        hairChangeModal.classList.add(
+          "active"
+        );
+      }
+    );
+  }
+
+
+  hairChangeButtons.forEach(
+    button => {
+
+      button.addEventListener(
+        "click",
+        async () => {
+
+          if (!currentItem) {
+            return;
+          }
+
+
+          currentItem.hairColor =
+            button.dataset.hair;
+
+
+          await updateVisual(
+            currentItem
+          );
+
+
+          hairChangeModal.classList.remove(
+            "active"
+          );
+
+
+          closeVisualEdit();
+
+
+          await loadVisuals();
+        }
+      );
+    }
+  );
+
+
+  if (hairChangeCancel) {
+
+    hairChangeCancel.addEventListener(
+      "click",
+      () => {
+
+        if (hairChangeModal) {
+
+          hairChangeModal.classList.remove(
+            "active"
+          );
+        }
+      }
+    );
+  }
+
+
+  // =========================================
+  // 🗑 DELETE
+  // =========================================
+
+  if (deleteButton) {
+
+    deleteButton.addEventListener(
+      "click",
+      async () => {
+
+        if (!currentItem) {
+          return;
+        }
+
+
+        const ok =
+          confirm(
+            `この${japaneseName}をVISUAL BOOKから削除しますか？🥲`
+          );
+
+
+        if (!ok) return;
+
+
+        await deleteVisual(
+          currentItem
+        );
+
+
+        closeVisualEdit();
+
+
+        await loadVisuals();
+      }
+    );
+  }
+
+
+  // =========================================
+  // 🎨 FILTER
+  // =========================================
+
+  const hairFilters =
+    document.querySelectorAll(
+      `.${key}-hair-filter button`
+    );
+
+
+  hairFilters.forEach(
+    button => {
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          const selectedHair =
+            button.dataset.hair;
+
+
+          hairFilters.forEach(
+            filterButton => {
+
+              filterButton.classList.remove(
+                "active"
+              );
+            }
+          );
+
+
+          button.classList.add(
+            "active"
+          );
+
+
+          const cards =
+            document.querySelectorAll(
+              `.${key}-visual-card`
+            );
+
+
+          cards.forEach(
+            card => {
+
+              card.style.display =
+                selectedHair ===
+                  "ALL" ||
+                card.dataset.hair ===
+                  selectedHair
+                  ? ""
+                  : "none";
+            }
+          );
+        }
+      );
+    }
+  );
+
+
+  // =========================================
+  // 🚀 INITIALIZE
+  // =========================================
+
+  openDB()
+    .then(
+      async () => {
+
+        await loadVisuals();
+      }
+    )
+    .catch(
+      error => {
+
+        console.error(
+          `${displayName} VISUAL DB ERROR`,
+          error
+        );
+      }
+    );
+
+
+  // 後のRANKING/GROWTHでも使えるよう返す
+  return {
+
+    getVisuals,
+
+    updateVisual,
+
+    loadVisuals
+
+  };
+}
+
+
+// ======================================================
+// 🐯 YOSHI VISUAL BOOK START
+// ======================================================
+
+const yoshiVisualSystem =
+  setupMemberVisualBook({
+
+    key: "yoshi",
+
+    displayName: "YOSHI",
+
+    japaneseName: "ヨシ"
+
+  });
