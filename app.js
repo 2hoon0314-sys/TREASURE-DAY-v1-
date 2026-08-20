@@ -4820,6 +4820,60 @@ if (jihoonBookDetail) {
     document.body.style.overflow = "hidden";
   });
 }
+// =========================================
+// 🌱 HYUNSUK GROWTH HISTORY OPEN / BACK
+// =========================================
+
+const hyunsukGrowthHistoryOpen =
+  document.getElementById("hyunsukGrowthHistoryOpen");
+
+const hyunsukGrowthHistoryPage =
+  document.getElementById("hyunsukGrowthHistoryPage");
+
+const hyunsukGrowthHistoryBack =
+  document.getElementById("hyunsukGrowthHistoryBack");
+
+if (
+  hyunsukGrowthHistoryOpen &&
+  hyunsukGrowthHistoryPage &&
+  hyunsukGrowthHistoryBack
+) {
+
+  hyunsukGrowthHistoryOpen.addEventListener(
+    "click",
+    () => {
+
+      if (hyunsukBookDetail) {
+        hyunsukBookDetail.classList.remove("active");
+      }
+
+      hyunsukGrowthHistoryPage.style.display =
+        "block";
+
+      hyunsukGrowthHistoryPage.scrollTop = 0;
+
+      document.body.style.overflow =
+        "hidden";
+    }
+  );
+
+
+  hyunsukGrowthHistoryBack.addEventListener(
+    "click",
+    () => {
+
+      hyunsukGrowthHistoryPage.style.display =
+        "none";
+
+      if (hyunsukBookDetail) {
+        hyunsukBookDetail.classList.add("active");
+      }
+
+      document.body.style.overflow =
+        "hidden";
+    }
+  );
+}
 // ==========================================
 // 💎 GROWTH HISTORY 2020 OPEN / BACK
 // ==========================================
