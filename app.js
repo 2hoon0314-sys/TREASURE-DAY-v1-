@@ -11176,7 +11176,10 @@ const hyunsukSongPage =
 
 const hyunsukSongBack =
   document.getElementById("hyunsukSongBack");
-
+// 🚀 起動時は必ず閉じる
+if (hyunsukSongPage) {
+  hyunsukSongPage.style.display = "none";
+}
 const hyunsukSongTitle =
   document.getElementById("hyunsukSongTitle");
 
