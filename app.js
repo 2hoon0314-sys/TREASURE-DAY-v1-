@@ -16335,3 +16335,386 @@ function escapeMemberSongHTML(
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
 }
+// ======================================================
+// 📷 MEMBER MEMORIES 共通エンジン
+// PHOTO MEMORY LINK
+// ======================================================
+
+function setupMemberMemories(config) {
+
+  const {
+    key,
+    displayName,
+    japaneseName
+  } = config;
+
+
+  const open =
+    document.getElementById(
+      `${key}MemoriesOpen`
+    );
+
+  const page =
+    document.getElementById(
+      `${key}MemoriesPage`
+    );
+
+  const back =
+    document.getElementById(
+      `${key}MemoriesBack`
+    );
+
+  const add =
+    document.getElementById(
+      `${key}MemoriesAdd`
+    );
+
+  const list =
+    document.getElementById(
+      `${key}MemoriesList`
+    );
+
+
+  async function renderMemories() {
+
+    if (!list) return;
+
+    list.innerHTML = "";
+
+
+    const entries =
+      memories
+        .map(
+          (memory, index) => ({
+            memory,
+            index
+          })
+        )
+        .filter(
+          ({ memory }) =>
+            String(
+              memory.member || ""
+            ).toUpperCase() ===
+            displayName
+        );
+
+
+    if (
+      entries.length === 0
+    ) {
+
+      list.innerHTML = `
+        <div class="jihoon-memories-empty">
+
+          <span>📷</span>
+
+          <strong>
+            まだ${displayName} MEMORYがありません
+          </strong>
+
+          <small>
+            PHOTO MEMORYでMEMBERを
+            ${displayName}にして投稿してみよう 💎
+          </small>
+
+        </div>
+      `;
+
+      return;
+    }
+
+
+    for (
+      const { memory, index }
+      of entries
+    ) {
+
+      const card =
+        document.createElement(
+          "article"
+        );
+
+      card.className =
+        "jihoon-memory-card";
+
+
+      if (
+        memory.photoKey ||
+        memory.photo
+      ) {
+
+        const image =
+          document.createElement(
+            "img"
+          );
+
+        image.alt =
+          memory.title ||
+          `${displayName} MEMORY`;
+
+
+        if (memory.photoKey) {
+
+          try {
+
+            image.src =
+              await loadPhotoMemoryImage(
+                memory.photoKey
+              );
+
+          } catch (error) {
+
+            console.error(
+              `${displayName} MEMORY IMAGE LOAD ERROR`,
+              error
+            );
+
+            image.src = "";
+          }
+
+        } else {
+
+          image.src =
+            memory.photo || "";
+        }
+
+
+        if (image.src) {
+
+          card.appendChild(
+            image
+          );
+        }
+      }
+
+
+      const body =
+        document.createElement(
+          "div"
+        );
+
+      body.className =
+        "jihoon-memory-card-body";
+
+
+      const title =
+        document.createElement(
+          "strong"
+        );
+
+      title.textContent =
+        memory.title ||
+        `${displayName} MEMORY 💎`;
+
+      body.appendChild(
+        title
+      );
+
+
+      if (memory.text) {
+
+        const text =
+          document.createElement(
+            "p"
+          );
+
+        text.textContent =
+          memory.text;
+
+        body.appendChild(
+          text
+        );
+      }
+
+
+      if (
+        Array.isArray(
+          memory.tags
+        ) &&
+        memory.tags.length > 0
+      ) {
+
+        const tags =
+          document.createElement(
+            "div"
+          );
+
+        tags.className =
+          "jihoon-memory-tags";
+
+
+        memory.tags.forEach(
+          tag => {
+
+            const span =
+              document.createElement(
+                "span"
+              );
+
+            span.textContent =
+              "#" + tag;
+
+            tags.appendChild(
+              span
+            );
+          }
+        );
+
+
+        body.appendChild(
+          tags
+        );
+      }
+
+
+      card.appendChild(
+        body
+      );
+
+
+      card.addEventListener(
+        "click",
+        async () => {
+
+          photoMemoryReturnTarget =
+            key;
+
+          showPage("memory");
+
+          switchMemoryMode(
+            "photo"
+          );
+
+          await openPhotoMemoryDetail(
+            index
+          );
+
+          window.scrollTo(
+            0,
+            0
+          );
+        }
+      );
+
+
+      list.appendChild(
+        card
+      );
+    }
+  }
+
+
+  // =========================================
+  // OPEN
+  // =========================================
+
+  if (
+    open &&
+    page
+  ) {
+
+    open.addEventListener(
+      "click",
+      async () => {
+
+        page.style.display =
+          "block";
+
+        page.scrollTop =
+          0;
+
+        await renderMemories();
+
+        document.body.style.overflow =
+          "hidden";
+      }
+    );
+  }
+
+
+  // =========================================
+  // BACK
+  // =========================================
+
+  if (
+    back &&
+    page
+  ) {
+
+    back.addEventListener(
+      "click",
+      () => {
+
+        page.style.display =
+          "none";
+
+        document.body.style.overflow =
+          "hidden";
+      }
+    );
+  }
+
+
+  // =========================================
+  // ADD → PHOTO MEMORY
+  // =========================================
+
+  if (add) {
+
+    add.addEventListener(
+      "click",
+      () => {
+
+        page.style.display =
+          "none";
+
+        showPage(
+          "memory"
+        );
+
+        switchMemoryMode(
+          "photo"
+        );
+
+
+        if (memoryMember) {
+
+          memoryMember.value =
+            displayName;
+        }
+
+
+        document.body.style.overflow =
+          "";
+
+        window.scrollTo(
+          0,
+          0
+        );
+      }
+    );
+  }
+
+
+  return {
+
+    renderMemories
+
+  };
+}
+
+
+// ======================================================
+// 🐯 YOSHI MEMORIES START
+// ======================================================
+
+const yoshiMemoriesSystem =
+  setupMemberMemories({
+
+    key: "yoshi",
+
+    displayName: "YOSHI",
+
+    japaneseName: "ヨシ"
+
+  });
