@@ -931,6 +931,43 @@ if (
   document.body.style.overflow =
     "hidden";
 
+} else if (
+  photoMemoryReturnTarget ===
+  "hyunsuk"
+) {
+
+  showPage("home");
+
+  const memberBookDetail =
+    document.getElementById(
+      "member-book-detail"
+    );
+
+  if (memberBookDetail) {
+    memberBookDetail.classList.add(
+      "active"
+    );
+  }
+
+  if (hyunsukBookDetail) {
+    hyunsukBookDetail.classList.add(
+      "active"
+    );
+  }
+
+  if (hyunsukMemoriesPage) {
+
+    hyunsukMemoriesPage.style.display =
+      "block";
+
+    hyunsukMemoriesPage.scrollTop = 0;
+
+    await renderHyunsukMemories();
+  }
+
+  document.body.style.overflow =
+    "hidden";
+
 } else {
         // 通常PHOTO MEMORYから来た場合
         if (memoryPage) {
