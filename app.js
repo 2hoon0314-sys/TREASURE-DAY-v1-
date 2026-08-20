@@ -4329,14 +4329,14 @@ if (
 ) {
 
   hyunsukVisualRankingOpen.addEventListener(
-    "click",
-    () => {
+  "click",
+  async () => {
 
       hyunsukVisualRankingPage.style.display =
         "block";
 
       hyunsukVisualRankingPage.scrollTop = 0;
-
+await loadHyunsukVisualRanking();
       document.body.style.overflow =
         "hidden";
     }
