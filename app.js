@@ -17790,7 +17790,20 @@ const yoshiSongSystem =
     japaneseName: "ヨシ"
 
   });
+// ======================================================
+// 🐨 JUNKYU SONG START
+// ======================================================
 
+const junkyuSongSystem =
+  setupMemberSong({
+
+    key: "junkyu",
+
+    displayName: "JUNKYU",
+
+    japaneseName: "ジュンギュ"
+
+  });
 
 // ======================================================
 // 🛡 SONG HTML ESCAPE
