@@ -878,17 +878,13 @@ if (photoMemoryDetailBackBtn) {
         );
 
 
-      if (detailPage) {
-        detailPage.style.display =
-          "none";
-      }
-
-
-      // 🐶 JIHOON MEMORIESから来た場合
- if (
+if (
   photoMemoryReturnTarget ===
   "jihoon"
 ) {
+
+  // 🏠 HOME側を正式に復活
+  showPage("home");
 
   // 💎 MEMBER BOOKを復活
   const memberBookDetail =
@@ -916,7 +912,6 @@ if (photoMemoryDetailBackBtn) {
 
   // 📷 JIHOON MEMORIESを復活
   if (jihoonMemoriesPage) {
-
     jihoonMemoriesPage.style.display =
       "block";
 
@@ -927,8 +922,8 @@ if (photoMemoryDetailBackBtn) {
 
   document.body.style.overflow =
     "hidden";
-      } else {
 
+} else {
         // 通常PHOTO MEMORYから来た場合
         if (memoryPage) {
           memoryPage.style.display =
