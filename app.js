@@ -13052,7 +13052,7 @@ async function renderSharedChemistryMemories() {
 
   if (items.length === 0) {
 
-    hyunsukChemistryMemoryList.innerHTML = `
+    currentSharedChemistryRenderTarget.innerHTML = `
       <div class="jihoon-chemistry-empty">
         <span>📸</span>
 
