@@ -13392,3 +13392,54 @@ function escapeSharedChemistryHTML(
       "&#039;"
     );
 }
+// ========================================
+// 🐯 YOSHI BOOK OPEN / CLOSE
+// ========================================
+
+const yoshiBookOpen =
+  document.getElementById("yoshi-book-open");
+
+const yoshiBookDetail =
+  document.getElementById("yoshi-book-detail");
+
+const yoshiBookClose =
+  document.getElementById("yoshi-book-close");
+
+
+// YOSHI BOOKを開く
+if (yoshiBookOpen && yoshiBookDetail) {
+
+  yoshiBookOpen.addEventListener(
+    "click",
+    () => {
+
+      yoshiBookDetail.classList.add(
+        "active"
+      );
+
+      yoshiBookDetail.scrollTop = 0;
+
+      document.body.style.overflow =
+        "hidden";
+    }
+  );
+}
+
+
+// MEMBER BOOKへ戻る
+if (yoshiBookClose && yoshiBookDetail) {
+
+  yoshiBookClose.addEventListener(
+    "click",
+    () => {
+
+      yoshiBookDetail.classList.remove(
+        "active"
+      );
+
+      // MEMBER BOOKは後ろで開いたまま
+      document.body.style.overflow =
+        "hidden";
+    }
+  );
+}
