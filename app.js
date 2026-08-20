@@ -10172,3 +10172,864 @@ async function loadHyunsukVisualRanking() {
     );
   }
 }
+// =========================================
+// 🌱 HYUNSUK GROWTH VISUAL
+// 2020 - 2026 COMMON SYSTEM
+// =========================================
+
+const hyunsukGrowthVisualAdd =
+  document.getElementById("hyunsukGrowthYearVisualAdd");
+
+const hyunsukGrowthVisualGrid =
+  document.getElementById("hyunsukGrowthYearVisualGrid");
+
+const hyunsukGrowthVisualModal =
+  document.getElementById("hyunsukGrowthVisualModal");
+
+const hyunsukGrowthVisualInput =
+  document.getElementById("hyunsukGrowthVisualInput");
+
+const hyunsukGrowthVisualSelect =
+  document.getElementById("hyunsukGrowthVisualSelect");
+
+const hyunsukGrowthVisualPreview =
+  document.getElementById("hyunsukGrowthVisualPreview");
+
+const hyunsukGrowthVisualPreviewImage =
+  document.getElementById("hyunsukGrowthVisualPreviewImage");
+
+const hyunsukGrowthVisualHair =
+  document.getElementById("hyunsukGrowthVisualHair");
+
+const hyunsukGrowthVisualMemo =
+  document.getElementById("hyunsukGrowthVisualMemo");
+
+const hyunsukGrowthVisualSave =
+  document.getElementById("hyunsukGrowthVisualSave");
+
+const hyunsukGrowthVisualDelete =
+  document.getElementById("hyunsukGrowthVisualDelete");
+
+const hyunsukGrowthVisualCancel =
+  document.getElementById("hyunsukGrowthVisualCancel");
+
+const hyunsukGrowthVisualModalKicker =
+  document.getElementById("hyunsukGrowthVisualModalKicker");
+
+
+// =========================================
+// 💾 INDEXED DB
+// =========================================
+
+const HYUNSUK_GROWTH_DB_NAME =
+  "treasure-day-hyunsuk-growth-db";
+
+const HYUNSUK_GROWTH_DB_VERSION = 1;
+
+const HYUNSUK_GROWTH_STORE =
+  "growthVisuals";
+
+let hyunsukGrowthDB = null;
+
+let pendingHyunsukGrowthFile = null;
+
+let currentHyunsukGrowthVisualItem = null;
+
+
+// DB OPEN
+function openHyunsukGrowthDB() {
+
+  return new Promise((resolve, reject) => {
+
+    const request =
+      indexedDB.open(
+        HYUNSUK_GROWTH_DB_NAME,
+        HYUNSUK_GROWTH_DB_VERSION
+      );
+
+    request.onupgradeneeded = (event) => {
+
+      const db =
+        event.target.result;
+
+      if (
+        !db.objectStoreNames.contains(
+          HYUNSUK_GROWTH_STORE
+        )
+      ) {
+
+        db.createObjectStore(
+          HYUNSUK_GROWTH_STORE,
+          {
+            keyPath: "id",
+            autoIncrement: true
+          }
+        );
+      }
+    };
+
+    request.onsuccess = () => {
+
+      hyunsukGrowthDB =
+        request.result;
+
+      resolve(hyunsukGrowthDB);
+    };
+
+    request.onerror = () => {
+      reject(request.error);
+    };
+  });
+}
+
+
+// =========================================
+// 📸 IMAGE → DATA URL
+// =========================================
+
+function hyunsukGrowthImageToDataURL(file) {
+
+  return new Promise((resolve, reject) => {
+
+    const reader =
+      new FileReader();
+
+    reader.onload = () => {
+
+      const img =
+        new Image();
+
+      img.onload = () => {
+
+        const MAX_SIZE = 1600;
+
+        let width =
+          img.naturalWidth;
+
+        let height =
+          img.naturalHeight;
+
+        if (
+          width > height &&
+          width > MAX_SIZE
+        ) {
+
+          height =
+            Math.round(
+              height * MAX_SIZE / width
+            );
+
+          width = MAX_SIZE;
+
+        } else if (
+          height >= width &&
+          height > MAX_SIZE
+        ) {
+
+          width =
+            Math.round(
+              width * MAX_SIZE / height
+            );
+
+          height = MAX_SIZE;
+        }
+
+        const canvas =
+          document.createElement("canvas");
+
+        canvas.width = width;
+        canvas.height = height;
+
+        const ctx =
+          canvas.getContext("2d");
+
+        if (!ctx) {
+          reject(
+            new Error(
+              "Canvas unavailable"
+            )
+          );
+          return;
+        }
+
+        ctx.drawImage(
+          img,
+          0,
+          0,
+          width,
+          height
+        );
+
+        resolve(
+          canvas.toDataURL(
+            "image/jpeg",
+            0.86
+          )
+        );
+      };
+
+      img.src =
+        reader.result;
+    };
+
+    reader.onerror = () => {
+      reject(reader.error);
+    };
+
+    reader.readAsDataURL(file);
+  });
+}
+
+
+// =========================================
+// 💾 SAVE / UPDATE / DELETE
+// =========================================
+
+async function saveHyunsukGrowthVisual(
+  file,
+  year,
+  hairColor,
+  memo
+) {
+
+  if (!hyunsukGrowthDB) return;
+
+  const imageData =
+    await hyunsukGrowthImageToDataURL(
+      file
+    );
+
+  return new Promise(
+    (resolve, reject) => {
+
+      const transaction =
+        hyunsukGrowthDB.transaction(
+          HYUNSUK_GROWTH_STORE,
+          "readwrite"
+        );
+
+      const store =
+        transaction.objectStore(
+          HYUNSUK_GROWTH_STORE
+        );
+
+      const item = {
+        year: Number(year),
+        imageData,
+        hairColor,
+        memo,
+        createdAt: Date.now()
+      };
+
+      const request =
+        store.add(item);
+
+      request.onsuccess = () => {
+
+        item.id =
+          request.result;
+
+        resolve(item);
+      };
+
+      request.onerror = () => {
+        reject(request.error);
+      };
+    }
+  );
+}
+
+
+function updateHyunsukGrowthVisual(
+  item
+) {
+
+  return new Promise(
+    (resolve, reject) => {
+
+      const transaction =
+        hyunsukGrowthDB.transaction(
+          HYUNSUK_GROWTH_STORE,
+          "readwrite"
+        );
+
+      const store =
+        transaction.objectStore(
+          HYUNSUK_GROWTH_STORE
+        );
+
+      const request =
+        store.put(item);
+
+      request.onsuccess =
+        () => resolve();
+
+      request.onerror =
+        () => reject(
+          request.error
+        );
+    }
+  );
+}
+
+
+function deleteHyunsukGrowthVisual(
+  item
+) {
+
+  return new Promise(
+    (resolve, reject) => {
+
+      const transaction =
+        hyunsukGrowthDB.transaction(
+          HYUNSUK_GROWTH_STORE,
+          "readwrite"
+        );
+
+      const store =
+        transaction.objectStore(
+          HYUNSUK_GROWTH_STORE
+        );
+
+      const request =
+        store.delete(item.id);
+
+      request.onsuccess =
+        () => resolve();
+
+      request.onerror =
+        () => reject(
+          request.error
+        );
+    }
+  );
+}
+
+
+// =========================================
+// 📚 GET YEAR VISUALS
+// =========================================
+
+function getHyunsukGrowthVisuals(
+  year
+) {
+
+  return new Promise(
+    (resolve, reject) => {
+
+      if (!hyunsukGrowthDB) {
+        resolve([]);
+        return;
+      }
+
+      const transaction =
+        hyunsukGrowthDB.transaction(
+          HYUNSUK_GROWTH_STORE,
+          "readonly"
+        );
+
+      const store =
+        transaction.objectStore(
+          HYUNSUK_GROWTH_STORE
+        );
+
+      const request =
+        store.getAll();
+
+      request.onsuccess = () => {
+
+        const items =
+          (request.result || [])
+            .filter(
+              item =>
+                Number(item.year) ===
+                Number(year)
+            );
+
+        resolve(items);
+      };
+
+      request.onerror = () => {
+        reject(request.error);
+      };
+    }
+  );
+}
+
+
+// =========================================
+// 📸 CARD
+// =========================================
+
+function createHyunsukGrowthCard(
+  item
+) {
+
+  const card =
+    document.createElement("div");
+
+  card.className =
+    "jihoon-growth-visual-card";
+
+  const img =
+    document.createElement("img");
+
+  img.src =
+    item.imageData || "";
+
+  img.alt =
+    `${item.year} HYUNSUK`;
+
+  const hair =
+    document.createElement("span");
+
+  const hairLabels = {
+    BLACK: "🖤 BLACK",
+    BROWN: "🤎 BROWN",
+    RED: "❤️ RED",
+    PINK: "🩷 PINK",
+    BLONDE: "💛 BLONDE",
+    GRAY: "🩶 GRAY",
+    OTHER: "✨ OTHER"
+  };
+
+  hair.textContent =
+    hairLabels[item.hairColor] ||
+    "✨ OTHER";
+
+  hair.className =
+    "jihoon-growth-visual-hair";
+
+  card.appendChild(img);
+  card.appendChild(hair);
+
+
+  if (item.memo) {
+
+    const memo =
+      document.createElement("p");
+
+    memo.textContent =
+      item.memo;
+
+    card.appendChild(memo);
+  }
+
+
+  card.addEventListener(
+    "click",
+    () => {
+
+      openHyunsukGrowthEdit(
+        item
+      );
+    }
+  );
+
+  return card;
+}
+
+
+// =========================================
+// 📚 RENDER CURRENT YEAR
+// =========================================
+
+async function renderHyunsukGrowthVisuals() {
+
+  if (!hyunsukGrowthVisualGrid) {
+    return;
+  }
+
+  hyunsukGrowthVisualGrid.innerHTML =
+    "";
+
+  const visuals =
+    await getHyunsukGrowthVisuals(
+      currentHyunsukGrowthYear
+    );
+
+  visuals
+    .sort(
+      (a, b) =>
+        a.createdAt - b.createdAt
+    )
+    .forEach(
+      item => {
+
+        hyunsukGrowthVisualGrid.appendChild(
+          createHyunsukGrowthCard(
+            item
+          )
+        );
+      }
+    );
+
+
+  if (visuals.length === 0) {
+
+    hyunsukGrowthVisualGrid.innerHTML =
+      `
+      <div class="jihoon-growth-visual-empty">
+        <span>📷</span>
+        <strong>まだ写真がありません</strong>
+        <small>
+          好きな${currentHyunsukGrowthYear}ヒョンソクを追加してみよう 💎
+        </small>
+      </div>
+      `;
+  }
+}
+
+
+// =========================================
+// ＋ ADD
+// =========================================
+
+if (hyunsukGrowthVisualAdd) {
+
+  hyunsukGrowthVisualAdd.addEventListener(
+    "click",
+    () => {
+
+      currentHyunsukGrowthVisualItem =
+        null;
+
+      pendingHyunsukGrowthFile =
+        null;
+
+      if (hyunsukGrowthVisualInput) {
+        hyunsukGrowthVisualInput.value =
+          "";
+      }
+
+      if (hyunsukGrowthVisualMemo) {
+        hyunsukGrowthVisualMemo.value =
+          "";
+      }
+
+      if (hyunsukGrowthVisualHair) {
+        hyunsukGrowthVisualHair.value =
+          "BLACK";
+      }
+
+      if (hyunsukGrowthVisualPreview) {
+        hyunsukGrowthVisualPreview.style.display =
+          "none";
+      }
+
+      if (hyunsukGrowthVisualDelete) {
+        hyunsukGrowthVisualDelete.style.display =
+          "none";
+      }
+
+      if (hyunsukGrowthVisualModalKicker) {
+        hyunsukGrowthVisualModalKicker.textContent =
+          `📸 ${currentHyunsukGrowthYear} VISUAL`;
+      }
+
+      if (hyunsukGrowthVisualModal) {
+        hyunsukGrowthVisualModal.style.display =
+          "flex";
+      }
+    }
+  );
+}
+
+
+// =========================================
+// 📷 SELECT PHOTO
+// =========================================
+
+if (
+  hyunsukGrowthVisualSelect &&
+  hyunsukGrowthVisualInput
+) {
+
+  hyunsukGrowthVisualSelect.addEventListener(
+    "click",
+    () => {
+
+      hyunsukGrowthVisualInput.click();
+    }
+  );
+}
+
+
+if (hyunsukGrowthVisualInput) {
+
+  hyunsukGrowthVisualInput.addEventListener(
+    "change",
+    () => {
+
+      const file =
+        hyunsukGrowthVisualInput.files[0];
+
+      if (!file) return;
+
+      pendingHyunsukGrowthFile =
+        file;
+
+      const reader =
+        new FileReader();
+
+      reader.onload = () => {
+
+        if (
+          hyunsukGrowthVisualPreviewImage
+        ) {
+
+          hyunsukGrowthVisualPreviewImage.src =
+            reader.result;
+        }
+
+        if (
+          hyunsukGrowthVisualPreview
+        ) {
+
+          hyunsukGrowthVisualPreview.style.display =
+            "block";
+        }
+      };
+
+      reader.readAsDataURL(file);
+    }
+  );
+}
+
+
+// =========================================
+// 💾 SAVE
+// =========================================
+
+if (hyunsukGrowthVisualSave) {
+
+  hyunsukGrowthVisualSave.addEventListener(
+    "click",
+    async () => {
+
+      try {
+
+        const hairColor =
+          hyunsukGrowthVisualHair
+            ? hyunsukGrowthVisualHair.value
+            : "OTHER";
+
+        const memo =
+          hyunsukGrowthVisualMemo
+            ? hyunsukGrowthVisualMemo.value.trim()
+            : "";
+
+
+        // EDIT
+        if (
+          currentHyunsukGrowthVisualItem
+        ) {
+
+          currentHyunsukGrowthVisualItem.hairColor =
+            hairColor;
+
+          currentHyunsukGrowthVisualItem.memo =
+            memo;
+
+          if (
+            pendingHyunsukGrowthFile
+          ) {
+
+            currentHyunsukGrowthVisualItem.imageData =
+              await hyunsukGrowthImageToDataURL(
+                pendingHyunsukGrowthFile
+              );
+          }
+
+          await updateHyunsukGrowthVisual(
+            currentHyunsukGrowthVisualItem
+          );
+
+        }
+
+        // NEW
+        else {
+
+          if (
+            !pendingHyunsukGrowthFile
+          ) {
+
+            alert(
+              "写真を選んでね📸"
+            );
+
+            return;
+          }
+
+          await saveHyunsukGrowthVisual(
+            pendingHyunsukGrowthFile,
+            currentHyunsukGrowthYear,
+            hairColor,
+            memo
+          );
+        }
+
+
+        closeHyunsukGrowthModal();
+
+        await renderHyunsukGrowthVisuals();
+
+      } catch (error) {
+
+        console.error(
+          "HYUNSUK GROWTH SAVE ERROR:",
+          error
+        );
+
+        alert(
+          "保存に失敗しました🥲"
+        );
+      }
+    }
+  );
+}
+
+
+// =========================================
+// ✏️ EDIT
+// =========================================
+
+function openHyunsukGrowthEdit(
+  item
+) {
+
+  currentHyunsukGrowthVisualItem =
+    item;
+
+  pendingHyunsukGrowthFile =
+    null;
+
+  if (hyunsukGrowthVisualHair) {
+
+    hyunsukGrowthVisualHair.value =
+      item.hairColor ||
+      "OTHER";
+  }
+
+  if (hyunsukGrowthVisualMemo) {
+
+    hyunsukGrowthVisualMemo.value =
+      item.memo || "";
+  }
+
+  if (
+    hyunsukGrowthVisualPreviewImage
+  ) {
+
+    hyunsukGrowthVisualPreviewImage.src =
+      item.imageData || "";
+  }
+
+  if (hyunsukGrowthVisualPreview) {
+
+    hyunsukGrowthVisualPreview.style.display =
+      "block";
+  }
+
+  if (hyunsukGrowthVisualDelete) {
+
+    hyunsukGrowthVisualDelete.style.display =
+      "block";
+  }
+
+  if (
+    hyunsukGrowthVisualModalKicker
+  ) {
+
+    hyunsukGrowthVisualModalKicker.textContent =
+      `📸 ${item.year} VISUAL EDIT`;
+  }
+
+  if (hyunsukGrowthVisualModal) {
+
+    hyunsukGrowthVisualModal.style.display =
+      "flex";
+  }
+}
+
+
+// =========================================
+// 🗑️ DELETE
+// =========================================
+
+if (hyunsukGrowthVisualDelete) {
+
+  hyunsukGrowthVisualDelete.addEventListener(
+    "click",
+    async () => {
+
+      if (
+        !currentHyunsukGrowthVisualItem
+      ) {
+        return;
+      }
+
+      const ok =
+        confirm(
+          "この写真を削除しますか？🥲"
+        );
+
+      if (!ok) return;
+
+      await deleteHyunsukGrowthVisual(
+        currentHyunsukGrowthVisualItem
+      );
+
+      closeHyunsukGrowthModal();
+
+      await renderHyunsukGrowthVisuals();
+    }
+  );
+}
+
+
+// =========================================
+// CANCEL / CLOSE
+// =========================================
+
+function closeHyunsukGrowthModal() {
+
+  pendingHyunsukGrowthFile =
+    null;
+
+  currentHyunsukGrowthVisualItem =
+    null;
+
+  if (hyunsukGrowthVisualInput) {
+    hyunsukGrowthVisualInput.value =
+      "";
+  }
+
+  if (hyunsukGrowthVisualModal) {
+    hyunsukGrowthVisualModal.style.display =
+      "none";
+  }
+}
+
+
+if (hyunsukGrowthVisualCancel) {
+
+  hyunsukGrowthVisualCancel.addEventListener(
+    "click",
+    closeHyunsukGrowthModal
+  );
+}
+
+
+// =========================================
+// 🚀 DB INITIALIZE
+// =========================================
+
+openHyunsukGrowthDB()
+  .catch((error) => {
+
+    console.error(
+      "HYUNSUK GROWTH DB ERROR:",
+      error
+    );
+  });
