@@ -14701,6 +14701,20 @@ const yoshiVisualSystem =
 
   });
 // ======================================================
+// 🐨 JUNKYU VISUAL BOOK START
+// ======================================================
+
+const junkyuVisualSystem =
+  setupMemberVisualBook({
+
+    key: "junkyu",
+
+    displayName: "JUNKYU",
+
+    japaneseName: "ジュンギュ"
+
+  });
+// ======================================================
 // 👑 MEMBER VISUAL RANKING 共通エンジン
 // ======================================================
 
