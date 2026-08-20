@@ -11836,3 +11836,1503 @@ async function renderHyunsukMemories() {
     );
   }
 }
+// =====================================================
+// 🫶 SHARED CHEMISTRY ENGINE
+// HYUNSUK START / ALL MEMBERS READY
+// =====================================================
+
+
+// -----------------------------------------------------
+// MEMBER INFO
+// -----------------------------------------------------
+
+const chemistryMemberInfo = {
+
+  HYUNSUK: {
+    name: "HYUNSUK",
+    emoji: "🦔"
+  },
+
+  JIHOON: {
+    name: "JIHOON",
+    emoji: "🐶"
+  },
+
+  YOSHI: {
+    name: "YOSHI",
+    emoji: "🐯"
+  },
+
+  JUNKYU: {
+    name: "JUNKYU",
+    emoji: "🐨"
+  },
+
+  JAEHYUK: {
+    name: "JAEHYUK",
+    emoji: "🦁"
+  },
+
+  ASAHI: {
+    name: "ASAHI",
+    emoji: "🤖"
+  },
+
+  DOYOUNG: {
+    name: "DOYOUNG",
+    emoji: "🐰"
+  },
+
+  HARUTO: {
+    name: "HARUTO",
+    emoji: "🦋"
+  },
+
+  JEONGWOO: {
+    name: "JEONGWOO",
+    emoji: "🐺"
+  },
+
+  JUNGHWAN: {
+    name: "JUNGHWAN",
+    emoji: "🐮"
+  }
+
+};
+
+
+// -----------------------------------------------------
+// 💎 PAIR KEY
+// 順番が逆でも必ず同じキー
+// -----------------------------------------------------
+
+function createChemistryPairKey(
+  memberA,
+  memberB
+) {
+
+  return [
+    memberA.toUpperCase(),
+    memberB.toUpperCase()
+  ]
+    .sort()
+    .join("-");
+}
+
+
+// 例
+// HYUNSUK + JIHOON
+// JIHOON + HYUNSUK
+// ↓
+// HYUNSUK-JIHOON
+
+
+// =====================================================
+// 💾 SHARED METADATA
+// =====================================================
+
+const SHARED_CHEMISTRY_STORAGE_KEY =
+  "treasure-shared-chemistry-memories";
+
+
+let sharedChemistryMemories = [];
+
+
+try {
+
+  sharedChemistryMemories =
+    JSON.parse(
+      localStorage.getItem(
+        SHARED_CHEMISTRY_STORAGE_KEY
+      )
+    ) || [];
+
+} catch (error) {
+
+  sharedChemistryMemories = [];
+}
+
+
+function saveSharedChemistryMemories() {
+
+  localStorage.setItem(
+    SHARED_CHEMISTRY_STORAGE_KEY,
+    JSON.stringify(
+      sharedChemistryMemories
+    )
+  );
+}
+
+
+// =====================================================
+// 📸 SHARED IMAGE DB
+// =====================================================
+
+const SHARED_CHEMISTRY_DB_NAME =
+  "treasure-day-shared-chemistry-db";
+
+const SHARED_CHEMISTRY_DB_VERSION =
+  1;
+
+const SHARED_CHEMISTRY_IMAGE_STORE =
+  "chemistry-images";
+
+
+function openSharedChemistryDB() {
+
+  return new Promise(
+    (resolve, reject) => {
+
+      const request =
+        indexedDB.open(
+          SHARED_CHEMISTRY_DB_NAME,
+          SHARED_CHEMISTRY_DB_VERSION
+        );
+
+
+      request.onupgradeneeded =
+        event => {
+
+          const db =
+            event.target.result;
+
+          if (
+            !db.objectStoreNames.contains(
+              SHARED_CHEMISTRY_IMAGE_STORE
+            )
+          ) {
+
+            db.createObjectStore(
+              SHARED_CHEMISTRY_IMAGE_STORE
+            );
+          }
+        };
+
+
+      request.onsuccess = () => {
+
+        resolve(
+          request.result
+        );
+      };
+
+
+      request.onerror = () => {
+
+        reject(
+          request.error
+        );
+      };
+
+    }
+  );
+}
+
+
+// IMAGE SAVE
+
+async function saveSharedChemistryImage(
+  imageKey,
+  imageData
+) {
+
+  const db =
+    await openSharedChemistryDB();
+
+
+  return new Promise(
+    (resolve, reject) => {
+
+      const transaction =
+        db.transaction(
+          SHARED_CHEMISTRY_IMAGE_STORE,
+          "readwrite"
+        );
+
+      const store =
+        transaction.objectStore(
+          SHARED_CHEMISTRY_IMAGE_STORE
+        );
+
+      const request =
+        store.put(
+          imageData,
+          imageKey
+        );
+
+
+      request.onsuccess =
+        () => resolve();
+
+
+      request.onerror =
+        () => reject(
+          request.error
+        );
+    }
+  );
+}
+
+
+// IMAGE LOAD
+
+async function loadSharedChemistryImage(
+  imageKey
+) {
+
+  if (!imageKey) return "";
+
+
+  const db =
+    await openSharedChemistryDB();
+
+
+  return new Promise(
+    (resolve, reject) => {
+
+      const transaction =
+        db.transaction(
+          SHARED_CHEMISTRY_IMAGE_STORE,
+          "readonly"
+        );
+
+      const store =
+        transaction.objectStore(
+          SHARED_CHEMISTRY_IMAGE_STORE
+        );
+
+      const request =
+        store.get(
+          imageKey
+        );
+
+
+      request.onsuccess = () => {
+
+        resolve(
+          request.result || ""
+        );
+      };
+
+
+      request.onerror =
+        () => reject(
+          request.error
+        );
+    }
+  );
+}
+
+
+// IMAGE DELETE
+
+async function deleteSharedChemistryImage(
+  imageKey
+) {
+
+  if (!imageKey) return;
+
+
+  const db =
+    await openSharedChemistryDB();
+
+
+  return new Promise(
+    (resolve, reject) => {
+
+      const transaction =
+        db.transaction(
+          SHARED_CHEMISTRY_IMAGE_STORE,
+          "readwrite"
+        );
+
+      const store =
+        transaction.objectStore(
+          SHARED_CHEMISTRY_IMAGE_STORE
+        );
+
+      const request =
+        store.delete(
+          imageKey
+        );
+
+
+      request.onsuccess =
+        () => resolve();
+
+
+      request.onerror =
+        () => reject(
+          request.error
+        );
+    }
+  );
+}
+
+
+// =====================================================
+// 📸 IMAGE RESIZE
+// =====================================================
+
+function resizeSharedChemistryImage(
+  file
+) {
+
+  return new Promise(
+    (resolve, reject) => {
+
+      const reader =
+        new FileReader();
+
+
+      reader.onload = () => {
+
+        const img =
+          new Image();
+
+
+        img.onload = () => {
+
+          const MAX_SIZE =
+            1600;
+
+          let width =
+            img.naturalWidth;
+
+          let height =
+            img.naturalHeight;
+
+
+          if (
+            width > height &&
+            width > MAX_SIZE
+          ) {
+
+            height =
+              Math.round(
+                height *
+                MAX_SIZE /
+                width
+              );
+
+            width =
+              MAX_SIZE;
+
+          } else if (
+            height >= width &&
+            height > MAX_SIZE
+          ) {
+
+            width =
+              Math.round(
+                width *
+                MAX_SIZE /
+                height
+              );
+
+            height =
+              MAX_SIZE;
+          }
+
+
+          const canvas =
+            document.createElement(
+              "canvas"
+            );
+
+          canvas.width =
+            width;
+
+          canvas.height =
+            height;
+
+
+          const ctx =
+            canvas.getContext(
+              "2d"
+            );
+
+
+          if (!ctx) {
+
+            reject(
+              new Error(
+                "Canvas unavailable"
+              )
+            );
+
+            return;
+          }
+
+
+          ctx.drawImage(
+            img,
+            0,
+            0,
+            width,
+            height
+          );
+
+
+          resolve(
+            canvas.toDataURL(
+              "image/jpeg",
+              0.82
+            )
+          );
+        };
+
+
+        img.onerror =
+          reject;
+
+
+        img.src =
+          reader.result;
+      };
+
+
+      reader.onerror =
+        reject;
+
+
+      reader.readAsDataURL(
+        file
+      );
+    }
+  );
+}
+
+
+// =====================================================
+// 🦔 HYUNSUK CHEMISTRY DOM
+// =====================================================
+
+const hyunsukChemistryOpen =
+  document.getElementById(
+    "hyunsukChemistryOpen"
+  );
+
+const hyunsukChemistryPage =
+  document.getElementById(
+    "hyunsukChemistryPage"
+  );
+
+const hyunsukChemistryBack =
+  document.getElementById(
+    "hyunsukChemistryBack"
+  );
+
+const hyunsukChemistryDetailPage =
+  document.getElementById(
+    "hyunsukChemistryDetailPage"
+  );
+
+const hyunsukChemistryDetailBack =
+  document.getElementById(
+    "hyunsukChemistryDetailBack"
+  );
+
+const hyunsukChemistryDetailEmoji =
+  document.getElementById(
+    "hyunsukChemistryDetailEmoji"
+  );
+
+const hyunsukChemistryDetailTitle =
+  document.getElementById(
+    "hyunsukChemistryDetailTitle"
+  );
+
+const hyunsukChemistryDetailName =
+  document.getElementById(
+    "hyunsukChemistryDetailName"
+  );
+
+const hyunsukChemistryDetailCaption =
+  document.getElementById(
+    "hyunsukChemistryDetailCaption"
+  );
+
+const hyunsukChemistryMemoryList =
+  document.getElementById(
+    "hyunsukChemistryMemoryList"
+  );
+
+const hyunsukChemistryAdd =
+  document.getElementById(
+    "hyunsukChemistryAdd"
+  );
+
+
+// MODAL
+
+const hyunsukChemistryMemoryModal =
+  document.getElementById(
+    "hyunsukChemistryMemoryModal"
+  );
+
+const hyunsukChemistryMemoryTitle =
+  document.getElementById(
+    "hyunsukChemistryMemoryTitle"
+  );
+
+const hyunsukChemistryMemoryInput =
+  document.getElementById(
+    "hyunsukChemistryMemoryInput"
+  );
+
+const hyunsukChemistryMemorySelect =
+  document.getElementById(
+    "hyunsukChemistryMemorySelect"
+  );
+
+const hyunsukChemistryMemoryPreview =
+  document.getElementById(
+    "hyunsukChemistryMemoryPreview"
+  );
+
+const hyunsukChemistryMemoryPreviewImage =
+  document.getElementById(
+    "hyunsukChemistryMemoryPreviewImage"
+  );
+
+const hyunsukChemistryMemoryMemo =
+  document.getElementById(
+    "hyunsukChemistryMemoryMemo"
+  );
+
+const hyunsukChemistryMemorySave =
+  document.getElementById(
+    "hyunsukChemistryMemorySave"
+  );
+
+const hyunsukChemistryMemoryDelete =
+  document.getElementById(
+    "hyunsukChemistryMemoryDelete"
+  );
+
+const hyunsukChemistryMemoryCancel =
+  document.getElementById(
+    "hyunsukChemistryMemoryCancel"
+  );
+
+
+let currentHyunsukChemistryPartner =
+  null;
+
+let currentHyunsukChemistryPairKey =
+  null;
+
+let currentSharedChemistryImageData =
+  null;
+
+
+// =====================================================
+// 🦔 HYUNSUK CHEMISTRY OPEN / BACK
+// =====================================================
+
+if (
+  hyunsukChemistryOpen &&
+  hyunsukChemistryPage
+) {
+
+  hyunsukChemistryOpen.addEventListener(
+    "click",
+    () => {
+
+      if (hyunsukBookDetail) {
+
+        hyunsukBookDetail.classList.remove(
+          "active"
+        );
+      }
+
+
+      hyunsukChemistryPage.style.display =
+        "block";
+
+      hyunsukChemistryPage.scrollTop =
+        0;
+
+
+      document.body.style.overflow =
+        "hidden";
+    }
+  );
+}
+
+
+if (
+  hyunsukChemistryBack &&
+  hyunsukChemistryPage
+) {
+
+  hyunsukChemistryBack.addEventListener(
+    "click",
+    () => {
+
+      hyunsukChemistryPage.style.display =
+        "none";
+
+
+      if (hyunsukBookDetail) {
+
+        hyunsukBookDetail.classList.add(
+          "active"
+        );
+
+        hyunsukBookDetail.scrollTop =
+          0;
+      }
+
+
+      document.body.style.overflow =
+        "hidden";
+    }
+  );
+}
+
+
+// =====================================================
+// 🫶 9 CHEMISTRY CARDS
+// =====================================================
+
+const hyunsukChemistryCards =
+  document.querySelectorAll(
+    ".hyunsuk-chemistry-card"
+  );
+
+
+hyunsukChemistryCards.forEach(
+  card => {
+
+    card.addEventListener(
+      "click",
+      async () => {
+
+        const partner =
+          card.dataset.partner;
+
+
+        if (!partner) return;
+
+
+        currentHyunsukChemistryPartner =
+          partner;
+
+
+        currentHyunsukChemistryPairKey =
+          createChemistryPairKey(
+            "HYUNSUK",
+            partner
+          );
+
+
+        const partnerInfo =
+          chemistryMemberInfo[
+            partner
+          ];
+
+
+        if (
+          hyunsukChemistryDetailEmoji
+        ) {
+
+          hyunsukChemistryDetailEmoji.textContent =
+            "🦔" +
+            (
+              partnerInfo?.emoji ||
+              "💎"
+            );
+        }
+
+
+        if (
+          hyunsukChemistryDetailTitle
+        ) {
+
+          hyunsukChemistryDetailTitle.textContent =
+            `HYUNSUK × ${partner}`;
+        }
+
+
+        if (
+          hyunsukChemistryDetailName
+        ) {
+
+          hyunsukChemistryDetailName.textContent =
+            "CHEMISTRY MEMORY 💎";
+        }
+
+
+        if (
+          hyunsukChemistryDetailCaption
+        ) {
+
+          hyunsukChemistryDetailCaption.textContent =
+            `ヒョンソクと${partner}の好きな瞬間を集めよう 💎`;
+        }
+
+
+        hyunsukChemistryPage.style.display =
+          "none";
+
+        hyunsukChemistryDetailPage.style.display =
+          "block";
+
+        hyunsukChemistryDetailPage.scrollTop =
+          0;
+
+
+        await renderSharedChemistryMemories();
+
+
+        document.body.style.overflow =
+          "hidden";
+      }
+    );
+  }
+);
+
+
+// =====================================================
+// ← CHEMISTRY LIST
+// =====================================================
+
+if (
+  hyunsukChemistryDetailBack &&
+  hyunsukChemistryDetailPage
+) {
+
+  hyunsukChemistryDetailBack.addEventListener(
+    "click",
+    () => {
+
+      hyunsukChemistryDetailPage.style.display =
+        "none";
+
+      hyunsukChemistryPage.style.display =
+        "block";
+
+      hyunsukChemistryPage.scrollTop =
+        0;
+
+
+      document.body.style.overflow =
+        "hidden";
+    }
+  );
+}
+
+
+// =====================================================
+// ＋ ADD MEMORY
+// =====================================================
+
+if (hyunsukChemistryAdd) {
+
+  hyunsukChemistryAdd.addEventListener(
+    "click",
+    () => {
+
+      if (
+        !currentHyunsukChemistryPairKey
+      ) {
+        return;
+      }
+
+
+      currentSharedChemistryImageData =
+        null;
+
+
+      delete hyunsukChemistryMemorySave
+        .dataset.editId;
+
+
+      hyunsukChemistryMemoryInput.value =
+        "";
+
+      hyunsukChemistryMemoryMemo.value =
+        "";
+
+      hyunsukChemistryMemoryPreviewImage.src =
+        "";
+
+      hyunsukChemistryMemoryPreview.style.display =
+        "none";
+
+      hyunsukChemistryMemoryDelete.style.display =
+        "none";
+
+
+      hyunsukChemistryMemorySave.textContent =
+        "💎 SAVE MEMORY";
+
+
+      hyunsukChemistryMemoryTitle.textContent =
+        `HYUNSUK × ${currentHyunsukChemistryPartner} MEMORY`;
+
+
+      hyunsukChemistryMemoryModal.style.display =
+        "flex";
+
+      hyunsukChemistryMemoryModal.scrollTop =
+        0;
+
+
+      document.body.style.overflow =
+        "hidden";
+    }
+  );
+}
+
+
+// =====================================================
+// 📸 PHOTO SELECT
+// =====================================================
+
+if (
+  hyunsukChemistryMemorySelect &&
+  hyunsukChemistryMemoryInput
+) {
+
+  hyunsukChemistryMemorySelect.addEventListener(
+    "click",
+    () => {
+
+      hyunsukChemistryMemoryInput.click();
+    }
+  );
+}
+
+
+if (hyunsukChemistryMemoryInput) {
+
+  hyunsukChemistryMemoryInput.addEventListener(
+    "change",
+    async () => {
+
+      const file =
+        hyunsukChemistryMemoryInput
+          .files[0];
+
+
+      if (!file) return;
+
+
+      try {
+
+        currentSharedChemistryImageData =
+          await resizeSharedChemistryImage(
+            file
+          );
+
+
+        hyunsukChemistryMemoryPreviewImage.src =
+          currentSharedChemistryImageData;
+
+
+        hyunsukChemistryMemoryPreview.style.display =
+          "block";
+
+
+      } catch (error) {
+
+        console.error(
+          "SHARED CHEMISTRY IMAGE ERROR",
+          error
+        );
+
+
+        alert(
+          "写真の読み込みに失敗しました😭"
+        );
+      }
+    }
+  );
+}
+
+
+// =====================================================
+// 💾 SAVE / UPDATE
+// =====================================================
+
+if (hyunsukChemistryMemorySave) {
+
+  hyunsukChemistryMemorySave.addEventListener(
+    "click",
+    async () => {
+
+      if (
+        !currentHyunsukChemistryPairKey
+      ) {
+        return;
+      }
+
+
+      const memo =
+        hyunsukChemistryMemoryMemo
+          .value
+          .trim();
+
+
+      const editId =
+        hyunsukChemistryMemorySave
+          .dataset.editId
+          ? Number(
+              hyunsukChemistryMemorySave
+                .dataset.editId
+            )
+          : null;
+
+
+      try {
+
+
+        // =============================
+        // ✏️ UPDATE
+        // =============================
+
+        if (editId) {
+
+          const item =
+            sharedChemistryMemories.find(
+              memory =>
+                memory.id === editId
+            );
+
+
+          if (!item) return;
+
+
+          item.memo =
+            memo;
+
+
+          if (
+            currentSharedChemistryImageData
+          ) {
+
+            const newImageKey =
+              "shared-chemistry-" +
+              Date.now() +
+              "-" +
+              Math.random()
+                .toString(36)
+                .slice(2);
+
+
+            await saveSharedChemistryImage(
+              newImageKey,
+              currentSharedChemistryImageData
+            );
+
+
+            if (item.imageKey) {
+
+              await deleteSharedChemistryImage(
+                item.imageKey
+              );
+            }
+
+
+            item.imageKey =
+              newImageKey;
+          }
+
+        }
+
+
+        // =============================
+        // 💎 NEW
+        // =============================
+
+        else {
+
+          if (
+            !currentSharedChemistryImageData
+          ) {
+
+            alert(
+              "写真を選んでね 📸"
+            );
+
+            return;
+          }
+
+
+          const imageKey =
+            "shared-chemistry-" +
+            Date.now() +
+            "-" +
+            Math.random()
+              .toString(36)
+              .slice(2);
+
+
+          await saveSharedChemistryImage(
+            imageKey,
+            currentSharedChemistryImageData
+          );
+
+
+          sharedChemistryMemories.unshift({
+
+            id:
+              Date.now(),
+
+            pairKey:
+              currentHyunsukChemistryPairKey,
+
+            members: [
+              "HYUNSUK",
+              currentHyunsukChemistryPartner
+            ],
+
+            imageKey,
+
+            memo,
+
+            createdAt:
+              Date.now()
+
+          });
+        }
+
+
+        saveSharedChemistryMemories();
+
+
+        await renderSharedChemistryMemories();
+
+
+        closeSharedChemistryModal();
+
+
+      } catch (error) {
+
+        console.error(
+          "SHARED CHEMISTRY SAVE ERROR",
+          error
+        );
+
+
+        alert(
+          "保存に失敗しました😭"
+        );
+      }
+    }
+  );
+}
+
+
+// =====================================================
+// 🖼 RENDER CURRENT PAIR
+// =====================================================
+
+async function renderSharedChemistryMemories() {
+
+  if (
+    !hyunsukChemistryMemoryList ||
+    !currentHyunsukChemistryPairKey
+  ) {
+    return;
+  }
+
+
+  const items =
+    sharedChemistryMemories
+      .filter(
+        memory =>
+          memory.pairKey ===
+          currentHyunsukChemistryPairKey
+      )
+      .sort(
+        (a, b) =>
+          (b.createdAt || 0) -
+          (a.createdAt || 0)
+      );
+
+
+  if (items.length === 0) {
+
+    hyunsukChemistryMemoryList.innerHTML = `
+      <div class="jihoon-chemistry-empty">
+        <span>📸</span>
+
+        <strong>
+          まだ思い出がありません
+        </strong>
+
+        <small>
+          好きなケミを追加してみよう 💎
+        </small>
+      </div>
+    `;
+
+    return;
+  }
+
+
+  hyunsukChemistryMemoryList.innerHTML =
+    "";
+
+
+  for (const item of items) {
+
+    let imageData = "";
+
+
+    try {
+
+      imageData =
+        await loadSharedChemistryImage(
+          item.imageKey
+        );
+
+    } catch (error) {
+
+      console.error(
+        "CHEMISTRY IMAGE LOAD ERROR",
+        error
+      );
+    }
+
+
+    const article =
+      document.createElement(
+        "article"
+      );
+
+
+    article.className =
+      "jihoon-chemistry-memory-card";
+
+
+    article.dataset.id =
+      String(item.id);
+
+
+    article.innerHTML = `
+      ${
+        imageData
+          ? `
+            <img
+              src="${imageData}"
+              alt="CHEMISTRY MEMORY"
+            >
+          `
+          : ""
+      }
+
+      ${
+        item.memo
+          ? `
+            <p>
+              ${escapeSharedChemistryHTML(
+                item.memo
+              )}
+            </p>
+          `
+          : `
+            <p class="jihoon-chemistry-no-note">
+              NO NOTE
+            </p>
+          `
+      }
+    `;
+
+
+    article.addEventListener(
+      "click",
+      () => {
+
+        openSharedChemistryMemoryEdit(
+          item,
+          imageData
+        );
+      }
+    );
+
+
+    hyunsukChemistryMemoryList.appendChild(
+      article
+    );
+  }
+}
+
+
+// =====================================================
+// ✏️ EDIT
+// =====================================================
+
+function openSharedChemistryMemoryEdit(
+  item,
+  imageData
+) {
+
+  currentHyunsukChemistryPairKey =
+    item.pairKey;
+
+
+  currentSharedChemistryImageData =
+    null;
+
+
+  hyunsukChemistryMemoryPreviewImage.src =
+    imageData || "";
+
+
+  hyunsukChemistryMemoryPreview.style.display =
+    imageData
+      ? "block"
+      : "none";
+
+
+  hyunsukChemistryMemoryMemo.value =
+    item.memo || "";
+
+
+  hyunsukChemistryMemorySave.dataset.editId =
+    String(item.id);
+
+
+  hyunsukChemistryMemorySave.textContent =
+    "💎 UPDATE MEMORY";
+
+
+  hyunsukChemistryMemoryDelete.dataset.deleteId =
+    String(item.id);
+
+
+  hyunsukChemistryMemoryDelete.style.display =
+    "block";
+
+
+  hyunsukChemistryMemoryModal.style.display =
+    "flex";
+
+
+  hyunsukChemistryMemoryModal.scrollTop =
+    0;
+
+
+  document.body.style.overflow =
+    "hidden";
+}
+
+
+// =====================================================
+// 🗑 DELETE
+// =====================================================
+
+if (hyunsukChemistryMemoryDelete) {
+
+  hyunsukChemistryMemoryDelete.addEventListener(
+    "click",
+    async () => {
+
+      const id =
+        Number(
+          hyunsukChemistryMemoryDelete
+            .dataset.deleteId
+        );
+
+
+      if (!id) return;
+
+
+      const ok =
+        confirm(
+          "このCHEMISTRY MEMORYを削除する？🥲"
+        );
+
+
+      if (!ok) return;
+
+
+      const item =
+        sharedChemistryMemories.find(
+          memory =>
+            memory.id === id
+        );
+
+
+      try {
+
+        if (
+          item &&
+          item.imageKey
+        ) {
+
+          await deleteSharedChemistryImage(
+            item.imageKey
+          );
+        }
+
+
+        sharedChemistryMemories =
+          sharedChemistryMemories.filter(
+            memory =>
+              memory.id !== id
+          );
+
+
+        saveSharedChemistryMemories();
+
+
+        await renderSharedChemistryMemories();
+
+
+        closeSharedChemistryModal();
+
+
+      } catch (error) {
+
+        console.error(
+          "SHARED CHEMISTRY DELETE ERROR",
+          error
+        );
+
+
+        alert(
+          "削除に失敗しました😭"
+        );
+      }
+    }
+  );
+}
+
+
+// =====================================================
+// ❌ CANCEL
+// =====================================================
+
+if (hyunsukChemistryMemoryCancel) {
+
+  hyunsukChemistryMemoryCancel.addEventListener(
+    "click",
+    () => {
+
+      closeSharedChemistryModal();
+    }
+  );
+}
+
+
+// =====================================================
+// CLOSE MODAL
+// =====================================================
+
+function closeSharedChemistryModal() {
+
+  if (
+    hyunsukChemistryMemoryModal
+  ) {
+
+    hyunsukChemistryMemoryModal.style.display =
+      "none";
+  }
+
+
+  if (
+    hyunsukChemistryMemoryInput
+  ) {
+
+    hyunsukChemistryMemoryInput.value =
+      "";
+  }
+
+
+  if (
+    hyunsukChemistryMemoryMemo
+  ) {
+
+    hyunsukChemistryMemoryMemo.value =
+      "";
+  }
+
+
+  if (
+    hyunsukChemistryMemoryPreviewImage
+  ) {
+
+    hyunsukChemistryMemoryPreviewImage.src =
+      "";
+  }
+
+
+  if (
+    hyunsukChemistryMemoryPreview
+  ) {
+
+    hyunsukChemistryMemoryPreview.style.display =
+      "none";
+  }
+
+
+  currentSharedChemistryImageData =
+    null;
+
+
+  if (
+    hyunsukChemistryMemorySave
+  ) {
+
+    delete hyunsukChemistryMemorySave
+      .dataset.editId;
+
+    hyunsukChemistryMemorySave.textContent =
+      "💎 SAVE MEMORY";
+  }
+
+
+  if (
+    hyunsukChemistryMemoryDelete
+  ) {
+
+    delete hyunsukChemistryMemoryDelete
+      .dataset.deleteId;
+
+    hyunsukChemistryMemoryDelete.style.display =
+      "none";
+  }
+}
+
+
+// =====================================================
+// 🛡 HTML ESCAPE
+// =====================================================
+
+function escapeSharedChemistryHTML(
+  text
+) {
+
+  return String(text)
+
+    .replaceAll(
+      "&",
+      "&amp;"
+    )
+
+    .replaceAll(
+      "<",
+      "&lt;"
+    )
+
+    .replaceAll(
+      ">",
+      "&gt;"
+    )
+
+    .replaceAll(
+      '"',
+      "&quot;"
+    )
+
+    .replaceAll(
+      "'",
+      "&#039;"
+    );
+}
