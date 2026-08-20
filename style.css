@@ -8117,3 +8117,25 @@ z-index: 1400;
   }
 }
 renderHyunsukGrowthVisuals();
+/* ========================================
+   📸 MEMBER VISUAL BOOK 写真サイズ修正
+======================================== */
+
+.jihoon-year-gallery img,
+.hyunsuk-year-gallery img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 20px;
+  display: block;
+}
+
+/* 写真一覧 */
+.jihoon-year-gallery,
+.hyunsuk-year-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  width: 100%;
+}
