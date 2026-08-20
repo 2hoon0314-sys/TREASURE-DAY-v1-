@@ -14661,3 +14661,392 @@ const yoshiVisualSystem =
     japaneseName: "ヨシ"
 
   });
+// ======================================================
+// 👑 MEMBER VISUAL RANKING 共通エンジン
+// ======================================================
+
+function setupMemberVisualRanking(
+  config
+) {
+
+  const {
+    key,
+    displayName,
+    visualSystem
+  } = config;
+
+
+  const open =
+    document.getElementById(
+      `${key}VisualRankingOpen`
+    );
+
+  const page =
+    document.getElementById(
+      `${key}VisualRankingPage`
+    );
+
+  const back =
+    document.getElementById(
+      `${key}VisualRankingBack`
+    );
+
+  const list =
+    document.getElementById(
+      `${key}VisualRankingList`
+    );
+
+
+  if (
+    !visualSystem ||
+    !list
+  ) {
+    return;
+  }
+
+
+  async function loadRanking() {
+
+    list.innerHTML = "";
+
+
+    const visuals =
+      await visualSystem.getVisuals();
+
+
+    const favorites =
+      visuals.filter(
+        item =>
+          item.favorite === true
+      );
+
+
+    favorites.sort(
+      (a, b) => {
+
+        const orderA =
+          a.rankOrder ??
+          Number.MAX_SAFE_INTEGER;
+
+        const orderB =
+          b.rankOrder ??
+          Number.MAX_SAFE_INTEGER;
+
+        return orderA - orderB;
+      }
+    );
+
+
+    // 初回順位セット
+    for (
+      let i = 0;
+      i < favorites.length;
+      i++
+    ) {
+
+      if (
+        favorites[i].rankOrder ==
+        null
+      ) {
+
+        favorites[i].rankOrder =
+          i;
+
+        await visualSystem.updateVisual(
+          favorites[i]
+        );
+      }
+    }
+
+
+    if (
+      favorites.length === 0
+    ) {
+
+      list.innerHTML = `
+        <div class="jihoon-ranking-empty">
+          ♡ FAVORITEした写真がまだありません
+        </div>
+      `;
+
+      return;
+    }
+
+
+    favorites.forEach(
+      (item, index) => {
+
+        const card =
+          document.createElement(
+            "div"
+          );
+
+        card.className =
+          "jihoon-visual-ranking-item";
+
+
+        const rank =
+          document.createElement(
+            "div"
+          );
+
+        rank.className =
+          "jihoon-visual-ranking-number";
+
+
+        const rankLabels = [
+          "🥇 1ST",
+          "🥈 2ND",
+          "🥉 3RD"
+        ];
+
+
+        rank.textContent =
+          rankLabels[index] ||
+          `#${index + 1}`;
+
+
+        const img =
+          document.createElement(
+            "img"
+          );
+
+        img.alt =
+          `${displayName} VISUAL`;
+
+        img.loading =
+          "lazy";
+
+        img.decoding =
+          "async";
+
+        img.src =
+          item.imageData || "";
+
+
+        const controls =
+          document.createElement(
+            "div"
+          );
+
+        controls.className =
+          "jihoon-visual-ranking-controls";
+
+
+        const upButton =
+          document.createElement(
+            "button"
+          );
+
+        upButton.type =
+          "button";
+
+        upButton.textContent =
+          "↑  UP";
+
+        upButton.className =
+          "jihoon-ranking-move-button";
+
+
+        const downButton =
+          document.createElement(
+            "button"
+          );
+
+        downButton.type =
+          "button";
+
+        downButton.textContent =
+          "DOWN  ↓";
+
+        downButton.className =
+          "jihoon-ranking-move-button";
+
+
+        upButton.addEventListener(
+          "click",
+          async () => {
+
+            if (
+              index === 0
+            ) {
+              return;
+            }
+
+
+            const previousItem =
+              favorites[
+                index - 1
+              ];
+
+
+            const currentOrder =
+              item.rankOrder ??
+              index;
+
+            const previousOrder =
+              previousItem.rankOrder ??
+              index - 1;
+
+
+            item.rankOrder =
+              previousOrder;
+
+            previousItem.rankOrder =
+              currentOrder;
+
+
+            await visualSystem.updateVisual(
+              item
+            );
+
+            await visualSystem.updateVisual(
+              previousItem
+            );
+
+
+            await loadRanking();
+          }
+        );
+
+
+        downButton.addEventListener(
+          "click",
+          async () => {
+
+            if (
+              index ===
+              favorites.length - 1
+            ) {
+              return;
+            }
+
+
+            const nextItem =
+              favorites[
+                index + 1
+              ];
+
+
+            const currentOrder =
+              item.rankOrder ??
+              index;
+
+            const nextOrder =
+              nextItem.rankOrder ??
+              index + 1;
+
+
+            item.rankOrder =
+              nextOrder;
+
+            nextItem.rankOrder =
+              currentOrder;
+
+
+            await visualSystem.updateVisual(
+              item
+            );
+
+            await visualSystem.updateVisual(
+              nextItem
+            );
+
+
+            await loadRanking();
+          }
+        );
+
+
+        controls.appendChild(
+          upButton
+        );
+
+        controls.appendChild(
+          downButton
+        );
+
+
+        card.appendChild(
+          rank
+        );
+
+        card.appendChild(
+          img
+        );
+
+        card.appendChild(
+          controls
+        );
+
+
+        list.appendChild(
+          card
+        );
+      }
+    );
+  }
+
+
+  if (
+    open &&
+    page
+  ) {
+
+    open.addEventListener(
+      "click",
+      async () => {
+
+        page.style.display =
+          "block";
+
+        page.scrollTop =
+          0;
+
+        await loadRanking();
+
+        document.body.style.overflow =
+          "hidden";
+      }
+    );
+  }
+
+
+  if (
+    back &&
+    page
+  ) {
+
+    back.addEventListener(
+      "click",
+      () => {
+
+        page.style.display =
+          "none";
+
+        document.body.style.overflow =
+          "hidden";
+      }
+    );
+  }
+
+
+  return {
+    loadRanking
+  };
+}
+
+
+// 🐯 YOSHI RANKING START
+
+const yoshiVisualRankingSystem =
+  setupMemberVisualRanking({
+
+    key: "yoshi",
+
+    displayName: "YOSHI",
+
+    visualSystem:
+      yoshiVisualSystem
+
+  });
