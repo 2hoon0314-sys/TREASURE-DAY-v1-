@@ -13030,12 +13030,11 @@ if (hyunsukChemistryMemorySave) {
 async function renderSharedChemistryMemories() {
 
   if (
-    !hyunsukChemistryMemoryList ||
-    !currentHyunsukChemistryPairKey
-  ) {
-    return;
-  }
-
+  !currentSharedChemistryRenderTarget ||
+  !currentHyunsukChemistryPairKey
+) {
+  return;
+}
 
   const items =
     sharedChemistryMemories
