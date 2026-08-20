@@ -17757,9 +17757,9 @@ document
   .querySelectorAll(".yoshi-chemistry-card")
   .forEach(card => {
 
-    card.addEventListener(
-      "click",
-      () => {
+   card.addEventListener(
+  "click",
+  async () => {
 
         const partner =
           card.dataset.partner;
