@@ -11483,3 +11483,319 @@ function escapeHyunsukSongHTML(text) {
 
 // 最初の表示
 renderHyunsukSongs();
+// ========================================
+// 📷 HYUNSUK MEMORIES
+// PHOTO MEMORY LINK VIEW
+// ========================================
+
+const hyunsukMemoriesOpen =
+  document.getElementById("hyunsukMemoriesOpen");
+
+const hyunsukMemoriesPage =
+  document.getElementById("hyunsukMemoriesPage");
+
+const hyunsukMemoriesBack =
+  document.getElementById("hyunsukMemoriesBack");
+
+const hyunsukMemoriesAdd =
+  document.getElementById("hyunsukMemoriesAdd");
+
+const hyunsukMemoriesList =
+  document.getElementById("hyunsukMemoriesList");
+
+
+// OPEN
+if (
+  hyunsukMemoriesOpen &&
+  hyunsukMemoriesPage &&
+  hyunsukBookDetail
+) {
+
+  hyunsukMemoriesOpen.addEventListener(
+    "click",
+    async () => {
+
+      hyunsukMemoriesPage.style.display =
+        "block";
+
+      hyunsukMemoriesPage.scrollTop = 0;
+
+      await renderHyunsukMemories();
+
+      document.body.style.overflow =
+        "hidden";
+    }
+  );
+}
+
+
+// BACK
+if (
+  hyunsukMemoriesBack &&
+  hyunsukMemoriesPage &&
+  hyunsukBookDetail
+) {
+
+  hyunsukMemoriesBack.addEventListener(
+    "click",
+    () => {
+
+      hyunsukMemoriesPage.style.display =
+        "none";
+
+      hyunsukBookDetail.classList.add(
+        "active"
+      );
+
+      hyunsukBookDetail.scrollTop = 0;
+
+      document.body.style.overflow =
+        "hidden";
+    }
+  );
+}
+
+
+// ADD → PHOTO MEMORY
+if (hyunsukMemoriesAdd) {
+
+  hyunsukMemoriesAdd.addEventListener(
+    "click",
+    () => {
+
+      if (hyunsukMemoriesPage) {
+        hyunsukMemoriesPage.style.display =
+          "none";
+      }
+
+      if (hyunsukBookDetail) {
+        hyunsukBookDetail.classList.remove(
+          "active"
+        );
+      }
+
+      const memberBookDetail =
+        document.getElementById(
+          "member-book-detail"
+        );
+
+      if (memberBookDetail) {
+        memberBookDetail.classList.remove(
+          "active"
+        );
+      }
+
+      showPage("memory");
+
+      switchMemoryMode("photo");
+
+      // MEMBER自動セット
+      if (memoryMember) {
+        memoryMember.value =
+          "HYUNSUK";
+      }
+
+      document.body.style.overflow =
+        "";
+
+      window.scrollTo(0, 0);
+    }
+  );
+}
+
+
+// ========================================
+// 🦔 HYUNSUK MEMORY RENDER
+// ========================================
+
+async function renderHyunsukMemories() {
+
+  if (!hyunsukMemoriesList) return;
+
+  hyunsukMemoriesList.innerHTML = "";
+
+
+  const hyunsukEntries =
+    memories
+      .map(
+        (memory, index) => ({
+          memory,
+          index
+        })
+      )
+      .filter(
+        ({ memory }) =>
+          String(
+            memory.member || ""
+          ).toUpperCase() ===
+          "HYUNSUK"
+      );
+
+
+  if (hyunsukEntries.length === 0) {
+
+    hyunsukMemoriesList.innerHTML = `
+      <div class="jihoon-memories-empty">
+        <span>📷</span>
+
+        <strong>
+          まだHYUNSUK MEMORYがありません
+        </strong>
+
+        <small>
+          PHOTO MEMORYでMEMBERを
+          HYUNSUKにして投稿してみよう 🦔💎
+        </small>
+      </div>
+    `;
+
+    return;
+  }
+
+
+  for (
+    const { memory, index }
+    of hyunsukEntries
+  ) {
+
+    const card =
+      document.createElement("article");
+
+    card.className =
+      "jihoon-memory-card";
+
+
+    // PHOTO
+    if (
+      memory.photoKey ||
+      memory.photo
+    ) {
+
+      const image =
+        document.createElement("img");
+
+      image.alt =
+        memory.title ||
+        "HYUNSUK MEMORY";
+
+
+      if (memory.photoKey) {
+
+        try {
+
+          image.src =
+            await loadPhotoMemoryImage(
+              memory.photoKey
+            );
+
+        } catch (error) {
+
+          console.error(
+            "HYUNSUK MEMORY IMAGE LOAD ERROR",
+            error
+          );
+
+          image.src = "";
+        }
+
+      } else {
+
+        image.src =
+          memory.photo || "";
+      }
+
+
+      if (image.src) {
+        card.appendChild(image);
+      }
+    }
+
+
+    // INFO
+    const body =
+      document.createElement("div");
+
+    body.className =
+      "jihoon-memory-card-body";
+
+
+    const title =
+      document.createElement("strong");
+
+    title.textContent =
+      memory.title ||
+      "HYUNSUK MEMORY 💎";
+
+    body.appendChild(title);
+
+
+    if (memory.text) {
+
+      const text =
+        document.createElement("p");
+
+      text.textContent =
+        memory.text;
+
+      body.appendChild(text);
+    }
+
+
+    // TAGS
+    if (
+      Array.isArray(memory.tags) &&
+      memory.tags.length > 0
+    ) {
+
+      const tags =
+        document.createElement("div");
+
+      tags.className =
+        "jihoon-memory-tags";
+
+      memory.tags.forEach(
+        tag => {
+
+          const span =
+            document.createElement("span");
+
+          span.textContent =
+            "#" + tag;
+
+          tags.appendChild(span);
+        }
+      );
+
+      body.appendChild(tags);
+    }
+
+
+    card.appendChild(body);
+
+
+    // PHOTO MEMORY詳細へ
+    card.addEventListener(
+      "click",
+      async () => {
+
+        photoMemoryReturnTarget =
+          "hyunsuk";
+
+        showPage("memory");
+
+        switchMemoryMode("photo");
+
+        await openPhotoMemoryDetail(
+          index
+        );
+
+        window.scrollTo(0, 0);
+      }
+    );
+
+
+    hyunsukMemoriesList.appendChild(
+      card
+    );
+  }
+}
