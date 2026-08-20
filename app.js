@@ -8683,3 +8683,988 @@ jihoonHairFilters.forEach((button) => {
   });
 
 });
+// =========================================
+// 💎 HYUNSUK VISUAL BOOK
+// SAVE / FILTER / FAVORITE / EDIT / DELETE
+// =========================================
+
+const hyunsukVisualAdd =
+  document.getElementById("hyunsukVisualAdd");
+
+const hyunsukVisualInput =
+  document.getElementById("hyunsukVisualInput");
+
+const hyunsukVisualGrid =
+  document.getElementById("hyunsukVisualGrid");
+
+const hyunsukHairModal =
+  document.getElementById("hyunsukHairModal");
+
+const hyunsukHairCancel =
+  document.getElementById("hyunsukHairCancel");
+
+const hyunsukVisualEditModal =
+  document.getElementById("hyunsukVisualEditModal");
+
+const hyunsukVisualEditImage =
+  document.getElementById("hyunsukVisualEditImage");
+
+const hyunsukVisualEditCancel =
+  document.getElementById("hyunsukVisualEditCancel");
+
+const hyunsukVisualFavorite =
+  document.getElementById("hyunsukVisualFavorite");
+
+const hyunsukVisualChangeHair =
+  document.getElementById("hyunsukVisualChangeHair");
+
+const hyunsukVisualDelete =
+  document.getElementById("hyunsukVisualDelete");
+
+const hyunsukHairChangeModal =
+  document.getElementById("hyunsukHairChangeModal");
+
+const hyunsukHairChangeCancel =
+  document.getElementById("hyunsukHairChangeCancel");
+
+
+// =========================================
+// 💾 HYUNSUK専用 IndexedDB
+// =========================================
+
+const HYUNSUK_VISUAL_DB_NAME =
+  "treasure-day-hyunsuk-visual-db";
+
+const HYUNSUK_VISUAL_DB_VERSION = 1;
+
+const HYUNSUK_VISUAL_STORE =
+  "hyunsukVisuals";
+
+let hyunsukVisualDB;
+
+
+// DB OPEN
+function openHyunsukVisualDB() {
+
+  return new Promise((resolve, reject) => {
+
+    const request =
+      indexedDB.open(
+        HYUNSUK_VISUAL_DB_NAME,
+        HYUNSUK_VISUAL_DB_VERSION
+      );
+
+    request.onupgradeneeded = (event) => {
+
+      const db = event.target.result;
+
+      if (
+        !db.objectStoreNames.contains(
+          HYUNSUK_VISUAL_STORE
+        )
+      ) {
+
+        db.createObjectStore(
+          HYUNSUK_VISUAL_STORE,
+          {
+            keyPath: "id",
+            autoIncrement: true
+          }
+        );
+      }
+    };
+
+    request.onsuccess = (event) => {
+
+      hyunsukVisualDB =
+        event.target.result;
+
+      resolve(hyunsukVisualDB);
+    };
+
+    request.onerror = () => {
+      reject(request.error);
+    };
+  });
+}
+
+
+// =========================================
+// 📸 IMAGE → DataURL
+// =========================================
+
+function hyunsukImageToDataURL(file) {
+
+  return new Promise((resolve, reject) => {
+
+    const reader = new FileReader();
+
+    reader.onload = () => {
+
+      const img = new Image();
+
+      img.onload = () => {
+
+        const MAX_SIZE = 1600;
+
+        let width = img.naturalWidth;
+        let height = img.naturalHeight;
+
+        if (
+          width > height &&
+          width > MAX_SIZE
+        ) {
+
+          height =
+            Math.round(
+              height * MAX_SIZE / width
+            );
+
+          width = MAX_SIZE;
+
+        } else if (
+          height >= width &&
+          height > MAX_SIZE
+        ) {
+
+          width =
+            Math.round(
+              width * MAX_SIZE / height
+            );
+
+          height = MAX_SIZE;
+        }
+
+        const canvas =
+          document.createElement("canvas");
+
+        canvas.width = width;
+        canvas.height = height;
+
+        const ctx =
+          canvas.getContext("2d");
+
+        if (!ctx) {
+          reject(
+            new Error(
+              "Canvas is not available"
+            )
+          );
+          return;
+        }
+
+        ctx.drawImage(
+          img,
+          0,
+          0,
+          width,
+          height
+        );
+
+        const imageData =
+          canvas.toDataURL(
+            "image/jpeg",
+            0.86
+          );
+
+        resolve(imageData);
+      };
+
+      img.onerror = () => {
+        reject(
+          new Error(
+            "Image decode failed"
+          )
+        );
+      };
+
+      img.src = reader.result;
+    };
+
+    reader.onerror = () => {
+      reject(reader.error);
+    };
+
+    reader.readAsDataURL(file);
+  });
+}
+
+
+// =========================================
+// 💾 SAVE
+// =========================================
+
+async function saveHyunsukVisual(
+  file,
+  hairColor
+) {
+
+  if (!hyunsukVisualDB) {
+    throw new Error(
+      "Database is not ready"
+    );
+  }
+
+  const imageData =
+    await hyunsukImageToDataURL(file);
+
+  return new Promise(
+    (resolve, reject) => {
+
+      const transaction =
+        hyunsukVisualDB.transaction(
+          HYUNSUK_VISUAL_STORE,
+          "readwrite"
+        );
+
+      const store =
+        transaction.objectStore(
+          HYUNSUK_VISUAL_STORE
+        );
+
+      const data = {
+        imageData: imageData,
+        hairColor: hairColor,
+        favorite: false,
+        createdAt: Date.now()
+      };
+
+      const request =
+        store.add(data);
+
+      request.onsuccess = () => {
+
+        data.id = request.result;
+        resolve(data);
+      };
+
+      request.onerror = () => {
+        reject(request.error);
+      };
+    }
+  );
+}
+
+
+// =========================================
+// 📚 GET ALL
+// =========================================
+
+function getHyunsukVisuals() {
+
+  return new Promise(
+    (resolve, reject) => {
+
+      if (!hyunsukVisualDB) {
+        resolve([]);
+        return;
+      }
+
+      const transaction =
+        hyunsukVisualDB.transaction(
+          HYUNSUK_VISUAL_STORE,
+          "readonly"
+        );
+
+      const store =
+        transaction.objectStore(
+          HYUNSUK_VISUAL_STORE
+        );
+
+      const request =
+        store.getAll();
+
+      request.onsuccess = () => {
+        resolve(
+          request.result || []
+        );
+      };
+
+      request.onerror = () => {
+        reject(request.error);
+      };
+    }
+  );
+}
+
+
+// =========================================
+// ✏️ UPDATE
+// =========================================
+
+function updateHyunsukVisual(item) {
+
+  return new Promise(
+    (resolve, reject) => {
+
+      if (
+        !hyunsukVisualDB ||
+        !item
+      ) {
+        reject(
+          new Error(
+            "Database or item is not ready"
+          )
+        );
+        return;
+      }
+
+      const transaction =
+        hyunsukVisualDB.transaction(
+          HYUNSUK_VISUAL_STORE,
+          "readwrite"
+        );
+
+      const store =
+        transaction.objectStore(
+          HYUNSUK_VISUAL_STORE
+        );
+
+      const request =
+        store.put(item);
+
+      request.onsuccess =
+        () => resolve();
+
+      request.onerror =
+        () => reject(
+          request.error
+        );
+    }
+  );
+}
+
+
+// =========================================
+// 🗑️ DELETE
+// =========================================
+
+function deleteHyunsukVisual(item) {
+
+  return new Promise(
+    (resolve, reject) => {
+
+      if (
+        !hyunsukVisualDB ||
+        !item
+      ) {
+        reject(
+          new Error(
+            "Database or item is not ready"
+          )
+        );
+        return;
+      }
+
+      const transaction =
+        hyunsukVisualDB.transaction(
+          HYUNSUK_VISUAL_STORE,
+          "readwrite"
+        );
+
+      const store =
+        transaction.objectStore(
+          HYUNSUK_VISUAL_STORE
+        );
+
+      const request =
+        store.delete(item.id);
+
+      request.onsuccess =
+        () => resolve();
+
+      request.onerror =
+        () => reject(
+          request.error
+        );
+    }
+  );
+}
+
+
+// =========================================
+// 📸 CARD
+// =========================================
+
+let currentHyunsukVisualItem = null;
+
+function createHyunsukVisualCard(item) {
+
+  if (!hyunsukVisualGrid) return;
+
+  const card =
+    document.createElement("div");
+
+  card.className =
+    "jihoon-visual-card hyunsuk-visual-card";
+
+  const hairColor =
+    item.hairColor || "UNTAGGED";
+
+  card.dataset.hair =
+    hairColor;
+
+  const img =
+    document.createElement("img");
+
+  img.alt =
+    "HYUNSUK VISUAL";
+
+  img.decoding = "async";
+  img.loading = "lazy";
+
+  if (item.imageData) {
+    img.src = item.imageData;
+  }
+
+  const hairTag =
+    document.createElement("div");
+
+  hairTag.className =
+    "jihoon-visual-hair-tag";
+
+  const hairLabels = {
+    BLACK: "🖤 BLACK",
+    BROWN: "🤎 BROWN",
+    RED: "❤️ RED",
+    PINK: "🩷 PINK",
+    BLONDE: "💛 BLONDE",
+    GRAY: "🩶 GRAY",
+    OTHER: "✨ OTHER",
+    UNTAGGED: "💎 UNTAGGED"
+  };
+
+  hairTag.textContent =
+    hairLabels[hairColor] ||
+    "✨ OTHER";
+
+  const favoriteBadge =
+    document.createElement("div");
+
+  favoriteBadge.className =
+    "jihoon-visual-favorite-badge";
+
+  if (item.favorite === true) {
+
+    favoriteBadge.textContent =
+      "♥";
+
+    favoriteBadge.classList.add(
+      "show"
+    );
+  }
+
+  card.addEventListener(
+    "click",
+    () => {
+      openHyunsukVisualEdit(item);
+    }
+  );
+
+  card.appendChild(img);
+  card.appendChild(hairTag);
+  card.appendChild(favoriteBadge);
+
+  hyunsukVisualGrid.prepend(card);
+}
+
+
+// =========================================
+// 📚 LOAD
+// =========================================
+
+async function loadHyunsukVisuals() {
+
+  if (!hyunsukVisualGrid) return;
+
+  hyunsukVisualGrid.innerHTML = "";
+
+  try {
+
+    const visuals =
+      await getHyunsukVisuals();
+
+    visuals
+      .sort(
+        (a, b) =>
+          a.createdAt - b.createdAt
+      )
+      .forEach(
+        (item) => {
+          createHyunsukVisualCard(
+            item
+          );
+        }
+      );
+
+  } catch (error) {
+
+    console.error(
+      "HYUNSUK VISUAL LOAD ERROR:",
+      error
+    );
+  }
+}
+
+
+// =========================================
+// ＋ ADD VISUAL
+// =========================================
+
+if (
+  hyunsukVisualAdd &&
+  hyunsukVisualInput
+) {
+
+  hyunsukVisualAdd.addEventListener(
+    "click",
+    () => {
+      hyunsukVisualInput.click();
+    }
+  );
+}
+
+
+// =========================================
+// 🎨 ADD時 HAIR SELECT
+// =========================================
+
+const hyunsukHairButtons =
+  hyunsukHairModal
+    ? hyunsukHairModal.querySelectorAll(
+        "[data-hair]"
+      )
+    : [];
+
+let pendingHyunsukVisualFile =
+  null;
+
+
+if (hyunsukVisualInput) {
+
+  hyunsukVisualInput.addEventListener(
+    "change",
+    () => {
+
+      const file =
+        hyunsukVisualInput.files[0];
+
+      if (!file) return;
+
+      pendingHyunsukVisualFile =
+        file;
+
+      if (hyunsukHairModal) {
+        hyunsukHairModal.classList.add(
+          "active"
+        );
+      }
+    }
+  );
+}
+
+
+hyunsukHairButtons.forEach(
+  (button) => {
+
+    button.addEventListener(
+      "click",
+      async () => {
+
+        if (
+          !pendingHyunsukVisualFile
+        ) {
+          return;
+        }
+
+        const hairColor =
+          button.dataset.hair;
+
+        try {
+
+          const savedItem =
+            await saveHyunsukVisual(
+              pendingHyunsukVisualFile,
+              hairColor
+            );
+
+          createHyunsukVisualCard(
+            savedItem
+          );
+
+        } catch (error) {
+
+          console.error(
+            "HYUNSUK VISUAL SAVE ERROR:",
+            error
+          );
+
+          alert(
+            "写真の保存に失敗しました🥲"
+          );
+        }
+
+        pendingHyunsukVisualFile =
+          null;
+
+        hyunsukVisualInput.value =
+          "";
+
+        if (hyunsukHairModal) {
+          hyunsukHairModal.classList.remove(
+            "active"
+          );
+        }
+      }
+    );
+  }
+);
+
+
+// CANCEL
+if (hyunsukHairCancel) {
+
+  hyunsukHairCancel.addEventListener(
+    "click",
+    () => {
+
+      pendingHyunsukVisualFile =
+        null;
+
+      if (hyunsukVisualInput) {
+        hyunsukVisualInput.value =
+          "";
+      }
+
+      if (hyunsukHairModal) {
+        hyunsukHairModal.classList.remove(
+          "active"
+        );
+      }
+    }
+  );
+}
+
+
+// =========================================
+// ✏️ EDIT OPEN / CLOSE
+// =========================================
+
+function openHyunsukVisualEdit(item) {
+
+  if (
+    !hyunsukVisualEditModal ||
+    !hyunsukVisualEditImage
+  ) {
+    return;
+  }
+
+  currentHyunsukVisualItem =
+    item;
+
+  hyunsukVisualEditImage.src =
+    item.imageData || "";
+
+  if (hyunsukVisualFavorite) {
+
+    const isFavorite =
+      item.favorite === true;
+
+    hyunsukVisualFavorite.textContent =
+      isFavorite
+        ? "♥ FAVORITED"
+        : "♡ FAVORITE";
+
+    hyunsukVisualFavorite.classList.toggle(
+      "active",
+      isFavorite
+    );
+  }
+
+  hyunsukVisualEditModal.classList.add(
+    "active"
+  );
+}
+
+
+function closeHyunsukVisualEdit() {
+
+  if (!hyunsukVisualEditModal) {
+    return;
+  }
+
+  hyunsukVisualEditModal.classList.remove(
+    "active"
+  );
+
+  if (hyunsukVisualEditImage) {
+    hyunsukVisualEditImage.src =
+      "";
+  }
+
+  currentHyunsukVisualItem =
+    null;
+}
+
+
+if (hyunsukVisualEditCancel) {
+
+  hyunsukVisualEditCancel.addEventListener(
+    "click",
+    closeHyunsukVisualEdit
+  );
+}
+
+
+// =========================================
+// ♡ FAVORITE
+// =========================================
+
+if (hyunsukVisualFavorite) {
+
+  hyunsukVisualFavorite.addEventListener(
+    "click",
+    async () => {
+
+      if (
+        !currentHyunsukVisualItem
+      ) {
+        return;
+      }
+
+      currentHyunsukVisualItem.favorite =
+        currentHyunsukVisualItem.favorite
+          !== true;
+
+      await updateHyunsukVisual(
+        currentHyunsukVisualItem
+      );
+
+      const isFavorite =
+        currentHyunsukVisualItem.favorite
+          === true;
+
+      hyunsukVisualFavorite.textContent =
+        isFavorite
+          ? "♥ FAVORITED"
+          : "♡ FAVORITE";
+
+      hyunsukVisualFavorite.classList.toggle(
+        "active",
+        isFavorite
+      );
+
+      await loadHyunsukVisuals();
+    }
+  );
+}
+
+
+// =========================================
+// 🎨 CHANGE HAIR
+// =========================================
+
+const hyunsukHairChangeButtons =
+  hyunsukHairChangeModal
+    ? hyunsukHairChangeModal.querySelectorAll(
+        "[data-hair]"
+      )
+    : [];
+
+
+if (hyunsukVisualChangeHair) {
+
+  hyunsukVisualChangeHair.addEventListener(
+    "click",
+    () => {
+
+      if (
+        !currentHyunsukVisualItem ||
+        !hyunsukHairChangeModal
+      ) {
+        return;
+      }
+
+      hyunsukHairChangeModal.classList.add(
+        "active"
+      );
+    }
+  );
+}
+
+
+hyunsukHairChangeButtons.forEach(
+  (button) => {
+
+    button.addEventListener(
+      "click",
+      async () => {
+
+        if (
+          !currentHyunsukVisualItem
+        ) {
+          return;
+        }
+
+        currentHyunsukVisualItem.hairColor =
+          button.dataset.hair;
+
+        await updateHyunsukVisual(
+          currentHyunsukVisualItem
+        );
+
+        if (hyunsukHairChangeModal) {
+          hyunsukHairChangeModal.classList.remove(
+            "active"
+          );
+        }
+
+        closeHyunsukVisualEdit();
+
+        await loadHyunsukVisuals();
+      }
+    );
+  }
+);
+
+
+if (hyunsukHairChangeCancel) {
+
+  hyunsukHairChangeCancel.addEventListener(
+    "click",
+    () => {
+
+      if (hyunsukHairChangeModal) {
+        hyunsukHairChangeModal.classList.remove(
+          "active"
+        );
+      }
+    }
+  );
+}
+
+
+// =========================================
+// 🗑️ DELETE
+// =========================================
+
+if (hyunsukVisualDelete) {
+
+  hyunsukVisualDelete.addEventListener(
+    "click",
+    async () => {
+
+      if (
+        !currentHyunsukVisualItem
+      ) {
+        return;
+      }
+
+      const ok =
+        confirm(
+          "このヒョンソクをVISUAL BOOKから削除しますか？🥲"
+        );
+
+      if (!ok) return;
+
+      try {
+
+        await deleteHyunsukVisual(
+          currentHyunsukVisualItem
+        );
+
+        closeHyunsukVisualEdit();
+
+        await loadHyunsukVisuals();
+
+      } catch (error) {
+
+        console.error(
+          "HYUNSUK VISUAL DELETE ERROR:",
+          error
+        );
+
+        alert(
+          "削除に失敗しました🥲"
+        );
+      }
+    }
+  );
+}
+
+
+// =========================================
+// 🎨 FILTER
+// =========================================
+
+const hyunsukHairFilters =
+  document.querySelectorAll(
+    ".hyunsuk-hair-filter button"
+  );
+
+
+hyunsukHairFilters.forEach(
+  (button) => {
+
+    button.addEventListener(
+      "click",
+      () => {
+
+        const selectedHair =
+          button.dataset.hair;
+
+        hyunsukHairFilters.forEach(
+          (filterButton) => {
+            filterButton.classList.remove(
+              "active"
+            );
+          }
+        );
+
+        button.classList.add(
+          "active"
+        );
+
+        const cards =
+          document.querySelectorAll(
+            ".hyunsuk-visual-card"
+          );
+
+        cards.forEach(
+          (card) => {
+
+            if (
+              selectedHair === "ALL" ||
+              card.dataset.hair ===
+                selectedHair
+            ) {
+              card.style.display = "";
+            } else {
+              card.style.display =
+                "none";
+            }
+          }
+        );
+      }
+    );
+  }
+);
+
+
+// =========================================
+// 🚀 INITIALIZE
+// =========================================
+
+openHyunsukVisualDB()
+  .then(async () => {
+
+    await loadHyunsukVisuals();
+
+  })
+  .catch((error) => {
+
+    console.error(
+      "HYUNSUK VISUAL DB ERROR:",
+      error
+    );
+  });
