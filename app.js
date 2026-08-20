@@ -4874,6 +4874,144 @@ if (
     }
   );
 }
+// =========================================
+// 🌱 HYUNSUK GROWTH YEAR OPEN / BACK
+// 2020 - 2026 共通
+// =========================================
+
+const hyunsukGrowthYearPage =
+  document.getElementById("hyunsukGrowthYearPage");
+
+const hyunsukGrowthYearBack =
+  document.getElementById("hyunsukGrowthYearBack");
+
+const hyunsukGrowthYearNumber =
+  document.getElementById("hyunsukGrowthYearNumber");
+
+const hyunsukGrowthYearTitle =
+  document.getElementById("hyunsukGrowthYearTitle");
+
+const hyunsukGrowthYearSubtitle =
+  document.getElementById("hyunsukGrowthYearSubtitle");
+
+const hyunsukGrowthYearVisualTitle =
+  document.getElementById("hyunsukGrowthYearVisualTitle");
+
+const hyunsukGrowthYearCaption =
+  document.getElementById("hyunsukGrowthYearCaption");
+
+let currentHyunsukGrowthYear = 2020;
+
+const hyunsukGrowthYearInfo = {
+  2020: "DEBUT ERA 💎",
+  2021: "OUR TREASURE ERA 💎",
+  2022: "THE SECOND STEP ERA 💎",
+  2023: "REBOOT ERA 💎",
+  2024: "2024 MEMORIES 💎",
+  2025: "2025 MEMORIES 💎",
+  2026: "NOW ✨"
+};
+
+
+function openHyunsukGrowthYear(year) {
+
+  currentHyunsukGrowthYear = year;
+
+  if (hyunsukGrowthHistoryPage) {
+    hyunsukGrowthHistoryPage.style.display =
+      "none";
+  }
+
+  if (hyunsukGrowthYearNumber) {
+    hyunsukGrowthYearNumber.textContent =
+      year;
+  }
+
+  if (hyunsukGrowthYearTitle) {
+    hyunsukGrowthYearTitle.textContent =
+      hyunsukGrowthYearInfo[year] ||
+      `${year} 💎`;
+  }
+
+  if (hyunsukGrowthYearSubtitle) {
+    hyunsukGrowthYearSubtitle.textContent =
+      `${year}年のヒョンソクを振り返ろう 💎`;
+  }
+
+  if (hyunsukGrowthYearVisualTitle) {
+    hyunsukGrowthYearVisualTitle.textContent =
+      `📸 ${year} VISUAL`;
+  }
+
+  if (hyunsukGrowthYearCaption) {
+    hyunsukGrowthYearCaption.textContent =
+      `${year}年のお気に入りヒョンソクを残そう 💎`;
+  }
+
+  if (hyunsukGrowthYearPage) {
+    hyunsukGrowthYearPage.style.display =
+      "block";
+
+    hyunsukGrowthYearPage.scrollTop = 0;
+  }
+
+  document.body.style.overflow =
+    "hidden";
+}
+
+
+// 2020〜2026のボタンをまとめて接続
+[
+  2020,
+  2021,
+  2022,
+  2023,
+  2024,
+  2025,
+  2026
+].forEach((year) => {
+
+  const button =
+    document.getElementById(
+      `hyunsukGrowth${year}Open`
+    );
+
+  if (button) {
+
+    button.addEventListener(
+      "click",
+      () => {
+        openHyunsukGrowthYear(year);
+      }
+    );
+  }
+});
+
+
+// ← GROWTH HISTORY一覧へ戻る
+if (hyunsukGrowthYearBack) {
+
+  hyunsukGrowthYearBack.addEventListener(
+    "click",
+    () => {
+
+      if (hyunsukGrowthYearPage) {
+        hyunsukGrowthYearPage.style.display =
+          "none";
+      }
+
+      if (hyunsukGrowthHistoryPage) {
+        hyunsukGrowthHistoryPage.style.display =
+          "block";
+
+        hyunsukGrowthHistoryPage.scrollTop = 0;
+      }
+
+      document.body.style.overflow =
+        "hidden";
+    }
+  );
+}
 // ==========================================
 // 💎 GROWTH HISTORY 2020 OPEN / BACK
 // ==========================================
