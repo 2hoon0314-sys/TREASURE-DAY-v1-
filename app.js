@@ -12621,7 +12621,8 @@ hyunsukChemistryCards.forEach(
             "HYUNSUK",
             partner
           );
-
+currentSharedChemistryRenderTarget =
+  hyunsukChemistryMemoryList;
 
         const partnerInfo =
           chemistryMemberInfo[
