@@ -8116,26 +8116,32 @@ z-index: 1400;
     font-size: 11px;
   }
 }
-renderHyunsukGrowthVisuals();
+
 /* ========================================
-   📸 MEMBER VISUAL BOOK 写真サイズ修正
+   📸 VISUAL写真サイズ 最終修正
 ======================================== */
 
-.jihoon-year-gallery img,
-.hyunsuk-year-gallery img {
-  width: 100%;
-  height: 220px;
-  object-fit: cover;
-  object-position: center;
-  border-radius: 20px;
-  display: block;
+.jihoon-growth-visual-card,
+.hyunsuk-growth-visual-card {
+  width: 100% !important;
+  max-width: 240px !important;
+  margin: 0 auto 16px !important;
 }
 
-/* 写真一覧 */
-.jihoon-year-gallery,
-.hyunsuk-year-gallery {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-  width: 100%;
+.jihoon-growth-visual-photo,
+.hyunsuk-growth-visual-photo {
+  width: 100% !important;
+  height: 300px !important;
+  aspect-ratio: auto !important;
+  overflow: hidden !important;
+}
+
+.jihoon-growth-visual-photo img,
+.hyunsuk-growth-visual-photo img {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
 }
