@@ -15050,3 +15050,734 @@ const yoshiVisualRankingSystem =
       yoshiVisualSystem
 
   });
+// ======================================================
+// 🌱 MEMBER GROWTH HISTORY 共通エンジン
+// YOSHI以降の量産用
+// ======================================================
+
+function setupMemberGrowthHistory(config) {
+
+  const {
+    key,
+    displayName
+  } = config;
+
+
+  // =========================================
+  // DOM
+  // =========================================
+
+  const open =
+    document.getElementById(
+      `${key}GrowthHistoryOpen`
+    );
+
+  const page =
+    document.getElementById(
+      `${key}GrowthHistoryPage`
+    );
+
+  const back =
+    document.getElementById(
+      `${key}GrowthHistoryBack`
+    );
+
+  const input =
+    document.getElementById(
+      `${key}GrowthInput`
+    );
+
+  const addButtons =
+    document.querySelectorAll(
+      `.${key}-growth-add`
+    );
+
+
+  // =========================================
+  // 💾 IndexedDB
+  // =========================================
+
+  const DB_NAME =
+    `treasure-day-${key}-growth-db`;
+
+  const DB_VERSION = 1;
+
+  const STORE_NAME =
+    `${key}GrowthPhotos`;
+
+  let growthDB = null;
+
+  let selectedYear = null;
+
+
+  function openGrowthDB() {
+
+    return new Promise(
+      (resolve, reject) => {
+
+        const request =
+          indexedDB.open(
+            DB_NAME,
+            DB_VERSION
+          );
+
+
+        request.onupgradeneeded =
+          event => {
+
+            const db =
+              event.target.result;
+
+
+            if (
+              !db.objectStoreNames.contains(
+                STORE_NAME
+              )
+            ) {
+
+              db.createObjectStore(
+                STORE_NAME,
+                {
+                  keyPath: "id",
+                  autoIncrement: true
+                }
+              );
+            }
+          };
+
+
+        request.onsuccess =
+          event => {
+
+            growthDB =
+              event.target.result;
+
+            resolve(growthDB);
+          };
+
+
+        request.onerror =
+          () => {
+
+            reject(
+              request.error
+            );
+          };
+      }
+    );
+  }
+
+
+  // =========================================
+  // 📸 IMAGE → DataURL
+  // =========================================
+
+  function growthImageToDataURL(file) {
+
+    return new Promise(
+      (resolve, reject) => {
+
+        const reader =
+          new FileReader();
+
+
+        reader.onload = () => {
+
+          const img =
+            new Image();
+
+
+          img.onload = () => {
+
+            const MAX_SIZE = 1600;
+
+            let width =
+              img.naturalWidth;
+
+            let height =
+              img.naturalHeight;
+
+
+            if (
+              width > height &&
+              width > MAX_SIZE
+            ) {
+
+              height =
+                Math.round(
+                  height *
+                  MAX_SIZE /
+                  width
+                );
+
+              width =
+                MAX_SIZE;
+
+            } else if (
+              height >= width &&
+              height > MAX_SIZE
+            ) {
+
+              width =
+                Math.round(
+                  width *
+                  MAX_SIZE /
+                  height
+                );
+
+              height =
+                MAX_SIZE;
+            }
+
+
+            const canvas =
+              document.createElement(
+                "canvas"
+              );
+
+            canvas.width =
+              width;
+
+            canvas.height =
+              height;
+
+
+            const ctx =
+              canvas.getContext("2d");
+
+
+            if (!ctx) {
+
+              reject(
+                new Error(
+                  "Canvas unavailable"
+                )
+              );
+
+              return;
+            }
+
+
+            ctx.drawImage(
+              img,
+              0,
+              0,
+              width,
+              height
+            );
+
+
+            resolve(
+              canvas.toDataURL(
+                "image/jpeg",
+                0.86
+              )
+            );
+          };
+
+
+          img.onerror =
+            reject;
+
+          img.src =
+            reader.result;
+        };
+
+
+        reader.onerror =
+          reject;
+
+
+        reader.readAsDataURL(
+          file
+        );
+      }
+    );
+  }
+
+
+  // =========================================
+  // 💾 SAVE
+  // =========================================
+
+  async function saveGrowthPhoto(
+    file,
+    year
+  ) {
+
+    const imageData =
+      await growthImageToDataURL(
+        file
+      );
+
+
+    return new Promise(
+      (resolve, reject) => {
+
+        const transaction =
+          growthDB.transaction(
+            STORE_NAME,
+            "readwrite"
+          );
+
+        const store =
+          transaction.objectStore(
+            STORE_NAME
+          );
+
+
+        const data = {
+
+          year:
+            String(year),
+
+          imageData,
+
+          createdAt:
+            Date.now()
+
+        };
+
+
+        const request =
+          store.add(data);
+
+
+        request.onsuccess =
+          () => {
+
+            data.id =
+              request.result;
+
+            resolve(data);
+          };
+
+
+        request.onerror =
+          () => {
+
+            reject(
+              request.error
+            );
+          };
+      }
+    );
+  }
+
+
+  // =========================================
+  // 📚 GET ALL
+  // =========================================
+
+  function getGrowthPhotos() {
+
+    return new Promise(
+      (resolve, reject) => {
+
+        if (!growthDB) {
+
+          resolve([]);
+
+          return;
+        }
+
+
+        const transaction =
+          growthDB.transaction(
+            STORE_NAME,
+            "readonly"
+          );
+
+        const store =
+          transaction.objectStore(
+            STORE_NAME
+          );
+
+        const request =
+          store.getAll();
+
+
+        request.onsuccess =
+          () => {
+
+            resolve(
+              request.result || []
+            );
+          };
+
+
+        request.onerror =
+          () => {
+
+            reject(
+              request.error
+            );
+          };
+      }
+    );
+  }
+
+
+  // =========================================
+  // 🗑 DELETE
+  // =========================================
+
+  function deleteGrowthPhoto(id) {
+
+    return new Promise(
+      (resolve, reject) => {
+
+        const transaction =
+          growthDB.transaction(
+            STORE_NAME,
+            "readwrite"
+          );
+
+        const store =
+          transaction.objectStore(
+            STORE_NAME
+          );
+
+        const request =
+          store.delete(id);
+
+
+        request.onsuccess =
+          () => resolve();
+
+
+        request.onerror =
+          () => {
+
+            reject(
+              request.error
+            );
+          };
+      }
+    );
+  }
+
+
+  // =========================================
+  // 📸 CARD
+  // =========================================
+
+  function createGrowthCard(item) {
+
+    const grid =
+      document.getElementById(
+        `${key}Growth${item.year}`
+      );
+
+
+    if (!grid) return;
+
+
+    const card =
+      document.createElement(
+        "div"
+      );
+
+    card.className =
+      "jihoon-growth-photo-card";
+
+
+    const img =
+      document.createElement(
+        "img"
+      );
+
+    img.src =
+      item.imageData || "";
+
+    img.alt =
+      `${displayName} ${item.year}`;
+
+    img.loading =
+      "lazy";
+
+    img.decoding =
+      "async";
+
+
+    const deleteButton =
+      document.createElement(
+        "button"
+      );
+
+    deleteButton.type =
+      "button";
+
+    deleteButton.className =
+      "jihoon-growth-photo-delete";
+
+    deleteButton.textContent =
+      "×";
+
+
+    deleteButton.addEventListener(
+      "click",
+      async event => {
+
+        event.stopPropagation();
+
+
+        const ok =
+          confirm(
+            `${item.year}年の写真を削除しますか？🥲`
+          );
+
+
+        if (!ok) return;
+
+
+        await deleteGrowthPhoto(
+          item.id
+        );
+
+
+        await loadGrowthPhotos();
+      }
+    );
+
+
+    card.appendChild(img);
+
+    card.appendChild(
+      deleteButton
+    );
+
+
+    grid.appendChild(card);
+  }
+
+
+  // =========================================
+  // 📚 LOAD
+  // =========================================
+
+  async function loadGrowthPhotos() {
+
+    for (
+      let year = 2020;
+      year <= 2026;
+      year++
+    ) {
+
+      const grid =
+        document.getElementById(
+          `${key}Growth${year}`
+        );
+
+
+      if (grid) {
+
+        grid.innerHTML =
+          "";
+      }
+    }
+
+
+    const photos =
+      await getGrowthPhotos();
+
+
+    photos
+      .sort(
+        (a, b) =>
+          a.createdAt -
+          b.createdAt
+      )
+      .forEach(
+        item => {
+
+          createGrowthCard(
+            item
+          );
+        }
+      );
+  }
+
+
+  // =========================================
+  // 🌱 OPEN
+  // =========================================
+
+  if (
+    open &&
+    page
+  ) {
+
+    open.addEventListener(
+      "click",
+      async () => {
+
+        page.style.display =
+          "block";
+
+        page.scrollTop =
+          0;
+
+
+        await loadGrowthPhotos();
+
+
+        document.body.style.overflow =
+          "hidden";
+      }
+    );
+  }
+
+
+  // =========================================
+  // ← BACK
+  // =========================================
+
+  if (
+    back &&
+    page
+  ) {
+
+    back.addEventListener(
+      "click",
+      () => {
+
+        page.style.display =
+          "none";
+
+        document.body.style.overflow =
+          "hidden";
+      }
+    );
+  }
+
+
+  // =========================================
+  // ＋ ADD
+  // =========================================
+
+  addButtons.forEach(
+    button => {
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          selectedYear =
+            button.dataset.year;
+
+
+          if (input) {
+
+            input.value =
+              "";
+
+            input.click();
+          }
+        }
+      );
+    }
+  );
+
+
+  // =========================================
+  // 📸 FILE SELECT
+  // =========================================
+
+  if (input) {
+
+    input.addEventListener(
+      "change",
+      async () => {
+
+        const file =
+          input.files[0];
+
+
+        if (
+          !file ||
+          !selectedYear
+        ) {
+          return;
+        }
+
+
+        try {
+
+          await saveGrowthPhoto(
+            file,
+            selectedYear
+          );
+
+
+          await loadGrowthPhotos();
+
+
+        } catch (error) {
+
+          console.error(
+            `${displayName} GROWTH SAVE ERROR`,
+            error
+          );
+
+
+          alert(
+            "写真の保存に失敗しました🥲"
+          );
+        }
+
+
+        input.value =
+          "";
+
+        selectedYear =
+          null;
+      }
+    );
+  }
+
+
+  // =========================================
+  // 🚀 INITIALIZE
+  // =========================================
+
+  openGrowthDB()
+    .then(
+      async () => {
+
+        await loadGrowthPhotos();
+      }
+    )
+    .catch(
+      error => {
+
+        console.error(
+          `${displayName} GROWTH DB ERROR`,
+          error
+        );
+      }
+    );
+
+
+  return {
+
+    loadGrowthPhotos,
+
+    getGrowthPhotos
+
+  };
+}
+
+
+// ======================================================
+// 🐯 YOSHI GROWTH HISTORY START
+// ======================================================
+
+const yoshiGrowthSystem =
+  setupMemberGrowthHistory({
+
+    key: "yoshi",
+
+    displayName: "YOSHI"
+
+  });
