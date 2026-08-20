@@ -8117,19 +8117,21 @@ z-index: 1400;
   }
 }
 
-/* ========================================
+/* =========================================
    📸 VISUAL写真サイズ 最終修正
-======================================== */
+========================================= */
 
 .jihoon-growth-visual-card,
-.hyunsuk-growth-visual-card {
+.hyunsuk-growth-visual-card,
+.yoshi-growth-visual-card {
   width: 100% !important;
   max-width: 240px !important;
   margin: 0 auto 16px !important;
 }
 
 .jihoon-growth-visual-photo,
-.hyunsuk-growth-visual-photo {
+.hyunsuk-growth-visual-photo,
+.yoshi-growth-visual-photo {
   width: 100% !important;
   height: 300px !important;
   aspect-ratio: auto !important;
@@ -8137,7 +8139,8 @@ z-index: 1400;
 }
 
 .jihoon-growth-visual-photo img,
-.hyunsuk-growth-visual-photo img {
+.hyunsuk-growth-visual-photo img,
+.yoshi-growth-visual-photo img {
   display: block !important;
   width: 100% !important;
   height: 100% !important;
