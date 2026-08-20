@@ -4210,6 +4210,59 @@ if (jihoonBookClose && jihoonBookDetail) {
     document.body.style.overflow = "hidden";
   });
 }
+// ========================================
+// 🦔 HYUNSUK BOOK OPEN / CLOSE
+// ========================================
+
+const hyunsukBookOpen =
+  document.getElementById("hyunsuk-book-open");
+
+const hyunsukBookDetail =
+  document.getElementById("hyunsuk-book-detail");
+
+const hyunsukBookClose =
+  document.getElementById("hyunsuk-book-close");
+
+
+// HYUNSUK BOOKを開く
+if (hyunsukBookOpen && hyunsukBookDetail) {
+
+  hyunsukBookOpen.addEventListener(
+    "click",
+    () => {
+
+      hyunsukBookDetail.classList.add(
+        "active"
+      );
+
+      hyunsukBookDetail.scrollTop = 0;
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+  );
+}
+
+
+// MEMBER BOOKへ戻る
+if (hyunsukBookClose && hyunsukBookDetail) {
+
+  hyunsukBookClose.addEventListener(
+    "click",
+    () => {
+
+      hyunsukBookDetail.classList.remove(
+        "active"
+      );
+
+      // MEMBER BOOKは後ろで開いたまま
+      document.body.style.overflow =
+        "hidden";
+
+    }
+  );
+}
 // =========================================
 // 📸 JIHOON VISUAL BOOK OPEN / CLOSE
 // =========================================
