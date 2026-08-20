@@ -16802,7 +16802,41 @@ const yoshiGrowthYearVisualGrid =
   document.getElementById("yoshiGrowthYearVisualGrid");
 
 let currentYoshiGrowthYear = "2020";
+const yoshiGrowthVisualModal =
+  document.getElementById("yoshiGrowthVisualModal");
 
+const yoshiGrowthVisualInput =
+  document.getElementById("yoshiGrowthVisualInput");
+
+const yoshiGrowthVisualSelect =
+  document.getElementById("yoshiGrowthVisualSelect");
+
+const yoshiGrowthVisualPreview =
+  document.getElementById("yoshiGrowthVisualPreview");
+
+const yoshiGrowthVisualPreviewImage =
+  document.getElementById("yoshiGrowthVisualPreviewImage");
+
+const yoshiGrowthVisualHair =
+  document.getElementById("yoshiGrowthVisualHair");
+
+const yoshiGrowthVisualMemo =
+  document.getElementById("yoshiGrowthVisualMemo");
+
+const yoshiGrowthVisualSave =
+  document.getElementById("yoshiGrowthVisualSave");
+
+const yoshiGrowthVisualDelete =
+  document.getElementById("yoshiGrowthVisualDelete");
+
+const yoshiGrowthVisualCancel =
+  document.getElementById("yoshiGrowthVisualCancel");
+
+const yoshiGrowthVisualModalKicker =
+  document.getElementById("yoshiGrowthVisualModalKicker");
+
+let pendingYoshiGrowthFile = null;
+let currentYoshiGrowthVisualItem = null;
 
 // =====================================================
 // 🐯 YEAR INFO
