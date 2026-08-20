@@ -17823,7 +17823,7 @@ currentSharedChemistryRenderTarget =
 
         yoshiChemistryDetailPage.scrollTop =
           0;
-
+await renderSharedChemistryMemories();
         document.body.style.overflow =
           "hidden";
       }
