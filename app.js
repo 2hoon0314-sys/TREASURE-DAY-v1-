@@ -17594,3 +17594,254 @@ openYoshiGrowthDB()
       error
     );
   });
+// =====================================================
+// 🫶 YOSHI CHEMISTRY
+// LIST → SHARED DETAIL
+// =====================================================
+
+const yoshiChemistryOpen =
+  document.getElementById("yoshiChemistryOpen");
+
+const yoshiChemistryPage =
+  document.getElementById("yoshiChemistryPage");
+
+const yoshiChemistryBack =
+  document.getElementById("yoshiChemistryBack");
+
+const yoshiChemistryDetailPage =
+  document.getElementById("yoshiChemistryDetailPage");
+
+const yoshiChemistryDetailBack =
+  document.getElementById("yoshiChemistryDetailBack");
+
+const yoshiChemistryDetailEmoji =
+  document.getElementById("yoshiChemistryDetailEmoji");
+
+const yoshiChemistryDetailTitle =
+  document.getElementById("yoshiChemistryDetailTitle");
+
+const yoshiChemistryDetailName =
+  document.getElementById("yoshiChemistryDetailName");
+
+const yoshiChemistryDetailCaption =
+  document.getElementById("yoshiChemistryDetailCaption");
+
+const yoshiChemistryAdd =
+  document.getElementById("yoshiChemistryAdd");
+
+let currentYoshiChemistryPartner = null;
+
+
+// =====================================================
+// 🐯 PARTNER INFO
+// =====================================================
+
+const yoshiChemistryPartnerInfo = {
+
+  HYUNSUK: {
+    emoji: "🐯🦔",
+    title: "YOSHI × HYUNSUK"
+  },
+
+  JIHOON: {
+    emoji: "🐯🐶",
+    title: "YOSHI × JIHOON"
+  },
+
+  JUNKYU: {
+    emoji: "🐯🐨",
+    title: "YOSHI × JUNKYU"
+  },
+
+  JAEHYUK: {
+    emoji: "🐯🦁",
+    title: "YOSHI × JAEHYUK"
+  },
+
+  ASAHI: {
+    emoji: "🐯🤖",
+    title: "YOSHI × ASAHI"
+  },
+
+  DOYOUNG: {
+    emoji: "🐯🐰",
+    title: "YOSHI × DOYOUNG"
+  },
+
+  HARUTO: {
+    emoji: "🐯🦋",
+    title: "YOSHI × HARUTO"
+  },
+
+  JEONGWOO: {
+    emoji: "🐯🐺",
+    title: "YOSHI × JEONGWOO"
+  },
+
+  JUNGHWAN: {
+    emoji: "🐯🐮",
+    title: "YOSHI × JUNGHWAN"
+  }
+
+};
+
+
+// =====================================================
+// 🫶 YOSHI BOOK → CHEMISTRY
+// =====================================================
+
+if (
+  yoshiChemistryOpen &&
+  yoshiChemistryPage
+) {
+
+  yoshiChemistryOpen.addEventListener(
+    "click",
+    () => {
+
+      if (yoshiBookDetail) {
+        yoshiBookDetail.classList.remove("active");
+      }
+
+      yoshiChemistryPage.style.display =
+        "block";
+
+      yoshiChemistryPage.scrollTop =
+        0;
+
+      document.body.style.overflow =
+        "hidden";
+    }
+  );
+}
+
+
+// =====================================================
+// ← CHEMISTRY → YOSHI BOOK
+// =====================================================
+
+if (
+  yoshiChemistryBack &&
+  yoshiChemistryPage
+) {
+
+  yoshiChemistryBack.addEventListener(
+    "click",
+    () => {
+
+      yoshiChemistryPage.style.display =
+        "none";
+
+      if (yoshiBookDetail) {
+
+        yoshiBookDetail.classList.add(
+          "active"
+        );
+
+        yoshiBookDetail.scrollTop =
+          0;
+      }
+
+      document.body.style.overflow =
+        "hidden";
+    }
+  );
+}
+
+
+// =====================================================
+// 🐯 CHEMISTRY CARD → DETAIL
+// =====================================================
+
+document
+  .querySelectorAll(".yoshi-chemistry-card")
+  .forEach(card => {
+
+    card.addEventListener(
+      "click",
+      () => {
+
+        const partner =
+          card.dataset.partner;
+
+        if (!partner) return;
+
+        const info =
+          yoshiChemistryPartnerInfo[
+            partner
+          ];
+
+        if (!info) return;
+
+
+        currentYoshiChemistryPartner =
+          partner;
+
+
+        if (yoshiChemistryDetailEmoji) {
+          yoshiChemistryDetailEmoji.textContent =
+            info.emoji;
+        }
+
+
+        if (yoshiChemistryDetailTitle) {
+          yoshiChemistryDetailTitle.textContent =
+            info.title;
+        }
+
+
+        if (yoshiChemistryDetailName) {
+          yoshiChemistryDetailName.textContent =
+            "CHEMISTRY MEMORY 💎";
+        }
+
+
+        if (yoshiChemistryDetailCaption) {
+          yoshiChemistryDetailCaption.textContent =
+            `ヨシと${partner}の好きな瞬間を集めよう 💎`;
+        }
+
+
+        yoshiChemistryPage.style.display =
+          "none";
+
+        yoshiChemistryDetailPage.style.display =
+          "block";
+
+        yoshiChemistryDetailPage.scrollTop =
+          0;
+
+        document.body.style.overflow =
+          "hidden";
+      }
+    );
+  });
+
+
+// =====================================================
+// ← DETAIL → CHEMISTRY LIST
+// =====================================================
+
+if (
+  yoshiChemistryDetailBack &&
+  yoshiChemistryDetailPage
+) {
+
+  yoshiChemistryDetailBack.addEventListener(
+    "click",
+    () => {
+
+      yoshiChemistryDetailPage.style.display =
+        "none";
+
+      yoshiChemistryPage.style.display =
+        "block";
+
+      yoshiChemistryPage.scrollTop =
+        0;
+
+      document.body.style.overflow =
+        "hidden";
+    }
+  );
+}
