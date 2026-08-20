@@ -9722,3 +9722,261 @@ openHyunsukVisualDB()
       error
     );
   });
+// =========================================
+// 👑 HYUNSUK VISUAL RANKING
+// =========================================
+
+const hyunsukVisualRankingList =
+  document.getElementById("hyunsukVisualRankingList");
+
+
+// FAVORITEだけ取得
+async function getHyunsukFavoriteVisuals() {
+
+  const visuals =
+    await getHyunsukVisuals();
+
+  return visuals.filter(
+    (item) => item.favorite === true
+  );
+}
+
+
+// ランキング表示
+async function loadHyunsukVisualRanking() {
+
+  if (!hyunsukVisualRankingList) return;
+
+  hyunsukVisualRankingList.innerHTML = "";
+
+  try {
+
+    const favorites =
+      await getHyunsukFavoriteVisuals();
+
+    favorites.sort(
+      (a, b) => {
+
+        const orderA =
+          a.rankOrder ??
+          Number.MAX_SAFE_INTEGER;
+
+        const orderB =
+          b.rankOrder ??
+          Number.MAX_SAFE_INTEGER;
+
+        return orderA - orderB;
+      }
+    );
+
+
+    // まだ順位がない写真に初期順位
+    for (
+      let i = 0;
+      i < favorites.length;
+      i++
+    ) {
+
+      if (
+        favorites[i].rankOrder == null
+      ) {
+
+        favorites[i].rankOrder = i;
+
+        await updateHyunsukVisual(
+          favorites[i]
+        );
+      }
+    }
+
+
+    if (favorites.length === 0) {
+
+      hyunsukVisualRankingList.innerHTML =
+        '<div class="jihoon-ranking-empty">♡ FAVORITEした写真がまだありません</div>';
+
+      return;
+    }
+
+
+    favorites.forEach(
+      (item, index) => {
+
+        const card =
+          document.createElement("div");
+
+        card.className =
+          "jihoon-visual-ranking-item";
+
+
+        const rank =
+          document.createElement("div");
+
+        rank.className =
+          "jihoon-visual-ranking-number";
+
+
+        const rankLabels = [
+          "🥇 1ST",
+          "🥈 2ND",
+          "🥉 3RD"
+        ];
+
+        rank.textContent =
+          rankLabels[index] ||
+          `#${index + 1}`;
+
+
+        const img =
+          document.createElement("img");
+
+        img.alt =
+          "HYUNSUK VISUAL";
+
+        img.loading = "lazy";
+        img.decoding = "async";
+
+        if (item.imageData) {
+          img.src = item.imageData;
+        }
+
+
+        card.appendChild(rank);
+        card.appendChild(img);
+
+
+        // =========================
+        // ↑↓ 順位変更
+        // =========================
+
+        const controls =
+          document.createElement("div");
+
+        controls.className =
+          "jihoon-visual-ranking-controls";
+
+
+        const upButton =
+          document.createElement("button");
+
+        upButton.type = "button";
+        upButton.textContent = "↑  UP";
+        upButton.className =
+          "jihoon-ranking-move-button";
+
+
+        const downButton =
+          document.createElement("button");
+
+        downButton.type = "button";
+        downButton.textContent =
+          "DOWN  ↓";
+
+        downButton.className =
+          "jihoon-ranking-move-button";
+
+
+        controls.appendChild(
+          upButton
+        );
+
+        controls.appendChild(
+          downButton
+        );
+
+
+        // ↑ 1つ上へ
+        upButton.addEventListener(
+          "click",
+          async () => {
+
+            if (index === 0) return;
+
+            const previousItem =
+              favorites[index - 1];
+
+            const currentOrder =
+              item.rankOrder ?? index;
+
+            const previousOrder =
+              previousItem.rankOrder ??
+              index - 1;
+
+            item.rankOrder =
+              previousOrder;
+
+            previousItem.rankOrder =
+              currentOrder;
+
+            await updateHyunsukVisual(
+              item
+            );
+
+            await updateHyunsukVisual(
+              previousItem
+            );
+
+            loadHyunsukVisualRanking();
+          }
+        );
+
+
+        // ↓ 1つ下へ
+        downButton.addEventListener(
+          "click",
+          async () => {
+
+            if (
+              index ===
+              favorites.length - 1
+            ) {
+              return;
+            }
+
+            const nextItem =
+              favorites[index + 1];
+
+            const currentOrder =
+              item.rankOrder ?? index;
+
+            const nextOrder =
+              nextItem.rankOrder ??
+              index + 1;
+
+            item.rankOrder =
+              nextOrder;
+
+            nextItem.rankOrder =
+              currentOrder;
+
+            await updateHyunsukVisual(
+              item
+            );
+
+            await updateHyunsukVisual(
+              nextItem
+            );
+
+            loadHyunsukVisualRanking();
+          }
+        );
+
+
+        card.appendChild(
+          controls
+        );
+
+        hyunsukVisualRankingList.appendChild(
+          card
+        );
+      }
+    );
+
+  } catch (error) {
+
+    console.error(
+      "HYUNSUK VISUAL RANKING LOAD ERROR:",
+      error
+    );
+  }
+}
