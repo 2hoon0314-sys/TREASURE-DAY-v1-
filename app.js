@@ -17055,31 +17055,34 @@ async function saveYoshiGrowthVisual(
       );
 
 
-    const item = {
+   const item = {
 
-      year:
-        String(year),
+  id:
+    Date.now() +
+    Math.floor(
+      Math.random() * 1000
+    ),
 
-      imageData,
+  year:
+    String(year),
 
-      createdAt:
-        Date.now()
+  imageData,
 
-    };
+  createdAt:
+    Date.now()
+
+};
 
 
     const request =
       store.add(item);
 
 
-    request.onsuccess = () => {
+  request.onsuccess = () => {
 
-      item.id =
-        request.result;
+  resolve(item);
 
-      resolve(item);
-    };
-
+};
 
     request.onerror = () => {
 
