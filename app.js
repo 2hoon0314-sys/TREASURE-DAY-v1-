@@ -15104,6 +15104,21 @@ const yoshiVisualRankingSystem =
 
   });
 // ======================================================
+// 🐨 JUNKYU RANKING START
+// ======================================================
+
+const junkyuVisualRankingSystem =
+  setupMemberVisualRanking({
+
+    key: "junkyu",
+
+    displayName: "JUNKYU",
+
+    visualSystem:
+      junkyuVisualSystem
+
+  });
+// ======================================================
 // 🌱 MEMBER GROWTH HISTORY 共通エンジン
 // YOSHI以降の量産用
 // ======================================================
