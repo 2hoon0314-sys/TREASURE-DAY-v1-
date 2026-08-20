@@ -4192,7 +4192,8 @@ async function loadEventPhotos(eventKey) {
 
 const memberCards = document.querySelectorAll(".member-card");
 const jihoonBookDetail = document.getElementById("jihoon-book-detail");
-const jihoonBookClose = document.querySelector(".jihoon-book-close");
+const jihoonBookClose =
+  document.getElementById("jihoon-book-close");
 
 if (memberCards[1] && jihoonBookDetail) {
   memberCards[1].addEventListener("click", () => {
