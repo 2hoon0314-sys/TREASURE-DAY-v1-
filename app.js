@@ -13482,6 +13482,64 @@ if (yoshiBookClose && yoshiBookDetail) {
     }
   );
 }
+// ========================================
+// 🐨 JUNKYU BOOK OPEN / CLOSE
+// ========================================
+
+const junkyuBookOpen =
+  document.getElementById("junkyu-book-open");
+
+const junkyuBookDetail =
+  document.getElementById("junkyu-book-detail");
+
+const junkyuBookClose =
+  document.getElementById("junkyu-book-close");
+
+
+// JUNKYU BOOKを開く
+if (
+  junkyuBookOpen &&
+  junkyuBookDetail
+) {
+
+  junkyuBookOpen.addEventListener(
+    "click",
+    () => {
+
+      junkyuBookDetail.classList.add(
+        "active"
+      );
+
+      junkyuBookDetail.scrollTop = 0;
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+  );
+}
+
+
+// MEMBER BOOKへ戻る
+if (
+  junkyuBookClose &&
+  junkyuBookDetail
+) {
+
+  junkyuBookClose.addEventListener(
+    "click",
+    () => {
+
+      junkyuBookDetail.classList.remove(
+        "active"
+      );
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+  );
+}
 // ======================================================
 // 📸 MEMBER VISUAL BOOK 共通エンジン
 // YOSHI以降の量産用
