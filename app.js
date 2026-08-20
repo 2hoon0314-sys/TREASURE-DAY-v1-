@@ -17592,49 +17592,221 @@ if (
 
 
 // =====================================================
-// ＋ ADD
+// ＋ ADD → MODAL
 // =====================================================
 
-if (
-  yoshiGrowthYearVisualAdd &&
-  yoshiGrowthYearVisualInput
-) {
+if (yoshiGrowthYearVisualAdd) {
 
   yoshiGrowthYearVisualAdd.addEventListener(
     "click",
     () => {
 
-      yoshiGrowthYearVisualInput.click();
+      currentYoshiGrowthVisualItem =
+        null;
+
+      pendingYoshiGrowthFile =
+        null;
+
+
+      if (yoshiGrowthVisualInput) {
+        yoshiGrowthVisualInput.value = "";
+      }
+
+
+      if (yoshiGrowthVisualMemo) {
+        yoshiGrowthVisualMemo.value = "";
+      }
+
+
+      if (yoshiGrowthVisualHair) {
+        yoshiGrowthVisualHair.value =
+          "BLACK";
+      }
+
+
+      if (yoshiGrowthVisualPreview) {
+        yoshiGrowthVisualPreview.style.display =
+          "none";
+      }
+
+
+      if (yoshiGrowthVisualDelete) {
+        yoshiGrowthVisualDelete.style.display =
+          "none";
+      }
+
+
+      if (yoshiGrowthVisualModalKicker) {
+
+        yoshiGrowthVisualModalKicker.textContent =
+          `📸 ${currentYoshiGrowthYear} VISUAL`;
+
+      }
+
+
+      if (yoshiGrowthVisualModal) {
+
+        yoshiGrowthVisualModal.style.display =
+          "flex";
+
+        yoshiGrowthVisualModal.scrollTop =
+          0;
+
+      }
+
     }
   );
 }
 
 
 // =====================================================
-// 📸 PHOTO SELECT → SAVE
+// 📷 SELECT PHOTO
 // =====================================================
 
-if (yoshiGrowthYearVisualInput) {
+if (
+  yoshiGrowthVisualSelect &&
+  yoshiGrowthVisualInput
+) {
 
-  yoshiGrowthYearVisualInput.addEventListener(
+  yoshiGrowthVisualSelect.addEventListener(
+    "click",
+    () => {
+
+      yoshiGrowthVisualInput.click();
+
+    }
+  );
+}
+
+
+if (yoshiGrowthVisualInput) {
+
+  yoshiGrowthVisualInput.addEventListener(
     "change",
-    async () => {
+    () => {
 
       const file =
-        yoshiGrowthYearVisualInput
-          .files[0];
-
+        yoshiGrowthVisualInput.files[0];
 
       if (!file) return;
 
 
+      pendingYoshiGrowthFile =
+        file;
+
+
+      const reader =
+        new FileReader();
+
+
+      reader.onload = () => {
+
+        if (
+          yoshiGrowthVisualPreviewImage
+        ) {
+
+          yoshiGrowthVisualPreviewImage.src =
+            reader.result;
+
+        }
+
+
+        if (yoshiGrowthVisualPreview) {
+
+          yoshiGrowthVisualPreview.style.display =
+            "block";
+
+        }
+
+      };
+
+
+      reader.readAsDataURL(file);
+
+    }
+  );
+}
+
+
+// =====================================================
+// 💾 SAVE / UPDATE
+// =====================================================
+
+if (yoshiGrowthVisualSave) {
+
+  yoshiGrowthVisualSave.addEventListener(
+    "click",
+    async () => {
+
       try {
 
-        await saveYoshiGrowthVisual(
-          file,
-          currentYoshiGrowthYear
-        );
+        const hairColor =
+          yoshiGrowthVisualHair
+            ? yoshiGrowthVisualHair.value
+            : "OTHER";
 
+
+        const memo =
+          yoshiGrowthVisualMemo
+            ? yoshiGrowthVisualMemo.value.trim()
+            : "";
+
+
+        // ✏️ EDIT
+        if (
+          currentYoshiGrowthVisualItem
+        ) {
+
+          currentYoshiGrowthVisualItem.hairColor =
+            hairColor;
+
+          currentYoshiGrowthVisualItem.memo =
+            memo;
+
+
+          if (
+            pendingYoshiGrowthFile
+          ) {
+
+            currentYoshiGrowthVisualItem.imageData =
+              await yoshiGrowthImageToDataURL(
+                pendingYoshiGrowthFile
+              );
+
+          }
+
+
+          await updateYoshiGrowthVisual(
+            currentYoshiGrowthVisualItem
+          );
+
+        }
+
+        // 📸 NEW
+        else {
+
+          if (!pendingYoshiGrowthFile) {
+
+            alert(
+              "写真を選んでね📸"
+            );
+
+            return;
+
+          }
+
+
+          await saveYoshiGrowthVisual(
+            pendingYoshiGrowthFile,
+            currentYoshiGrowthYear,
+            hairColor,
+            memo
+          );
+
+        }
+
+
+        closeYoshiGrowthModal();
 
         await renderYoshiGrowthYearVisuals();
 
@@ -17646,15 +17818,214 @@ if (yoshiGrowthYearVisualInput) {
           error
         );
 
-
         alert(
-          "写真の保存に失敗しました🥲"
+          "保存に失敗しました🥲"
         );
+
+      }
+
+    }
+  );
+}
+
+
+// =====================================================
+// ✏️ EDIT
+// =====================================================
+
+function openYoshiGrowthEdit(item) {
+
+  currentYoshiGrowthVisualItem =
+    item;
+
+  pendingYoshiGrowthFile =
+    null;
+
+
+  if (yoshiGrowthVisualInput) {
+    yoshiGrowthVisualInput.value = "";
+  }
+
+
+  if (yoshiGrowthVisualHair) {
+
+    yoshiGrowthVisualHair.value =
+      item.hairColor ||
+      "OTHER";
+
+  }
+
+
+  if (yoshiGrowthVisualMemo) {
+
+    yoshiGrowthVisualMemo.value =
+      item.memo || "";
+
+  }
+
+
+  if (
+    yoshiGrowthVisualPreviewImage
+  ) {
+
+    yoshiGrowthVisualPreviewImage.src =
+      item.imageData || "";
+
+  }
+
+
+  if (yoshiGrowthVisualPreview) {
+
+    yoshiGrowthVisualPreview.style.display =
+      "block";
+
+  }
+
+
+  if (yoshiGrowthVisualDelete) {
+
+    yoshiGrowthVisualDelete.style.display =
+      "block";
+
+  }
+
+
+  if (
+    yoshiGrowthVisualModalKicker
+  ) {
+
+    yoshiGrowthVisualModalKicker.textContent =
+      `📸 ${item.year} VISUAL EDIT`;
+
+  }
+
+
+  if (yoshiGrowthVisualModal) {
+
+    yoshiGrowthVisualModal.style.display =
+      "flex";
+
+    yoshiGrowthVisualModal.scrollTop =
+      0;
+
+  }
+
+}
+
+
+// =====================================================
+// 🗑 DELETE
+// =====================================================
+
+if (yoshiGrowthVisualDelete) {
+
+  yoshiGrowthVisualDelete.addEventListener(
+    "click",
+    async () => {
+
+      if (
+        !currentYoshiGrowthVisualItem
+      ) {
+        return;
       }
 
 
-      yoshiGrowthYearVisualInput.value =
-        "";
+      const ok =
+        confirm(
+          "この写真を削除しますか？🥲"
+        );
+
+      if (!ok) return;
+
+
+      try {
+
+        await deleteYoshiGrowthVisual(
+          currentYoshiGrowthVisualItem.id
+        );
+
+        closeYoshiGrowthModal();
+
+        await renderYoshiGrowthYearVisuals();
+
+
+      } catch (error) {
+
+        console.error(
+          "YOSHI GROWTH DELETE ERROR:",
+          error
+        );
+
+        alert(
+          "削除に失敗しました🥲"
+        );
+
+      }
+
+    }
+  );
+}
+
+
+// =====================================================
+// CANCEL / CLOSE
+// =====================================================
+
+function closeYoshiGrowthModal() {
+
+  pendingYoshiGrowthFile =
+    null;
+
+  currentYoshiGrowthVisualItem =
+    null;
+
+
+  if (yoshiGrowthVisualInput) {
+    yoshiGrowthVisualInput.value =
+      "";
+  }
+
+
+  if (yoshiGrowthVisualPreviewImage) {
+    yoshiGrowthVisualPreviewImage.src =
+      "";
+  }
+
+
+  if (yoshiGrowthVisualPreview) {
+    yoshiGrowthVisualPreview.style.display =
+      "none";
+  }
+
+
+  if (yoshiGrowthVisualMemo) {
+    yoshiGrowthVisualMemo.value =
+      "";
+  }
+
+
+  if (yoshiGrowthVisualDelete) {
+    yoshiGrowthVisualDelete.style.display =
+      "none";
+  }
+
+
+  if (yoshiGrowthVisualModal) {
+    yoshiGrowthVisualModal.style.display =
+      "none";
+  }
+
+}
+
+
+if (yoshiGrowthVisualCancel) {
+
+  yoshiGrowthVisualCancel.addEventListener(
+    "click",
+    () => {
+
+      closeYoshiGrowthModal();
+
     }
   );
 }
