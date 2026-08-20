@@ -15908,6 +15908,1352 @@ const yoshiGrowthSystem =
 
   });
 // ======================================================
+// 🐨 JUNKYU GROWTH HISTORY START
+// 完成型：YEAR DETAIL + EDIT MODAL
+// ======================================================
+
+const junkyuGrowthHistoryOpen =
+  document.getElementById("junkyuGrowthHistoryOpen");
+
+const junkyuGrowthHistoryPage =
+  document.getElementById("junkyuGrowthHistoryPage");
+
+const junkyuGrowthHistoryBack =
+  document.getElementById("junkyuGrowthHistoryBack");
+
+const junkyuGrowthYearPage =
+  document.getElementById("junkyuGrowthYearPage");
+
+const junkyuGrowthYearBack =
+  document.getElementById("junkyuGrowthYearBack");
+
+const junkyuGrowthYearButtons =
+  document.querySelectorAll(".junkyu-growth-year");
+
+const junkyuGrowthYearNumber =
+  document.getElementById("junkyuGrowthYearNumber");
+
+const junkyuGrowthYearTitle =
+  document.getElementById("junkyuGrowthYearTitle");
+
+const junkyuGrowthYearSubtitle =
+  document.getElementById("junkyuGrowthYearSubtitle");
+
+const junkyuGrowthYearVisualTitle =
+  document.getElementById("junkyuGrowthYearVisualTitle");
+
+const junkyuGrowthYearCaption =
+  document.getElementById("junkyuGrowthYearCaption");
+
+const junkyuGrowthYearVisualGrid =
+  document.getElementById("junkyuGrowthYearVisualGrid");
+
+const junkyuGrowthYearVisualAdd =
+  document.getElementById("junkyuGrowthYearVisualAdd");
+
+const junkyuGrowthVisualModal =
+  document.getElementById("junkyuGrowthVisualModal");
+
+const junkyuGrowthVisualModalKicker =
+  document.getElementById("junkyuGrowthVisualModalKicker");
+
+const junkyuGrowthVisualInput =
+  document.getElementById("junkyuGrowthVisualInput");
+
+const junkyuGrowthVisualSelect =
+  document.getElementById("junkyuGrowthVisualSelect");
+
+const junkyuGrowthVisualPreview =
+  document.getElementById("junkyuGrowthVisualPreview");
+
+const junkyuGrowthVisualPreviewImage =
+  document.getElementById("junkyuGrowthVisualPreviewImage");
+
+const junkyuGrowthVisualHair =
+  document.getElementById("junkyuGrowthVisualHair");
+
+const junkyuGrowthVisualMemo =
+  document.getElementById("junkyuGrowthVisualMemo");
+
+const junkyuGrowthVisualSave =
+  document.getElementById("junkyuGrowthVisualSave");
+
+const junkyuGrowthVisualDelete =
+  document.getElementById("junkyuGrowthVisualDelete");
+
+const junkyuGrowthVisualCancel =
+  document.getElementById("junkyuGrowthVisualCancel");
+
+let currentJunkyuGrowthYear = "2020";
+
+let pendingJunkyuGrowthFile = null;
+
+let currentJunkyuGrowthVisualItem = null;
+
+let junkyuGrowthDB = null;
+
+const JUNKYU_GROWTH_DB =
+  "treasure-day-junkyu-growth-db";
+
+const JUNKYU_GROWTH_STORE =
+  "junkyuGrowthVisuals";
+// ======================================================
+// 💾 JUNKYU GROWTH IndexedDB
+// ======================================================
+
+function openJunkyuGrowthDB() {
+
+  return new Promise((resolve, reject) => {
+
+    const request =
+      indexedDB.open(
+        JUNKYU_GROWTH_DB,
+        1
+      );
+
+    request.onupgradeneeded =
+      event => {
+
+        const db =
+          event.target.result;
+
+        if (
+          !db.objectStoreNames.contains(
+            JUNKYU_GROWTH_STORE
+          )
+        ) {
+
+          db.createObjectStore(
+            JUNKYU_GROWTH_STORE,
+            {
+              keyPath: "id"
+            }
+          );
+
+        }
+
+      };
+
+
+    request.onsuccess =
+      () => {
+
+        junkyuGrowthDB =
+          request.result;
+
+        resolve(
+          junkyuGrowthDB
+        );
+
+      };
+
+
+    request.onerror =
+      () => {
+
+        reject(
+          request.error
+        );
+
+      };
+
+  });
+}
+
+
+// ======================================================
+// 📸 IMAGE → DataURL
+// ======================================================
+
+function junkyuGrowthImageToDataURL(
+  file
+) {
+
+  return new Promise(
+    (resolve, reject) => {
+
+      const reader =
+        new FileReader();
+
+      reader.onload = () => {
+
+        const img =
+          new Image();
+
+        img.onload = () => {
+
+          const MAX_SIZE = 1600;
+
+          let width =
+            img.naturalWidth;
+
+          let height =
+            img.naturalHeight;
+
+
+          if (
+            width > height &&
+            width > MAX_SIZE
+          ) {
+
+            height =
+              Math.round(
+                height *
+                MAX_SIZE /
+                width
+              );
+
+            width =
+              MAX_SIZE;
+
+          } else if (
+            height >= width &&
+            height > MAX_SIZE
+          ) {
+
+            width =
+              Math.round(
+                width *
+                MAX_SIZE /
+                height
+              );
+
+            height =
+              MAX_SIZE;
+
+          }
+
+
+          const canvas =
+            document.createElement(
+              "canvas"
+            );
+
+          canvas.width =
+            width;
+
+          canvas.height =
+            height;
+
+
+          const ctx =
+            canvas.getContext(
+              "2d"
+            );
+
+          if (!ctx) {
+
+            reject(
+              new Error(
+                "Canvas unavailable"
+              )
+            );
+
+            return;
+
+          }
+
+
+          ctx.drawImage(
+            img,
+            0,
+            0,
+            width,
+            height
+          );
+
+
+          resolve(
+            canvas.toDataURL(
+              "image/jpeg",
+              0.86
+            )
+          );
+
+        };
+
+
+        img.onerror =
+          reject;
+
+        img.src =
+          reader.result;
+
+      };
+
+
+      reader.onerror =
+        reject;
+
+      reader.readAsDataURL(
+        file
+      );
+
+    }
+  );
+}
+
+
+// ======================================================
+// 💾 SAVE NEW
+// ======================================================
+
+async function saveJunkyuGrowthVisual(
+  file,
+  year,
+  hairColor,
+  memo
+) {
+
+  if (!junkyuGrowthDB) {
+    await openJunkyuGrowthDB();
+  }
+
+
+  const imageData =
+    await junkyuGrowthImageToDataURL(
+      file
+    );
+
+
+  const item = {
+
+    id:
+      Date.now() +
+      Math.floor(
+        Math.random() * 1000
+      ),
+
+    year:
+      String(year),
+
+    imageData,
+
+    hairColor:
+      hairColor || "OTHER",
+
+    memo:
+      memo || "",
+
+    createdAt:
+      Date.now()
+
+  };
+
+
+  return new Promise(
+    (resolve, reject) => {
+
+      const transaction =
+        junkyuGrowthDB.transaction(
+          JUNKYU_GROWTH_STORE,
+          "readwrite"
+        );
+
+      const store =
+        transaction.objectStore(
+          JUNKYU_GROWTH_STORE
+        );
+
+      const request =
+        store.add(item);
+
+
+      request.onsuccess =
+        () => resolve(item);
+
+      request.onerror =
+        () => reject(
+          request.error
+        );
+
+    }
+  );
+}
+
+
+// ======================================================
+// ✏️ UPDATE
+// ======================================================
+
+function updateJunkyuGrowthVisual(
+  item
+) {
+
+  return new Promise(
+    (resolve, reject) => {
+
+      const transaction =
+        junkyuGrowthDB.transaction(
+          JUNKYU_GROWTH_STORE,
+          "readwrite"
+        );
+
+      const store =
+        transaction.objectStore(
+          JUNKYU_GROWTH_STORE
+        );
+
+      const request =
+        store.put(item);
+
+
+      request.onsuccess =
+        () => resolve();
+
+      request.onerror =
+        () => reject(
+          request.error
+        );
+
+    }
+  );
+}
+
+
+// ======================================================
+// 📚 GET YEAR VISUALS
+// ======================================================
+
+async function getJunkyuGrowthVisuals(
+  year
+) {
+
+  if (!junkyuGrowthDB) {
+    await openJunkyuGrowthDB();
+  }
+
+
+  return new Promise(
+    (resolve, reject) => {
+
+      const transaction =
+        junkyuGrowthDB.transaction(
+          JUNKYU_GROWTH_STORE,
+          "readonly"
+        );
+
+      const store =
+        transaction.objectStore(
+          JUNKYU_GROWTH_STORE
+        );
+
+      const request =
+        store.getAll();
+
+
+      request.onsuccess =
+        () => {
+
+          const items =
+            request.result || [];
+
+          resolve(
+            items.filter(
+              item =>
+                String(item.year) ===
+                String(year)
+            )
+          );
+
+        };
+
+
+      request.onerror =
+        () => reject(
+          request.error
+        );
+
+    }
+  );
+}
+
+
+// ======================================================
+// 🗑 DELETE
+// ======================================================
+
+async function deleteJunkyuGrowthVisual(
+  id
+) {
+
+  if (!junkyuGrowthDB) {
+    await openJunkyuGrowthDB();
+  }
+
+
+  return new Promise(
+    (resolve, reject) => {
+
+      const transaction =
+        junkyuGrowthDB.transaction(
+          JUNKYU_GROWTH_STORE,
+          "readwrite"
+        );
+
+      const store =
+        transaction.objectStore(
+          JUNKYU_GROWTH_STORE
+        );
+
+      const request =
+        store.delete(id);
+
+
+      request.onsuccess =
+        () => resolve();
+
+      request.onerror =
+        () => reject(
+          request.error
+        );
+
+    }
+  );
+}
+// ======================================================
+// 🌱 JUNKYU GROWTH YEAR INFO
+// ======================================================
+
+const junkyuGrowthYearInfo = {
+
+  "2020": {
+    title: "DEBUT ERA 💎"
+  },
+
+  "2021": {
+    title: "2021 ERA 💎"
+  },
+
+  "2022": {
+    title: "2022 ERA 💎"
+  },
+
+  "2023": {
+    title: "2023 ERA 💎"
+  },
+
+  "2024": {
+    title: "2024 ERA 💎"
+  },
+
+  "2025": {
+    title: "2025 ERA 💎"
+  },
+
+  "2026": {
+    title: "NOW ✨"
+  }
+
+};
+
+
+// ======================================================
+// 📸 RENDER YEAR VISUALS
+// ======================================================
+
+async function renderJunkyuGrowthYearVisuals() {
+
+  if (!junkyuGrowthYearVisualGrid) {
+    return;
+  }
+
+
+  junkyuGrowthYearVisualGrid.innerHTML =
+    "";
+
+
+  const items =
+    await getJunkyuGrowthVisuals(
+      currentJunkyuGrowthYear
+    );
+
+
+  items
+    .sort(
+      (a, b) =>
+        a.createdAt -
+        b.createdAt
+    )
+    .forEach(item => {
+
+      const card =
+        document.createElement(
+          "button"
+        );
+
+      card.type =
+        "button";
+
+      card.className =
+        "jihoon-growth-visual-card";
+
+
+      const img =
+        document.createElement(
+          "img"
+        );
+
+      img.src =
+        item.imageData || "";
+
+      img.alt =
+        `JUNKYU ${item.year}`;
+
+      img.loading =
+        "lazy";
+
+      img.decoding =
+        "async";
+
+
+      const info =
+        document.createElement(
+          "div"
+        );
+
+      info.className =
+        "jihoon-growth-visual-info";
+
+
+      const hair =
+        document.createElement(
+          "span"
+        );
+
+      hair.textContent =
+        `🎨 ${item.hairColor || "OTHER"}`;
+
+
+      const memo =
+        document.createElement(
+          "p"
+        );
+
+      memo.textContent =
+        item.memo || "";
+
+
+      info.appendChild(
+        hair
+      );
+
+
+      if (item.memo) {
+
+        info.appendChild(
+          memo
+        );
+
+      }
+
+
+      card.appendChild(
+        img
+      );
+
+      card.appendChild(
+        info
+      );
+
+
+      // 写真タップ → EDIT
+      card.addEventListener(
+        "click",
+        () => {
+
+          currentJunkyuGrowthVisualItem =
+            item;
+
+          pendingJunkyuGrowthFile =
+            null;
+
+
+          if (
+            junkyuGrowthVisualPreviewImage
+          ) {
+
+            junkyuGrowthVisualPreviewImage.src =
+              item.imageData || "";
+
+          }
+
+
+          if (
+            junkyuGrowthVisualPreview
+          ) {
+
+            junkyuGrowthVisualPreview.style.display =
+              "block";
+
+          }
+
+
+          if (
+            junkyuGrowthVisualHair
+          ) {
+
+            junkyuGrowthVisualHair.value =
+              item.hairColor ||
+              "OTHER";
+
+          }
+
+
+          if (
+            junkyuGrowthVisualMemo
+          ) {
+
+            junkyuGrowthVisualMemo.value =
+              item.memo || "";
+
+          }
+
+
+          if (
+            junkyuGrowthVisualDelete
+          ) {
+
+            junkyuGrowthVisualDelete.style.display =
+              "block";
+
+          }
+
+
+          if (
+            junkyuGrowthVisualModalKicker
+          ) {
+
+            junkyuGrowthVisualModalKicker.textContent =
+              `📸 ${item.year} VISUAL`;
+
+          }
+
+
+          if (
+            junkyuGrowthVisualModal
+          ) {
+
+            junkyuGrowthVisualModal.style.display =
+              "flex";
+
+          }
+
+        }
+      );
+
+
+      junkyuGrowthYearVisualGrid.appendChild(
+        card
+      );
+
+    });
+
+}
+
+
+// ======================================================
+// 🌱 OPEN YEAR DETAIL
+// ======================================================
+
+async function openJunkyuGrowthYear(
+  year
+) {
+
+  currentJunkyuGrowthYear =
+    String(year);
+
+
+  const info =
+    junkyuGrowthYearInfo[
+      currentJunkyuGrowthYear
+    ] || {
+      title:
+        `${currentJunkyuGrowthYear} ERA 💎`
+    };
+
+
+  if (
+    junkyuGrowthYearNumber
+  ) {
+
+    junkyuGrowthYearNumber.textContent =
+      currentJunkyuGrowthYear;
+
+  }
+
+
+  if (
+    junkyuGrowthYearTitle
+  ) {
+
+    junkyuGrowthYearTitle.textContent =
+      info.title;
+
+  }
+
+
+  if (
+    junkyuGrowthYearSubtitle
+  ) {
+
+    junkyuGrowthYearSubtitle.textContent =
+      `${currentJunkyuGrowthYear}年のジュンギュを振り返ろう 💎`;
+
+  }
+
+
+  if (
+    junkyuGrowthYearVisualTitle
+  ) {
+
+    junkyuGrowthYearVisualTitle.textContent =
+      `📸 ${currentJunkyuGrowthYear} VISUAL`;
+
+  }
+
+
+  if (
+    junkyuGrowthYearCaption
+  ) {
+
+    junkyuGrowthYearCaption.textContent =
+      `${currentJunkyuGrowthYear}年のお気に入りジュンギュを残そう 💎`;
+
+  }
+
+
+  if (
+    junkyuGrowthHistoryPage
+  ) {
+
+    junkyuGrowthHistoryPage.style.display =
+      "none";
+
+  }
+
+
+  if (
+    junkyuGrowthYearPage
+  ) {
+
+    junkyuGrowthYearPage.style.display =
+      "block";
+
+    junkyuGrowthYearPage.scrollTop =
+      0;
+
+  }
+
+
+  await renderJunkyuGrowthYearVisuals();
+
+}
+
+
+// ======================================================
+// 🌱 YEAR BUTTONS
+// ======================================================
+
+junkyuGrowthYearButtons.forEach(
+  button => {
+
+    button.addEventListener(
+      "click",
+      async () => {
+
+        await openJunkyuGrowthYear(
+          button.dataset.year
+        );
+
+      }
+    );
+
+  }
+);
+// ======================================================
+// 🌱 OPEN GROWTH HISTORY
+// ======================================================
+
+if (
+  junkyuGrowthHistoryOpen &&
+  junkyuGrowthHistoryPage
+) {
+
+  junkyuGrowthHistoryOpen.addEventListener(
+    "click",
+    () => {
+
+      if (junkyuBookDetail) {
+        junkyuBookDetail.classList.remove(
+          "active"
+        );
+      }
+
+      junkyuGrowthHistoryPage.style.display =
+        "block";
+
+      junkyuGrowthHistoryPage.scrollTop =
+        0;
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+  );
+}
+
+
+// ======================================================
+// ← GROWTH HISTORY → JUNKYU BOOK
+// ======================================================
+
+if (
+  junkyuGrowthHistoryBack &&
+  junkyuGrowthHistoryPage
+) {
+
+  junkyuGrowthHistoryBack.addEventListener(
+    "click",
+    () => {
+
+      junkyuGrowthHistoryPage.style.display =
+        "none";
+
+      if (junkyuBookDetail) {
+
+        junkyuBookDetail.classList.add(
+          "active"
+        );
+
+        junkyuBookDetail.scrollTop =
+          0;
+
+      }
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+  );
+}
+
+
+// ======================================================
+// ← YEAR DETAIL → GROWTH HISTORY
+// ======================================================
+
+if (
+  junkyuGrowthYearBack &&
+  junkyuGrowthYearPage
+) {
+
+  junkyuGrowthYearBack.addEventListener(
+    "click",
+    () => {
+
+      junkyuGrowthYearPage.style.display =
+        "none";
+
+      junkyuGrowthHistoryPage.style.display =
+        "block";
+
+      junkyuGrowthHistoryPage.scrollTop =
+        0;
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+  );
+}
+
+
+// ======================================================
+// ＋ ADD → MODAL
+// ======================================================
+
+if (junkyuGrowthYearVisualAdd) {
+
+  junkyuGrowthYearVisualAdd.addEventListener(
+    "click",
+    () => {
+
+      currentJunkyuGrowthVisualItem =
+        null;
+
+      pendingJunkyuGrowthFile =
+        null;
+
+
+      if (junkyuGrowthVisualInput) {
+        junkyuGrowthVisualInput.value =
+          "";
+      }
+
+
+      if (junkyuGrowthVisualMemo) {
+        junkyuGrowthVisualMemo.value =
+          "";
+      }
+
+
+      if (junkyuGrowthVisualHair) {
+        junkyuGrowthVisualHair.value =
+          "BLACK";
+      }
+
+
+      if (junkyuGrowthVisualPreviewImage) {
+        junkyuGrowthVisualPreviewImage.src =
+          "";
+      }
+
+
+      if (junkyuGrowthVisualPreview) {
+        junkyuGrowthVisualPreview.style.display =
+          "none";
+      }
+
+
+      if (junkyuGrowthVisualDelete) {
+        junkyuGrowthVisualDelete.style.display =
+          "none";
+      }
+
+
+      if (junkyuGrowthVisualModalKicker) {
+
+        junkyuGrowthVisualModalKicker.textContent =
+          `📸 ${currentJunkyuGrowthYear} VISUAL`;
+
+      }
+
+
+      if (junkyuGrowthVisualModal) {
+
+        junkyuGrowthVisualModal.style.display =
+          "flex";
+
+        junkyuGrowthVisualModal.scrollTop =
+          0;
+
+      }
+
+    }
+  );
+}
+
+
+// ======================================================
+// 📷 SELECT PHOTO
+// ======================================================
+
+if (
+  junkyuGrowthVisualSelect &&
+  junkyuGrowthVisualInput
+) {
+
+  junkyuGrowthVisualSelect.addEventListener(
+    "click",
+    () => {
+
+      junkyuGrowthVisualInput.click();
+
+    }
+  );
+}
+
+
+if (junkyuGrowthVisualInput) {
+
+  junkyuGrowthVisualInput.addEventListener(
+    "change",
+    () => {
+
+      const file =
+        junkyuGrowthVisualInput.files[0];
+
+      if (!file) return;
+
+
+      pendingJunkyuGrowthFile =
+        file;
+
+
+      const reader =
+        new FileReader();
+
+
+      reader.onload =
+        () => {
+
+          if (
+            junkyuGrowthVisualPreviewImage
+          ) {
+
+            junkyuGrowthVisualPreviewImage.src =
+              reader.result;
+
+          }
+
+
+          if (
+            junkyuGrowthVisualPreview
+          ) {
+
+            junkyuGrowthVisualPreview.style.display =
+              "block";
+
+          }
+
+        };
+
+
+      reader.readAsDataURL(
+        file
+      );
+
+    }
+  );
+}
+
+
+// ======================================================
+// 💎 SAVE / UPDATE
+// ======================================================
+
+if (junkyuGrowthVisualSave) {
+
+  junkyuGrowthVisualSave.addEventListener(
+    "click",
+    async () => {
+
+      try {
+
+        const hairColor =
+          junkyuGrowthVisualHair
+            ? junkyuGrowthVisualHair.value
+            : "OTHER";
+
+
+        const memo =
+          junkyuGrowthVisualMemo
+            ? junkyuGrowthVisualMemo.value.trim()
+            : "";
+
+
+        // ✏️ UPDATE
+        if (
+          currentJunkyuGrowthVisualItem
+        ) {
+
+          currentJunkyuGrowthVisualItem.hairColor =
+            hairColor;
+
+          currentJunkyuGrowthVisualItem.memo =
+            memo;
+
+
+          if (
+            pendingJunkyuGrowthFile
+          ) {
+
+            currentJunkyuGrowthVisualItem.imageData =
+              await junkyuGrowthImageToDataURL(
+                pendingJunkyuGrowthFile
+              );
+
+          }
+
+
+          await updateJunkyuGrowthVisual(
+            currentJunkyuGrowthVisualItem
+          );
+
+        }
+
+        // 📸 NEW
+        else {
+
+          if (!pendingJunkyuGrowthFile) {
+
+            alert(
+              "写真を選んでね📸"
+            );
+
+            return;
+
+          }
+
+
+          await saveJunkyuGrowthVisual(
+            pendingJunkyuGrowthFile,
+            currentJunkyuGrowthYear,
+            hairColor,
+            memo
+          );
+
+        }
+
+
+        closeJunkyuGrowthModal();
+
+        await renderJunkyuGrowthYearVisuals();
+
+
+      } catch (error) {
+
+        console.error(
+          "JUNKYU GROWTH SAVE ERROR:",
+          error
+        );
+
+        alert(
+          "保存に失敗しました🥲"
+        );
+
+      }
+
+    }
+  );
+}
+
+
+// ======================================================
+// 🗑 DELETE
+// ======================================================
+
+if (junkyuGrowthVisualDelete) {
+
+  junkyuGrowthVisualDelete.addEventListener(
+    "click",
+    async () => {
+
+      if (
+        !currentJunkyuGrowthVisualItem
+      ) {
+        return;
+      }
+
+
+      const ok =
+        confirm(
+          "この写真を削除しますか？🥲"
+        );
+
+      if (!ok) return;
+
+
+      try {
+
+        await deleteJunkyuGrowthVisual(
+          currentJunkyuGrowthVisualItem.id
+        );
+
+        closeJunkyuGrowthModal();
+
+        await renderJunkyuGrowthYearVisuals();
+
+
+      } catch (error) {
+
+        console.error(
+          "JUNKYU GROWTH DELETE ERROR:",
+          error
+        );
+
+        alert(
+          "削除に失敗しました🥲"
+        );
+
+      }
+
+    }
+  );
+}
+
+
+// ======================================================
+// CANCEL / CLOSE
+// ======================================================
+
+function closeJunkyuGrowthModal() {
+
+  pendingJunkyuGrowthFile =
+    null;
+
+  currentJunkyuGrowthVisualItem =
+    null;
+
+
+  if (junkyuGrowthVisualInput) {
+    junkyuGrowthVisualInput.value =
+      "";
+  }
+
+
+  if (junkyuGrowthVisualPreviewImage) {
+    junkyuGrowthVisualPreviewImage.src =
+      "";
+  }
+
+
+  if (junkyuGrowthVisualPreview) {
+    junkyuGrowthVisualPreview.style.display =
+      "none";
+  }
+
+
+  if (junkyuGrowthVisualMemo) {
+    junkyuGrowthVisualMemo.value =
+      "";
+  }
+
+
+  if (junkyuGrowthVisualDelete) {
+    junkyuGrowthVisualDelete.style.display =
+      "none";
+  }
+
+
+  if (junkyuGrowthVisualModal) {
+    junkyuGrowthVisualModal.style.display =
+      "none";
+  }
+
+}
+
+
+if (junkyuGrowthVisualCancel) {
+
+  junkyuGrowthVisualCancel.addEventListener(
+    "click",
+    () => {
+
+      closeJunkyuGrowthModal();
+
+    }
+  );
+}
+
+
+// ======================================================
+// 🚀 INITIALIZE JUNKYU GROWTH DB
+// ======================================================
+
+openJunkyuGrowthDB()
+  .catch(
+    error => {
+
+      console.error(
+        "JUNKYU GROWTH DB ERROR:",
+        error
+      );
+
+    }
+  );
+// ======================================================
 // 🎧 MEMBER SONG 共通エンジン
 // YOSHI以降の量産用
 // ======================================================
