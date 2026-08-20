@@ -11033,3 +11033,453 @@ openHyunsukGrowthDB()
       error
     );
   });
+// =========================================
+// 🎧 HYUNSUK'S SONG
+// =========================================
+
+const hyunsukSongOpen =
+  document.getElementById("hyunsukSongOpen");
+
+const hyunsukSongPage =
+  document.getElementById("hyunsukSongPage");
+
+const hyunsukSongBack =
+  document.getElementById("hyunsukSongBack");
+
+const hyunsukSongTitle =
+  document.getElementById("hyunsukSongTitle");
+
+const hyunsukSongMemo =
+  document.getElementById("hyunsukSongMemo");
+
+const hyunsukSongSave =
+  document.getElementById("hyunsukSongSave");
+
+const hyunsukSongList =
+  document.getElementById("hyunsukSongList");
+
+
+let hyunsukSongs = [];
+
+try {
+  hyunsukSongs =
+    JSON.parse(
+      localStorage.getItem("treasure-hyunsuk-songs")
+    ) || [];
+} catch (error) {
+  hyunsukSongs = [];
+}
+
+
+// =========================================
+// 🎧 OPEN / BACK
+// =========================================
+
+if (
+  hyunsukSongOpen &&
+  hyunsukSongPage &&
+  hyunsukBookDetail
+) {
+
+  hyunsukSongOpen.addEventListener(
+    "click",
+    () => {
+
+      hyunsukBookDetail.classList.remove("active");
+
+      hyunsukSongPage.style.display =
+        "block";
+
+      hyunsukSongPage.scrollTop = 0;
+
+      renderHyunsukSongs();
+
+      document.body.style.overflow =
+        "hidden";
+    }
+  );
+}
+
+
+if (
+  hyunsukSongBack &&
+  hyunsukSongPage &&
+  hyunsukBookDetail
+) {
+
+  hyunsukSongBack.addEventListener(
+    "click",
+    () => {
+
+      hyunsukSongPage.style.display =
+        "none";
+
+      hyunsukBookDetail.classList.add(
+        "active"
+      );
+
+      hyunsukBookDetail.scrollTop = 0;
+
+      resetHyunsukSongForm();
+
+      document.body.style.overflow =
+        "hidden";
+    }
+  );
+}
+
+
+// =========================================
+// 💾 SAVE / UPDATE
+// =========================================
+
+if (hyunsukSongSave) {
+
+  hyunsukSongSave.addEventListener(
+    "click",
+    () => {
+
+      const title =
+        hyunsukSongTitle?.value.trim() || "";
+
+      const memo =
+        hyunsukSongMemo?.value.trim() || "";
+
+      if (!title) {
+        alert("曲名を入力してね 🎧");
+        return;
+      }
+
+
+      const editId =
+        hyunsukSongSave.dataset.editId
+          ? Number(
+              hyunsukSongSave.dataset.editId
+            )
+          : null;
+
+
+      if (editId) {
+
+        const item =
+          hyunsukSongs.find(
+            song => song.id === editId
+          );
+
+        if (!item) return;
+
+        item.title = title;
+        item.memo = memo;
+
+      } else {
+
+        hyunsukSongs.unshift({
+          id: Date.now(),
+          title,
+          memo,
+          favorite: false,
+          createdAt: Date.now()
+        });
+      }
+
+
+      saveHyunsukSongs();
+
+      renderHyunsukSongs();
+
+      resetHyunsukSongForm();
+    }
+  );
+}
+
+
+// =========================================
+// 💎 LOCAL STORAGE SAVE
+// =========================================
+
+function saveHyunsukSongs() {
+
+  localStorage.setItem(
+    "treasure-hyunsuk-songs",
+    JSON.stringify(hyunsukSongs)
+  );
+}
+
+
+// =========================================
+// 🔄 FORM RESET
+// =========================================
+
+function resetHyunsukSongForm() {
+
+  if (hyunsukSongTitle) {
+    hyunsukSongTitle.value = "";
+  }
+
+  if (hyunsukSongMemo) {
+    hyunsukSongMemo.value = "";
+  }
+
+  if (hyunsukSongSave) {
+
+    delete hyunsukSongSave.dataset.editId;
+
+    hyunsukSongSave.textContent =
+      "＋ ADD SONG";
+  }
+}
+
+
+// =========================================
+// 🎧 SONG LIST RENDER
+// =========================================
+
+function renderHyunsukSongs() {
+
+  if (!hyunsukSongList) return;
+
+
+  if (hyunsukSongs.length === 0) {
+
+    hyunsukSongList.innerHTML = `
+      <div class="jihoon-song-empty">
+        <span>🎧</span>
+
+        <strong>
+          まだ曲がありません
+        </strong>
+
+        <small>
+          ヒョンソクを思い浮かべる曲を追加してみよう 🦔
+        </small>
+      </div>
+    `;
+
+    return;
+  }
+
+
+  const sortedSongs =
+    [...hyunsukSongs].sort(
+      (a, b) => {
+
+        if (
+          a.favorite !== b.favorite
+        ) {
+          return (
+            Number(b.favorite) -
+            Number(a.favorite)
+          );
+        }
+
+        return (
+          (b.createdAt || 0) -
+          (a.createdAt || 0)
+        );
+      }
+    );
+
+
+  hyunsukSongList.innerHTML =
+    sortedSongs
+      .map(
+        song => `
+          <article
+            class="jihoon-song-card ${
+              song.favorite
+                ? "is-favorite"
+                : ""
+            }"
+            data-id="${song.id}"
+          >
+
+            <button
+              type="button"
+              class="jihoon-song-favorite"
+              data-action="favorite"
+            >
+              ${
+                song.favorite
+                  ? "⭐️ HYUNSUK'S SONG"
+                  : "☆ FAVORITE"
+              }
+            </button>
+
+            <div
+              class="jihoon-song-card-title"
+            >
+              🎧 ${escapeHyunsukSongHTML(
+                song.title
+              )}
+            </div>
+
+            ${
+              song.memo
+                ? `
+                  <p>
+                    ${escapeHyunsukSongHTML(
+                      song.memo
+                    )}
+                  </p>
+                `
+                : `
+                  <p class="jihoon-song-no-note">
+                    NO NOTE
+                  </p>
+                `
+            }
+
+            <div
+              class="jihoon-song-actions"
+            >
+
+              <button
+                type="button"
+                data-action="edit"
+              >
+                ✏️ EDIT
+              </button>
+
+              <button
+                type="button"
+                data-action="delete"
+              >
+                🗑 DELETE
+              </button>
+
+            </div>
+
+          </article>
+        `
+      )
+      .join("");
+
+
+  const cards =
+    hyunsukSongList.querySelectorAll(
+      ".jihoon-song-card"
+    );
+
+
+  cards.forEach(card => {
+
+    const id =
+      Number(card.dataset.id);
+
+
+    card.addEventListener(
+      "click",
+      event => {
+
+        const button =
+          event.target.closest(
+            "button[data-action]"
+          );
+
+        if (!button) return;
+
+        const action =
+          button.dataset.action;
+
+
+        // ⭐ FAVORITE
+        if (action === "favorite") {
+
+          hyunsukSongs.forEach(
+            song => {
+
+              song.favorite =
+                song.id === id
+                  ? !song.favorite
+                  : false;
+            }
+          );
+
+          saveHyunsukSongs();
+
+          renderHyunsukSongs();
+
+          return;
+        }
+
+
+        // ✏️ EDIT
+        if (action === "edit") {
+
+          const song =
+            hyunsukSongs.find(
+              item => item.id === id
+            );
+
+          if (!song) return;
+
+          if (hyunsukSongTitle) {
+            hyunsukSongTitle.value =
+              song.title || "";
+          }
+
+          if (hyunsukSongMemo) {
+            hyunsukSongMemo.value =
+              song.memo || "";
+          }
+
+          if (hyunsukSongSave) {
+
+            hyunsukSongSave.dataset.editId =
+              String(song.id);
+
+            hyunsukSongSave.textContent =
+              "💎 UPDATE SONG";
+          }
+
+          hyunsukSongPage.scrollTop = 0;
+
+          return;
+        }
+
+
+        // 🗑 DELETE
+        if (action === "delete") {
+
+          const ok =
+            confirm(
+              "この曲を削除する？🎧"
+            );
+
+          if (!ok) return;
+
+          hyunsukSongs =
+            hyunsukSongs.filter(
+              song =>
+                song.id !== id
+            );
+
+          saveHyunsukSongs();
+
+          renderHyunsukSongs();
+
+          resetHyunsukSongForm();
+        }
+      }
+    );
+  });
+}
+
+
+// =========================================
+// 🛡 HTML ESCAPE
+// =========================================
+
+function escapeHyunsukSongHTML(text) {
+
+  return String(text)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+
+// 最初の表示
+renderHyunsukSongs();
