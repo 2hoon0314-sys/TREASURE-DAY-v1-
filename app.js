@@ -416,7 +416,15 @@ const openJihoonChemistry =
 if (openJihoonChemistry) {
   openJihoonChemistry.style.display = "none";
 }
+const openPhotoMemoryDetail =
+  document.getElementById(
+    "photo-memory-detail-page"
+  );
 
+if (openPhotoMemoryDetail) {
+  openPhotoMemoryDetail.style.display =
+    "none";
+}
 document.body.style.overflow = "";
   if (homePage) {
     homePage.style.display =
