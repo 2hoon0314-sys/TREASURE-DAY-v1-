@@ -967,6 +967,44 @@ if (
 
   document.body.style.overflow =
     "hidden";
+} else if (
+  photoMemoryReturnTarget ===
+  "yoshi"
+) {
+
+  showPage("home");
+
+  const memberBookDetail =
+    document.getElementById(
+      "member-book-detail"
+    );
+
+  if (memberBookDetail) {
+    memberBookDetail.classList.add(
+      "active"
+    );
+  }
+
+  if (yoshiBookDetail) {
+    yoshiBookDetail.classList.add(
+      "active"
+    );
+  }
+
+  if (yoshiMemoriesPage) {
+
+    yoshiMemoriesPage.style.display =
+      "block";
+
+    yoshiMemoriesPage.scrollTop =
+      0;
+
+    await yoshiMemoriesSystem
+      .renderMemories();
+  }
+
+  document.body.style.overflow =
+    "hidden";
 
 } else {
         // 通常PHOTO MEMORYから来た場合
