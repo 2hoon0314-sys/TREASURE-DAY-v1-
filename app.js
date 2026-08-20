@@ -4954,7 +4954,7 @@ function openHyunsukGrowthYear(year) {
 
     hyunsukGrowthYearPage.scrollTop = 0;
   }
-
+renderHyunsukGrowthVisuals();
   document.body.style.overflow =
     "hidden";
 }
