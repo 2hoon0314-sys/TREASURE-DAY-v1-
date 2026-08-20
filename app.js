@@ -19841,3 +19841,398 @@ if (yoshiChemistryAdd) {
     }
   );
 }
+// =====================================================
+// 🐨 JUNKYU CHEMISTRY
+// SHARED CHEMISTRY ENGINE CONNECT
+// =====================================================
+
+const junkyuChemistryOpen =
+  document.getElementById(
+    "junkyuChemistryOpen"
+  );
+
+const junkyuChemistryPage =
+  document.getElementById(
+    "junkyuChemistryPage"
+  );
+
+const junkyuChemistryBack =
+  document.getElementById(
+    "junkyuChemistryBack"
+  );
+
+const junkyuChemistryList =
+  document.getElementById(
+    "junkyuChemistryList"
+  );
+
+const junkyuChemistryDetailPage =
+  document.getElementById(
+    "junkyuChemistryDetailPage"
+  );
+
+const junkyuChemistryDetailBack =
+  document.getElementById(
+    "junkyuChemistryDetailBack"
+  );
+
+const junkyuChemistryDetailName =
+  document.getElementById(
+    "junkyuChemistryDetailName"
+  );
+
+const junkyuChemistryDetailCaption =
+  document.getElementById(
+    "junkyuChemistryDetailCaption"
+  );
+
+const junkyuChemistryAdd =
+  document.getElementById(
+    "junkyuChemistryAdd"
+  );
+
+const junkyuChemistryMemories =
+  document.getElementById(
+    "junkyuChemistryMemories"
+  );
+
+
+let currentJunkyuChemistryPartner =
+  null;
+
+
+// =====================================================
+// 🐨 PARTNERS
+// =====================================================
+
+const junkyuChemistryPartners = [
+  "HYUNSUK",
+  "JIHOON",
+  "YOSHI",
+  "JAEHYUK",
+  "ASAHI",
+  "DOYOUNG",
+  "HARUTO",
+  "JEONGWOO",
+  "JUNGHWAN"
+];
+
+
+// =====================================================
+// 🫶 MAKE 9 CHEMISTRY CARDS
+// =====================================================
+
+function renderJunkyuChemistryCards() {
+
+  if (!junkyuChemistryList) {
+    return;
+  }
+
+
+  junkyuChemistryList.innerHTML =
+    "";
+
+
+  junkyuChemistryPartners.forEach(
+    partner => {
+
+      const partnerInfo =
+        chemistryMemberInfo[
+          partner
+        ];
+
+
+      const card =
+        document.createElement(
+          "button"
+        );
+
+      card.type =
+        "button";
+
+      card.className =
+        "jihoon-chemistry-card junkyu-chemistry-card";
+
+      card.dataset.partner =
+        partner;
+
+
+      card.innerHTML = `
+        <span class="jihoon-chemistry-emoji">
+          🐨${partnerInfo?.emoji || "💎"}
+        </span>
+
+        <div>
+          <strong>
+            JUNKYU × ${partner}
+          </strong>
+
+          <small>
+            CHEMISTRY MEMORY 💎
+          </small>
+        </div>
+
+        <span>→</span>
+      `;
+
+
+      card.addEventListener(
+        "click",
+        async () => {
+
+          currentJunkyuChemistryPartner =
+            partner;
+
+
+          // 💎 SHARED ENGINEへ接続
+          currentHyunsukChemistryPartner =
+            partner;
+
+          currentHyunsukChemistryPairKey =
+            createChemistryPairKey(
+              "JUNKYU",
+              partner
+            );
+
+          currentSharedChemistryRenderTarget =
+            junkyuChemistryMemories;
+
+
+          if (
+            junkyuChemistryDetailName
+          ) {
+
+            junkyuChemistryDetailName.textContent =
+              `🐨${partnerInfo?.emoji || "💎"} JUNKYU × ${partner}`;
+
+          }
+
+
+          if (
+            junkyuChemistryDetailCaption
+          ) {
+
+            junkyuChemistryDetailCaption.textContent =
+              `ジュンギュと${partner}の好きな瞬間を集めよう 💎`;
+
+          }
+
+
+          junkyuChemistryPage.style.display =
+            "none";
+
+          junkyuChemistryDetailPage.style.display =
+            "block";
+
+          junkyuChemistryDetailPage.scrollTop =
+            0;
+
+
+          await renderSharedChemistryMemories();
+
+
+          document.body.style.overflow =
+            "hidden";
+
+        }
+      );
+
+
+      junkyuChemistryList.appendChild(
+        card
+      );
+
+    }
+  );
+}
+
+
+// =====================================================
+// 🐨 JUNKYU BOOK → CHEMISTRY
+// =====================================================
+
+if (
+  junkyuChemistryOpen &&
+  junkyuChemistryPage
+) {
+
+  junkyuChemistryOpen.addEventListener(
+    "click",
+    () => {
+
+      if (junkyuBookDetail) {
+
+        junkyuBookDetail.classList.remove(
+          "active"
+        );
+
+      }
+
+
+      renderJunkyuChemistryCards();
+
+
+      junkyuChemistryPage.style.display =
+        "block";
+
+      junkyuChemistryPage.scrollTop =
+        0;
+
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+  );
+}
+
+
+// =====================================================
+// ← CHEMISTRY → JUNKYU BOOK
+// =====================================================
+
+if (
+  junkyuChemistryBack &&
+  junkyuChemistryPage
+) {
+
+  junkyuChemistryBack.addEventListener(
+    "click",
+    () => {
+
+      junkyuChemistryPage.style.display =
+        "none";
+
+
+      if (junkyuBookDetail) {
+
+        junkyuBookDetail.classList.add(
+          "active"
+        );
+
+        junkyuBookDetail.scrollTop =
+          0;
+
+      }
+
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+  );
+}
+
+
+// =====================================================
+// ← DETAIL → CHEMISTRY LIST
+// =====================================================
+
+if (
+  junkyuChemistryDetailBack &&
+  junkyuChemistryDetailPage
+) {
+
+  junkyuChemistryDetailBack.addEventListener(
+    "click",
+    () => {
+
+      junkyuChemistryDetailPage.style.display =
+        "none";
+
+      junkyuChemistryPage.style.display =
+        "block";
+
+      junkyuChemistryPage.scrollTop =
+        0;
+
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+  );
+}
+
+
+// =====================================================
+// ＋ ADD MEMORY → SHARED MODAL
+// =====================================================
+
+if (junkyuChemistryAdd) {
+
+  junkyuChemistryAdd.addEventListener(
+    "click",
+    () => {
+
+      if (
+        !currentJunkyuChemistryPartner
+      ) {
+        return;
+      }
+
+
+      currentHyunsukChemistryPartner =
+        currentJunkyuChemistryPartner;
+
+
+      currentHyunsukChemistryPairKey =
+        createChemistryPairKey(
+          "JUNKYU",
+          currentJunkyuChemistryPartner
+        );
+
+
+      currentSharedChemistryRenderTarget =
+        junkyuChemistryMemories;
+
+
+      currentSharedChemistryImageData =
+        null;
+
+
+      delete hyunsukChemistryMemorySave
+        .dataset.editId;
+
+
+      hyunsukChemistryMemoryInput.value =
+        "";
+
+      hyunsukChemistryMemoryMemo.value =
+        "";
+
+      hyunsukChemistryMemoryPreviewImage.src =
+        "";
+
+      hyunsukChemistryMemoryPreview.style.display =
+        "none";
+
+      hyunsukChemistryMemoryDelete.style.display =
+        "none";
+
+
+      hyunsukChemistryMemorySave.textContent =
+        "💎 SAVE MEMORY";
+
+
+      hyunsukChemistryMemoryTitle.textContent =
+        `JUNKYU × ${currentJunkyuChemistryPartner} MEMORY`;
+
+
+      hyunsukChemistryMemoryModal.style.display =
+        "flex";
+
+      hyunsukChemistryMemoryModal.scrollTop =
+        0;
+
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+  );
+}
+
+
+// 最初のカード生成
+renderJunkyuChemistryCards();
