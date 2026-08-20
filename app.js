@@ -12519,7 +12519,8 @@ let currentHyunsukChemistryPairKey =
 
 let currentSharedChemistryImageData =
   null;
-
+let currentSharedChemistryRenderTarget =
+  hyunsukChemistryMemoryList;
 
 // =====================================================
 // 🦔 HYUNSUK CHEMISTRY OPEN / BACK
