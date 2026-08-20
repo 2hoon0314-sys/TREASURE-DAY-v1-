@@ -16756,3 +16756,838 @@ const yoshiMemoriesSystem =
     japaneseName: "ヨシ"
 
   });
+// =====================================================
+// 🌱 YOSHI GROWTH HISTORY
+// 2020 - 2026 共通YEARシステム
+// =====================================================
+
+const yoshiGrowthHistoryOpen =
+  document.getElementById("yoshiGrowthHistoryOpen");
+
+const yoshiGrowthHistoryPage =
+  document.getElementById("yoshiGrowthHistoryPage");
+
+const yoshiGrowthHistoryBack =
+  document.getElementById("yoshiGrowthHistoryBack");
+
+const yoshiGrowthYearPage =
+  document.getElementById("yoshiGrowthYearPage");
+
+const yoshiGrowthYearBack =
+  document.getElementById("yoshiGrowthYearBack");
+
+const yoshiGrowthYearNumber =
+  document.getElementById("yoshiGrowthYearNumber");
+
+const yoshiGrowthYearTitle =
+  document.getElementById("yoshiGrowthYearTitle");
+
+const yoshiGrowthYearSubtitle =
+  document.getElementById("yoshiGrowthYearSubtitle");
+
+const yoshiGrowthYearVisualTitle =
+  document.getElementById("yoshiGrowthYearVisualTitle");
+
+const yoshiGrowthYearCaption =
+  document.getElementById("yoshiGrowthYearCaption");
+
+const yoshiGrowthYearVisualAdd =
+  document.getElementById("yoshiGrowthYearVisualAdd");
+
+const yoshiGrowthYearVisualInput =
+  document.getElementById("yoshiGrowthYearVisualInput");
+
+const yoshiGrowthYearVisualGrid =
+  document.getElementById("yoshiGrowthYearVisualGrid");
+
+let currentYoshiGrowthYear = "2020";
+
+
+// =====================================================
+// 🐯 YEAR INFO
+// =====================================================
+
+const yoshiGrowthYearInfo = {
+
+  "2020": {
+    title: "DEBUT ERA 💎"
+  },
+
+  "2021": {
+    title: "2021 ERA 💎"
+  },
+
+  "2022": {
+    title: "2022 ERA 💎"
+  },
+
+  "2023": {
+    title: "2023 ERA 💎"
+  },
+
+  "2024": {
+    title: "2024 ERA 💎"
+  },
+
+  "2025": {
+    title: "2025 ERA 💎"
+  },
+
+  "2026": {
+    title: "NOW ✨"
+  }
+
+};
+
+
+// =====================================================
+// 💾 YOSHI GROWTH IndexedDB
+// =====================================================
+
+const YOSHI_GROWTH_DB_NAME =
+  "treasure-day-yoshi-growth-db";
+
+const YOSHI_GROWTH_DB_VERSION =
+  1;
+
+const YOSHI_GROWTH_STORE =
+  "visuals";
+
+let yoshiGrowthDB = null;
+
+
+function openYoshiGrowthDB() {
+
+  return new Promise((resolve, reject) => {
+
+    const request =
+      indexedDB.open(
+        YOSHI_GROWTH_DB_NAME,
+        YOSHI_GROWTH_DB_VERSION
+      );
+
+
+    request.onupgradeneeded = (event) => {
+
+      const db =
+        event.target.result;
+
+      if (
+        !db.objectStoreNames.contains(
+          YOSHI_GROWTH_STORE
+        )
+      ) {
+
+        db.createObjectStore(
+          YOSHI_GROWTH_STORE,
+          {
+            keyPath: "id",
+            autoIncrement: true
+          }
+        );
+      }
+    };
+
+
+    request.onsuccess = (event) => {
+
+      yoshiGrowthDB =
+        event.target.result;
+
+      resolve(yoshiGrowthDB);
+    };
+
+
+    request.onerror = () => {
+
+      reject(request.error);
+    };
+  });
+}
+
+
+// =====================================================
+// 📸 IMAGE RESIZE
+// =====================================================
+
+function yoshiGrowthImageToDataURL(file) {
+
+  return new Promise((resolve, reject) => {
+
+    const reader =
+      new FileReader();
+
+
+    reader.onload = () => {
+
+      const img =
+        new Image();
+
+
+      img.onload = () => {
+
+        const MAX_SIZE = 1600;
+
+        let width =
+          img.naturalWidth;
+
+        let height =
+          img.naturalHeight;
+
+
+        if (
+          width > height &&
+          width > MAX_SIZE
+        ) {
+
+          height =
+            Math.round(
+              height *
+              MAX_SIZE /
+              width
+            );
+
+          width =
+            MAX_SIZE;
+
+        } else if (
+          height >= width &&
+          height > MAX_SIZE
+        ) {
+
+          width =
+            Math.round(
+              width *
+              MAX_SIZE /
+              height
+            );
+
+          height =
+            MAX_SIZE;
+        }
+
+
+        const canvas =
+          document.createElement("canvas");
+
+        canvas.width = width;
+        canvas.height = height;
+
+
+        const ctx =
+          canvas.getContext("2d");
+
+        if (!ctx) {
+
+          reject(
+            new Error(
+              "Canvas unavailable"
+            )
+          );
+
+          return;
+        }
+
+
+        ctx.drawImage(
+          img,
+          0,
+          0,
+          width,
+          height
+        );
+
+
+        resolve(
+          canvas.toDataURL(
+            "image/jpeg",
+            0.84
+          )
+        );
+      };
+
+
+      img.onerror = reject;
+
+      img.src =
+        reader.result;
+    };
+
+
+    reader.onerror = reject;
+
+    reader.readAsDataURL(file);
+  });
+}
+
+
+// =====================================================
+// 💾 SAVE
+// =====================================================
+
+async function saveYoshiGrowthVisual(
+  file,
+  year
+) {
+
+  if (!yoshiGrowthDB) {
+    await openYoshiGrowthDB();
+  }
+
+
+  const imageData =
+    await yoshiGrowthImageToDataURL(
+      file
+    );
+
+
+  return new Promise((resolve, reject) => {
+
+    const transaction =
+      yoshiGrowthDB.transaction(
+        YOSHI_GROWTH_STORE,
+        "readwrite"
+      );
+
+    const store =
+      transaction.objectStore(
+        YOSHI_GROWTH_STORE
+      );
+
+
+    const item = {
+
+      year:
+        String(year),
+
+      imageData,
+
+      createdAt:
+        Date.now()
+
+    };
+
+
+    const request =
+      store.add(item);
+
+
+    request.onsuccess = () => {
+
+      item.id =
+        request.result;
+
+      resolve(item);
+    };
+
+
+    request.onerror = () => {
+
+      reject(request.error);
+    };
+  });
+}
+
+
+// =====================================================
+// 📚 GET YEAR VISUALS
+// =====================================================
+
+async function getYoshiGrowthVisuals(
+  year
+) {
+
+  if (!yoshiGrowthDB) {
+    await openYoshiGrowthDB();
+  }
+
+
+  return new Promise((resolve, reject) => {
+
+    const transaction =
+      yoshiGrowthDB.transaction(
+        YOSHI_GROWTH_STORE,
+        "readonly"
+      );
+
+    const store =
+      transaction.objectStore(
+        YOSHI_GROWTH_STORE
+      );
+
+    const request =
+      store.getAll();
+
+
+    request.onsuccess = () => {
+
+      const items =
+        request.result || [];
+
+
+      resolve(
+        items.filter(
+          item =>
+            String(item.year) ===
+            String(year)
+        )
+      );
+    };
+
+
+    request.onerror = () => {
+
+      reject(request.error);
+    };
+  });
+}
+
+
+// =====================================================
+// 🗑 DELETE
+// =====================================================
+
+async function deleteYoshiGrowthVisual(
+  id
+) {
+
+  if (!yoshiGrowthDB) {
+    await openYoshiGrowthDB();
+  }
+
+
+  return new Promise((resolve, reject) => {
+
+    const transaction =
+      yoshiGrowthDB.transaction(
+        YOSHI_GROWTH_STORE,
+        "readwrite"
+      );
+
+    const store =
+      transaction.objectStore(
+        YOSHI_GROWTH_STORE
+      );
+
+
+    const request =
+      store.delete(id);
+
+
+    request.onsuccess =
+      () => resolve();
+
+
+    request.onerror =
+      () => reject(
+        request.error
+      );
+  });
+}
+
+
+// =====================================================
+// 🖼 RENDER
+// =====================================================
+
+async function renderYoshiGrowthYearVisuals() {
+
+  if (!yoshiGrowthYearVisualGrid) {
+    return;
+  }
+
+
+  yoshiGrowthYearVisualGrid.innerHTML =
+    "";
+
+
+  const items =
+    await getYoshiGrowthVisuals(
+      currentYoshiGrowthYear
+    );
+
+
+  if (items.length === 0) {
+
+    yoshiGrowthYearVisualGrid.innerHTML = `
+      <div class="jihoon-growth-visual-empty">
+        📸 まだ写真がありません
+      </div>
+    `;
+
+    return;
+  }
+
+
+  items
+    .sort(
+      (a, b) =>
+        (b.createdAt || 0) -
+        (a.createdAt || 0)
+    )
+    .forEach(item => {
+
+      const card =
+        document.createElement(
+          "article"
+        );
+
+      card.className =
+        "jihoon-growth-visual-card yoshi-growth-visual-card";
+
+
+      const photo =
+        document.createElement(
+          "div"
+        );
+
+      photo.className =
+        "jihoon-growth-visual-photo yoshi-growth-visual-photo";
+
+
+      const img =
+        document.createElement(
+          "img"
+        );
+
+      img.src =
+        item.imageData || "";
+
+      img.alt =
+        `${currentYoshiGrowthYear} YOSHI`;
+
+      img.loading =
+        "lazy";
+
+      img.decoding =
+        "async";
+
+
+      photo.appendChild(img);
+
+      card.appendChild(photo);
+
+
+      // 写真タップ → 削除確認
+      card.addEventListener(
+        "click",
+        async () => {
+
+          const ok =
+            confirm(
+              "この写真を削除する？📸"
+            );
+
+
+          if (!ok) return;
+
+
+          try {
+
+            await deleteYoshiGrowthVisual(
+              item.id
+            );
+
+
+            await renderYoshiGrowthYearVisuals();
+
+
+          } catch (error) {
+
+            console.error(
+              "YOSHI GROWTH DELETE ERROR:",
+              error
+            );
+
+
+            alert(
+              "削除に失敗しました🥲"
+            );
+          }
+        }
+      );
+
+
+      yoshiGrowthYearVisualGrid.appendChild(
+        card
+      );
+    });
+}
+
+
+// =====================================================
+// 🌱 GROWTH HISTORY OPEN
+// =====================================================
+
+if (
+  yoshiGrowthHistoryOpen &&
+  yoshiGrowthHistoryPage
+) {
+
+  yoshiGrowthHistoryOpen.addEventListener(
+    "click",
+    () => {
+
+      if (yoshiBookDetail) {
+
+        yoshiBookDetail.classList.remove(
+          "active"
+        );
+      }
+
+
+      yoshiGrowthHistoryPage.style.display =
+        "block";
+
+      yoshiGrowthHistoryPage.scrollTop =
+        0;
+
+
+      document.body.style.overflow =
+        "hidden";
+    }
+  );
+}
+
+
+// =====================================================
+// ← YOSHI BOOK
+// =====================================================
+
+if (
+  yoshiGrowthHistoryBack &&
+  yoshiGrowthHistoryPage
+) {
+
+  yoshiGrowthHistoryBack.addEventListener(
+    "click",
+    () => {
+
+      yoshiGrowthHistoryPage.style.display =
+        "none";
+
+
+      if (yoshiBookDetail) {
+
+        yoshiBookDetail.classList.add(
+          "active"
+        );
+
+        yoshiBookDetail.scrollTop =
+          0;
+      }
+
+
+      document.body.style.overflow =
+        "hidden";
+    }
+  );
+}
+
+
+// =====================================================
+// 📅 YEAR SELECT
+// =====================================================
+
+const yoshiGrowthYearButtons =
+  yoshiGrowthHistoryPage
+    ? yoshiGrowthHistoryPage.querySelectorAll(
+        ".jihoon-growth-year"
+      )
+    : [];
+
+
+yoshiGrowthYearButtons.forEach(
+  button => {
+
+    button.addEventListener(
+      "click",
+      async () => {
+
+        const year =
+          button.dataset.year;
+
+
+        if (!year) return;
+
+
+        currentYoshiGrowthYear =
+          String(year);
+
+
+        const info =
+          yoshiGrowthYearInfo[
+            currentYoshiGrowthYear
+          ];
+
+
+        if (yoshiGrowthYearNumber) {
+
+          yoshiGrowthYearNumber.textContent =
+            currentYoshiGrowthYear;
+        }
+
+
+        if (yoshiGrowthYearTitle) {
+
+          yoshiGrowthYearTitle.textContent =
+            info?.title ||
+            `${currentYoshiGrowthYear} ERA 💎`;
+        }
+
+
+        if (yoshiGrowthYearSubtitle) {
+
+          yoshiGrowthYearSubtitle.textContent =
+            `${currentYoshiGrowthYear}年のヨシを振り返ろう 💎`;
+        }
+
+
+        if (yoshiGrowthYearVisualTitle) {
+
+          yoshiGrowthYearVisualTitle.textContent =
+            `📸 ${currentYoshiGrowthYear} VISUAL`;
+        }
+
+
+        if (yoshiGrowthYearCaption) {
+
+          yoshiGrowthYearCaption.textContent =
+            `${currentYoshiGrowthYear}年のお気に入りヨシを残そう 💎`;
+        }
+
+
+        yoshiGrowthHistoryPage.style.display =
+          "none";
+
+
+        yoshiGrowthYearPage.style.display =
+          "block";
+
+        yoshiGrowthYearPage.scrollTop =
+          0;
+
+
+        await renderYoshiGrowthYearVisuals();
+
+
+        document.body.style.overflow =
+          "hidden";
+      }
+    );
+  }
+);
+
+
+// =====================================================
+// ← YEAR → GROWTH HISTORY
+// =====================================================
+
+if (
+  yoshiGrowthYearBack &&
+  yoshiGrowthYearPage
+) {
+
+  yoshiGrowthYearBack.addEventListener(
+    "click",
+    () => {
+
+      yoshiGrowthYearPage.style.display =
+        "none";
+
+
+      yoshiGrowthHistoryPage.style.display =
+        "block";
+
+      yoshiGrowthHistoryPage.scrollTop =
+        0;
+
+
+      document.body.style.overflow =
+        "hidden";
+    }
+  );
+}
+
+
+// =====================================================
+// ＋ ADD
+// =====================================================
+
+if (
+  yoshiGrowthYearVisualAdd &&
+  yoshiGrowthYearVisualInput
+) {
+
+  yoshiGrowthYearVisualAdd.addEventListener(
+    "click",
+    () => {
+
+      yoshiGrowthYearVisualInput.click();
+    }
+  );
+}
+
+
+// =====================================================
+// 📸 PHOTO SELECT → SAVE
+// =====================================================
+
+if (yoshiGrowthYearVisualInput) {
+
+  yoshiGrowthYearVisualInput.addEventListener(
+    "change",
+    async () => {
+
+      const file =
+        yoshiGrowthYearVisualInput
+          .files[0];
+
+
+      if (!file) return;
+
+
+      try {
+
+        await saveYoshiGrowthVisual(
+          file,
+          currentYoshiGrowthYear
+        );
+
+
+        await renderYoshiGrowthYearVisuals();
+
+
+      } catch (error) {
+
+        console.error(
+          "YOSHI GROWTH SAVE ERROR:",
+          error
+        );
+
+
+        alert(
+          "写真の保存に失敗しました🥲"
+        );
+      }
+
+
+      yoshiGrowthYearVisualInput.value =
+        "";
+    }
+  );
+}
+
+
+// =====================================================
+// 🚀 INITIALIZE
+// =====================================================
+
+openYoshiGrowthDB()
+  .catch(error => {
+
+    console.error(
+      "YOSHI GROWTH DB ERROR:",
+      error
+    );
+  });
