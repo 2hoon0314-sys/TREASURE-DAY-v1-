@@ -15781,3 +15781,557 @@ const yoshiGrowthSystem =
     displayName: "YOSHI"
 
   });
+// ======================================================
+// 🎧 MEMBER SONG 共通エンジン
+// YOSHI以降の量産用
+// ======================================================
+
+function setupMemberSong(config) {
+
+  const {
+    key,
+    displayName,
+    japaneseName
+  } = config;
+
+
+  const open =
+    document.getElementById(
+      `${key}SongOpen`
+    );
+
+  const page =
+    document.getElementById(
+      `${key}SongPage`
+    );
+
+  const back =
+    document.getElementById(
+      `${key}SongBack`
+    );
+
+  const title =
+    document.getElementById(
+      `${key}SongTitle`
+    );
+
+  const memo =
+    document.getElementById(
+      `${key}SongMemo`
+    );
+
+  const save =
+    document.getElementById(
+      `${key}SongSave`
+    );
+
+  const list =
+    document.getElementById(
+      `${key}SongList`
+    );
+
+
+  const STORAGE_KEY =
+    `treasure-${key}-songs`;
+
+
+  let songs = [];
+
+
+  try {
+
+    songs =
+      JSON.parse(
+        localStorage.getItem(
+          STORAGE_KEY
+        )
+      ) || [];
+
+  } catch (error) {
+
+    songs = [];
+  }
+
+
+  // =========================================
+  // SAVE STORAGE
+  // =========================================
+
+  function saveSongs() {
+
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(songs)
+    );
+  }
+
+
+  // =========================================
+  // RESET
+  // =========================================
+
+  function resetForm() {
+
+    if (title) {
+      title.value = "";
+    }
+
+    if (memo) {
+      memo.value = "";
+    }
+
+    if (save) {
+
+      delete save.dataset.editId;
+
+      save.textContent =
+        "＋ ADD SONG";
+    }
+  }
+
+
+  // =========================================
+  // OPEN / BACK
+  // =========================================
+
+  if (
+    open &&
+    page
+  ) {
+
+    open.addEventListener(
+      "click",
+      () => {
+
+        page.style.display =
+          "block";
+
+        page.scrollTop =
+          0;
+
+        renderSongs();
+
+        document.body.style.overflow =
+          "hidden";
+      }
+    );
+  }
+
+
+  if (
+    back &&
+    page
+  ) {
+
+    back.addEventListener(
+      "click",
+      () => {
+
+        page.style.display =
+          "none";
+
+        resetForm();
+
+        document.body.style.overflow =
+          "hidden";
+      }
+    );
+  }
+
+
+  // =========================================
+  // ADD / UPDATE
+  // =========================================
+
+  if (save) {
+
+    save.addEventListener(
+      "click",
+      () => {
+
+        const songTitle =
+          title?.value.trim() || "";
+
+        const songMemo =
+          memo?.value.trim() || "";
+
+
+        if (!songTitle) {
+
+          alert(
+            "曲名を入力してね 🎧"
+          );
+
+          return;
+        }
+
+
+        const editId =
+          save.dataset.editId
+            ? Number(
+                save.dataset.editId
+              )
+            : null;
+
+
+        if (editId) {
+
+          const item =
+            songs.find(
+              song =>
+                song.id === editId
+            );
+
+
+          if (!item) return;
+
+
+          item.title =
+            songTitle;
+
+          item.memo =
+            songMemo;
+
+
+        } else {
+
+          songs.unshift({
+
+            id:
+              Date.now(),
+
+            title:
+              songTitle,
+
+            memo:
+              songMemo,
+
+            favorite:
+              false,
+
+            createdAt:
+              Date.now()
+
+          });
+        }
+
+
+        saveSongs();
+
+        renderSongs();
+
+        resetForm();
+      }
+    );
+  }
+
+
+  // =========================================
+  // RENDER
+  // =========================================
+
+  function renderSongs() {
+
+    if (!list) return;
+
+
+    if (
+      songs.length === 0
+    ) {
+
+      list.innerHTML = `
+        <div class="jihoon-song-empty">
+          <span>🎧</span>
+
+          <strong>
+            まだ曲がありません
+          </strong>
+
+          <small>
+            ${japaneseName}を思い浮かべる曲を追加してみよう 💎
+          </small>
+        </div>
+      `;
+
+      return;
+    }
+
+
+    const sorted =
+      [...songs].sort(
+        (a, b) => {
+
+          if (
+            a.favorite !==
+            b.favorite
+          ) {
+
+            return (
+              Number(b.favorite) -
+              Number(a.favorite)
+            );
+          }
+
+
+          return (
+            (b.createdAt || 0) -
+            (a.createdAt || 0)
+          );
+        }
+      );
+
+
+    list.innerHTML =
+      sorted
+        .map(
+          song => `
+            <article
+              class="jihoon-song-card ${
+                song.favorite
+                  ? "is-favorite"
+                  : ""
+              }"
+              data-id="${song.id}"
+            >
+
+              <button
+                type="button"
+                class="jihoon-song-favorite"
+                data-action="favorite"
+              >
+                ${
+                  song.favorite
+                    ? `⭐️ ${displayName}'S SONG`
+                    : "☆ FAVORITE"
+                }
+              </button>
+
+              <div
+                class="jihoon-song-card-title"
+              >
+                🎧 ${escapeMemberSongHTML(
+                  song.title
+                )}
+              </div>
+
+              ${
+                song.memo
+                  ? `
+                    <p>
+                      ${escapeMemberSongHTML(
+                        song.memo
+                      )}
+                    </p>
+                  `
+                  : `
+                    <p class="jihoon-song-no-note">
+                      NO NOTE
+                    </p>
+                  `
+              }
+
+              <div
+                class="jihoon-song-actions"
+              >
+
+                <button
+                  type="button"
+                  data-action="edit"
+                >
+                  ✏️ EDIT
+                </button>
+
+                <button
+                  type="button"
+                  data-action="delete"
+                >
+                  🗑 DELETE
+                </button>
+
+              </div>
+
+            </article>
+          `
+        )
+        .join("");
+
+
+    const cards =
+      list.querySelectorAll(
+        ".jihoon-song-card"
+      );
+
+
+    cards.forEach(
+      card => {
+
+        const id =
+          Number(
+            card.dataset.id
+          );
+
+
+        card.addEventListener(
+          "click",
+          event => {
+
+            const button =
+              event.target.closest(
+                "button[data-action]"
+              );
+
+
+            if (!button) return;
+
+
+            const action =
+              button.dataset.action;
+
+
+            // ⭐ FAVORITE
+            if (
+              action ===
+              "favorite"
+            ) {
+
+              songs.forEach(
+                song => {
+
+                  song.favorite =
+                    song.id === id
+                      ? !song.favorite
+                      : false;
+                }
+              );
+
+
+              saveSongs();
+
+              renderSongs();
+
+              return;
+            }
+
+
+            // ✏️ EDIT
+            if (
+              action ===
+              "edit"
+            ) {
+
+              const song =
+                songs.find(
+                  item =>
+                    item.id === id
+                );
+
+
+              if (!song) return;
+
+
+              if (title) {
+                title.value =
+                  song.title || "";
+              }
+
+
+              if (memo) {
+                memo.value =
+                  song.memo || "";
+              }
+
+
+              if (save) {
+
+                save.dataset.editId =
+                  String(
+                    song.id
+                  );
+
+                save.textContent =
+                  "💎 UPDATE SONG";
+              }
+
+
+              page.scrollTop =
+                0;
+
+              return;
+            }
+
+
+            // 🗑 DELETE
+            if (
+              action ===
+              "delete"
+            ) {
+
+              const ok =
+                confirm(
+                  "この曲を削除する？🎧"
+                );
+
+
+              if (!ok) return;
+
+
+              songs =
+                songs.filter(
+                  song =>
+                    song.id !== id
+                );
+
+
+              saveSongs();
+
+              renderSongs();
+
+              resetForm();
+            }
+          }
+        );
+      }
+    );
+  }
+
+
+  renderSongs();
+
+
+  return {
+    renderSongs
+  };
+}
+
+
+// ======================================================
+// 🐯 YOSHI SONG START
+// ======================================================
+
+const yoshiSongSystem =
+  setupMemberSong({
+
+    key: "yoshi",
+
+    displayName: "YOSHI",
+
+    japaneseName: "ヨシ"
+
+  });
+
+
+// ======================================================
+// 🛡 SONG HTML ESCAPE
+// ======================================================
+
+function escapeMemberSongHTML(
+  text
+) {
+
+  return String(text)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
