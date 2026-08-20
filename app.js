@@ -18203,6 +18203,20 @@ const yoshiMemoriesSystem =
     japaneseName: "ヨシ"
 
   });
+// ======================================================
+// 🐨 JUNKYU MEMORIES START
+// ======================================================
+
+const junkyuMemoriesSystem =
+  setupMemberMemories({
+
+    key: "junkyu",
+
+    displayName: "JUNKYU",
+
+    japaneseName: "ジュンギュ"
+
+  });
 // =====================================================
 // 🌱 YOSHI GROWTH HISTORY
 // 2020 - 2026 共通YEARシステム
