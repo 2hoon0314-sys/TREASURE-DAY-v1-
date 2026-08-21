@@ -20585,3 +20585,153 @@ if (
 
 
       renderJaehyukChemistryCards();
+      jaehyukChemistryPage.style.display =
+        "block";
+
+      jaehyukChemistryPage.scrollTop =
+        0;
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+  );
+}
+
+
+// =====================================================
+// ← CHEMISTRY → JAEHYUK BOOK
+// =====================================================
+
+if (
+  jaehyukChemistryBack &&
+  jaehyukChemistryPage
+) {
+
+  jaehyukChemistryBack.addEventListener(
+    "click",
+    () => {
+
+      jaehyukChemistryPage.style.display =
+        "none";
+
+      if (jaehyukBookDetail) {
+
+        jaehyukBookDetail.classList.add(
+          "active"
+        );
+
+        jaehyukBookDetail.scrollTop =
+          0;
+
+      }
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+  );
+}
+
+
+// =====================================================
+// ← DETAIL → CHEMISTRY LIST
+// =====================================================
+
+if (
+  jaehyukChemistryDetailBack &&
+  jaehyukChemistryDetailPage
+) {
+
+  jaehyukChemistryDetailBack.addEventListener(
+    "click",
+    () => {
+
+      jaehyukChemistryDetailPage.style.display =
+        "none";
+
+      jaehyukChemistryPage.style.display =
+        "block";
+
+      jaehyukChemistryPage.scrollTop =
+        0;
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+  );
+}
+
+
+// =====================================================
+// ＋ ADD MEMORY → SHARED MODAL
+// =====================================================
+
+if (jaehyukChemistryAdd) {
+
+  jaehyukChemistryAdd.addEventListener(
+    "click",
+    () => {
+
+      if (
+        !currentJaehyukChemistryPartner
+      ) {
+        return;
+      }
+
+      currentHyunsukChemistryPartner =
+        currentJaehyukChemistryPartner;
+
+      currentHyunsukChemistryPairKey =
+        createChemistryPairKey(
+          "JAEHYUK",
+          currentJaehyukChemistryPartner
+        );
+
+      currentSharedChemistryRenderTarget =
+        jaehyukChemistryMemories;
+
+      currentSharedChemistryImageData =
+        null;
+
+      delete hyunsukChemistryMemorySave
+        .dataset.editId;
+
+      hyunsukChemistryMemoryInput.value =
+        "";
+
+      hyunsukChemistryMemoryMemo.value =
+        "";
+
+      hyunsukChemistryMemoryPreviewImage.src =
+        "";
+
+      hyunsukChemistryMemoryPreview.style.display =
+        "none";
+
+      hyunsukChemistryMemoryDelete.style.display =
+        "none";
+
+      hyunsukChemistryMemorySave.textContent =
+        "💎 SAVE MEMORY";
+
+      hyunsukChemistryMemoryTitle.textContent =
+        `JAEHYUK × ${currentJaehyukChemistryPartner} MEMORY`;
+
+      hyunsukChemistryMemoryModal.style.display =
+        "flex";
+
+      hyunsukChemistryMemoryModal.scrollTop =
+        0;
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+  );
+}
+
+
+// 最初のカード生成
+renderJaehyukChemistryCards();
