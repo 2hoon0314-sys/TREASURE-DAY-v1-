@@ -14830,6 +14830,20 @@ const junkyuVisualSystem =
 
   });
 // ======================================================
+// 🦁 JAEHYUK VISUAL BOOK START
+// ======================================================
+
+const jaehyukVisualSystem =
+  setupMemberVisualBook({
+
+    key: "jaehyuk",
+
+    displayName: "JAEHYUK",
+
+    japaneseName: "ジェヒョク"
+
+  });
+// ======================================================
 // 👑 MEMBER VISUAL RANKING 共通エンジン
 // ======================================================
 
