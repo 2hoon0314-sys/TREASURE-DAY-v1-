@@ -14914,6 +14914,20 @@ const asahiVisualSystem =
     japaneseName: "アサヒ"
 
   });
+// ======================================================
+// 👑 ASAHI VISUAL RANKING
+// ======================================================
+
+const asahiVisualRankingSystem =
+  setupMemberVisualRanking({
+
+    key: "asahi",
+
+    displayName: "ASAHI",
+
+    japaneseName: "アサヒ"
+
+  });
 <!-- =========================================
      👑 ASAHI VISUAL RANKING
 ========================================= -->
