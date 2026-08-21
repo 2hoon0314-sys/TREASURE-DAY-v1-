@@ -2567,7 +2567,7 @@ id="junkyuVisualBook"
   </div>
 
 </section>
-  <!-- =========================================
+<!-- =========================================
      🌱 ASAHI GROWTH HISTORY
 ========================================= -->
 
@@ -2588,20 +2588,49 @@ id="junkyuVisualBook"
   <div class="jihoon-growth-history-inner">
 
     <div class="jihoon-growth-history-kicker">
-      🌱 ASAHI GROWTH HISTORY
+      🌱 GROWTH HISTORY
     </div>
 
-    <h2>DEBUT → NOW 💎</h2>
+    <h2>
+      ASAHI<br>
+      GROWTH HISTORY
+    </h2>
 
     <p class="jihoon-growth-history-subtitle">
-      2020年から今までのアサヒを<br>
-      年ごとに残していく 🤖
+      2020 → 2026<br>
+      アサヒの成長を一緒に振り返ろう 💎
     </p>
 
-    <div
-      id="asahiGrowthHistoryList"
-      class="jihoon-growth-history-list"
-    >
+    <div class="jihoon-growth-years">
+
+      <button type="button" class="jihoon-growth-year asahi-growth-year" data-year="2020">
+        <span>2020</span><small>DEBUT 💎</small>
+      </button>
+
+      <button type="button" class="jihoon-growth-year asahi-growth-year" data-year="2021">
+        <span>2021</span><small>2021 ERA 💎</small>
+      </button>
+
+      <button type="button" class="jihoon-growth-year asahi-growth-year" data-year="2022">
+        <span>2022</span><small>2022 ERA 💎</small>
+      </button>
+
+      <button type="button" class="jihoon-growth-year asahi-growth-year" data-year="2023">
+        <span>2023</span><small>2023 ERA 💎</small>
+      </button>
+
+      <button type="button" class="jihoon-growth-year asahi-growth-year" data-year="2024">
+        <span>2024</span><small>2024 ERA 💎</small>
+      </button>
+
+      <button type="button" class="jihoon-growth-year asahi-growth-year" data-year="2025">
+        <span>2025</span><small>2025 ERA 💎</small>
+      </button>
+
+      <button type="button" class="jihoon-growth-year asahi-growth-year" data-year="2026">
+        <span>2026</span><small>NOW ✨</small>
+      </button>
+
     </div>
 
   </div>
@@ -2615,52 +2644,77 @@ id="junkyuVisualBook"
 
 <section
   id="asahiGrowthYearPage"
-  class="jihoon-growth-year-page"
+  class="jihoon-growth-detail-page"
   style="display: none;"
 >
 
   <button
     type="button"
     id="asahiGrowthYearBack"
-    class="jihoon-growth-year-back"
+    class="jihoon-growth-detail-back"
   >
     ← GROWTH HISTORYに戻る
   </button>
 
-  <div class="jihoon-growth-year-inner">
+  <div class="jihoon-growth-detail-inner">
 
-    <div class="jihoon-growth-year-kicker">
+    <div class="jihoon-growth-detail-kicker">
       🌱 GROWTH HISTORY
     </div>
 
-    <h2 id="asahiGrowthYearTitle">
-      2020
-    </h2>
-
-    <p class="jihoon-growth-year-subtitle">
-      この年のアサヒを残す 💎
-    </p>
-
     <div
-      id="asahiGrowthYearVisuals"
-      class="jihoon-growth-year-visuals"
+      id="asahiGrowthYearNumber"
+      class="jihoon-growth-detail-year"
     >
+      2020
     </div>
 
-    <button
-      type="button"
-      id="asahiGrowthYearAdd"
-      class="jihoon-growth-year-add"
-    >
-      ＋ ADD VISUAL
-    </button>
+    <h2 id="asahiGrowthYearTitle">
+      DEBUT ERA 💎
+    </h2>
 
-    <input
-      type="file"
-      id="asahiGrowthYearInput"
-      accept="image/*"
-      hidden
+    <p
+      id="asahiGrowthYearSubtitle"
+      class="jihoon-growth-detail-subtitle"
     >
+      2020年のアサヒを振り返ろう 💎
+    </p>
+
+    <section class="jihoon-growth-visual-section">
+
+      <div class="jihoon-growth-section-head">
+
+        <div>
+          <small>MY ARCHIVE</small>
+
+          <h3 id="asahiGrowthYearVisualTitle">
+            📸 2020 VISUAL
+          </h3>
+        </div>
+
+        <button
+          type="button"
+          id="asahiGrowthYearVisualAdd"
+          class="jihoon-growth-visual-add"
+        >
+          ＋ ADD
+        </button>
+
+      </div>
+
+      <p
+        id="asahiGrowthYearCaption"
+        class="jihoon-growth-section-caption"
+      >
+        2020年のお気に入りアサヒを残そう 💎
+      </p>
+
+      <div
+        id="asahiGrowthYearVisualGrid"
+        class="jihoon-growth-visual-grid"
+      ></div>
+
+    </section>
 
   </div>
 
@@ -2668,38 +2722,81 @@ id="junkyuVisualBook"
 
 
 <!-- =========================================
-     🌱 ASAHI GROWTH VISUAL EDIT
+     📸 ASAHI GROWTH VISUAL ADD / EDIT
 ========================================= -->
 
-<div
+<section
   id="asahiGrowthVisualModal"
   class="jihoon-growth-visual-modal"
+  style="display: none;"
 >
 
-  <div class="jihoon-growth-visual-sheet">
+  <div class="jihoon-growth-visual-modal-card">
 
-    <div class="jihoon-growth-visual-kicker">
-      🌱 GROWTH VISUAL
+    <div
+      id="asahiGrowthVisualModalKicker"
+      class="jihoon-growth-visual-modal-kicker"
+    >
+      📸 2020 VISUAL
     </div>
 
-    <h2>
-      このアサヒを編集する 💎
-    </h2>
+    <h3>
+      お気に入りのアサヒを追加 🤖
+    </h3>
 
-    <div class="jihoon-growth-visual-preview">
+    <input
+      type="file"
+      id="asahiGrowthVisualInput"
+      accept="image/*"
+      hidden
+    >
 
+    <button
+      type="button"
+      id="asahiGrowthVisualSelect"
+      class="jihoon-growth-visual-select"
+    >
+      ＋ 写真を選ぶ
+    </button>
+
+    <div
+      id="asahiGrowthVisualPreview"
+      class="jihoon-growth-visual-preview"
+      style="display: none;"
+    >
       <img
-        id="asahiGrowthVisualImage"
+        id="asahiGrowthVisualPreviewImage"
         alt="ASAHI GROWTH VISUAL"
       >
+    </div>
+
+    <div class="jihoon-growth-visual-field">
+
+      <label>🎨 HAIR COLOR</label>
+
+      <select id="asahiGrowthVisualHair">
+        <option value="BLACK">🖤 BLACK</option>
+        <option value="BROWN">🤎 BROWN</option>
+        <option value="RED">❤️ RED</option>
+        <option value="PINK">🩷 PINK</option>
+        <option value="BLONDE">💛 BLONDE</option>
+        <option value="GRAY">🩶 GRAY</option>
+        <option value="OTHER">✨ OTHER</option>
+      </select>
 
     </div>
 
-    <textarea
-      id="asahiGrowthVisualMemo"
-      class="jihoon-growth-visual-memo"
-      placeholder="この時のアサヒの思い出やメモ 💎"
-    ></textarea>
+    <div class="jihoon-growth-visual-field">
+
+      <label>💬 MY NOTE</label>
+
+      <textarea
+        id="asahiGrowthVisualMemo"
+        rows="3"
+        placeholder="このアサヒの好きなところ 💎"
+      ></textarea>
+
+    </div>
 
     <button
       type="button"
@@ -2713,8 +2810,9 @@ id="junkyuVisualBook"
       type="button"
       id="asahiGrowthVisualDelete"
       class="jihoon-growth-visual-delete"
+      style="display: none;"
     >
-      🗑️ DELETE
+      🗑 DELETE
     </button>
 
     <button
@@ -2727,7 +2825,7 @@ id="junkyuVisualBook"
 
   </div>
 
-</div>
+</section>
   <!-- =========================================
      👑 JAEHYUK VISUAL RANKING
 ========================================= -->
