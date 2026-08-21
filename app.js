@@ -14925,7 +14925,8 @@ const asahiVisualRankingSystem =
 
     displayName: "ASAHI",
 
-    japaneseName: "アサヒ"
+    visualSystem:
+      asahiVisualSystem
 
   });
 
