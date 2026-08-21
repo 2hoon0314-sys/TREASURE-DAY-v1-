@@ -15992,108 +15992,107 @@ const yoshiGrowthSystem =
 
     displayName: "YOSHI"
 
-  });
-// ======================================================
-// 🐨 JUNKYU GROWTH HISTORY START
+  });// ======================================================
+// 🦁 JAEHYUK GROWTH HISTORY START
 // 完成型：YEAR DETAIL + EDIT MODAL
 // ======================================================
 
-const junkyuGrowthHistoryOpen =
-  document.getElementById("junkyuGrowthHistoryOpen");
+const jaehyukGrowthHistoryOpen =
+  document.getElementById("jaehyukGrowthHistoryOpen");
 
-const junkyuGrowthHistoryPage =
-  document.getElementById("junkyuGrowthHistoryPage");
+const jaehyukGrowthHistoryPage =
+  document.getElementById("jaehyukGrowthHistoryPage");
 
-const junkyuGrowthHistoryBack =
-  document.getElementById("junkyuGrowthHistoryBack");
+const jaehyukGrowthHistoryBack =
+  document.getElementById("jaehyukGrowthHistoryBack");
 
-const junkyuGrowthYearPage =
-  document.getElementById("junkyuGrowthYearPage");
+const jaehyukGrowthYearPage =
+  document.getElementById("jaehyukGrowthYearPage");
 
-const junkyuGrowthYearBack =
-  document.getElementById("junkyuGrowthYearBack");
+const jaehyukGrowthYearBack =
+  document.getElementById("jaehyukGrowthYearBack");
 
-const junkyuGrowthYearButtons =
-  document.querySelectorAll(".junkyu-growth-year");
+const jaehyukGrowthYearButtons =
+  document.querySelectorAll(".jaehyuk-growth-year");
 
-const junkyuGrowthYearNumber =
-  document.getElementById("junkyuGrowthYearNumber");
+const jaehyukGrowthYearNumber =
+  document.getElementById("jaehyukGrowthYearNumber");
 
-const junkyuGrowthYearTitle =
-  document.getElementById("junkyuGrowthYearTitle");
+const jaehyukGrowthYearTitle =
+  document.getElementById("jaehyukGrowthYearTitle");
 
-const junkyuGrowthYearSubtitle =
-  document.getElementById("junkyuGrowthYearSubtitle");
+const jaehyukGrowthYearSubtitle =
+  document.getElementById("jaehyukGrowthYearSubtitle");
 
-const junkyuGrowthYearVisualTitle =
-  document.getElementById("junkyuGrowthYearVisualTitle");
+const jaehyukGrowthYearVisualTitle =
+  document.getElementById("jaehyukGrowthYearVisualTitle");
 
-const junkyuGrowthYearCaption =
-  document.getElementById("junkyuGrowthYearCaption");
+const jaehyukGrowthYearCaption =
+  document.getElementById("jaehyukGrowthYearCaption");
 
-const junkyuGrowthYearVisualGrid =
-  document.getElementById("junkyuGrowthYearVisualGrid");
+const jaehyukGrowthYearVisualGrid =
+  document.getElementById("jaehyukGrowthYearVisualGrid");
 
-const junkyuGrowthYearVisualAdd =
-  document.getElementById("junkyuGrowthYearVisualAdd");
+const jaehyukGrowthYearVisualAdd =
+  document.getElementById("jaehyukGrowthYearVisualAdd");
 
-const junkyuGrowthVisualModal =
-  document.getElementById("junkyuGrowthVisualModal");
+const jaehyukGrowthVisualModal =
+  document.getElementById("jaehyukGrowthVisualModal");
 
-const junkyuGrowthVisualModalKicker =
-  document.getElementById("junkyuGrowthVisualModalKicker");
+const jaehyukGrowthVisualModalKicker =
+  document.getElementById("jaehyukGrowthVisualModalKicker");
 
-const junkyuGrowthVisualInput =
-  document.getElementById("junkyuGrowthVisualInput");
+const jaehyukGrowthVisualInput =
+  document.getElementById("jaehyukGrowthVisualInput");
 
-const junkyuGrowthVisualSelect =
-  document.getElementById("junkyuGrowthVisualSelect");
+const jaehyukGrowthVisualSelect =
+  document.getElementById("jaehyukGrowthVisualSelect");
 
-const junkyuGrowthVisualPreview =
-  document.getElementById("junkyuGrowthVisualPreview");
+const jaehyukGrowthVisualPreview =
+  document.getElementById("jaehyukGrowthVisualPreview");
 
-const junkyuGrowthVisualPreviewImage =
-  document.getElementById("junkyuGrowthVisualPreviewImage");
+const jaehyukGrowthVisualPreviewImage =
+  document.getElementById("jaehyukGrowthVisualPreviewImage");
 
-const junkyuGrowthVisualHair =
-  document.getElementById("junkyuGrowthVisualHair");
+const jaehyukGrowthVisualHair =
+  document.getElementById("jaehyukGrowthVisualHair");
 
-const junkyuGrowthVisualMemo =
-  document.getElementById("junkyuGrowthVisualMemo");
+const jaehyukGrowthVisualMemo =
+  document.getElementById("jaehyukGrowthVisualMemo");
 
-const junkyuGrowthVisualSave =
-  document.getElementById("junkyuGrowthVisualSave");
+const jaehyukGrowthVisualSave =
+  document.getElementById("jaehyukGrowthVisualSave");
 
-const junkyuGrowthVisualDelete =
-  document.getElementById("junkyuGrowthVisualDelete");
+const jaehyukGrowthVisualDelete =
+  document.getElementById("jaehyukGrowthVisualDelete");
 
-const junkyuGrowthVisualCancel =
-  document.getElementById("junkyuGrowthVisualCancel");
+const jaehyukGrowthVisualCancel =
+  document.getElementById("jaehyukGrowthVisualCancel");
 
-let currentJunkyuGrowthYear = "2020";
+let currentJaehyukGrowthYear = "2020";
 
-let pendingJunkyuGrowthFile = null;
+let pendingJaehyukGrowthFile = null;
 
-let currentJunkyuGrowthVisualItem = null;
+let currentJaehyukGrowthVisualItem = null;
 
-let junkyuGrowthDB = null;
+let jaehyukGrowthDB = null;
 
-const JUNKYU_GROWTH_DB =
-  "treasure-day-junkyu-growth-db";
+const JAEHYUK_GROWTH_DB =
+  "treasure-day-jaehyuk-growth-db";
 
-const JUNKYU_GROWTH_STORE =
-  "junkyuGrowthVisuals";
+const JAEHYUK_GROWTH_STORE =
+  "jaehyukGrowthVisuals";
 // ======================================================
-// 💾 JUNKYU GROWTH IndexedDB
+// 💾 JAEHYUK GROWTH IndexedDB
 // ======================================================
 
-function openJunkyuGrowthDB() {
+function openJaehyukGrowthDB() {
 
   return new Promise((resolve, reject) => {
 
     const request =
       indexedDB.open(
-        JUNKYU_GROWTH_DB,
+        JAEHYUK_GROWTH_DB,
         1
       );
 
@@ -16105,12 +16104,12 @@ function openJunkyuGrowthDB() {
 
         if (
           !db.objectStoreNames.contains(
-            JUNKYU_GROWTH_STORE
+            JAEHYUK_GROWTH_STORE
           )
         ) {
 
           db.createObjectStore(
-            JUNKYU_GROWTH_STORE,
+            JAEHYUK_GROWTH_STORE,
             {
               keyPath: "id"
             }
@@ -16124,11 +16123,11 @@ function openJunkyuGrowthDB() {
     request.onsuccess =
       () => {
 
-        junkyuGrowthDB =
+        jaehyukGrowthDB =
           request.result;
 
         resolve(
-          junkyuGrowthDB
+          jaehyukGrowthDB
         );
 
       };
@@ -16151,7 +16150,7 @@ function openJunkyuGrowthDB() {
 // 📸 IMAGE → DataURL
 // ======================================================
 
-function junkyuGrowthImageToDataURL(
+function jaehyukGrowthImageToDataURL(
   file
 ) {
 
@@ -16284,20 +16283,20 @@ function junkyuGrowthImageToDataURL(
 // 💾 SAVE NEW
 // ======================================================
 
-async function saveJunkyuGrowthVisual(
+async function saveJaehyukGrowthVisual(
   file,
   year,
   hairColor,
   memo
 ) {
 
-  if (!junkyuGrowthDB) {
-    await openJunkyuGrowthDB();
+  if (!jaehyukGrowthDB) {
+    await openJaehyukGrowthDB();
   }
 
 
   const imageData =
-    await junkyuGrowthImageToDataURL(
+    await jaehyukGrowthImageToDataURL(
       file
     );
 
@@ -16331,14 +16330,14 @@ async function saveJunkyuGrowthVisual(
     (resolve, reject) => {
 
       const transaction =
-        junkyuGrowthDB.transaction(
-          JUNKYU_GROWTH_STORE,
+        jaehyukGrowthDB.transaction(
+          JAEHYUK_GROWTH_STORE,
           "readwrite"
         );
 
       const store =
         transaction.objectStore(
-          JUNKYU_GROWTH_STORE
+          JAEHYUK_GROWTH_STORE
         );
 
       const request =
@@ -16362,7 +16361,7 @@ async function saveJunkyuGrowthVisual(
 // ✏️ UPDATE
 // ======================================================
 
-function updateJunkyuGrowthVisual(
+function updateJaehyukGrowthVisual(
   item
 ) {
 
@@ -16370,14 +16369,14 @@ function updateJunkyuGrowthVisual(
     (resolve, reject) => {
 
       const transaction =
-        junkyuGrowthDB.transaction(
-          JUNKYU_GROWTH_STORE,
+        jaehyukGrowthDB.transaction(
+          JAEHYUK_GROWTH_STORE,
           "readwrite"
         );
 
       const store =
         transaction.objectStore(
-          JUNKYU_GROWTH_STORE
+          JAEHYUK_GROWTH_STORE
         );
 
       const request =
@@ -16401,12 +16400,12 @@ function updateJunkyuGrowthVisual(
 // 📚 GET YEAR VISUALS
 // ======================================================
 
-async function getJunkyuGrowthVisuals(
+async function getJaehyukGrowthVisuals(
   year
 ) {
 
-  if (!junkyuGrowthDB) {
-    await openJunkyuGrowthDB();
+  if (!jaehyukGrowthDB) {
+    await openJaehyukGrowthDB();
   }
 
 
@@ -16414,14 +16413,14 @@ async function getJunkyuGrowthVisuals(
     (resolve, reject) => {
 
       const transaction =
-        junkyuGrowthDB.transaction(
-          JUNKYU_GROWTH_STORE,
+        jaehyukGrowthDB.transaction(
+          JAEHYUK_GROWTH_STORE,
           "readonly"
         );
 
       const store =
         transaction.objectStore(
-          JUNKYU_GROWTH_STORE
+          JAEHYUK_GROWTH_STORE
         );
 
       const request =
@@ -16459,12 +16458,12 @@ async function getJunkyuGrowthVisuals(
 // 🗑 DELETE
 // ======================================================
 
-async function deleteJunkyuGrowthVisual(
+async function deleteJaehyukGrowthVisual(
   id
 ) {
 
-  if (!junkyuGrowthDB) {
-    await openJunkyuGrowthDB();
+  if (!jaehyukGrowthDB) {
+    await openJaehyukGrowthDB();
   }
 
 
@@ -16472,14 +16471,14 @@ async function deleteJunkyuGrowthVisual(
     (resolve, reject) => {
 
       const transaction =
-        junkyuGrowthDB.transaction(
-          JUNKYU_GROWTH_STORE,
+        jaehyukGrowthDB.transaction(
+          JAEHYUK_GROWTH_STORE,
           "readwrite"
         );
 
       const store =
         transaction.objectStore(
-          JUNKYU_GROWTH_STORE
+          JAEHYUK_GROWTH_STORE
         );
 
       const request =
@@ -16498,10 +16497,10 @@ async function deleteJunkyuGrowthVisual(
   );
 }
 // ======================================================
-// 🌱 JUNKYU GROWTH YEAR INFO
+// 🌱 JAEHYUK GROWTH YEAR INFO
 // ======================================================
 
-const junkyuGrowthYearInfo = {
+const jaehyukGrowthYearInfo = {
 
   "2020": {
     title: "DEBUT ERA 💎"
@@ -16538,20 +16537,20 @@ const junkyuGrowthYearInfo = {
 // 📸 RENDER YEAR VISUALS
 // ======================================================
 
-async function renderJunkyuGrowthYearVisuals() {
+async function renderJaehyukGrowthYearVisuals() {
 
-  if (!junkyuGrowthYearVisualGrid) {
+  if (!jaehyukGrowthYearVisualGrid) {
     return;
   }
 
 
-  junkyuGrowthYearVisualGrid.innerHTML =
+  jaehyukGrowthYearVisualGrid.innerHTML =
     "";
 
 
   const items =
-    await getJunkyuGrowthVisuals(
-      currentJunkyuGrowthYear
+    await getJaehyukGrowthVisuals(
+      currentJaehyukGrowthYear
     );
 
 
@@ -16572,12 +16571,12 @@ async function renderJunkyuGrowthYearVisuals() {
         "button";
 
  card.className =
-  "jihoon-growth-visual-card junkyu-growth-visual-card";
+  "jihoon-growth-visual-card jaehyuk-growth-visual-card";
 const photo =
   document.createElement("div");
 
 photo.className =
-  "jihoon-growth-visual-photo junkyu-growth-visual-photo";
+  "jihoon-growth-visual-photo jaehyuk-growth-visual-photo";
       const img =
         document.createElement(
           "img"
@@ -16587,7 +16586,7 @@ photo.className =
         item.imageData || "";
 
       img.alt =
-        `JUNKYU ${item.year}`;
+        `JAEHYUK ${item.year}`;
 
       img.loading =
         "lazy";
@@ -16655,38 +16654,38 @@ card.appendChild(
         "click",
         () => {
 
-          currentJunkyuGrowthVisualItem =
+          currentJaehyukGrowthVisualItem =
             item;
 
-          pendingJunkyuGrowthFile =
+          pendingJaehyukGrowthFile =
             null;
 
 
           if (
-            junkyuGrowthVisualPreviewImage
+            jaehyukGrowthVisualPreviewImage
           ) {
 
-            junkyuGrowthVisualPreviewImage.src =
+            jaehyukGrowthVisualPreviewImage.src =
               item.imageData || "";
 
           }
 
 
           if (
-            junkyuGrowthVisualPreview
+            jaehyukGrowthVisualPreview
           ) {
 
-            junkyuGrowthVisualPreview.style.display =
+            jaehyukGrowthVisualPreview.style.display =
               "block";
 
           }
 
 
           if (
-            junkyuGrowthVisualHair
+            jaehyukGrowthVisualHair
           ) {
 
-            junkyuGrowthVisualHair.value =
+            jaehyukGrowthVisualHair.value =
               item.hairColor ||
               "OTHER";
 
@@ -16694,40 +16693,40 @@ card.appendChild(
 
 
           if (
-            junkyuGrowthVisualMemo
+            jaehyukGrowthVisualMemo
           ) {
 
-            junkyuGrowthVisualMemo.value =
+            jaehyukGrowthVisualMemo.value =
               item.memo || "";
 
           }
 
 
           if (
-            junkyuGrowthVisualDelete
+            jaehyukGrowthVisualDelete
           ) {
 
-            junkyuGrowthVisualDelete.style.display =
+            jaehyukGrowthVisualDelete.style.display =
               "block";
 
           }
 
 
           if (
-            junkyuGrowthVisualModalKicker
+            jaehyukGrowthVisualModalKicker
           ) {
 
-            junkyuGrowthVisualModalKicker.textContent =
+            jaehyukGrowthVisualModalKicker.textContent =
               `📸 ${item.year} VISUAL`;
 
           }
 
 
           if (
-            junkyuGrowthVisualModal
+            jaehyukGrowthVisualModal
           ) {
 
-            junkyuGrowthVisualModal.style.display =
+            jaehyukGrowthVisualModal.style.display =
               "flex";
 
           }
@@ -16736,7 +16735,7 @@ card.appendChild(
       );
 
 
-      junkyuGrowthYearVisualGrid.appendChild(
+      jaehyukGrowthYearVisualGrid.appendChild(
         card
       );
 
@@ -16749,97 +16748,97 @@ card.appendChild(
 // 🌱 OPEN YEAR DETAIL
 // ======================================================
 
-async function openJunkyuGrowthYear(
+async function openJaehyukGrowthYear(
   year
 ) {
 
-  currentJunkyuGrowthYear =
+  currentJaehyukGrowthYear =
     String(year);
 
 
   const info =
-    junkyuGrowthYearInfo[
-      currentJunkyuGrowthYear
+    jaehyukGrowthYearInfo[
+      currentJaehyukGrowthYear
     ] || {
       title:
-        `${currentJunkyuGrowthYear} ERA 💎`
+        `${currentJaehyukGrowthYear} ERA 💎`
     };
 
 
   if (
-    junkyuGrowthYearNumber
+    jaehyukGrowthYearNumber
   ) {
 
-    junkyuGrowthYearNumber.textContent =
-      currentJunkyuGrowthYear;
+    jaehyukGrowthYearNumber.textContent =
+      currentJaehyukGrowthYear;
 
   }
 
 
   if (
-    junkyuGrowthYearTitle
+    jaehyukGrowthYearTitle
   ) {
 
-    junkyuGrowthYearTitle.textContent =
+    jaehyukGrowthYearTitle.textContent =
       info.title;
 
   }
 
 
   if (
-    junkyuGrowthYearSubtitle
+    jaehyukGrowthYearSubtitle
   ) {
 
-    junkyuGrowthYearSubtitle.textContent =
-      `${currentJunkyuGrowthYear}年のジュンギュを振り返ろう 💎`;
+    jaehyukGrowthYearSubtitle.textContent =
+      `${currentJaehyukGrowthYear}年のジェヒョクを振り返ろう 💎`;
 
   }
 
 
   if (
-    junkyuGrowthYearVisualTitle
+    jaehyukGrowthYearVisualTitle
   ) {
 
-    junkyuGrowthYearVisualTitle.textContent =
-      `📸 ${currentJunkyuGrowthYear} VISUAL`;
+    jaehyukGrowthYearVisualTitle.textContent =
+      `📸 ${currentJaehyukGrowthYear} VISUAL`;
 
   }
 
 
   if (
-    junkyuGrowthYearCaption
+    jaehyukGrowthYearCaption
   ) {
 
-    junkyuGrowthYearCaption.textContent =
-      `${currentJunkyuGrowthYear}年のお気に入りジュンギュを残そう 💎`;
+    jaehyukGrowthYearCaption.textContent =
+      `${currentJaehyukGrowthYear}年のお気に入りジェヒョクを残そう 💎`;
 
   }
 
 
   if (
-    junkyuGrowthHistoryPage
+    jaehyukGrowthHistoryPage
   ) {
 
-    junkyuGrowthHistoryPage.style.display =
+    jaehyukGrowthHistoryPage.style.display =
       "none";
 
   }
 
 
   if (
-    junkyuGrowthYearPage
+    jaehyukGrowthYearPage
   ) {
 
-    junkyuGrowthYearPage.style.display =
+    jaehyukGrowthYearPage.style.display =
       "block";
 
-    junkyuGrowthYearPage.scrollTop =
+    jaehyukGrowthYearPage.scrollTop =
       0;
 
   }
 
 
-  await renderJunkyuGrowthYearVisuals();
+  await renderJaehyukGrowthYearVisuals();
 
 }
 
@@ -16848,14 +16847,14 @@ async function openJunkyuGrowthYear(
 // 🌱 YEAR BUTTONS
 // ======================================================
 
-junkyuGrowthYearButtons.forEach(
+jaehyukGrowthYearButtons.forEach(
   button => {
 
     button.addEventListener(
       "click",
       async () => {
 
-        await openJunkyuGrowthYear(
+        await openJaehyukGrowthYear(
           button.dataset.year
         );
 
@@ -16869,24 +16868,24 @@ junkyuGrowthYearButtons.forEach(
 // ======================================================
 
 if (
-  junkyuGrowthHistoryOpen &&
-  junkyuGrowthHistoryPage
+  jaehyukGrowthHistoryOpen &&
+  jaehyukGrowthHistoryPage
 ) {
 
-  junkyuGrowthHistoryOpen.addEventListener(
+  jaehyukGrowthHistoryOpen.addEventListener(
     "click",
     () => {
 
-      if (junkyuBookDetail) {
-        junkyuBookDetail.classList.remove(
+      if (jaehyukBookDetail) {
+        jaehyukBookDetail.classList.remove(
           "active"
         );
       }
 
-      junkyuGrowthHistoryPage.style.display =
+      jaehyukGrowthHistoryPage.style.display =
         "block";
 
-      junkyuGrowthHistoryPage.scrollTop =
+      jaehyukGrowthHistoryPage.scrollTop =
         0;
 
       document.body.style.overflow =
@@ -16898,28 +16897,28 @@ if (
 
 
 // ======================================================
-// ← GROWTH HISTORY → JUNKYU BOOK
+// ← GROWTH HISTORY → JAEHYUK BOOK
 // ======================================================
 
 if (
-  junkyuGrowthHistoryBack &&
-  junkyuGrowthHistoryPage
+  jaehyukGrowthHistoryBack &&
+  jaehyukGrowthHistoryPage
 ) {
 
-  junkyuGrowthHistoryBack.addEventListener(
+  jaehyukGrowthHistoryBack.addEventListener(
     "click",
     () => {
 
-      junkyuGrowthHistoryPage.style.display =
+      jaehyukGrowthHistoryPage.style.display =
         "none";
 
-      if (junkyuBookDetail) {
+      if (jaehyukBookDetail) {
 
-        junkyuBookDetail.classList.add(
+        jaehyukBookDetail.classList.add(
           "active"
         );
 
-        junkyuBookDetail.scrollTop =
+        jaehyukBookDetail.scrollTop =
           0;
 
       }
@@ -16937,21 +16936,21 @@ if (
 // ======================================================
 
 if (
-  junkyuGrowthYearBack &&
-  junkyuGrowthYearPage
+  jaehyukGrowthYearBack &&
+  jaehyukGrowthYearPage
 ) {
 
-  junkyuGrowthYearBack.addEventListener(
+  jaehyukGrowthYearBack.addEventListener(
     "click",
     () => {
 
-      junkyuGrowthYearPage.style.display =
+      jaehyukGrowthYearPage.style.display =
         "none";
 
-      junkyuGrowthHistoryPage.style.display =
+      jaehyukGrowthHistoryPage.style.display =
         "block";
 
-      junkyuGrowthHistoryPage.scrollTop =
+      jaehyukGrowthHistoryPage.scrollTop =
         0;
 
       document.body.style.overflow =
@@ -16966,69 +16965,69 @@ if (
 // ＋ ADD → MODAL
 // ======================================================
 
-if (junkyuGrowthYearVisualAdd) {
+if (jaehyukGrowthYearVisualAdd) {
 
-  junkyuGrowthYearVisualAdd.addEventListener(
+  jaehyukGrowthYearVisualAdd.addEventListener(
     "click",
     () => {
 
-      currentJunkyuGrowthVisualItem =
+      currentJaehyukGrowthVisualItem =
         null;
 
-      pendingJunkyuGrowthFile =
+      pendingJaehyukGrowthFile =
         null;
 
 
-      if (junkyuGrowthVisualInput) {
-        junkyuGrowthVisualInput.value =
+      if (jaehyukGrowthVisualInput) {
+        jaehyukGrowthVisualInput.value =
           "";
       }
 
 
-      if (junkyuGrowthVisualMemo) {
-        junkyuGrowthVisualMemo.value =
+      if (jaehyukGrowthVisualMemo) {
+        jaehyukGrowthVisualMemo.value =
           "";
       }
 
 
-      if (junkyuGrowthVisualHair) {
-        junkyuGrowthVisualHair.value =
+      if (jaehyukGrowthVisualHair) {
+        jaehyukGrowthVisualHair.value =
           "BLACK";
       }
 
 
-      if (junkyuGrowthVisualPreviewImage) {
-        junkyuGrowthVisualPreviewImage.src =
+      if (jaehyukGrowthVisualPreviewImage) {
+        jaehyukGrowthVisualPreviewImage.src =
           "";
       }
 
 
-      if (junkyuGrowthVisualPreview) {
-        junkyuGrowthVisualPreview.style.display =
+      if (jaehyukGrowthVisualPreview) {
+        jaehyukGrowthVisualPreview.style.display =
           "none";
       }
 
 
-      if (junkyuGrowthVisualDelete) {
-        junkyuGrowthVisualDelete.style.display =
+      if (jaehyukGrowthVisualDelete) {
+        jaehyukGrowthVisualDelete.style.display =
           "none";
       }
 
 
-      if (junkyuGrowthVisualModalKicker) {
+      if (jaehyukGrowthVisualModalKicker) {
 
-        junkyuGrowthVisualModalKicker.textContent =
-          `📸 ${currentJunkyuGrowthYear} VISUAL`;
+        jaehyukGrowthVisualModalKicker.textContent =
+          `📸 ${currentJaehyukGrowthYear} VISUAL`;
 
       }
 
 
-      if (junkyuGrowthVisualModal) {
+      if (jaehyukGrowthVisualModal) {
 
-        junkyuGrowthVisualModal.style.display =
+        jaehyukGrowthVisualModal.style.display =
           "flex";
 
-        junkyuGrowthVisualModal.scrollTop =
+        jaehyukGrowthVisualModal.scrollTop =
           0;
 
       }
@@ -17043,34 +17042,34 @@ if (junkyuGrowthYearVisualAdd) {
 // ======================================================
 
 if (
-  junkyuGrowthVisualSelect &&
-  junkyuGrowthVisualInput
+  jaehyukGrowthVisualSelect &&
+  jaehyukGrowthVisualInput
 ) {
 
-  junkyuGrowthVisualSelect.addEventListener(
+  jaehyukGrowthVisualSelect.addEventListener(
     "click",
     () => {
 
-      junkyuGrowthVisualInput.click();
+      jaehyukGrowthVisualInput.click();
 
     }
   );
 }
 
 
-if (junkyuGrowthVisualInput) {
+if (jaehyukGrowthVisualInput) {
 
-  junkyuGrowthVisualInput.addEventListener(
+  jaehyukGrowthVisualInput.addEventListener(
     "change",
     () => {
 
       const file =
-        junkyuGrowthVisualInput.files[0];
+        jaehyukGrowthVisualInput.files[0];
 
       if (!file) return;
 
 
-      pendingJunkyuGrowthFile =
+      pendingJaehyukGrowthFile =
         file;
 
 
@@ -17082,20 +17081,20 @@ if (junkyuGrowthVisualInput) {
         () => {
 
           if (
-            junkyuGrowthVisualPreviewImage
+            jaehyukGrowthVisualPreviewImage
           ) {
 
-            junkyuGrowthVisualPreviewImage.src =
+            jaehyukGrowthVisualPreviewImage.src =
               reader.result;
 
           }
 
 
           if (
-            junkyuGrowthVisualPreview
+            jaehyukGrowthVisualPreview
           ) {
 
-            junkyuGrowthVisualPreview.style.display =
+            jaehyukGrowthVisualPreview.style.display =
               "block";
 
           }
@@ -17116,52 +17115,52 @@ if (junkyuGrowthVisualInput) {
 // 💎 SAVE / UPDATE
 // ======================================================
 
-if (junkyuGrowthVisualSave) {
+if (jaehyukGrowthVisualSave) {
 
-  junkyuGrowthVisualSave.addEventListener(
+  jaehyukGrowthVisualSave.addEventListener(
     "click",
     async () => {
 
       try {
 
         const hairColor =
-          junkyuGrowthVisualHair
-            ? junkyuGrowthVisualHair.value
+          jaehyukGrowthVisualHair
+            ? jaehyukGrowthVisualHair.value
             : "OTHER";
 
 
         const memo =
-          junkyuGrowthVisualMemo
-            ? junkyuGrowthVisualMemo.value.trim()
+          jaehyukGrowthVisualMemo
+            ? jaehyukGrowthVisualMemo.value.trim()
             : "";
 
 
         // ✏️ UPDATE
         if (
-          currentJunkyuGrowthVisualItem
+          currentJaehyukGrowthVisualItem
         ) {
 
-          currentJunkyuGrowthVisualItem.hairColor =
+          currentJaehyukGrowthVisualItem.hairColor =
             hairColor;
 
-          currentJunkyuGrowthVisualItem.memo =
+          currentJaehyukGrowthVisualItem.memo =
             memo;
 
 
           if (
-            pendingJunkyuGrowthFile
+            pendingJaehyukGrowthFile
           ) {
 
-            currentJunkyuGrowthVisualItem.imageData =
-              await junkyuGrowthImageToDataURL(
-                pendingJunkyuGrowthFile
+            currentJaehyukGrowthVisualItem.imageData =
+              await jaehyukGrowthImageToDataURL(
+                pendingJaehyukGrowthFile
               );
 
           }
 
 
-          await updateJunkyuGrowthVisual(
-            currentJunkyuGrowthVisualItem
+          await updateJaehyukGrowthVisual(
+            currentJaehyukGrowthVisualItem
           );
 
         }
@@ -17169,7 +17168,7 @@ if (junkyuGrowthVisualSave) {
         // 📸 NEW
         else {
 
-          if (!pendingJunkyuGrowthFile) {
+          if (!pendingJaehyukGrowthFile) {
 
             alert(
               "写真を選んでね📸"
@@ -17180,9 +17179,9 @@ if (junkyuGrowthVisualSave) {
           }
 
 
-          await saveJunkyuGrowthVisual(
-            pendingJunkyuGrowthFile,
-            currentJunkyuGrowthYear,
+          await saveJaehyukGrowthVisual(
+            pendingJaehyukGrowthFile,
+            currentJaehyukGrowthYear,
             hairColor,
             memo
           );
@@ -17190,15 +17189,15 @@ if (junkyuGrowthVisualSave) {
         }
 
 
-        closeJunkyuGrowthModal();
+        closeJaehyukGrowthModal();
 
-        await renderJunkyuGrowthYearVisuals();
+        await renderJaehyukGrowthYearVisuals();
 
 
       } catch (error) {
 
         console.error(
-          "JUNKYU GROWTH SAVE ERROR:",
+          "JAEHYUK GROWTH SAVE ERROR:",
           error
         );
 
@@ -17217,14 +17216,14 @@ if (junkyuGrowthVisualSave) {
 // 🗑 DELETE
 // ======================================================
 
-if (junkyuGrowthVisualDelete) {
+if (jaehyukGrowthVisualDelete) {
 
-  junkyuGrowthVisualDelete.addEventListener(
+  jaehyukGrowthVisualDelete.addEventListener(
     "click",
     async () => {
 
       if (
-        !currentJunkyuGrowthVisualItem
+        !currentJaehyukGrowthVisualItem
       ) {
         return;
       }
@@ -17240,19 +17239,19 @@ if (junkyuGrowthVisualDelete) {
 
       try {
 
-        await deleteJunkyuGrowthVisual(
-          currentJunkyuGrowthVisualItem.id
+        await deleteJaehyukGrowthVisual(
+          currentJaehyukGrowthVisualItem.id
         );
 
-        closeJunkyuGrowthModal();
+        closeJaehyukGrowthModal();
 
-        await renderJunkyuGrowthYearVisuals();
+        await renderJaehyukGrowthYearVisuals();
 
 
       } catch (error) {
 
         console.error(
-          "JUNKYU GROWTH DELETE ERROR:",
+          "JAEHYUK GROWTH DELETE ERROR:",
           error
         );
 
@@ -17271,60 +17270,60 @@ if (junkyuGrowthVisualDelete) {
 // CANCEL / CLOSE
 // ======================================================
 
-function closeJunkyuGrowthModal() {
+function closeJaehyukGrowthModal() {
 
-  pendingJunkyuGrowthFile =
+  pendingJaehyukGrowthFile =
     null;
 
-  currentJunkyuGrowthVisualItem =
+  currentJaehyukGrowthVisualItem =
     null;
 
 
-  if (junkyuGrowthVisualInput) {
-    junkyuGrowthVisualInput.value =
+  if (jaehyukGrowthVisualInput) {
+    jaehyukGrowthVisualInput.value =
       "";
   }
 
 
-  if (junkyuGrowthVisualPreviewImage) {
-    junkyuGrowthVisualPreviewImage.src =
+  if (jaehyukGrowthVisualPreviewImage) {
+    jaehyukGrowthVisualPreviewImage.src =
       "";
   }
 
 
-  if (junkyuGrowthVisualPreview) {
-    junkyuGrowthVisualPreview.style.display =
+  if (jaehyukGrowthVisualPreview) {
+    jaehyukGrowthVisualPreview.style.display =
       "none";
   }
 
 
-  if (junkyuGrowthVisualMemo) {
-    junkyuGrowthVisualMemo.value =
+  if (jaehyukGrowthVisualMemo) {
+    jaehyukGrowthVisualMemo.value =
       "";
   }
 
 
-  if (junkyuGrowthVisualDelete) {
-    junkyuGrowthVisualDelete.style.display =
+  if (jaehyukGrowthVisualDelete) {
+    jaehyukGrowthVisualDelete.style.display =
       "none";
   }
 
 
-  if (junkyuGrowthVisualModal) {
-    junkyuGrowthVisualModal.style.display =
+  if (jaehyukGrowthVisualModal) {
+    jaehyukGrowthVisualModal.style.display =
       "none";
   }
 
 }
 
 
-if (junkyuGrowthVisualCancel) {
+if (jaehyukGrowthVisualCancel) {
 
-  junkyuGrowthVisualCancel.addEventListener(
+  jaehyukGrowthVisualCancel.addEventListener(
     "click",
     () => {
 
-      closeJunkyuGrowthModal();
+      closeJaehyukGrowthModal();
 
     }
   );
@@ -17332,15 +17331,15 @@ if (junkyuGrowthVisualCancel) {
 
 
 // ======================================================
-// 🚀 INITIALIZE JUNKYU GROWTH DB
+// 🚀 INITIALIZE JAEHYUK GROWTH DB
 // ======================================================
 
-openJunkyuGrowthDB()
+openJaehyukGrowthDB()
   .catch(
     error => {
 
       console.error(
-        "JUNKYU GROWTH DB ERROR:",
+        "JAEHYUK GROWTH DB ERROR:",
         error
       );
 
