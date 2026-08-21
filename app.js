@@ -30304,3 +30304,573 @@ musicComingSoonButtons.forEach(
 
   }
 );
+// ======================================================
+// 🎧 TREASURE MUSIC MASTER DATA
+// ======================================================
+
+const treasureSongs = [
+
+  // 2020
+  { id: 1, year: 2020, title: "BOY", tags: [], album: null },
+  { id: 2, year: 2020, title: "COME TO ME", tags: [], album: null },
+  { id: 3, year: 2020, title: "I LOVE YOU", tags: [], album: null },
+  { id: 4, year: 2020, title: "B.L.T (BLING LIKE THIS)", tags: [], album: null },
+  { id: 5, year: 2020, title: "MMM", tags: [], album: null },
+  { id: 6, year: 2020, title: "ORANGE", tags: [], album: null },
+
+  // 2021
+  { id: 7, year: 2021, title: "MY TREASURE", tags: [], album: null },
+  { id: 8, year: 2021, title: "BE WITH ME", tags: [], album: null },
+  { id: 9, year: 2021, title: "SLOWMOTION", tags: [], album: null },
+  { id: 10, year: 2021, title: "GOING CRAZY", tags: [], album: null },
+  { id: 11, year: 2021, title: "BEAUTIFUL", tags: ["JAPAN"], album: null },
+  { id: 12, year: 2021, title: "EVERYDAY", tags: ["SPECIAL"], album: null },
+
+  // 2022
+  { id: 13, year: 2022, title: "JIKJIN", tags: [], album: null },
+  { id: 14, year: 2022, title: "U", tags: [], album: null },
+  { id: 15, year: 2022, title: "DARARI", tags: [], album: null },
+  { id: 16, year: 2022, title: "IT’S OKAY", tags: [], album: null },
+  { id: 17, year: 2022, title: "BFF (Best Friend Forever)", tags: ["OST"], album: null },
+  { id: 18, year: 2022, title: "Gonna Be Fine", tags: ["OST"], album: null },
+  { id: 19, year: 2022, title: "HELLO", tags: [], album: null },
+  { id: 20, year: 2022, title: "VolKno", tags: ["UNIT"], album: null },
+  { id: 21, year: 2022, title: "CLAP!", tags: [], album: null },
+  { id: 22, year: 2022, title: "THANK YOU", tags: ["UNIT"], album: null },
+  { id: 23, year: 2022, title: "HOLD IT IN", tags: [], album: null },
+  { id: 24, year: 2022, title: "DARARI (ROCK REMIX)", tags: [], album: null },
+
+  // 2023
+  { id: 25, year: 2023, title: "Here I Stand", tags: ["JAPAN"], album: null },
+  { id: 26, year: 2023, title: "BEAUTIFUL (Ballad Ver.)", tags: ["JAPAN"], album: null },
+  { id: 27, year: 2023, title: "MOVE (T5)", tags: ["UNIT"], album: null },
+  { id: 28, year: 2023, title: "BONA BONA", tags: [], album: null },
+  { id: 29, year: 2023, title: "I WANT YOUR LOVE", tags: [], album: null },
+  { id: 30, year: 2023, title: "RUN", tags: [], album: null },
+  { id: 31, year: 2023, title: "G.O.A.T", tags: ["UNIT"], album: null },
+  { id: 32, year: 2023, title: "STUPID", tags: [], album: null },
+  { id: 33, year: 2023, title: "THE WAY TO", tags: ["UNIT"], album: null },
+  { id: 34, year: 2023, title: "WONDERLAND", tags: [], album: null },
+  { id: 35, year: 2023, title: "B.O.M.B", tags: [], album: null },
+  { id: 36, year: 2023, title: "LOVESICK", tags: [], album: null },
+  { id: 37, year: 2023, title: "B.O.M.B (KABOOM ver.)", tags: [], album: null },
+
+  // 2024
+  { id: 38, year: 2024, title: "病 (YAMAI)", tags: ["JAPAN"], album: null },
+  { id: 39, year: 2024, title: "LET IT BURN", tags: ["JAPAN"], album: null },
+  { id: 40, year: 2024, title: "KING KONG", tags: [], album: null },
+  { id: 41, year: 2024, title: "REVERSE", tags: ["JAPAN"], album: null },
+  { id: 42, year: 2024, title: "LAST NIGHT", tags: [], album: null },
+
+  // 2025
+  { id: 43, year: 2025, title: "YELLOW", tags: [], album: null },
+  { id: 44, year: 2025, title: "SARURU", tags: [], album: null },
+  { id: 45, year: 2025, title: "WHATEVER, WHENEVER", tags: [], album: null },
+  { id: 46, year: 2025, title: "EVERYTHING", tags: [], album: null },
+  { id: 47, year: 2025, title: "PARADISE", tags: [], album: null },
+  { id: 48, year: 2025, title: "NOW FOREVER", tags: [], album: null },
+  { id: 49, year: 2025, title: "BETTER THAN ME", tags: [], album: null },
+
+  // 2026
+  { id: 50, year: 2026, title: "IF I", tags: [], album: null },
+  { id: 51, year: 2026, title: "ZOOM ZOOM", tags: [], album: null },
+  { id: 52, year: 2026, title: "NALLY-NA (HYUNHAYO)", tags: ["UNIT"], album: null },
+  { id: 53, year: 2026, title: "DANGER", tags: [], album: null }
+
+];
+
+
+// ======================================================
+// 🎵 ALL SONGS SYSTEM
+// ======================================================
+
+const MUSIC_FAVORITES_KEY =
+  "treasure-music-favorites";
+
+const musicAllSongsOpen =
+  document.getElementById("music-all-songs-open");
+
+const musicAllSongsPage =
+  document.getElementById("music-all-songs-page");
+
+const musicAllSongsBack =
+  document.getElementById("music-all-songs-back");
+
+const musicSongSearch =
+  document.getElementById("music-song-search");
+
+const musicYearFilter =
+  document.getElementById("music-year-filter");
+
+const musicFavoriteFilter =
+  document.getElementById("music-favorite-filter");
+
+const musicSongList =
+  document.getElementById("music-song-list");
+
+const musicSongCount =
+  document.getElementById("music-song-count");
+
+const musicSongResultCount =
+  document.getElementById("music-song-result-count");
+
+
+let currentMusicYear = "ALL";
+let musicFavoritesOnly = false;
+
+
+function loadMusicFavorites() {
+
+  try {
+
+    const saved =
+      JSON.parse(
+        localStorage.getItem(
+          MUSIC_FAVORITES_KEY
+        )
+      );
+
+    return Array.isArray(saved)
+      ? saved
+      : [];
+
+  } catch (error) {
+
+    return [];
+
+  }
+
+}
+
+
+function saveMusicFavorites(favorites) {
+
+  localStorage.setItem(
+    MUSIC_FAVORITES_KEY,
+    JSON.stringify(favorites)
+  );
+
+}
+
+
+function isMusicFavorite(songId) {
+
+  return loadMusicFavorites()
+    .includes(songId);
+
+}
+
+
+function toggleMusicFavorite(songId) {
+
+  let favorites =
+    loadMusicFavorites();
+
+  if (favorites.includes(songId)) {
+
+    favorites =
+      favorites.filter(
+        id => id !== songId
+      );
+
+  } else {
+
+    favorites.push(songId);
+
+  }
+
+  saveMusicFavorites(favorites);
+
+}
+
+
+// ======================================================
+// YEAR FILTER
+// 新しい年の曲を追加すると自動で増える
+// ======================================================
+
+function renderMusicYearFilters() {
+
+  if (!musicYearFilter) return;
+
+  const years = [
+    ...new Set(
+      treasureSongs.map(
+        song => song.year
+      )
+    )
+  ].sort(
+    (a, b) => a - b
+  );
+
+  musicYearFilter.innerHTML = "";
+
+  const filterValues = [
+    "ALL",
+    ...years
+  ];
+
+  filterValues.forEach(value => {
+
+    const button =
+      document.createElement("button");
+
+    button.type = "button";
+
+    button.className =
+      "music-year-button";
+
+    button.textContent =
+      value;
+
+    if (
+      String(currentMusicYear) ===
+      String(value)
+    ) {
+
+      button.classList.add(
+        "active"
+      );
+
+    }
+
+    button.addEventListener(
+      "click",
+      () => {
+
+        currentMusicYear =
+          value;
+
+        renderMusicYearFilters();
+        renderMusicSongs();
+
+      }
+    );
+
+    musicYearFilter.appendChild(
+      button
+    );
+
+  });
+
+}
+
+
+// ======================================================
+// TAG DISPLAY
+// ======================================================
+
+function getMusicTagLabel(tag) {
+
+  const labels = {
+
+    JAPAN: "🇯🇵 JAPAN",
+    OST: "🎬 OST",
+    UNIT: "👥 UNIT",
+    SPECIAL: "💎 SPECIAL"
+
+  };
+
+  return labels[tag] || tag;
+
+}
+
+
+// ======================================================
+// SONG LIST
+// ======================================================
+
+function renderMusicSongs() {
+
+  if (!musicSongList) return;
+
+  const searchText =
+    musicSongSearch
+      ? musicSongSearch.value
+          .trim()
+          .toLowerCase()
+      : "";
+
+  let songs =
+    treasureSongs.filter(song => {
+
+      const yearMatch =
+        currentMusicYear === "ALL" ||
+        String(song.year) ===
+          String(currentMusicYear);
+
+      const searchMatch =
+        song.title
+          .toLowerCase()
+          .includes(searchText);
+
+      const favoriteMatch =
+        !musicFavoritesOnly ||
+        isMusicFavorite(song.id);
+
+      return (
+        yearMatch &&
+        searchMatch &&
+        favoriteMatch
+      );
+
+    });
+
+
+  musicSongList.innerHTML = "";
+
+
+  if (musicSongCount) {
+
+    musicSongCount.textContent =
+      `${treasureSongs.length} SONGS 💎`;
+
+  }
+
+
+  if (musicSongResultCount) {
+
+    musicSongResultCount.textContent =
+      `${songs.length} SONGS`;
+
+  }
+
+
+  if (songs.length === 0) {
+
+    musicSongList.innerHTML = `
+      <div class="music-song-empty">
+        🎧 該当する曲がありません<br>
+        別の条件で探してみてね 💎
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  songs.forEach(song => {
+
+    const card =
+      document.createElement("div");
+
+    card.className =
+      "music-song-card";
+
+
+    const tagsHTML =
+      song.tags
+        .map(
+          tag => `
+            <span class="music-song-tag">
+              ${getMusicTagLabel(tag)}
+            </span>
+          `
+        )
+        .join("");
+
+
+    const favorite =
+      isMusicFavorite(song.id);
+
+
+    card.innerHTML = `
+
+      <div class="music-song-number">
+        ${String(song.id).padStart(2, "0")}
+      </div>
+
+      <div class="music-song-info">
+
+        <strong>
+          ${song.title}
+        </strong>
+
+        <div class="music-song-meta">
+
+          <span>
+            ${song.year}
+          </span>
+
+          ${tagsHTML}
+
+        </div>
+
+      </div>
+
+      <button
+        type="button"
+        class="
+          music-song-favorite
+          ${favorite ? "active" : ""}
+        "
+        aria-label="favorite"
+      >
+        ${favorite ? "♥" : "♡"}
+      </button>
+
+    `;
+
+
+    const favoriteButton =
+      card.querySelector(
+        ".music-song-favorite"
+      );
+
+
+    favoriteButton.addEventListener(
+      "click",
+      (event) => {
+
+        event.stopPropagation();
+
+        toggleMusicFavorite(
+          song.id
+        );
+
+        renderMusicSongs();
+
+      }
+    );
+
+
+    musicSongList.appendChild(
+      card
+    );
+
+  });
+
+}
+
+
+// ======================================================
+// SEARCH
+// ======================================================
+
+if (musicSongSearch) {
+
+  musicSongSearch.addEventListener(
+    "input",
+    renderMusicSongs
+  );
+
+}
+
+
+// ======================================================
+// FAVORITES ONLY
+// ======================================================
+
+if (musicFavoriteFilter) {
+
+  musicFavoriteFilter.addEventListener(
+    "click",
+    () => {
+
+      musicFavoritesOnly =
+        !musicFavoritesOnly;
+
+      musicFavoriteFilter
+        .classList.toggle(
+          "active",
+          musicFavoritesOnly
+        );
+
+      musicFavoriteFilter.textContent =
+        musicFavoritesOnly
+          ? "♥ FAVORITES ONLY"
+          : "♡ FAVORITES ONLY";
+
+      renderMusicSongs();
+
+    }
+  );
+
+}
+
+
+// ======================================================
+// MUSIC → ALL SONGS
+// ======================================================
+
+if (
+  musicAllSongsOpen &&
+  musicAllSongsPage
+) {
+
+  musicAllSongsOpen.addEventListener(
+    "click",
+    () => {
+
+      currentMusicYear =
+        "ALL";
+
+      musicFavoritesOnly =
+        false;
+
+      if (musicSongSearch) {
+        musicSongSearch.value = "";
+      }
+
+      if (musicFavoriteFilter) {
+
+        musicFavoriteFilter
+          .classList.remove(
+            "active"
+          );
+
+        musicFavoriteFilter.textContent =
+          "♡ FAVORITES ONLY";
+
+      }
+
+      renderMusicYearFilters();
+      renderMusicSongs();
+
+      musicPage.style.display =
+        "none";
+
+      musicAllSongsPage.style.display =
+        "block";
+
+      musicAllSongsPage.scrollTop =
+        0;
+
+    }
+  );
+
+}
+
+
+// ======================================================
+// ALL SONGS → MUSIC
+// ======================================================
+
+if (
+  musicAllSongsBack &&
+  musicAllSongsPage
+) {
+
+  musicAllSongsBack.addEventListener(
+    "click",
+    () => {
+
+      musicAllSongsPage.style.display =
+        "none";
+
+      musicPage.style.display =
+        "block";
+
+      musicPage.scrollTop =
+        0;
+
+    }
+  );
+
+}
+
+
+// INITIAL
+renderMusicYearFilters();
+renderMusicSongs();
