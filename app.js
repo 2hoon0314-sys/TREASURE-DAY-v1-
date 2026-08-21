@@ -20446,3 +20446,232 @@ if (junkyuChemistryAdd) {
 
 // 最初のカード生成
 renderJunkyuChemistryCards();
+// =====================================================
+// 🦁 JAEHYUK CHEMISTRY
+// SHARED CHEMISTRY ENGINE CONNECT
+// =====================================================
+
+const jaehyukChemistryOpen =
+  document.getElementById(
+    "jaehyukChemistryOpen"
+  );
+
+const jaehyukChemistryPage =
+  document.getElementById(
+    "jaehyukChemistryPage"
+  );
+
+const jaehyukChemistryBack =
+  document.getElementById(
+    "jaehyukChemistryBack"
+  );
+
+const jaehyukChemistryList =
+  document.getElementById(
+    "jaehyukChemistryList"
+  );
+
+const jaehyukChemistryDetailPage =
+  document.getElementById(
+    "jaehyukChemistryDetailPage"
+  );
+
+const jaehyukChemistryDetailBack =
+  document.getElementById(
+    "jaehyukChemistryDetailBack"
+  );
+
+const jaehyukChemistryDetailName =
+  document.getElementById(
+    "jaehyukChemistryDetailName"
+  );
+
+const jaehyukChemistryDetailCaption =
+  document.getElementById(
+    "jaehyukChemistryDetailCaption"
+  );
+
+const jaehyukChemistryAdd =
+  document.getElementById(
+    "jaehyukChemistryAdd"
+  );
+
+const jaehyukChemistryMemories =
+  document.getElementById(
+    "jaehyukChemistryMemories"
+  );
+
+
+let currentJaehyukChemistryPartner =
+  null;
+
+
+// =====================================================
+// 🦁 PARTNERS
+// =====================================================
+
+const jaehyukChemistryPartners = [
+  "HYUNSUK",
+  "JIHOON",
+  "YOSHI",
+  "JUNKYU",
+  "ASAHI",
+  "DOYOUNG",
+  "HARUTO",
+  "JEONGWOO",
+  "JUNGHWAN"
+];
+
+
+// =====================================================
+// 🫶 MAKE 9 CHEMISTRY CARDS
+// =====================================================
+
+function renderJaehyukChemistryCards() {
+
+  if (!jaehyukChemistryList) {
+    return;
+  }
+
+
+  jaehyukChemistryList.innerHTML =
+    "";
+
+
+  jaehyukChemistryPartners.forEach(
+    partner => {
+
+      const partnerInfo =
+        chemistryMemberInfo[
+          partner
+        ];
+
+
+      const card =
+        document.createElement(
+          "button"
+        );
+
+      card.type =
+        "button";
+
+      card.className =
+        "jihoon-chemistry-card jaehyuk-chemistry-card";
+
+      card.dataset.partner =
+        partner;
+
+
+      card.innerHTML = `
+        <span class="jihoon-chemistry-emoji">
+          🦁${partnerInfo?.emoji || "💎"}
+        </span>
+
+        <div>
+          <strong>
+            JAEHYUK × ${partner}
+          </strong>
+
+          <small>
+            CHEMISTRY MEMORY 💎
+          </small>
+        </div>
+
+        <span>→</span>
+      `;
+
+
+      card.addEventListener(
+        "click",
+        async () => {
+
+          currentJaehyukChemistryPartner =
+            partner;
+
+
+          // 💎 SHARED ENGINEへ接続
+          currentHyunsukChemistryPartner =
+            partner;
+
+          currentHyunsukChemistryPairKey =
+            createChemistryPairKey(
+              "JAEHYUK",
+              partner
+            );
+
+          currentSharedChemistryRenderTarget =
+            jaehyukChemistryMemories;
+
+
+          if (
+            jaehyukChemistryDetailName
+          ) {
+
+            jaehyukChemistryDetailName.textContent =
+              `🦁${partnerInfo?.emoji || "💎"} JAEHYUK × ${partner}`;
+
+          }
+
+
+          if (
+            jaehyukChemistryDetailCaption
+          ) {
+
+            jaehyukChemistryDetailCaption.textContent =
+              `ジェヒョクと${partner}の好きな瞬間を集めよう 💎`;
+
+          }
+
+
+          jaehyukChemistryPage.style.display =
+            "none";
+
+          jaehyukChemistryDetailPage.style.display =
+            "block";
+
+          jaehyukChemistryDetailPage.scrollTop =
+            0;
+
+
+          await renderSharedChemistryMemories();
+
+
+          document.body.style.overflow =
+            "hidden";
+
+        }
+      );
+
+
+      jaehyukChemistryList.appendChild(
+        card
+      );
+
+    }
+  );
+}
+
+
+// =====================================================
+// 🦁 JAEHYUK BOOK → CHEMISTRY
+// =====================================================
+
+if (
+  jaehyukChemistryOpen &&
+  jaehyukChemistryPage
+) {
+
+  jaehyukChemistryOpen.addEventListener(
+    "click",
+    () => {
+
+      if (jaehyukBookDetail) {
+
+        jaehyukBookDetail.classList.remove(
+          "active"
+        );
+
+      }
+
+
+      renderJaehyukChemistryCards();
