@@ -18322,6 +18322,20 @@ const junkyuMemoriesSystem =
     japaneseName: "ジュンギュ"
 
   });
+// ======================================================
+// 🦁 JAEHYUK MEMORIES START
+// ======================================================
+
+const jaehyukMemoriesSystem =
+  setupMemberMemories({
+
+    key: "jaehyuk",
+
+    displayName: "JAEHYUK",
+
+    japaneseName: "ジェヒョク"
+
+  });
 // =====================================================
 // 🌱 YOSHI GROWTH HISTORY
 // 2020 - 2026 共通YEARシステム
