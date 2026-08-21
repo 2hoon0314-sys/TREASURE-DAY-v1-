@@ -18788,6 +18788,1359 @@ openJaehyukGrowthDB()
     }
   );
 // ======================================================
+// 🤖 ASAHI GROWTH HISTORY START
+// 完成型：YEAR DETAIL + EDIT MODAL
+// ======================================================
+
+const asahiGrowthHistoryOpen =
+  document.getElementById("asahiGrowthHistoryOpen");
+
+const asahiGrowthHistoryPage =
+  document.getElementById("asahiGrowthHistoryPage");
+
+const asahiGrowthHistoryBack =
+  document.getElementById("asahiGrowthHistoryBack");
+
+const asahiGrowthYearPage =
+  document.getElementById("asahiGrowthYearPage");
+
+const asahiGrowthYearBack =
+  document.getElementById("asahiGrowthYearBack");
+
+const asahiGrowthYearButtons =
+  document.querySelectorAll(".asahi-growth-year");
+
+const asahiGrowthYearNumber =
+  document.getElementById("asahiGrowthYearNumber");
+
+const asahiGrowthYearTitle =
+  document.getElementById("asahiGrowthYearTitle");
+
+const asahiGrowthYearSubtitle =
+  document.getElementById("asahiGrowthYearSubtitle");
+
+const asahiGrowthYearVisualTitle =
+  document.getElementById("asahiGrowthYearVisualTitle");
+
+const asahiGrowthYearCaption =
+  document.getElementById("asahiGrowthYearCaption");
+
+const asahiGrowthYearVisualGrid =
+  document.getElementById("asahiGrowthYearVisualGrid");
+
+const asahiGrowthYearVisualAdd =
+  document.getElementById("asahiGrowthYearVisualAdd");
+
+const asahiGrowthVisualModal =
+  document.getElementById("asahiGrowthVisualModal");
+
+const asahiGrowthVisualModalKicker =
+  document.getElementById("asahiGrowthVisualModalKicker");
+
+const asahiGrowthVisualInput =
+  document.getElementById("asahiGrowthVisualInput");
+
+const asahiGrowthVisualSelect =
+  document.getElementById("asahiGrowthVisualSelect");
+
+const asahiGrowthVisualPreview =
+  document.getElementById("asahiGrowthVisualPreview");
+
+const asahiGrowthVisualPreviewImage =
+  document.getElementById("asahiGrowthVisualPreviewImage");
+
+const asahiGrowthVisualHair =
+  document.getElementById("asahiGrowthVisualHair");
+
+const asahiGrowthVisualMemo =
+  document.getElementById("asahiGrowthVisualMemo");
+
+const asahiGrowthVisualSave =
+  document.getElementById("asahiGrowthVisualSave");
+
+const asahiGrowthVisualDelete =
+  document.getElementById("asahiGrowthVisualDelete");
+
+const asahiGrowthVisualCancel =
+  document.getElementById("asahiGrowthVisualCancel");
+
+let currentAsahiGrowthYear = "2020";
+
+let pendingAsahiGrowthFile = null;
+
+let currentAsahiGrowthVisualItem = null;
+
+let asahiGrowthDB = null;
+
+const ASAHI_GROWTH_DB =
+  "treasure-day-asahi-growth-db";
+
+const ASAHI_GROWTH_STORE =
+  "asahiGrowthVisuals";
+// ======================================================
+// 💾 ASAHI GROWTH IndexedDB
+// ======================================================
+
+function openAsahiGrowthDB() {
+
+  return new Promise((resolve, reject) => {
+
+    const request =
+      indexedDB.open(
+        ASAHI_GROWTH_DB,
+        1
+      );
+
+    request.onupgradeneeded =
+      event => {
+
+        const db =
+          event.target.result;
+
+        if (
+          !db.objectStoreNames.contains(
+            ASAHI_GROWTH_STORE
+          )
+        ) {
+
+          db.createObjectStore(
+            ASAHI_GROWTH_STORE,
+            {
+              keyPath: "id"
+            }
+          );
+
+        }
+
+      };
+
+
+    request.onsuccess =
+      () => {
+
+        asahiGrowthDB =
+          request.result;
+
+        resolve(
+          asahiGrowthDB
+        );
+
+      };
+
+
+    request.onerror =
+      () => {
+
+        reject(
+          request.error
+        );
+
+      };
+
+  });
+}
+
+
+// ======================================================
+// 📸 IMAGE → DataURL
+// ======================================================
+
+function asahiGrowthImageToDataURL(
+  file
+) {
+
+  return new Promise(
+    (resolve, reject) => {
+
+      const reader =
+        new FileReader();
+
+      reader.onload = () => {
+
+        const img =
+          new Image();
+
+        img.onload = () => {
+
+          const MAX_SIZE = 1600;
+
+          let width =
+            img.naturalWidth;
+
+          let height =
+            img.naturalHeight;
+
+
+          if (
+            width > height &&
+            width > MAX_SIZE
+          ) {
+
+            height =
+              Math.round(
+                height *
+                MAX_SIZE /
+                width
+              );
+
+            width =
+              MAX_SIZE;
+
+          } else if (
+            height >= width &&
+            height > MAX_SIZE
+          ) {
+
+            width =
+              Math.round(
+                width *
+                MAX_SIZE /
+                height
+              );
+
+            height =
+              MAX_SIZE;
+
+          }
+
+
+          const canvas =
+            document.createElement(
+              "canvas"
+            );
+
+          canvas.width =
+            width;
+
+          canvas.height =
+            height;
+
+
+          const ctx =
+            canvas.getContext(
+              "2d"
+            );
+
+          if (!ctx) {
+
+            reject(
+              new Error(
+                "Canvas unavailable"
+              )
+            );
+
+            return;
+
+          }
+
+
+          ctx.drawImage(
+            img,
+            0,
+            0,
+            width,
+            height
+          );
+
+
+          resolve(
+            canvas.toDataURL(
+              "image/jpeg",
+              0.86
+            )
+          );
+
+        };
+
+
+        img.onerror =
+          reject;
+
+        img.src =
+          reader.result;
+
+      };
+
+
+      reader.onerror =
+        reject;
+
+      reader.readAsDataURL(
+        file
+      );
+
+    }
+  );
+}
+
+
+// ======================================================
+// 💾 SAVE NEW
+// ======================================================
+
+async function saveAsahiGrowthVisual(
+  file,
+  year,
+  hairColor,
+  memo
+) {
+
+  if (!asahiGrowthDB) {
+    await openAsahiGrowthDB();
+  }
+
+
+  const imageData =
+    await asahiGrowthImageToDataURL(
+      file
+    );
+
+
+  const item = {
+
+    id:
+      Date.now() +
+      Math.floor(
+        Math.random() * 1000
+      ),
+
+    year:
+      String(year),
+
+    imageData,
+
+    hairColor:
+      hairColor || "OTHER",
+
+    memo:
+      memo || "",
+
+    createdAt:
+      Date.now()
+
+  };
+
+
+  return new Promise(
+    (resolve, reject) => {
+
+      const transaction =
+        asahiGrowthDB.transaction(
+          ASAHI_GROWTH_STORE,
+          "readwrite"
+        );
+
+      const store =
+        transaction.objectStore(
+          ASAHI_GROWTH_STORE
+        );
+
+      const request =
+        store.add(item);
+
+
+      request.onsuccess =
+        () => resolve(item);
+
+      request.onerror =
+        () => reject(
+          request.error
+        );
+
+    }
+  );
+}
+
+
+// ======================================================
+// ✏️ UPDATE
+// ======================================================
+
+function updateAsahiGrowthVisual(
+  item
+) {
+
+  return new Promise(
+    (resolve, reject) => {
+
+      const transaction =
+        asahiGrowthDB.transaction(
+          ASAHI_GROWTH_STORE,
+          "readwrite"
+        );
+
+      const store =
+        transaction.objectStore(
+          ASAHI_GROWTH_STORE
+        );
+
+      const request =
+        store.put(item);
+
+
+      request.onsuccess =
+        () => resolve();
+
+      request.onerror =
+        () => reject(
+          request.error
+        );
+
+    }
+  );
+}
+
+
+// ======================================================
+// 📚 GET YEAR VISUALS
+// ======================================================
+
+async function getAsahiGrowthVisuals(
+  year
+) {
+
+  if (!asahiGrowthDB) {
+    await openAsahiGrowthDB();
+  }
+
+
+  return new Promise(
+    (resolve, reject) => {
+
+      const transaction =
+        asahiGrowthDB.transaction(
+          ASAHI_GROWTH_STORE,
+          "readonly"
+        );
+
+      const store =
+        transaction.objectStore(
+          ASAHI_GROWTH_STORE
+        );
+
+      const request =
+        store.getAll();
+
+
+      request.onsuccess =
+        () => {
+
+          const items =
+            request.result || [];
+
+          resolve(
+            items.filter(
+              item =>
+                String(item.year) ===
+                String(year)
+            )
+          );
+
+        };
+
+
+      request.onerror =
+        () => reject(
+          request.error
+        );
+
+    }
+  );
+}
+
+
+// ======================================================
+// 🗑 DELETE
+// ======================================================
+
+async function deleteAsahiGrowthVisual(
+  id
+) {
+
+  if (!asahiGrowthDB) {
+    await openAsahiGrowthDB();
+  }
+
+
+  return new Promise(
+    (resolve, reject) => {
+
+      const transaction =
+        asahiGrowthDB.transaction(
+          ASAHI_GROWTH_STORE,
+          "readwrite"
+        );
+
+      const store =
+        transaction.objectStore(
+          ASAHI_GROWTH_STORE
+        );
+
+      const request =
+        store.delete(id);
+
+
+      request.onsuccess =
+        () => resolve();
+
+      request.onerror =
+        () => reject(
+          request.error
+        );
+
+    }
+  );
+}
+// ======================================================
+// 🌱 ASAHI GROWTH YEAR INFO
+// ======================================================
+
+const asahiGrowthYearInfo = {
+
+  "2020": {
+    title: "DEBUT ERA 💎"
+  },
+
+  "2021": {
+    title: "2021 ERA 💎"
+  },
+
+  "2022": {
+    title: "2022 ERA 💎"
+  },
+
+  "2023": {
+    title: "2023 ERA 💎"
+  },
+
+  "2024": {
+    title: "2024 ERA 💎"
+  },
+
+  "2025": {
+    title: "2025 ERA 💎"
+  },
+
+  "2026": {
+    title: "NOW ✨"
+  }
+
+};
+
+
+// ======================================================
+// 📸 RENDER YEAR VISUALS
+// ======================================================
+
+async function renderAsahiGrowthYearVisuals() {
+
+  if (!asahiGrowthYearVisualGrid) {
+    return;
+  }
+
+
+  asahiGrowthYearVisualGrid.innerHTML =
+    "";
+
+
+  const items =
+    await getAsahiGrowthVisuals(
+      currentAsahiGrowthYear
+    );
+
+
+  items
+    .sort(
+      (a, b) =>
+        a.createdAt -
+        b.createdAt
+    )
+    .forEach(item => {
+
+      const card =
+        document.createElement(
+          "button"
+        );
+
+      card.type =
+        "button";
+
+ card.className =
+  "jihoon-growth-visual-card asahi-growth-visual-card";
+const photo =
+  document.createElement("div");
+
+photo.className =
+  "jihoon-growth-visual-photo asahi-growth-visual-photo";
+      const img =
+        document.createElement(
+          "img"
+        );
+
+      img.src =
+        item.imageData || "";
+
+      img.alt =
+        `ASAHI ${item.year}`;
+
+      img.loading =
+        "lazy";
+
+      img.decoding =
+        "async";
+
+
+      const info =
+        document.createElement(
+          "div"
+        );
+
+      info.className =
+        "jihoon-growth-visual-info";
+
+
+      const hair =
+        document.createElement(
+          "span"
+        );
+
+      hair.textContent =
+        `🎨 ${item.hairColor || "OTHER"}`;
+
+
+      const memo =
+        document.createElement(
+          "p"
+        );
+
+      memo.textContent =
+        item.memo || "";
+
+
+      info.appendChild(
+        hair
+      );
+
+
+      if (item.memo) {
+
+        info.appendChild(
+          memo
+        );
+
+      }
+
+
+      photo.appendChild(
+  img
+);
+
+card.appendChild(
+  photo
+);
+
+      card.appendChild(
+        info
+      );
+
+
+      // 写真タップ → EDIT
+      card.addEventListener(
+        "click",
+        () => {
+
+          currentAsahiGrowthVisualItem =
+            item;
+
+          pendingAsahiGrowthFile =
+            null;
+
+
+          if (
+            asahiGrowthVisualPreviewImage
+          ) {
+
+            asahiGrowthVisualPreviewImage.src =
+              item.imageData || "";
+
+          }
+
+
+          if (
+            asahiGrowthVisualPreview
+          ) {
+
+            asahiGrowthVisualPreview.style.display =
+              "block";
+
+          }
+
+
+          if (
+            asahiGrowthVisualHair
+          ) {
+
+            asahiGrowthVisualHair.value =
+              item.hairColor ||
+              "OTHER";
+
+          }
+
+
+          if (
+            asahiGrowthVisualMemo
+          ) {
+
+            asahiGrowthVisualMemo.value =
+              item.memo || "";
+
+          }
+
+
+          if (
+            asahiGrowthVisualDelete
+          ) {
+
+            asahiGrowthVisualDelete.style.display =
+              "block";
+
+          }
+
+
+          if (
+            asahiGrowthVisualModalKicker
+          ) {
+
+            asahiGrowthVisualModalKicker.textContent =
+              `📸 ${item.year} VISUAL`;
+
+          }
+
+
+          if (
+            asahiGrowthVisualModal
+          ) {
+
+            asahiGrowthVisualModal.style.display =
+              "flex";
+
+          }
+
+        }
+      );
+
+
+      asahiGrowthYearVisualGrid.appendChild(
+        card
+      );
+
+    });
+
+}
+
+
+// ======================================================
+// 🌱 OPEN YEAR DETAIL
+// ======================================================
+
+async function openAsahiGrowthYear(
+  year
+) {
+
+  currentAsahiGrowthYear =
+    String(year);
+
+
+  const info =
+    asahiGrowthYearInfo[
+      currentAsahiGrowthYear
+    ] || {
+      title:
+        `${currentAsahiGrowthYear} ERA 💎`
+    };
+
+
+  if (
+    asahiGrowthYearNumber
+  ) {
+
+    asahiGrowthYearNumber.textContent =
+      currentAsahiGrowthYear;
+
+  }
+
+
+  if (
+    asahiGrowthYearTitle
+  ) {
+
+    asahiGrowthYearTitle.textContent =
+      info.title;
+
+  }
+
+
+  if (
+    asahiGrowthYearSubtitle
+  ) {
+
+    asahiGrowthYearSubtitle.textContent =
+      `${currentAsahiGrowthYear}年のアサヒを振り返ろう 💎`;
+
+  }
+
+
+  if (
+    asahiGrowthYearVisualTitle
+  ) {
+
+    asahiGrowthYearVisualTitle.textContent =
+      `📸 ${currentAsahiGrowthYear} VISUAL`;
+
+  }
+
+
+  if (
+    asahiGrowthYearCaption
+  ) {
+
+    asahiGrowthYearCaption.textContent =
+      `${currentAsahiGrowthYear}年のお気に入りアサヒを残そう 💎`;
+
+  }
+
+
+  if (
+    asahiGrowthHistoryPage
+  ) {
+
+    asahiGrowthHistoryPage.style.display =
+      "none";
+
+  }
+
+
+  if (
+    asahiGrowthYearPage
+  ) {
+
+    asahiGrowthYearPage.style.display =
+      "block";
+
+    asahiGrowthYearPage.scrollTop =
+      0;
+
+  }
+
+
+  await renderAsahiGrowthYearVisuals();
+
+}
+
+
+// ======================================================
+// 🌱 YEAR BUTTONS
+// ======================================================
+
+asahiGrowthYearButtons.forEach(
+  button => {
+
+    button.addEventListener(
+      "click",
+      async () => {
+
+        await openAsahiGrowthYear(
+          button.dataset.year
+        );
+
+      }
+    );
+
+  }
+);
+// ======================================================
+// 🌱 OPEN GROWTH HISTORY
+// ======================================================
+
+if (
+  asahiGrowthHistoryOpen &&
+  asahiGrowthHistoryPage
+) {
+
+  asahiGrowthHistoryOpen.addEventListener(
+    "click",
+    () => {
+
+      if (asahiBookDetail) {
+        asahiBookDetail.classList.remove(
+          "active"
+        );
+      }
+
+      asahiGrowthHistoryPage.style.display =
+        "block";
+
+      asahiGrowthHistoryPage.scrollTop =
+        0;
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+  );
+}
+
+
+// ======================================================
+// ← GROWTH HISTORY → ASAHI BOOK
+// ======================================================
+
+if (
+  asahiGrowthHistoryBack &&
+  asahiGrowthHistoryPage
+) {
+
+  asahiGrowthHistoryBack.addEventListener(
+    "click",
+    () => {
+
+      asahiGrowthHistoryPage.style.display =
+        "none";
+
+      if (asahiBookDetail) {
+
+        asahiBookDetail.classList.add(
+          "active"
+        );
+
+        asahiBookDetail.scrollTop =
+          0;
+
+      }
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+  );
+}
+
+
+// ======================================================
+// ← YEAR DETAIL → GROWTH HISTORY
+// ======================================================
+
+if (
+  asahiGrowthYearBack &&
+  asahiGrowthYearPage
+) {
+
+  asahiGrowthYearBack.addEventListener(
+    "click",
+    () => {
+
+      asahiGrowthYearPage.style.display =
+        "none";
+
+      asahiGrowthHistoryPage.style.display =
+        "block";
+
+      asahiGrowthHistoryPage.scrollTop =
+        0;
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+  );
+}
+
+
+// ======================================================
+// ＋ ADD → MODAL
+// ======================================================
+
+if (asahiGrowthYearVisualAdd) {
+
+  asahiGrowthYearVisualAdd.addEventListener(
+    "click",
+    () => {
+
+      currentAsahiGrowthVisualItem =
+        null;
+
+      pendingAsahiGrowthFile =
+        null;
+
+
+      if (asahiGrowthVisualInput) {
+        asahiGrowthVisualInput.value =
+          "";
+      }
+
+
+      if (asahiGrowthVisualMemo) {
+        asahiGrowthVisualMemo.value =
+          "";
+      }
+
+
+      if (asahiGrowthVisualHair) {
+        asahiGrowthVisualHair.value =
+          "BLACK";
+      }
+
+
+      if (asahiGrowthVisualPreviewImage) {
+        asahiGrowthVisualPreviewImage.src =
+          "";
+      }
+
+
+      if (asahiGrowthVisualPreview) {
+        asahiGrowthVisualPreview.style.display =
+          "none";
+      }
+
+
+      if (asahiGrowthVisualDelete) {
+        asahiGrowthVisualDelete.style.display =
+          "none";
+      }
+
+
+      if (asahiGrowthVisualModalKicker) {
+
+        asahiGrowthVisualModalKicker.textContent =
+          `📸 ${currentAsahiGrowthYear} VISUAL`;
+
+      }
+
+
+      if (asahiGrowthVisualModal) {
+
+        asahiGrowthVisualModal.style.display =
+          "flex";
+
+        asahiGrowthVisualModal.scrollTop =
+          0;
+
+      }
+
+    }
+  );
+}
+
+
+// ======================================================
+// 📷 SELECT PHOTO
+// ======================================================
+
+if (
+  asahiGrowthVisualSelect &&
+  asahiGrowthVisualInput
+) {
+
+  asahiGrowthVisualSelect.addEventListener(
+    "click",
+    () => {
+
+      asahiGrowthVisualInput.click();
+
+    }
+  );
+}
+
+
+if (asahiGrowthVisualInput) {
+
+  asahiGrowthVisualInput.addEventListener(
+    "change",
+    () => {
+
+      const file =
+        asahiGrowthVisualInput.files[0];
+
+      if (!file) return;
+
+
+      pendingAsahiGrowthFile =
+        file;
+
+
+      const reader =
+        new FileReader();
+
+
+      reader.onload =
+        () => {
+
+          if (
+            asahiGrowthVisualPreviewImage
+          ) {
+
+            asahiGrowthVisualPreviewImage.src =
+              reader.result;
+
+          }
+
+
+          if (
+            asahiGrowthVisualPreview
+          ) {
+
+            asahiGrowthVisualPreview.style.display =
+              "block";
+
+          }
+
+        };
+
+
+      reader.readAsDataURL(
+        file
+      );
+
+    }
+  );
+}
+
+
+// ======================================================
+// 💎 SAVE / UPDATE
+// ======================================================
+
+if (asahiGrowthVisualSave) {
+
+  asahiGrowthVisualSave.addEventListener(
+    "click",
+    async () => {
+
+      try {
+
+        const hairColor =
+          asahiGrowthVisualHair
+            ? asahiGrowthVisualHair.value
+            : "OTHER";
+
+
+        const memo =
+          asahiGrowthVisualMemo
+            ? asahiGrowthVisualMemo.value.trim()
+            : "";
+
+
+        // ✏️ UPDATE
+        if (
+          currentAsahiGrowthVisualItem
+        ) {
+
+          currentAsahiGrowthVisualItem.hairColor =
+            hairColor;
+
+          currentAsahiGrowthVisualItem.memo =
+            memo;
+
+
+          if (
+            pendingAsahiGrowthFile
+          ) {
+
+            currentAsahiGrowthVisualItem.imageData =
+              await asahiGrowthImageToDataURL(
+                pendingAsahiGrowthFile
+              );
+
+          }
+
+
+          await updateAsahiGrowthVisual(
+            currentAsahiGrowthVisualItem
+          );
+
+        }
+
+        // 📸 NEW
+        else {
+
+          if (!pendingAsahiGrowthFile) {
+
+            alert(
+              "写真を選んでね📸"
+            );
+
+            return;
+
+          }
+
+
+          await saveAsahiGrowthVisual(
+            pendingAsahiGrowthFile,
+            currentAsahiGrowthYear,
+            hairColor,
+            memo
+          );
+
+        }
+
+
+        closeAsahiGrowthModal();
+
+        await renderAsahiGrowthYearVisuals();
+
+
+      } catch (error) {
+
+        console.error(
+          "ASAHI GROWTH SAVE ERROR:",
+          error
+        );
+
+        alert(
+          "保存に失敗しました🥲"
+        );
+
+      }
+
+    }
+  );
+}
+
+
+// ======================================================
+// 🗑 DELETE
+// ======================================================
+
+if (asahiGrowthVisualDelete) {
+
+  asahiGrowthVisualDelete.addEventListener(
+    "click",
+    async () => {
+
+      if (
+        !currentAsahiGrowthVisualItem
+      ) {
+        return;
+      }
+
+
+      const ok =
+        confirm(
+          "この写真を削除しますか？🥲"
+        );
+
+      if (!ok) return;
+
+
+      try {
+
+        await deleteAsahiGrowthVisual(
+          currentAsahiGrowthVisualItem.id
+        );
+
+        closeAsahiGrowthModal();
+
+        await renderAsahiGrowthYearVisuals();
+
+
+      } catch (error) {
+
+        console.error(
+          "ASAHI GROWTH DELETE ERROR:",
+          error
+        );
+
+        alert(
+          "削除に失敗しました🥲"
+        );
+
+      }
+
+    }
+  );
+}
+
+
+// ======================================================
+// CANCEL / CLOSE
+// ======================================================
+
+function closeAsahiGrowthModal() {
+
+  pendingAsahiGrowthFile =
+    null;
+
+  currentAsahiGrowthVisualItem =
+    null;
+
+
+  if (asahiGrowthVisualInput) {
+    asahiGrowthVisualInput.value =
+      "";
+  }
+
+
+  if (asahiGrowthVisualPreviewImage) {
+    asahiGrowthVisualPreviewImage.src =
+      "";
+  }
+
+
+  if (asahiGrowthVisualPreview) {
+    asahiGrowthVisualPreview.style.display =
+      "none";
+  }
+
+
+  if (asahiGrowthVisualMemo) {
+    asahiGrowthVisualMemo.value =
+      "";
+  }
+
+
+  if (asahiGrowthVisualDelete) {
+    asahiGrowthVisualDelete.style.display =
+      "none";
+  }
+
+
+  if (asahiGrowthVisualModal) {
+    asahiGrowthVisualModal.style.display =
+      "none";
+  }
+
+}
+
+
+if (asahiGrowthVisualCancel) {
+
+  asahiGrowthVisualCancel.addEventListener(
+    "click",
+    () => {
+
+      closeAsahiGrowthModal();
+
+    }
+  );
+}
+
+
+// ======================================================
+// 🚀 INITIALIZE ASAHI GROWTH DB
+// ======================================================
+
+openAsahiGrowthDB()
+  .catch(
+    error => {
+
+      console.error(
+        "ASAHI GROWTH DB ERROR:",
+        error
+      );
+
+    }
+  );
+// ======================================================
 // 🎧 MEMBER SONG 共通エンジン
 // YOSHI以降の量産用
 // ======================================================
