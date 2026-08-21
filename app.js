@@ -4442,7 +4442,8 @@ if (
 // =========================================
 
 const jihoonVisualBook = document.getElementById("jihoonVisualBook");
-const jihoonVisualClose = document.querySelector(".jihoon-visual-close");
+const jihoonVisualClose =
+  document.getElementById("jihoonVisualClose");
 const jihoonMenuCards =
   jihoonBookDetail
     ? jihoonBookDetail.querySelectorAll(".jihoon-book-menu-card")
