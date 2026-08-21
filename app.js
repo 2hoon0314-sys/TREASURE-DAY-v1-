@@ -14901,6 +14901,20 @@ const jaehyukVisualSystem =
 
   });
 // ======================================================
+// 🤖 ASAHI VISUAL BOOK
+// ======================================================
+
+const asahiVisualSystem =
+  setupMemberVisualBook({
+
+    key: "asahi",
+
+    displayName: "ASAHI",
+
+    japaneseName: "アサヒ"
+
+  });
+// ======================================================
 // 👑 MEMBER VISUAL RANKING 共通エンジン
 // ======================================================
 
