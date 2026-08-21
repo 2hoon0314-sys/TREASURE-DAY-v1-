@@ -16488,9 +16488,8 @@ async function renderJunkyuGrowthYearVisuals() {
       card.type =
         "button";
 
-      card.className =
-        "jihoon-growth-visual-card";
-
+ card.className =
+  "jihoon-growth-visual-card junkyu-growth-visual-card";
 
       const img =
         document.createElement(
