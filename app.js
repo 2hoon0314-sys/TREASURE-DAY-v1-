@@ -14044,9 +14044,8 @@ function setupMemberVisualBook(config) {
         "div"
       );
 
-    card.className =
-      `jihoon-visual-card ${key}-visual-card`;
-
+   card.className =
+  `jihoon-growth-visual-card ${key}-growth-visual-card`;
 
     const hairColor =
       item.hairColor ||
