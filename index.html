@@ -2258,6 +2258,277 @@ id="junkyuVisualBook"
 
 </div>
   <!-- =========================================
+     🤖 ASAHI VISUAL BOOK
+========================================= -->
+
+<section
+  id="asahiVisualBook"
+  class="jihoon-visual-book"
+>
+
+  <button
+    type="button"
+    id="asahiVisualClose"
+    class="jihoon-visual-close"
+  >
+    ← ASAHI BOOKに戻る
+  </button>
+
+  <div class="jihoon-visual-inner">
+
+    <div class="jihoon-visual-kicker">
+      📸 VISUAL BOOK
+    </div>
+
+    <div class="jihoon-visual-header">
+
+      <p class="jihoon-visual-small">
+        ASAHI VISUAL HISTORY
+      </p>
+
+      <h2>
+        MY ASAHI<br>VISUAL BOOK
+      </h2>
+
+      <p>
+        好きなアサヒのビジュを集めて、<br>
+        自分だけのVISUAL BOOKを育てる。
+      </p>
+
+    </div>
+
+    <div class="jihoon-hair-filter asahi-hair-filter">
+      <button type="button" class="active" data-hair="ALL">ALL</button>
+      <button type="button" data-hair="BLACK">🖤 BLACK</button>
+      <button type="button" data-hair="BROWN">🤎 BROWN</button>
+      <button type="button" data-hair="RED">❤️ RED</button>
+      <button type="button" data-hair="PINK">🩷 PINK</button>
+      <button type="button" data-hair="BLONDE">💛 BLONDE</button>
+      <button type="button" data-hair="GRAY">🩶 GRAY</button>
+      <button type="button" data-hair="OTHER">✨ OTHER</button>
+    </div>
+
+    <button
+      type="button"
+      id="asahiVisualAdd"
+      class="jihoon-visual-add"
+    >
+      ＋ ADD VISUAL
+    </button>
+
+    <input
+      type="file"
+      id="asahiVisualInput"
+      accept="image/*"
+      hidden
+    >
+
+    <div
+      id="asahiVisualGrid"
+      class="jihoon-visual-grid"
+    >
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- 🎨 ASAHI HAIR COLOR SELECT -->
+
+<div
+  id="asahiHairModal"
+  class="jihoon-hair-modal"
+>
+
+  <div class="jihoon-hair-modal-card">
+
+    <div class="jihoon-hair-modal-icon">
+      🎨
+    </div>
+
+    <p class="jihoon-hair-modal-small">
+      VISUAL TAG
+    </p>
+
+    <h3>
+      このアサヒは何髪？💎
+    </h3>
+
+    <div class="jihoon-hair-options">
+
+      <button type="button" data-hair="BLACK">
+        🖤 BLACK
+      </button>
+
+      <button type="button" data-hair="BROWN">
+        🤎 BROWN
+      </button>
+
+      <button type="button" data-hair="RED">
+        ❤️ RED
+      </button>
+
+      <button type="button" data-hair="PINK">
+        🩷 PINK
+      </button>
+
+      <button type="button" data-hair="BLONDE">
+        💛 BLONDE
+      </button>
+
+      <button type="button" data-hair="GRAY">
+        🩶 GRAY
+      </button>
+
+      <button type="button" data-hair="OTHER">
+        ✨ OTHER
+      </button>
+
+    </div>
+
+    <button
+      type="button"
+      id="asahiHairCancel"
+      class="jihoon-hair-cancel"
+    >
+      CANCEL
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- 📸 ASAHI VISUAL EDIT -->
+
+<div
+  id="asahiVisualEditModal"
+  class="jihoon-visual-edit-modal"
+>
+
+  <div class="jihoon-visual-edit-sheet">
+
+    <div class="jihoon-visual-edit-kicker">
+      📸 VISUAL EDIT
+    </div>
+
+    <h2>
+      このアサヒを編集する 💎
+    </h2>
+
+    <div class="jihoon-visual-edit-preview">
+
+      <img
+        id="asahiVisualEditImage"
+        alt="ASAHI VISUAL"
+      >
+
+    </div>
+
+    <div class="jihoon-visual-edit-actions">
+
+      <button
+        type="button"
+        id="asahiVisualFavorite"
+      >
+        ♡ FAVORITE
+      </button>
+
+      <button
+        type="button"
+        id="asahiVisualChangeHair"
+      >
+        🎨 CHANGE HAIR COLOR
+      </button>
+
+      <button
+        type="button"
+        id="asahiVisualDelete"
+      >
+        🗑️ DELETE
+      </button>
+
+    </div>
+
+    <button
+      type="button"
+      id="asahiVisualEditCancel"
+      class="jihoon-visual-edit-cancel"
+    >
+      CANCEL
+    </button>
+
+  </div>
+
+
+  <!-- 🎨 HAIR CHANGE -->
+
+  <div
+    id="asahiHairChangeModal"
+    class="jihoon-hair-change-modal"
+  >
+
+    <div class="jihoon-hair-change-sheet">
+
+      <div class="jihoon-hair-change-kicker">
+        🎨 CHANGE HAIR COLOR
+      </div>
+
+      <h3>
+        このアサヒの髪色を選ぶ 💎
+      </h3>
+
+      <div class="jihoon-hair-change-grid">
+
+        <button type="button" data-hair="BLACK">
+          🖤 BLACK
+        </button>
+
+        <button type="button" data-hair="BROWN">
+          🤎 BROWN
+        </button>
+
+        <button type="button" data-hair="RED">
+          ❤️ RED
+        </button>
+
+        <button type="button" data-hair="PINK">
+          💗 PINK
+        </button>
+
+        <button type="button" data-hair="BLONDE">
+          💛 BLONDE
+        </button>
+
+        <button type="button" data-hair="GRAY">
+          🩶 GRAY
+        </button>
+
+        <button type="button" data-hair="OTHER">
+          ✨ OTHER
+        </button>
+
+        <button type="button" data-hair="UNTAGGED">
+          💎 UNTAGGED
+        </button>
+
+      </div>
+
+      <button
+        type="button"
+        id="asahiHairChangeCancel"
+        class="jihoon-hair-change-cancel"
+      >
+        CANCEL
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+  <!-- =========================================
      👑 JAEHYUK VISUAL RANKING
 ========================================= -->
 
