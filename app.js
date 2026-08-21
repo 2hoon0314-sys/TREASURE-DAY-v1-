@@ -13542,6 +13542,63 @@ if (
   );
 }
 // ========================================
+// 🤖 ASAHI BOOK OPEN / CLOSE
+// ========================================
+
+const asahiBookOpen =
+  document.getElementById("asahi-book-open");
+
+const asahiBookDetail =
+  document.getElementById("asahi-book-detail");
+
+const asahiBookClose =
+  document.getElementById("asahi-book-close");
+
+
+// ASAHI BOOKを開く
+if (
+  asahiBookOpen &&
+  asahiBookDetail
+) {
+
+  asahiBookOpen.addEventListener(
+    "click",
+    () => {
+
+      asahiBookDetail.classList.add(
+        "active"
+      );
+
+      asahiBookDetail.scrollTop = 0;
+
+      document.body.style.overflow =
+        "hidden";
+    }
+  );
+}
+
+
+// ASAHI BOOKを閉じる
+if (
+  asahiBookClose &&
+  asahiBookDetail
+) {
+
+  asahiBookClose.addEventListener(
+    "click",
+    () => {
+
+      asahiBookDetail.classList.remove(
+        "active"
+      );
+
+      // MEMBER BOOKは後ろで開いたまま
+      document.body.style.overflow =
+        "hidden";
+    }
+  );
+}
+// ========================================
 // 🐨 JUNKYU BOOK OPEN / CLOSE
 // ========================================
 
