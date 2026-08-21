@@ -264,7 +264,7 @@
         <span>아사히</span>
       </button>
 
-      <button type="button" class="member-card" data-member="DOYOUNG">
+      <button type="button" class="member-card" id="doyoung-book-open" data-member="DOYOUNG">
         <!-- DOYOUNG -->
 <div class="member-card-photo">
   <img src="doyoung.jpg  .jpg" alt="DOYOUNG">
@@ -3713,6 +3713,940 @@ id="junkyuVisualBook"
   </div>
 
 </div>
+
+  <!-- =========================================
+     🐰 DOYOUNG BOOK DETAIL
+========================================= -->
+
+<div
+  id="doyoung-book-detail"
+  class="jihoon-book-detail"
+>
+
+  <button
+    type="button"
+    id="doyoung-book-close"
+    class="jihoon-book-close"
+  >
+    ← MEMBER BOOK
+  </button>
+
+  <div class="jihoon-book-inner">
+
+    <div class="jihoon-book-kicker">
+      💎 MEMBER BOOK
+    </div>
+
+    <div class="jihoon-book-hero">
+
+      <div class="jihoon-book-photo">
+        <img
+          src="doyoung.jpg  .jpg"
+          alt="DOYOUNG"
+        >
+      </div>
+
+      <div class="jihoon-book-name">
+        <span>김도영</span>
+        <h2>DOYOUNG</h2>
+        <p>MY TREASURE MEMBER BOOK</p>
+      </div>
+
+    </div>
+
+    <div class="jihoon-book-menu">
+
+      <button
+        type="button"
+        class="jihoon-book-menu-card"
+        id="doyoungVisualBookOpen"
+      >
+        <span class="jihoon-book-menu-icon">📸</span>
+        <div>
+          <strong>VISUAL BOOK</strong>
+          <small>髪色・ビジュアルを集める</small>
+        </div>
+        <span>→</span>
+      </button>
+
+      <button
+        type="button"
+        class="jihoon-book-menu-card"
+        id="doyoungVisualRankingOpen"
+      >
+        <span class="jihoon-book-menu-icon">👑</span>
+        <div>
+          <strong>MY VISUAL RANKING</strong>
+          <small>好きなビジュをランキング</small>
+        </div>
+        <span>→</span>
+      </button>
+
+      <button
+        type="button"
+        class="jihoon-book-menu-card"
+        id="doyoungGrowthHistoryOpen"
+      >
+        <span class="jihoon-book-menu-icon">🌱</span>
+        <div>
+          <strong>GROWTH HISTORY</strong>
+          <small>DEBUT → NOW</small>
+        </div>
+        <span>→</span>
+      </button>
+
+      <button
+        type="button"
+        class="jihoon-book-menu-card"
+        id="doyoungSongOpen"
+      >
+        <span class="jihoon-book-menu-icon">🎧</span>
+        <div>
+          <strong>DOYOUNG'S SONG</strong>
+          <small>ドヨンといえばこの曲</small>
+        </div>
+        <span>→</span>
+      </button>
+
+      <button
+        type="button"
+        class="jihoon-book-menu-card"
+        id="doyoungMemoriesOpen"
+      >
+        <span class="jihoon-book-menu-icon">📷</span>
+        <div>
+          <strong>MEMORIES</strong>
+          <small>ドヨンの思い出を見る</small>
+        </div>
+        <span>→</span>
+      </button>
+
+      <button
+        type="button"
+        class="jihoon-book-menu-card"
+        id="doyoungChemistryOpen"
+      >
+        <span class="jihoon-book-menu-icon">🫶</span>
+        <div>
+          <strong>CHEMISTRY</strong>
+          <small>ドヨンのケミを見る</small>
+        </div>
+        <span>→</span>
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+  <!-- =========================================
+     🐰 DOYOUNG VISUAL BOOK
+========================================= -->
+
+<section
+  id="doyoungVisualBook"
+  class="jihoon-visual-book"
+>
+
+  <button
+    type="button"
+    id="doyoungVisualClose"
+    class="jihoon-visual-close"
+  >
+    ← DOYOUNG BOOKに戻る
+  </button>
+
+  <div class="jihoon-visual-inner">
+
+    <div class="jihoon-visual-kicker">
+      📸 VISUAL BOOK
+    </div>
+
+    <div class="jihoon-visual-header">
+
+      <p class="jihoon-visual-small">
+        DOYOUNG VISUAL HISTORY
+      </p>
+
+      <h2>
+        MY DOYOUNG<br>VISUAL BOOK
+      </h2>
+
+      <p>
+        好きなドヨンのビジュを集めて、<br>
+        自分だけのVISUAL BOOKを育てる。
+      </p>
+
+    </div>
+
+    <div class="jihoon-hair-filter doyoung-hair-filter">
+      <button type="button" class="active" data-hair="ALL">ALL</button>
+      <button type="button" data-hair="BLACK">🖤 BLACK</button>
+      <button type="button" data-hair="BROWN">🤎 BROWN</button>
+      <button type="button" data-hair="RED">❤️ RED</button>
+      <button type="button" data-hair="PINK">🩷 PINK</button>
+      <button type="button" data-hair="BLONDE">💛 BLONDE</button>
+      <button type="button" data-hair="GRAY">🩶 GRAY</button>
+      <button type="button" data-hair="OTHER">✨ OTHER</button>
+    </div>
+
+    <button
+      type="button"
+      id="doyoungVisualAdd"
+      class="jihoon-visual-add"
+    >
+      ＋ ADD VISUAL
+    </button>
+
+    <input
+      type="file"
+      id="doyoungVisualInput"
+      accept="image/*"
+      hidden
+    >
+
+    <div
+      id="doyoungVisualGrid"
+      class="jihoon-visual-grid"
+    >
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- 🎨 DOYOUNG HAIR COLOR SELECT -->
+
+<div
+  id="doyoungHairModal"
+  class="jihoon-hair-modal"
+>
+
+  <div class="jihoon-hair-modal-card">
+
+    <div class="jihoon-hair-modal-icon">
+      🎨
+    </div>
+
+    <p class="jihoon-hair-modal-small">
+      VISUAL TAG
+    </p>
+
+    <h3>
+      このドヨンは何髪？💎
+    </h3>
+
+    <div class="jihoon-hair-options">
+
+      <button type="button" data-hair="BLACK">
+        🖤 BLACK
+      </button>
+
+      <button type="button" data-hair="BROWN">
+        🤎 BROWN
+      </button>
+
+      <button type="button" data-hair="RED">
+        ❤️ RED
+      </button>
+
+      <button type="button" data-hair="PINK">
+        🩷 PINK
+      </button>
+
+      <button type="button" data-hair="BLONDE">
+        💛 BLONDE
+      </button>
+
+      <button type="button" data-hair="GRAY">
+        🩶 GRAY
+      </button>
+
+      <button type="button" data-hair="OTHER">
+        ✨ OTHER
+      </button>
+
+    </div>
+
+    <button
+      type="button"
+      id="doyoungHairCancel"
+      class="jihoon-hair-cancel"
+    >
+      CANCEL
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- 📸 DOYOUNG VISUAL EDIT -->
+
+<div
+  id="doyoungVisualEditModal"
+  class="jihoon-visual-edit-modal"
+>
+
+  <div class="jihoon-visual-edit-sheet">
+
+    <div class="jihoon-visual-edit-kicker">
+      📸 VISUAL EDIT
+    </div>
+
+    <h2>
+      このドヨンを編集する 💎
+    </h2>
+
+    <div class="jihoon-visual-edit-preview">
+
+      <img
+        id="doyoungVisualEditImage"
+        alt="DOYOUNG VISUAL"
+      >
+
+    </div>
+
+    <div class="jihoon-visual-edit-actions">
+
+      <button
+        type="button"
+        id="doyoungVisualFavorite"
+      >
+        ♡ FAVORITE
+      </button>
+
+      <button
+        type="button"
+        id="doyoungVisualChangeHair"
+      >
+        🎨 CHANGE HAIR COLOR
+      </button>
+
+      <button
+        type="button"
+        id="doyoungVisualDelete"
+      >
+        🗑️ DELETE
+      </button>
+
+    </div>
+
+    <button
+      type="button"
+      id="doyoungVisualEditCancel"
+      class="jihoon-visual-edit-cancel"
+    >
+      CANCEL
+    </button>
+
+  </div>
+
+
+  <!-- 🎨 HAIR CHANGE -->
+
+  <div
+    id="doyoungHairChangeModal"
+    class="jihoon-hair-change-modal"
+  >
+
+    <div class="jihoon-hair-change-sheet">
+
+      <div class="jihoon-hair-change-kicker">
+        🎨 CHANGE HAIR COLOR
+      </div>
+
+      <h3>
+        このドヨンの髪色を選ぶ 💎
+      </h3>
+
+      <div class="jihoon-hair-change-grid">
+
+        <button type="button" data-hair="BLACK">
+          🖤 BLACK
+        </button>
+
+        <button type="button" data-hair="BROWN">
+          🤎 BROWN
+        </button>
+
+        <button type="button" data-hair="RED">
+          ❤️ RED
+        </button>
+
+        <button type="button" data-hair="PINK">
+          💗 PINK
+        </button>
+
+        <button type="button" data-hair="BLONDE">
+          💛 BLONDE
+        </button>
+
+        <button type="button" data-hair="GRAY">
+          🩶 GRAY
+        </button>
+
+        <button type="button" data-hair="OTHER">
+          ✨ OTHER
+        </button>
+
+        <button type="button" data-hair="UNTAGGED">
+          💎 UNTAGGED
+        </button>
+
+      </div>
+
+      <button
+        type="button"
+        id="doyoungHairChangeCancel"
+        class="jihoon-hair-change-cancel"
+      >
+        CANCEL
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+  <!-- =========================================
+     👑 DOYOUNG VISUAL RANKING
+========================================= -->
+
+<section
+  id="doyoungVisualRankingPage"
+  class="jihoon-visual-ranking-page"
+  style="display: none;"
+>
+
+  <button
+    type="button"
+    id="doyoungVisualRankingBack"
+    class="jihoon-visual-ranking-back"
+  >
+    ← DOYOUNG BOOKに戻る
+  </button>
+
+  <div class="jihoon-visual-ranking-inner">
+
+    <div class="jihoon-visual-ranking-kicker">
+      👑 DOYOUNG VISUAL RANKING
+    </div>
+
+    <h2>MY VISUAL TOP 3 💎</h2>
+
+    <p class="jihoon-visual-ranking-subtitle">
+      ドヨンの好きなビジュアルTOP3 🐰
+    </p>
+
+    <div
+      id="doyoungVisualRankingList"
+      class="jihoon-visual-ranking-list"
+    >
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =========================================
+     🌱 DOYOUNG GROWTH HISTORY
+========================================= -->
+
+<section
+  id="doyoungGrowthHistoryPage"
+  class="jihoon-growth-history-page"
+  style="display: none;"
+>
+
+  <button
+    type="button"
+    id="doyoungGrowthHistoryBack"
+    class="jihoon-growth-history-back"
+  >
+    ← DOYOUNG BOOKに戻る
+  </button>
+
+  <div class="jihoon-growth-history-inner">
+
+    <div class="jihoon-growth-history-kicker">
+      🌱 GROWTH HISTORY
+    </div>
+
+    <h2>
+      DOYOUNG<br>
+      GROWTH HISTORY
+    </h2>
+
+    <p class="jihoon-growth-history-subtitle">
+      2020 → 2026<br>
+      ドヨンの成長を一緒に振り返ろう 💎
+    </p>
+
+    <div class="jihoon-growth-years">
+
+      <button type="button" class="jihoon-growth-year doyoung-growth-year" data-year="2020">
+        <span>2020</span><small>DEBUT 💎</small>
+      </button>
+
+      <button type="button" class="jihoon-growth-year doyoung-growth-year" data-year="2021">
+        <span>2021</span><small>2021 ERA 💎</small>
+      </button>
+
+      <button type="button" class="jihoon-growth-year doyoung-growth-year" data-year="2022">
+        <span>2022</span><small>2022 ERA 💎</small>
+      </button>
+
+      <button type="button" class="jihoon-growth-year doyoung-growth-year" data-year="2023">
+        <span>2023</span><small>2023 ERA 💎</small>
+      </button>
+
+      <button type="button" class="jihoon-growth-year doyoung-growth-year" data-year="2024">
+        <span>2024</span><small>2024 ERA 💎</small>
+      </button>
+
+      <button type="button" class="jihoon-growth-year doyoung-growth-year" data-year="2025">
+        <span>2025</span><small>2025 ERA 💎</small>
+      </button>
+
+      <button type="button" class="jihoon-growth-year doyoung-growth-year" data-year="2026">
+        <span>2026</span><small>NOW ✨</small>
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================
+     🌱 DOYOUNG GROWTH YEAR DETAIL
+========================================= -->
+
+<section
+  id="doyoungGrowthYearPage"
+  class="jihoon-growth-detail-page"
+  style="display: none;"
+>
+
+  <button
+    type="button"
+    id="doyoungGrowthYearBack"
+    class="jihoon-growth-detail-back"
+  >
+    ← GROWTH HISTORYに戻る
+  </button>
+
+  <div class="jihoon-growth-detail-inner">
+
+    <div class="jihoon-growth-detail-kicker">
+      🌱 GROWTH HISTORY
+    </div>
+
+    <div
+      id="doyoungGrowthYearNumber"
+      class="jihoon-growth-detail-year"
+    >
+      2020
+    </div>
+
+    <h2 id="doyoungGrowthYearTitle">
+      DEBUT ERA 💎
+    </h2>
+
+    <p
+      id="doyoungGrowthYearSubtitle"
+      class="jihoon-growth-detail-subtitle"
+    >
+      2020年のドヨンを振り返ろう 💎
+    </p>
+
+    <section class="jihoon-growth-visual-section">
+
+      <div class="jihoon-growth-section-head">
+
+        <div>
+          <small>MY ARCHIVE</small>
+
+          <h3 id="doyoungGrowthYearVisualTitle">
+            📸 2020 VISUAL
+          </h3>
+        </div>
+
+        <button
+          type="button"
+          id="doyoungGrowthYearVisualAdd"
+          class="jihoon-growth-visual-add"
+        >
+          ＋ ADD
+        </button>
+
+      </div>
+
+      <p
+        id="doyoungGrowthYearCaption"
+        class="jihoon-growth-section-caption"
+      >
+        2020年のお気に入りドヨンを残そう 💎
+      </p>
+
+      <div
+        id="doyoungGrowthYearVisualGrid"
+        class="jihoon-growth-visual-grid"
+      ></div>
+
+    </section>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================
+     📸 DOYOUNG GROWTH VISUAL ADD / EDIT
+========================================= -->
+
+<section
+  id="doyoungGrowthVisualModal"
+  class="jihoon-growth-visual-modal"
+  style="display: none;"
+>
+
+  <div class="jihoon-growth-visual-modal-card">
+
+    <div
+      id="doyoungGrowthVisualModalKicker"
+      class="jihoon-growth-visual-modal-kicker"
+    >
+      📸 2020 VISUAL
+    </div>
+
+    <h3>
+      お気に入りのドヨンを追加 🐰
+    </h3>
+
+    <input
+      type="file"
+      id="doyoungGrowthVisualInput"
+      accept="image/*"
+      hidden
+    >
+
+    <button
+      type="button"
+      id="doyoungGrowthVisualSelect"
+      class="jihoon-growth-visual-select"
+    >
+      ＋ 写真を選ぶ
+    </button>
+
+    <div
+      id="doyoungGrowthVisualPreview"
+      class="jihoon-growth-visual-preview"
+      style="display: none;"
+    >
+      <img
+        id="doyoungGrowthVisualPreviewImage"
+        alt="DOYOUNG GROWTH VISUAL"
+      >
+    </div>
+
+    <div class="jihoon-growth-visual-field">
+
+      <label>🎨 HAIR COLOR</label>
+
+      <select id="doyoungGrowthVisualHair">
+        <option value="BLACK">🖤 BLACK</option>
+        <option value="BROWN">🤎 BROWN</option>
+        <option value="RED">❤️ RED</option>
+        <option value="PINK">🩷 PINK</option>
+        <option value="BLONDE">💛 BLONDE</option>
+        <option value="GRAY">🩶 GRAY</option>
+        <option value="OTHER">✨ OTHER</option>
+      </select>
+
+    </div>
+
+    <div class="jihoon-growth-visual-field">
+
+      <label>💬 MY NOTE</label>
+
+      <textarea
+        id="doyoungGrowthVisualMemo"
+        rows="3"
+        placeholder="このドヨンの好きなところ 💎"
+      ></textarea>
+
+    </div>
+
+    <button
+      type="button"
+      id="doyoungGrowthVisualSave"
+      class="jihoon-growth-visual-save"
+    >
+      💎 SAVE
+    </button>
+
+    <button
+      type="button"
+      id="doyoungGrowthVisualDelete"
+      class="jihoon-growth-visual-delete"
+      style="display: none;"
+    >
+      🗑 DELETE
+    </button>
+
+    <button
+      type="button"
+      id="doyoungGrowthVisualCancel"
+      class="jihoon-growth-visual-cancel"
+    >
+      CANCEL
+    </button>
+
+  </div>
+
+</section>
+
+<!-- =========================================
+     🎧 DOYOUNG'S SONG
+========================================= -->
+
+<section
+  id="doyoungSongPage"
+  class="jihoon-song-page"
+  style="display: none;"
+>
+
+  <button
+    type="button"
+    id="doyoungSongBack"
+    class="jihoon-song-back"
+  >
+    ← DOYOUNG BOOKに戻る
+  </button>
+
+  <div class="jihoon-song-inner">
+
+    <div class="jihoon-song-kicker">
+      🎧 DOYOUNG'S SONG
+    </div>
+
+    <h2>
+      MY DOYOUNG SONGS 🐰
+    </h2>
+
+    <p class="jihoon-song-subtitle">
+      ドヨンを思い浮かべる曲を<br>
+      自分だけのプレイリストに残そう 💎
+    </p>
+
+    <div class="jihoon-song-form">
+
+      <div class="jihoon-song-field">
+
+        <label for="doyoungSongTitle">
+          🎵 SONG TITLE
+        </label>
+
+        <input
+          type="text"
+          id="doyoungSongTitle"
+          placeholder="曲名を入力 🎧"
+        >
+
+      </div>
+
+      <div class="jihoon-song-field">
+
+        <label for="doyoungSongMemo">
+          💬 MY NOTE
+        </label>
+
+        <textarea
+          id="doyoungSongMemo"
+          rows="4"
+          placeholder="この曲がドヨンっぽい理由 💎"
+        ></textarea>
+
+      </div>
+
+      <button
+        type="button"
+        id="doyoungSongSave"
+        class="jihoon-song-save"
+      >
+        ＋ ADD SONG
+      </button>
+
+    </div>
+
+    <div
+      id="doyoungSongList"
+      class="jihoon-song-list"
+    ></div>
+
+  </div>
+
+</section>
+
+  <!-- =========================================
+     📷 DOYOUNG MEMORIES
+     PHOTO MEMORY LINK VIEW
+========================================= -->
+
+<section
+  id="doyoungMemoriesPage"
+  class="jihoon-memories-page"
+  style="display: none;"
+>
+
+  <button
+    type="button"
+    id="doyoungMemoriesBack"
+    class="jihoon-memories-back"
+  >
+    ← DOYOUNG BOOKに戻る
+  </button>
+
+  <div class="jihoon-memories-inner">
+
+    <div class="jihoon-memories-kicker">
+      📷 DOYOUNG MEMORIES
+    </div>
+
+    <h2>
+      MY DOYOUNG MEMORIES 🐰
+    </h2>
+
+    <p class="jihoon-memories-subtitle">
+      PHOTO MEMORYから<br>
+      ドヨンとの思い出だけを集めるページ 💎
+    </p>
+
+    <div class="jihoon-memories-info">
+      <span>🔗 PHOTO MEMORY LINK</span>
+
+      <p>
+        ここで追加した思い出はPHOTO MEMORYにも、<br>
+        PHOTO MEMORYでDOYOUNGを選んだ投稿はここにも表示されます。
+      </p>
+    </div>
+
+    <button
+      type="button"
+      id="doyoungMemoriesAdd"
+      class="jihoon-memories-add"
+    >
+      ＋ ADD DOYOUNG MEMORY
+    </button>
+
+    <div
+      id="doyoungMemoriesList"
+      class="jihoon-memories-list"
+    >
+    </div>
+
+  </div>
+
+</section>
+
+  <!-- =========================================
+     🐰 DOYOUNG CHEMISTRY
+========================================= -->
+
+<section
+  id="doyoungChemistryPage"
+  class="jihoon-chemistry-page"
+  style="display: none;"
+>
+
+  <button
+    type="button"
+    id="doyoungChemistryBack"
+    class="jihoon-chemistry-back"
+  >
+    ← DOYOUNG BOOKに戻る
+  </button>
+
+  <div class="jihoon-chemistry-inner">
+
+    <div class="jihoon-chemistry-kicker">
+      🐰 DOYOUNG CHEMISTRY
+    </div>
+
+    <h2>MY FAVORITE CHEMISTRY 💎</h2>
+
+    <p class="jihoon-chemistry-subtitle">
+      ドヨンとメンバーの<br>
+      好きな瞬間を集めよう 🐰
+    </p>
+
+    <div
+      id="doyoungChemistryList"
+      class="jihoon-chemistry-list"
+    ></div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================
+     🐰 DOYOUNG CHEMISTRY DETAIL
+========================================= -->
+
+<section
+  id="doyoungChemistryDetailPage"
+  class="jihoon-chemistry-detail-page"
+  style="display: none;"
+>
+
+  <button
+    type="button"
+    id="doyoungChemistryDetailBack"
+    class="jihoon-chemistry-detail-back"
+  >
+    ← CHEMISTRYに戻る
+  </button>
+
+  <div class="jihoon-chemistry-detail-inner">
+
+    <div
+      id="doyoungChemistryDetailName"
+      class="jihoon-chemistry-detail-kicker"
+    >
+      CHEMISTRY MEMORY 💎
+    </div>
+
+    <h2>MY CHEMISTRY MEMORY 💎</h2>
+
+    <p
+      id="doyoungChemistryDetailCaption"
+      class="jihoon-chemistry-detail-subtitle"
+    ></p>
+
+    <div
+      id="doyoungChemistryMemories"
+      class="jihoon-chemistry-memory-list"
+    ></div>
+
+    <button
+      type="button"
+      id="doyoungChemistryAdd"
+      class="jihoon-chemistry-add"
+    >
+      + ADD MEMORY
+    </button>
+
+  </div>
+
+</section>
+
 <!-- =========================================
      👑 JUNKYU VISUAL RANKING
 ========================================= -->
