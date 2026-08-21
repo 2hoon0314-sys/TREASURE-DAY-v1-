@@ -2292,6 +2292,265 @@ id="junkyuVisualBook"
 
 </section>
 <!-- =========================================
+     🌱 JAEHYUK GROWTH HISTORY
+========================================= -->
+
+<section
+  id="jaehyukGrowthHistoryPage"
+  class="jihoon-growth-history-page"
+  style="display: none;"
+>
+
+  <button
+    type="button"
+    id="jaehyukGrowthHistoryBack"
+    class="jihoon-growth-history-back"
+  >
+    ← JAEHYUK BOOKに戻る
+  </button>
+
+  <div class="jihoon-growth-history-inner">
+
+    <div class="jihoon-growth-history-kicker">
+      🌱 GROWTH HISTORY
+    </div>
+
+    <h2>
+      JAEHYUK<br>
+      GROWTH HISTORY
+    </h2>
+
+    <p class="jihoon-growth-history-subtitle">
+      2020 → 2026<br>
+      ジェヒョクの成長を一緒に振り返ろう 💎
+    </p>
+
+    <div class="jihoon-growth-years">
+
+      <button type="button" class="jihoon-growth-year jaehyuk-growth-year" data-year="2020">
+        <span>2020</span><small>DEBUT 💎</small>
+      </button>
+
+      <button type="button" class="jihoon-growth-year jaehyuk-growth-year" data-year="2021">
+        <span>2021</span><small>2021 ERA 💎</small>
+      </button>
+
+      <button type="button" class="jihoon-growth-year jaehyuk-growth-year" data-year="2022">
+        <span>2022</span><small>2022 ERA 💎</small>
+      </button>
+
+      <button type="button" class="jihoon-growth-year jaehyuk-growth-year" data-year="2023">
+        <span>2023</span><small>2023 ERA 💎</small>
+      </button>
+
+      <button type="button" class="jihoon-growth-year jaehyuk-growth-year" data-year="2024">
+        <span>2024</span><small>2024 ERA 💎</small>
+      </button>
+
+      <button type="button" class="jihoon-growth-year jaehyuk-growth-year" data-year="2025">
+        <span>2025</span><small>2025 ERA 💎</small>
+      </button>
+
+      <button type="button" class="jihoon-growth-year jaehyuk-growth-year" data-year="2026">
+        <span>2026</span><small>NOW ✨</small>
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================
+     🌱 JAEHYUK GROWTH YEAR DETAIL
+========================================= -->
+
+<section
+  id="jaehyukGrowthYearPage"
+  class="jihoon-growth-detail-page"
+  style="display: none;"
+>
+
+  <button
+    type="button"
+    id="jaehyukGrowthYearBack"
+    class="jihoon-growth-detail-back"
+  >
+    ← GROWTH HISTORYに戻る
+  </button>
+
+  <div class="jihoon-growth-detail-inner">
+
+    <div class="jihoon-growth-detail-kicker">
+      🌱 GROWTH HISTORY
+    </div>
+
+    <div
+      id="jaehyukGrowthYearNumber"
+      class="jihoon-growth-detail-year"
+    >
+      2020
+    </div>
+
+    <h2 id="jaehyukGrowthYearTitle">
+      DEBUT ERA 💎
+    </h2>
+
+    <p
+      id="jaehyukGrowthYearSubtitle"
+      class="jihoon-growth-detail-subtitle"
+    >
+      2020年のジェヒョクを振り返ろう 💎
+    </p>
+
+    <section class="jihoon-growth-visual-section">
+
+      <div class="jihoon-growth-section-head">
+
+        <div>
+          <small>MY ARCHIVE</small>
+
+          <h3 id="jaehyukGrowthYearVisualTitle">
+            📸 2020 VISUAL
+          </h3>
+        </div>
+
+        <button
+          type="button"
+          id="jaehyukGrowthYearVisualAdd"
+          class="jihoon-growth-visual-add"
+        >
+          ＋ ADD
+        </button>
+
+      </div>
+
+      <p
+        id="jaehyukGrowthYearCaption"
+        class="jihoon-growth-section-caption"
+      >
+        2020年のお気に入りジェヒョクを残そう 💎
+      </p>
+
+      <div
+        id="jaehyukGrowthYearVisualGrid"
+        class="jihoon-growth-visual-grid"
+      ></div>
+
+    </section>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================
+     📸 JAEHYUK GROWTH VISUAL ADD / EDIT
+========================================= -->
+
+<section
+  id="jaehyukGrowthVisualModal"
+  class="jihoon-growth-visual-modal"
+  style="display: none;"
+>
+
+  <div class="jihoon-growth-visual-modal-card">
+
+    <div
+      id="jaehyukGrowthVisualModalKicker"
+      class="jihoon-growth-visual-modal-kicker"
+    >
+      📸 2020 VISUAL
+    </div>
+
+    <h3>
+      お気に入りのジェヒョクを追加 🦁
+    </h3>
+
+    <input
+      type="file"
+      id="jaehyukGrowthVisualInput"
+      accept="image/*"
+      hidden
+    >
+
+    <button
+      type="button"
+      id="jaehyukGrowthVisualSelect"
+      class="jihoon-growth-visual-select"
+    >
+      ＋ 写真を選ぶ
+    </button>
+
+    <div
+      id="jaehyukGrowthVisualPreview"
+      class="jihoon-growth-visual-preview"
+      style="display: none;"
+    >
+      <img
+        id="jaehyukGrowthVisualPreviewImage"
+        alt="JAEHYUK GROWTH VISUAL"
+      >
+    </div>
+
+    <div class="jihoon-growth-visual-field">
+
+      <label>🎨 HAIR COLOR</label>
+
+      <select id="jaehyukGrowthVisualHair">
+        <option value="BLACK">🖤 BLACK</option>
+        <option value="BROWN">🤎 BROWN</option>
+        <option value="RED">❤️ RED</option>
+        <option value="PINK">🩷 PINK</option>
+        <option value="BLONDE">💛 BLONDE</option>
+        <option value="GRAY">🩶 GRAY</option>
+        <option value="OTHER">✨ OTHER</option>
+      </select>
+
+    </div>
+
+    <div class="jihoon-growth-visual-field">
+
+      <label>💬 MY NOTE</label>
+
+      <textarea
+        id="jaehyukGrowthVisualMemo"
+        rows="3"
+        placeholder="このジェヒョクの好きなところ 💎"
+      ></textarea>
+
+    </div>
+
+    <button
+      type="button"
+      id="jaehyukGrowthVisualSave"
+      class="jihoon-growth-visual-save"
+    >
+      💎 SAVE
+    </button>
+
+    <button
+      type="button"
+      id="jaehyukGrowthVisualDelete"
+      class="jihoon-growth-visual-delete"
+      style="display: none;"
+    >
+      🗑 DELETE
+    </button>
+
+    <button
+      type="button"
+      id="jaehyukGrowthVisualCancel"
+      class="jihoon-growth-visual-cancel"
+    >
+      CANCEL
+    </button>
+
+  </div>
+
+</section>  
+<!-- =========================================
      👑 JUNKYU VISUAL RANKING
 ========================================= -->
 
