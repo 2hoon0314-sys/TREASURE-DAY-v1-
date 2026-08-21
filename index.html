@@ -1984,7 +1984,274 @@ id="junkyuVisualBook"
   </div>
 
 </div>
+<!-- =========================================
+     🦁 JAEHYUK VISUAL BOOK
+========================================= -->
 
+<section
+  id="jaehyukVisualBook"
+  class="jihoon-visual-book"
+>
+
+  <button
+    type="button"
+    id="jaehyukVisualClose"
+    class="jihoon-visual-close"
+  >
+    ← JAEHYUK BOOKに戻る
+  </button>
+
+  <div class="jihoon-visual-inner">
+
+    <div class="jihoon-visual-kicker">
+      📸 VISUAL BOOK
+    </div>
+
+    <div class="jihoon-visual-header">
+
+      <p class="jihoon-visual-small">
+        JAEHYUK VISUAL HISTORY
+      </p>
+
+      <h2>
+        MY JAEHYUK<br>VISUAL BOOK
+      </h2>
+
+      <p>
+        好きなジェヒョクのビジュを集めて、<br>
+        自分だけのVISUAL BOOKを育てる。
+      </p>
+
+    </div>
+
+    <div class="jihoon-hair-filter jaehyuk-hair-filter">
+      <button type="button" class="active" data-hair="ALL">ALL</button>
+      <button type="button" data-hair="BLACK">🖤 BLACK</button>
+      <button type="button" data-hair="BROWN">🤎 BROWN</button>
+      <button type="button" data-hair="RED">❤️ RED</button>
+      <button type="button" data-hair="PINK">🩷 PINK</button>
+      <button type="button" data-hair="BLONDE">💛 BLONDE</button>
+      <button type="button" data-hair="GRAY">🩶 GRAY</button>
+      <button type="button" data-hair="OTHER">✨ OTHER</button>
+    </div>
+
+    <button
+      type="button"
+      id="jaehyukVisualAdd"
+      class="jihoon-visual-add"
+    >
+      ＋ ADD VISUAL
+    </button>
+
+    <input
+      type="file"
+      id="jaehyukVisualInput"
+      accept="image/*"
+      hidden
+    >
+
+    <div
+      id="jaehyukVisualGrid"
+      class="jihoon-visual-grid"
+    >
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- 🎨 JAEHYUK HAIR COLOR SELECT -->
+<div
+  id="jaehyukHairModal"
+  class="jihoon-hair-modal"
+>
+
+  <div class="jihoon-hair-modal-card">
+
+    <div class="jihoon-hair-modal-icon">
+      🎨
+    </div>
+
+    <p class="jihoon-hair-modal-small">
+      VISUAL TAG
+    </p>
+
+    <h3>
+      このジェヒョクは何髪？💎
+    </h3>
+
+    <div class="jihoon-hair-options">
+
+      <button type="button" data-hair="BLACK">
+        🖤 BLACK
+      </button>
+
+      <button type="button" data-hair="BROWN">
+        🤎 BROWN
+      </button>
+
+      <button type="button" data-hair="RED">
+        ❤️ RED
+      </button>
+
+      <button type="button" data-hair="PINK">
+        🩷 PINK
+      </button>
+
+      <button type="button" data-hair="BLONDE">
+        💛 BLONDE
+      </button>
+
+      <button type="button" data-hair="GRAY">
+        🩶 GRAY
+      </button>
+
+      <button type="button" data-hair="OTHER">
+        ✨ OTHER
+      </button>
+
+    </div>
+
+    <button
+      type="button"
+      id="jaehyukHairCancel"
+      class="jihoon-hair-cancel"
+    >
+      CANCEL
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- 📸 JAEHYUK VISUAL EDIT -->
+<div
+  id="jaehyukVisualEditModal"
+  class="jihoon-visual-edit-modal"
+>
+
+  <div class="jihoon-visual-edit-sheet">
+
+    <div class="jihoon-visual-edit-kicker">
+      📸 VISUAL EDIT
+    </div>
+
+    <h2>
+      このジェヒョクを編集する 💎
+    </h2>
+
+    <div class="jihoon-visual-edit-preview">
+
+      <img
+        id="jaehyukVisualEditImage"
+        alt="JAEHYUK VISUAL"
+      >
+
+    </div>
+
+    <div class="jihoon-visual-edit-actions">
+
+      <button
+        type="button"
+        id="jaehyukVisualFavorite"
+      >
+        ♡ FAVORITE
+      </button>
+
+      <button
+        type="button"
+        id="jaehyukVisualChangeHair"
+      >
+        🎨 CHANGE HAIR COLOR
+      </button>
+
+      <button
+        type="button"
+        id="jaehyukVisualDelete"
+      >
+        🗑️ DELETE
+      </button>
+
+    </div>
+
+    <button
+      type="button"
+      id="jaehyukVisualEditCancel"
+      class="jihoon-visual-edit-cancel"
+    >
+      CANCEL
+    </button>
+
+  </div>
+
+
+  <!-- 🎨 HAIR CHANGE -->
+  <div
+    id="jaehyukHairChangeModal"
+    class="jihoon-hair-change-modal"
+  >
+
+    <div class="jihoon-hair-change-sheet">
+
+      <div class="jihoon-hair-change-kicker">
+        🎨 CHANGE HAIR COLOR
+      </div>
+
+      <h3>
+        このジェヒョクの髪色を選ぶ 💎
+      </h3>
+
+      <div class="jihoon-hair-change-grid">
+
+        <button type="button" data-hair="BLACK">
+          🖤 BLACK
+        </button>
+
+        <button type="button" data-hair="BROWN">
+          🤎 BROWN
+        </button>
+
+        <button type="button" data-hair="RED">
+          ❤️ RED
+        </button>
+
+        <button type="button" data-hair="PINK">
+          💗 PINK
+        </button>
+
+        <button type="button" data-hair="BLONDE">
+          💛 BLONDE
+        </button>
+
+        <button type="button" data-hair="GRAY">
+          🩶 GRAY
+        </button>
+
+        <button type="button" data-hair="OTHER">
+          ✨ OTHER
+        </button>
+
+        <button type="button" data-hair="UNTAGGED">
+          💎 UNTAGGED
+        </button>
+
+      </div>
+
+      <button
+        type="button"
+        id="jaehyukHairChangeCancel"
+        class="jihoon-hair-change-cancel"
+      >
+        CANCEL
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
 <!-- =========================================
      👑 JUNKYU VISUAL RANKING
 ========================================= -->
