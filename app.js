@@ -23998,20 +23998,6 @@ if (
     }
   );
 }
-// ========================================
-// 🐨 JUNKYU BOOK OPEN / CLOSE
-// ========================================
-
-const junkyuBookOpen =
-  document.getElementById("junkyu-book-open");
-
-const junkyuBookDetail =
-  document.getElementById("junkyu-book-detail");
-
-const junkyuBookClose =
-  document.getElementById("junkyu-book-close");
-
-
 
 // ======================================================
 // 🐰 DOYOUNG VISUAL BOOK / RANKING
@@ -25838,20 +25824,6 @@ if (
     }
   );
 }
-// ========================================
-// 🐨 JUNKYU BOOK OPEN / CLOSE
-// ========================================
-
-const junkyuBookOpen =
-  document.getElementById("junkyu-book-open");
-
-const junkyuBookDetail =
-  document.getElementById("junkyu-book-detail");
-
-const junkyuBookClose =
-  document.getElementById("junkyu-book-close");
-
-
 
 // ======================================================
 // 🦋 HARUTO VISUAL BOOK / RANKING
@@ -27678,20 +27650,6 @@ if (
     }
   );
 }
-// ========================================
-// 🐨 JUNKYU BOOK OPEN / CLOSE
-// ========================================
-
-const junkyuBookOpen =
-  document.getElementById("junkyu-book-open");
-
-const junkyuBookDetail =
-  document.getElementById("junkyu-book-detail");
-
-const junkyuBookClose =
-  document.getElementById("junkyu-book-close");
-
-
 
 // ======================================================
 // 🐺 JEONGWOO VISUAL BOOK / RANKING
@@ -29518,20 +29476,6 @@ if (
     }
   );
 }
-// ========================================
-// 🐨 JUNKYU BOOK OPEN / CLOSE
-// ========================================
-
-const junkyuBookOpen =
-  document.getElementById("junkyu-book-open");
-
-const junkyuBookDetail =
-  document.getElementById("junkyu-book-detail");
-
-const junkyuBookClose =
-  document.getElementById("junkyu-book-close");
-
-
 
 // ======================================================
 // 🐮 JUNGHWAN VISUAL BOOK / RANKING
