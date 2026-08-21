@@ -16490,7 +16490,11 @@ async function renderJunkyuGrowthYearVisuals() {
 
  card.className =
   "jihoon-growth-visual-card junkyu-growth-visual-card";
+const photo =
+  document.createElement("div");
 
+photo.className =
+  "jihoon-growth-visual-photo junkyu-growth-visual-photo";
       const img =
         document.createElement(
           "img"
@@ -16550,9 +16554,13 @@ async function renderJunkyuGrowthYearVisuals() {
       }
 
 
-      card.appendChild(
-        img
-      );
+      photo.appendChild(
+  img
+);
+
+card.appendChild(
+  photo
+);
 
       card.appendChild(
         info
