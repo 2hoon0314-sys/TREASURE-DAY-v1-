@@ -21145,7 +21145,20 @@ const jaehyukMemoriesSystem =
     japaneseName: "ジェヒョク"
 
   });
+// ======================================================
+// 🤖 ASAHI MEMORIES START
+// ======================================================
 
+const asahiMemoriesSystem =
+  setupMemberMemories({
+
+    key: "asahi",
+
+    displayName: "ASAHI",
+
+    japaneseName: "アサヒ"
+
+  });
 // =====================================================
 // 🌱 YOSHI GROWTH HISTORY
 // 2020 - 2026 共通YEARシステム
