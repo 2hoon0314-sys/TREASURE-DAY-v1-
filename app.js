@@ -15248,6 +15248,21 @@ const junkyuVisualRankingSystem =
 
   });
 // ======================================================
+// 🦁 JAEHYUK RANKING START
+// ======================================================
+
+const jaehyukVisualRankingSystem =
+  setupMemberVisualRanking({
+
+    key: "jaehyuk",
+
+    displayName: "JAEHYUK",
+
+    visualSystem:
+      jaehyukVisualSystem
+
+  });
+// ======================================================
 // 🌱 MEMBER GROWTH HISTORY 共通エンジン
 // YOSHI以降の量産用
 // ======================================================
