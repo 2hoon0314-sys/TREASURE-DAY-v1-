@@ -14928,45 +14928,7 @@ const asahiVisualRankingSystem =
     japaneseName: "アサヒ"
 
   });
-<!-- =========================================
-     👑 ASAHI VISUAL RANKING
-========================================= -->
 
-<section
-  id="asahiVisualRankingPage"
-  class="jihoon-visual-ranking-page"
-  style="display: none;"
->
-
-  <button
-    type="button"
-    id="asahiVisualRankingBack"
-    class="jihoon-visual-ranking-back"
-  >
-    ← ASAHI BOOKに戻る
-  </button>
-
-  <div class="jihoon-visual-ranking-inner">
-
-    <div class="jihoon-visual-ranking-kicker">
-      👑 ASAHI VISUAL RANKING
-    </div>
-
-    <h2>MY VISUAL TOP 3 💎</h2>
-
-    <p class="jihoon-visual-ranking-subtitle">
-      アサヒの好きなビジュアルTOP3 🤖
-    </p>
-
-    <div
-      id="asahiVisualRankingList"
-      class="jihoon-visual-ranking-list"
-    >
-    </div>
-
-  </div>
-
-</section>
 // ======================================================
 // 👑 MEMBER VISUAL RANKING 共通エンジン
 // ======================================================
