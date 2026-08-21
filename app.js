@@ -30159,3 +30159,148 @@ async function migrateOldJihoonChemistryShared() {
 
 renderJihoonSharedChemistryCards();
 migrateOldJihoonChemistryShared().catch((error) => console.error("JIHOON SHARED MIGRATION ERROR", error));
+// ======================================================
+// 🎧 MY TREASURE MUSIC
+// FIRST STAGE
+// ======================================================
+
+const musicPageOpen =
+  document.getElementById(
+    "music-page-open"
+  );
+
+const musicPage =
+  document.getElementById(
+    "music-page"
+  );
+
+const musicPageBack =
+  document.getElementById(
+    "music-page-back"
+  );
+
+const musicTodaySong =
+  document.getElementById(
+    "music-today-song"
+  );
+
+
+function updateMusicTodaySong() {
+
+  if (!musicTodaySong) {
+    return;
+  }
+
+  let song =
+    getTodaySong();
+
+  // まだTODAYを引いていない日なら
+  // MUSICを開いた時に今日の曲を決定
+  if (
+    song === "???"
+  ) {
+
+    song =
+      drawTodaySong();
+
+    // HOME側にも同じ結果を反映
+    updateTodayTreasure();
+
+  }
+
+  musicTodaySong.textContent =
+    song;
+
+}
+
+
+// HOME → MUSIC
+if (
+  musicPageOpen &&
+  musicPage
+) {
+
+  musicPageOpen.addEventListener(
+    "click",
+    () => {
+
+      updateMusicTodaySong();
+
+      musicPage.style.display =
+        "block";
+
+      musicPage.scrollTop =
+        0;
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+  );
+
+}
+
+
+// MUSIC → HOME
+if (
+  musicPageBack &&
+  musicPage
+) {
+
+  musicPageBack.addEventListener(
+    "click",
+    () => {
+
+      musicPage.style.display =
+        "none";
+
+      document.body.style.overflow =
+        "";
+
+      window.scrollTo(
+        0,
+        0
+      );
+
+    }
+  );
+
+}
+
+
+// ======================================================
+// 🎧 MUSIC MENU
+// 今回は入口のみ。中身は次から順番に実装。
+// ======================================================
+
+const musicComingSoonButtons = [
+  "music-all-songs-open",
+  "music-favorites-open",
+  "music-discography-open",
+  "music-ranking-open",
+  "music-worldcup-open"
+];
+
+musicComingSoonButtons.forEach(
+  (id) => {
+
+    const button =
+      document.getElementById(id);
+
+    if (!button) {
+      return;
+    }
+
+    button.addEventListener(
+      "click",
+      () => {
+
+        console.log(
+          `${id} READY FOR NEXT STEP 💎`
+        );
+
+      }
+    );
+
+  }
+);
