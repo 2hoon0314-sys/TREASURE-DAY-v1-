@@ -17896,7 +17896,20 @@ const junkyuSongSystem =
     japaneseName: "ジュンギュ"
 
   });
+// ======================================================
+// 🦁 JAEHYUK SONG START
+// ======================================================
 
+const jaehyukSongSystem =
+  setupMemberSong({
+
+    key: "jaehyuk",
+
+    displayName: "JAEHYUK",
+
+    japaneseName: "ジェヒョク"
+
+  });
 // ======================================================
 // 🛡 SONG HTML ESCAPE
 // ======================================================
