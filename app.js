@@ -30873,3 +30873,230 @@ if (
 // INITIAL
 renderMusicYearFilters();
 renderMusicSongs();
+// ======================================================
+// ❤️ MUSIC FAVORITES
+// ======================================================
+
+const musicFavoritesOpen =
+  document.getElementById(
+    "music-favorites-open"
+  );
+
+const musicFavoritesPage =
+  document.getElementById(
+    "music-favorites-page"
+  );
+
+const musicFavoritesBack =
+  document.getElementById(
+    "music-favorites-back"
+  );
+
+const musicFavoritesList =
+  document.getElementById(
+    "music-favorites-list"
+  );
+
+const musicFavoritesCount =
+  document.getElementById(
+    "music-favorites-count"
+  );
+
+
+// ======================================================
+// RENDER FAVORITES
+// ======================================================
+
+function renderMusicFavorites() {
+
+  if (!musicFavoritesList) {
+    return;
+  }
+
+  const favoriteIds =
+    loadMusicFavorites();
+
+  const favoriteSongs =
+    treasureSongs.filter(
+      song =>
+        favoriteIds.includes(song.id)
+    );
+
+
+  if (musicFavoritesCount) {
+
+    musicFavoritesCount.textContent =
+      `${favoriteSongs.length} FAVORITES`;
+
+  }
+
+
+  musicFavoritesList.innerHTML = "";
+
+
+  // まだお気に入りがない
+  if (favoriteSongs.length === 0) {
+
+    musicFavoritesList.innerHTML = `
+      <div class="music-favorites-empty">
+
+        ♡<br>
+
+        まだお気に入りの曲がありません。<br>
+
+        ALL SONGSで♡を押して、<br>
+        MY FAVORITESを育てよう 💎
+
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  favoriteSongs.forEach(song => {
+
+    const card =
+      document.createElement("div");
+
+    card.className =
+      "music-favorite-card";
+
+
+    const tagsHTML =
+      song.tags
+        .map(
+          tag => `
+            <span class="music-song-tag">
+              ${getMusicTagLabel(tag)}
+            </span>
+          `
+        )
+        .join("");
+
+
+    card.innerHTML = `
+
+      <div class="music-favorite-number">
+        ${String(song.id).padStart(2, "0")}
+      </div>
+
+      <div class="music-favorite-info">
+
+        <strong>
+          ${song.title}
+        </strong>
+
+        <div class="music-favorite-meta">
+
+          <span>
+            ${song.year}
+          </span>
+
+          ${tagsHTML}
+
+        </div>
+
+      </div>
+
+      <button
+        type="button"
+        class="music-favorite-remove"
+        aria-label="お気に入り解除"
+      >
+        ♥
+      </button>
+
+    `;
+
+
+    const removeButton =
+      card.querySelector(
+        ".music-favorite-remove"
+      );
+
+
+    removeButton.addEventListener(
+      "click",
+      () => {
+
+        toggleMusicFavorite(
+          song.id
+        );
+
+        // FAVORITESを更新
+        renderMusicFavorites();
+
+        // ALL SONGS側も更新
+        renderMusicSongs();
+
+      }
+    );
+
+
+    musicFavoritesList.appendChild(
+      card
+    );
+
+  });
+
+}
+
+
+// ======================================================
+// MUSIC → FAVORITES
+// ======================================================
+
+if (
+  musicFavoritesOpen &&
+  musicFavoritesPage
+) {
+
+  musicFavoritesOpen.addEventListener(
+    "click",
+    () => {
+
+      renderMusicFavorites();
+
+      musicPage.style.display =
+        "none";
+
+      musicFavoritesPage.style.display =
+        "block";
+
+      musicFavoritesPage.scrollTop =
+        0;
+
+    }
+  );
+
+}
+
+
+// ======================================================
+// FAVORITES → MUSIC
+// ======================================================
+
+if (
+  musicFavoritesBack &&
+  musicFavoritesPage
+) {
+
+  musicFavoritesBack.addEventListener(
+    "click",
+    () => {
+
+      musicFavoritesPage.style.display =
+        "none";
+
+      musicPage.style.display =
+        "block";
+
+      musicPage.scrollTop =
+        0;
+
+    }
+  );
+
+}
