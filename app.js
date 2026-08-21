@@ -13486,6 +13486,62 @@ if (yoshiBookClose && yoshiBookDetail) {
   );
 }
 // ========================================
+// 🦁 JAEHYUK BOOK OPEN / CLOSE
+// ========================================
+
+const jaehyukBookOpen =
+  document.getElementById("jaehyuk-book-open");
+
+const jaehyukBookDetail =
+  document.getElementById("jaehyuk-book-detail");
+
+const jaehyukBookClose =
+  document.getElementById("jaehyuk-book-close");
+
+
+// JAEHYUK BOOKを開く
+if (
+  jaehyukBookOpen &&
+  jaehyukBookDetail
+) {
+
+  jaehyukBookOpen.addEventListener(
+    "click",
+    () => {
+
+      jaehyukBookDetail.classList.add(
+        "active"
+      );
+
+      jaehyukBookDetail.scrollTop = 0;
+
+      document.body.style.overflow =
+        "hidden";
+    }
+  );
+}
+
+
+// JAEHYUK BOOKを閉じる
+if (
+  jaehyukBookClose &&
+  jaehyukBookDetail
+) {
+
+  jaehyukBookClose.addEventListener(
+    "click",
+    () => {
+
+      jaehyukBookDetail.classList.remove(
+        "active"
+      );
+
+      document.body.style.overflow =
+        "hidden";
+    }
+  );
+}
+// ========================================
 // 🐨 JUNKYU BOOK OPEN / CLOSE
 // ========================================
 
