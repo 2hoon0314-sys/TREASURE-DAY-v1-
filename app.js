@@ -23936,3 +23936,7367 @@ if (asahiChemistryAdd) {
 
 // 最初のカード生成
 renderAsahiChemistryCards();
+
+// ======================================================
+// 🚀 DOYOUNG → JUNGHWAN COMPLETE PACK
+// ======================================================
+
+// ========================================
+// 🐰 DOYOUNG BOOK OPEN / CLOSE
+// ========================================
+
+const doyoungBookOpen =
+  document.getElementById("doyoung-book-open");
+
+const doyoungBookDetail =
+  document.getElementById("doyoung-book-detail");
+
+const doyoungBookClose =
+  document.getElementById("doyoung-book-close");
+
+
+// DOYOUNG BOOKを開く
+if (
+  doyoungBookOpen &&
+  doyoungBookDetail
+) {
+
+  doyoungBookOpen.addEventListener(
+    "click",
+    () => {
+
+      doyoungBookDetail.classList.add(
+        "active"
+      );
+
+      doyoungBookDetail.scrollTop = 0;
+
+      document.body.style.overflow =
+        "hidden";
+    }
+  );
+}
+
+
+// DOYOUNG BOOKを閉じる
+if (
+  doyoungBookClose &&
+  doyoungBookDetail
+) {
+
+  doyoungBookClose.addEventListener(
+    "click",
+    () => {
+
+      doyoungBookDetail.classList.remove(
+        "active"
+      );
+
+      // MEMBER BOOKは後ろで開いたまま
+      document.body.style.overflow =
+        "hidden";
+    }
+  );
+}
+// ========================================
+// 🐨 JUNKYU BOOK OPEN / CLOSE
+// ========================================
+
+const junkyuBookOpen =
+  document.getElementById("junkyu-book-open");
+
+const junkyuBookDetail =
+  document.getElementById("junkyu-book-detail");
+
+const junkyuBookClose =
+  document.getElementById("junkyu-book-close");
+
+
+
+// ======================================================
+// 🐰 DOYOUNG VISUAL BOOK / RANKING
+// ======================================================
+const doyoungVisualSystem =
+  setupMemberVisualBook({
+    key: "doyoung",
+    displayName: "DOYOUNG",
+    japaneseName: "ドヨン"
+  });
+
+const doyoungVisualRankingSystem =
+  setupMemberVisualRanking({
+    key: "doyoung",
+    displayName: "DOYOUNG",
+    visualSystem: doyoungVisualSystem
+  });
+
+// ======================================================
+// 🐰 DOYOUNG GROWTH HISTORY START
+// 完成型：YEAR DETAIL + EDIT MODAL
+// ======================================================
+
+const doyoungGrowthHistoryOpen =
+  document.getElementById("doyoungGrowthHistoryOpen");
+
+const doyoungGrowthHistoryPage =
+  document.getElementById("doyoungGrowthHistoryPage");
+
+const doyoungGrowthHistoryBack =
+  document.getElementById("doyoungGrowthHistoryBack");
+
+const doyoungGrowthYearPage =
+  document.getElementById("doyoungGrowthYearPage");
+
+const doyoungGrowthYearBack =
+  document.getElementById("doyoungGrowthYearBack");
+
+const doyoungGrowthYearButtons =
+  document.querySelectorAll(".doyoung-growth-year");
+
+const doyoungGrowthYearNumber =
+  document.getElementById("doyoungGrowthYearNumber");
+
+const doyoungGrowthYearTitle =
+  document.getElementById("doyoungGrowthYearTitle");
+
+const doyoungGrowthYearSubtitle =
+  document.getElementById("doyoungGrowthYearSubtitle");
+
+const doyoungGrowthYearVisualTitle =
+  document.getElementById("doyoungGrowthYearVisualTitle");
+
+const doyoungGrowthYearCaption =
+  document.getElementById("doyoungGrowthYearCaption");
+
+const doyoungGrowthYearVisualGrid =
+  document.getElementById("doyoungGrowthYearVisualGrid");
+
+const doyoungGrowthYearVisualAdd =
+  document.getElementById("doyoungGrowthYearVisualAdd");
+
+const doyoungGrowthVisualModal =
+  document.getElementById("doyoungGrowthVisualModal");
+
+const doyoungGrowthVisualModalKicker =
+  document.getElementById("doyoungGrowthVisualModalKicker");
+
+const doyoungGrowthVisualInput =
+  document.getElementById("doyoungGrowthVisualInput");
+
+const doyoungGrowthVisualSelect =
+  document.getElementById("doyoungGrowthVisualSelect");
+
+const doyoungGrowthVisualPreview =
+  document.getElementById("doyoungGrowthVisualPreview");
+
+const doyoungGrowthVisualPreviewImage =
+  document.getElementById("doyoungGrowthVisualPreviewImage");
+
+const doyoungGrowthVisualHair =
+  document.getElementById("doyoungGrowthVisualHair");
+
+const doyoungGrowthVisualMemo =
+  document.getElementById("doyoungGrowthVisualMemo");
+
+const doyoungGrowthVisualSave =
+  document.getElementById("doyoungGrowthVisualSave");
+
+const doyoungGrowthVisualDelete =
+  document.getElementById("doyoungGrowthVisualDelete");
+
+const doyoungGrowthVisualCancel =
+  document.getElementById("doyoungGrowthVisualCancel");
+
+let currentDoyoungGrowthYear = "2020";
+
+let pendingDoyoungGrowthFile = null;
+
+let currentDoyoungGrowthVisualItem = null;
+
+let doyoungGrowthDB = null;
+
+const DOYOUNG_GROWTH_DB =
+  "treasure-day-doyoung-growth-db";
+
+const DOYOUNG_GROWTH_STORE =
+  "doyoungGrowthVisuals";
+// ======================================================
+// 💾 DOYOUNG GROWTH IndexedDB
+// ======================================================
+
+function openDoyoungGrowthDB() {
+
+  return new Promise((resolve, reject) => {
+
+    const request =
+      indexedDB.open(
+        DOYOUNG_GROWTH_DB,
+        1
+      );
+
+    request.onupgradeneeded =
+      event => {
+
+        const db =
+          event.target.result;
+
+        if (
+          !db.objectStoreNames.contains(
+            DOYOUNG_GROWTH_STORE
+          )
+        ) {
+
+          db.createObjectStore(
+            DOYOUNG_GROWTH_STORE,
+            {
+              keyPath: "id"
+            }
+          );
+
+        }
+
+      };
+
+
+    request.onsuccess =
+      () => {
+
+        doyoungGrowthDB =
+          request.result;
+
+        resolve(
+          doyoungGrowthDB
+        );
+
+      };
+
+
+    request.onerror =
+      () => {
+
+        reject(
+          request.error
+        );
+
+      };
+
+  });
+}
+
+
+// ======================================================
+// 📸 IMAGE → DataURL
+// ======================================================
+
+function doyoungGrowthImageToDataURL(
+  file
+) {
+
+  return new Promise(
+    (resolve, reject) => {
+
+      const reader =
+        new FileReader();
+
+      reader.onload = () => {
+
+        const img =
+          new Image();
+
+        img.onload = () => {
+
+          const MAX_SIZE = 1600;
+
+          let width =
+            img.naturalWidth;
+
+          let height =
+            img.naturalHeight;
+
+
+          if (
+            width > height &&
+            width > MAX_SIZE
+          ) {
+
+            height =
+              Math.round(
+                height *
+                MAX_SIZE /
+                width
+              );
+
+            width =
+              MAX_SIZE;
+
+          } else if (
+            height >= width &&
+            height > MAX_SIZE
+          ) {
+
+            width =
+              Math.round(
+                width *
+                MAX_SIZE /
+                height
+              );
+
+            height =
+              MAX_SIZE;
+
+          }
+
+
+          const canvas =
+            document.createElement(
+              "canvas"
+            );
+
+          canvas.width =
+            width;
+
+          canvas.height =
+            height;
+
+
+          const ctx =
+            canvas.getContext(
+              "2d"
+            );
+
+          if (!ctx) {
+
+            reject(
+              new Error(
+                "Canvas unavailable"
+              )
+            );
+
+            return;
+
+          }
+
+
+          ctx.drawImage(
+            img,
+            0,
+            0,
+            width,
+            height
+          );
+
+
+          resolve(
+            canvas.toDataURL(
+              "image/jpeg",
+              0.86
+            )
+          );
+
+        };
+
+
+        img.onerror =
+          reject;
+
+        img.src =
+          reader.result;
+
+      };
+
+
+      reader.onerror =
+        reject;
+
+      reader.readAsDataURL(
+        file
+      );
+
+    }
+  );
+}
+
+
+// ======================================================
+// 💾 SAVE NEW
+// ======================================================
+
+async function saveDoyoungGrowthVisual(
+  file,
+  year,
+  hairColor,
+  memo
+) {
+
+  if (!doyoungGrowthDB) {
+    await openDoyoungGrowthDB();
+  }
+
+
+  const imageData =
+    await doyoungGrowthImageToDataURL(
+      file
+    );
+
+
+  const item = {
+
+    id:
+      Date.now() +
+      Math.floor(
+        Math.random() * 1000
+      ),
+
+    year:
+      String(year),
+
+    imageData,
+
+    hairColor:
+      hairColor || "OTHER",
+
+    memo:
+      memo || "",
+
+    createdAt:
+      Date.now()
+
+  };
+
+
+  return new Promise(
+    (resolve, reject) => {
+
+      const transaction =
+        doyoungGrowthDB.transaction(
+          DOYOUNG_GROWTH_STORE,
+          "readwrite"
+        );
+
+      const store =
+        transaction.objectStore(
+          DOYOUNG_GROWTH_STORE
+        );
+
+      const request =
+        store.add(item);
+
+
+      request.onsuccess =
+        () => resolve(item);
+
+      request.onerror =
+        () => reject(
+          request.error
+        );
+
+    }
+  );
+}
+
+
+// ======================================================
+// ✏️ UPDATE
+// ======================================================
+
+function updateDoyoungGrowthVisual(
+  item
+) {
+
+  return new Promise(
+    (resolve, reject) => {
+
+      const transaction =
+        doyoungGrowthDB.transaction(
+          DOYOUNG_GROWTH_STORE,
+          "readwrite"
+        );
+
+      const store =
+        transaction.objectStore(
+          DOYOUNG_GROWTH_STORE
+        );
+
+      const request =
+        store.put(item);
+
+
+      request.onsuccess =
+        () => resolve();
+
+      request.onerror =
+        () => reject(
+          request.error
+        );
+
+    }
+  );
+}
+
+
+// ======================================================
+// 📚 GET YEAR VISUALS
+// ======================================================
+
+async function getDoyoungGrowthVisuals(
+  year
+) {
+
+  if (!doyoungGrowthDB) {
+    await openDoyoungGrowthDB();
+  }
+
+
+  return new Promise(
+    (resolve, reject) => {
+
+      const transaction =
+        doyoungGrowthDB.transaction(
+          DOYOUNG_GROWTH_STORE,
+          "readonly"
+        );
+
+      const store =
+        transaction.objectStore(
+          DOYOUNG_GROWTH_STORE
+        );
+
+      const request =
+        store.getAll();
+
+
+      request.onsuccess =
+        () => {
+
+          const items =
+            request.result || [];
+
+          resolve(
+            items.filter(
+              item =>
+                String(item.year) ===
+                String(year)
+            )
+          );
+
+        };
+
+
+      request.onerror =
+        () => reject(
+          request.error
+        );
+
+    }
+  );
+}
+
+
+// ======================================================
+// 🗑 DELETE
+// ======================================================
+
+async function deleteDoyoungGrowthVisual(
+  id
+) {
+
+  if (!doyoungGrowthDB) {
+    await openDoyoungGrowthDB();
+  }
+
+
+  return new Promise(
+    (resolve, reject) => {
+
+      const transaction =
+        doyoungGrowthDB.transaction(
+          DOYOUNG_GROWTH_STORE,
+          "readwrite"
+        );
+
+      const store =
+        transaction.objectStore(
+          DOYOUNG_GROWTH_STORE
+        );
+
+      const request =
+        store.delete(id);
+
+
+      request.onsuccess =
+        () => resolve();
+
+      request.onerror =
+        () => reject(
+          request.error
+        );
+
+    }
+  );
+}
+// ======================================================
+// 🌱 DOYOUNG GROWTH YEAR INFO
+// ======================================================
+
+const doyoungGrowthYearInfo = {
+
+  "2020": {
+    title: "DEBUT ERA 💎"
+  },
+
+  "2021": {
+    title: "2021 ERA 💎"
+  },
+
+  "2022": {
+    title: "2022 ERA 💎"
+  },
+
+  "2023": {
+    title: "2023 ERA 💎"
+  },
+
+  "2024": {
+    title: "2024 ERA 💎"
+  },
+
+  "2025": {
+    title: "2025 ERA 💎"
+  },
+
+  "2026": {
+    title: "NOW ✨"
+  }
+
+};
+
+
+// ======================================================
+// 📸 RENDER YEAR VISUALS
+// ======================================================
+
+async function renderDoyoungGrowthYearVisuals() {
+
+  if (!doyoungGrowthYearVisualGrid) {
+    return;
+  }
+
+
+  doyoungGrowthYearVisualGrid.innerHTML =
+    "";
+
+
+  const items =
+    await getDoyoungGrowthVisuals(
+      currentDoyoungGrowthYear
+    );
+
+
+  items
+    .sort(
+      (a, b) =>
+        a.createdAt -
+        b.createdAt
+    )
+    .forEach(item => {
+
+      const card =
+        document.createElement(
+          "button"
+        );
+
+      card.type =
+        "button";
+
+ card.className =
+  "jihoon-growth-visual-card doyoung-growth-visual-card";
+const photo =
+  document.createElement("div");
+
+photo.className =
+  "jihoon-growth-visual-photo doyoung-growth-visual-photo";
+      const img =
+        document.createElement(
+          "img"
+        );
+
+      img.src =
+        item.imageData || "";
+
+      img.alt =
+        `DOYOUNG ${item.year}`;
+
+      img.loading =
+        "lazy";
+
+      img.decoding =
+        "async";
+
+
+      const info =
+        document.createElement(
+          "div"
+        );
+
+      info.className =
+        "jihoon-growth-visual-info";
+
+
+      const hair =
+        document.createElement(
+          "span"
+        );
+
+      hair.textContent =
+        `🎨 ${item.hairColor || "OTHER"}`;
+
+
+      const memo =
+        document.createElement(
+          "p"
+        );
+
+      memo.textContent =
+        item.memo || "";
+
+
+      info.appendChild(
+        hair
+      );
+
+
+      if (item.memo) {
+
+        info.appendChild(
+          memo
+        );
+
+      }
+
+
+      photo.appendChild(
+  img
+);
+
+card.appendChild(
+  photo
+);
+
+      card.appendChild(
+        info
+      );
+
+
+      // 写真タップ → EDIT
+      card.addEventListener(
+        "click",
+        () => {
+
+          currentDoyoungGrowthVisualItem =
+            item;
+
+          pendingDoyoungGrowthFile =
+            null;
+
+
+          if (
+            doyoungGrowthVisualPreviewImage
+          ) {
+
+            doyoungGrowthVisualPreviewImage.src =
+              item.imageData || "";
+
+          }
+
+
+          if (
+            doyoungGrowthVisualPreview
+          ) {
+
+            doyoungGrowthVisualPreview.style.display =
+              "block";
+
+          }
+
+
+          if (
+            doyoungGrowthVisualHair
+          ) {
+
+            doyoungGrowthVisualHair.value =
+              item.hairColor ||
+              "OTHER";
+
+          }
+
+
+          if (
+            doyoungGrowthVisualMemo
+          ) {
+
+            doyoungGrowthVisualMemo.value =
+              item.memo || "";
+
+          }
+
+
+          if (
+            doyoungGrowthVisualDelete
+          ) {
+
+            doyoungGrowthVisualDelete.style.display =
+              "block";
+
+          }
+
+
+          if (
+            doyoungGrowthVisualModalKicker
+          ) {
+
+            doyoungGrowthVisualModalKicker.textContent =
+              `📸 ${item.year} VISUAL`;
+
+          }
+
+
+          if (
+            doyoungGrowthVisualModal
+          ) {
+
+            doyoungGrowthVisualModal.style.display =
+              "flex";
+
+          }
+
+        }
+      );
+
+
+      doyoungGrowthYearVisualGrid.appendChild(
+        card
+      );
+
+    });
+
+}
+
+
+// ======================================================
+// 🌱 OPEN YEAR DETAIL
+// ======================================================
+
+async function openDoyoungGrowthYear(
+  year
+) {
+
+  currentDoyoungGrowthYear =
+    String(year);
+
+
+  const info =
+    doyoungGrowthYearInfo[
+      currentDoyoungGrowthYear
+    ] || {
+      title:
+        `${currentDoyoungGrowthYear} ERA 💎`
+    };
+
+
+  if (
+    doyoungGrowthYearNumber
+  ) {
+
+    doyoungGrowthYearNumber.textContent =
+      currentDoyoungGrowthYear;
+
+  }
+
+
+  if (
+    doyoungGrowthYearTitle
+  ) {
+
+    doyoungGrowthYearTitle.textContent =
+      info.title;
+
+  }
+
+
+  if (
+    doyoungGrowthYearSubtitle
+  ) {
+
+    doyoungGrowthYearSubtitle.textContent =
+      `${currentDoyoungGrowthYear}年のドヨンを振り返ろう 💎`;
+
+  }
+
+
+  if (
+    doyoungGrowthYearVisualTitle
+  ) {
+
+    doyoungGrowthYearVisualTitle.textContent =
+      `📸 ${currentDoyoungGrowthYear} VISUAL`;
+
+  }
+
+
+  if (
+    doyoungGrowthYearCaption
+  ) {
+
+    doyoungGrowthYearCaption.textContent =
+      `${currentDoyoungGrowthYear}年のお気に入りドヨンを残そう 💎`;
+
+  }
+
+
+  if (
+    doyoungGrowthHistoryPage
+  ) {
+
+    doyoungGrowthHistoryPage.style.display =
+      "none";
+
+  }
+
+
+  if (
+    doyoungGrowthYearPage
+  ) {
+
+    doyoungGrowthYearPage.style.display =
+      "block";
+
+    doyoungGrowthYearPage.scrollTop =
+      0;
+
+  }
+
+
+  await renderDoyoungGrowthYearVisuals();
+
+}
+
+
+// ======================================================
+// 🌱 YEAR BUTTONS
+// ======================================================
+
+doyoungGrowthYearButtons.forEach(
+  button => {
+
+    button.addEventListener(
+      "click",
+      async () => {
+
+        await openDoyoungGrowthYear(
+          button.dataset.year
+        );
+
+      }
+    );
+
+  }
+);
+// ======================================================
+// 🌱 OPEN GROWTH HISTORY
+// ======================================================
+
+if (
+  doyoungGrowthHistoryOpen &&
+  doyoungGrowthHistoryPage
+) {
+
+  doyoungGrowthHistoryOpen.addEventListener(
+    "click",
+    () => {
+
+      if (doyoungBookDetail) {
+        doyoungBookDetail.classList.remove(
+          "active"
+        );
+      }
+
+      doyoungGrowthHistoryPage.style.display =
+        "block";
+
+      doyoungGrowthHistoryPage.scrollTop =
+        0;
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+  );
+}
+
+
+// ======================================================
+// ← GROWTH HISTORY → DOYOUNG BOOK
+// ======================================================
+
+if (
+  doyoungGrowthHistoryBack &&
+  doyoungGrowthHistoryPage
+) {
+
+  doyoungGrowthHistoryBack.addEventListener(
+    "click",
+    () => {
+
+      doyoungGrowthHistoryPage.style.display =
+        "none";
+
+      if (doyoungBookDetail) {
+
+        doyoungBookDetail.classList.add(
+          "active"
+        );
+
+        doyoungBookDetail.scrollTop =
+          0;
+
+      }
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+  );
+}
+
+
+// ======================================================
+// ← YEAR DETAIL → GROWTH HISTORY
+// ======================================================
+
+if (
+  doyoungGrowthYearBack &&
+  doyoungGrowthYearPage
+) {
+
+  doyoungGrowthYearBack.addEventListener(
+    "click",
+    () => {
+
+      doyoungGrowthYearPage.style.display =
+        "none";
+
+      doyoungGrowthHistoryPage.style.display =
+        "block";
+
+      doyoungGrowthHistoryPage.scrollTop =
+        0;
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+  );
+}
+
+
+// ======================================================
+// ＋ ADD → MODAL
+// ======================================================
+
+if (doyoungGrowthYearVisualAdd) {
+
+  doyoungGrowthYearVisualAdd.addEventListener(
+    "click",
+    () => {
+
+      currentDoyoungGrowthVisualItem =
+        null;
+
+      pendingDoyoungGrowthFile =
+        null;
+
+
+      if (doyoungGrowthVisualInput) {
+        doyoungGrowthVisualInput.value =
+          "";
+      }
+
+
+      if (doyoungGrowthVisualMemo) {
+        doyoungGrowthVisualMemo.value =
+          "";
+      }
+
+
+      if (doyoungGrowthVisualHair) {
+        doyoungGrowthVisualHair.value =
+          "BLACK";
+      }
+
+
+      if (doyoungGrowthVisualPreviewImage) {
+        doyoungGrowthVisualPreviewImage.src =
+          "";
+      }
+
+
+      if (doyoungGrowthVisualPreview) {
+        doyoungGrowthVisualPreview.style.display =
+          "none";
+      }
+
+
+      if (doyoungGrowthVisualDelete) {
+        doyoungGrowthVisualDelete.style.display =
+          "none";
+      }
+
+
+      if (doyoungGrowthVisualModalKicker) {
+
+        doyoungGrowthVisualModalKicker.textContent =
+          `📸 ${currentDoyoungGrowthYear} VISUAL`;
+
+      }
+
+
+      if (doyoungGrowthVisualModal) {
+
+        doyoungGrowthVisualModal.style.display =
+          "flex";
+
+        doyoungGrowthVisualModal.scrollTop =
+          0;
+
+      }
+
+    }
+  );
+}
+
+
+// ======================================================
+// 📷 SELECT PHOTO
+// ======================================================
+
+if (
+  doyoungGrowthVisualSelect &&
+  doyoungGrowthVisualInput
+) {
+
+  doyoungGrowthVisualSelect.addEventListener(
+    "click",
+    () => {
+
+      doyoungGrowthVisualInput.click();
+
+    }
+  );
+}
+
+
+if (doyoungGrowthVisualInput) {
+
+  doyoungGrowthVisualInput.addEventListener(
+    "change",
+    () => {
+
+      const file =
+        doyoungGrowthVisualInput.files[0];
+
+      if (!file) return;
+
+
+      pendingDoyoungGrowthFile =
+        file;
+
+
+      const reader =
+        new FileReader();
+
+
+      reader.onload =
+        () => {
+
+          if (
+            doyoungGrowthVisualPreviewImage
+          ) {
+
+            doyoungGrowthVisualPreviewImage.src =
+              reader.result;
+
+          }
+
+
+          if (
+            doyoungGrowthVisualPreview
+          ) {
+
+            doyoungGrowthVisualPreview.style.display =
+              "block";
+
+          }
+
+        };
+
+
+      reader.readAsDataURL(
+        file
+      );
+
+    }
+  );
+}
+
+
+// ======================================================
+// 💎 SAVE / UPDATE
+// ======================================================
+
+if (doyoungGrowthVisualSave) {
+
+  doyoungGrowthVisualSave.addEventListener(
+    "click",
+    async () => {
+
+      try {
+
+        const hairColor =
+          doyoungGrowthVisualHair
+            ? doyoungGrowthVisualHair.value
+            : "OTHER";
+
+
+        const memo =
+          doyoungGrowthVisualMemo
+            ? doyoungGrowthVisualMemo.value.trim()
+            : "";
+
+
+        // ✏️ UPDATE
+        if (
+          currentDoyoungGrowthVisualItem
+        ) {
+
+          currentDoyoungGrowthVisualItem.hairColor =
+            hairColor;
+
+          currentDoyoungGrowthVisualItem.memo =
+            memo;
+
+
+          if (
+            pendingDoyoungGrowthFile
+          ) {
+
+            currentDoyoungGrowthVisualItem.imageData =
+              await doyoungGrowthImageToDataURL(
+                pendingDoyoungGrowthFile
+              );
+
+          }
+
+
+          await updateDoyoungGrowthVisual(
+            currentDoyoungGrowthVisualItem
+          );
+
+        }
+
+        // 📸 NEW
+        else {
+
+          if (!pendingDoyoungGrowthFile) {
+
+            alert(
+              "写真を選んでね📸"
+            );
+
+            return;
+
+          }
+
+
+          await saveDoyoungGrowthVisual(
+            pendingDoyoungGrowthFile,
+            currentDoyoungGrowthYear,
+            hairColor,
+            memo
+          );
+
+        }
+
+
+        closeDoyoungGrowthModal();
+
+        await renderDoyoungGrowthYearVisuals();
+
+
+      } catch (error) {
+
+        console.error(
+          "DOYOUNG GROWTH SAVE ERROR:",
+          error
+        );
+
+        alert(
+          "保存に失敗しました🥲"
+        );
+
+      }
+
+    }
+  );
+}
+
+
+// ======================================================
+// 🗑 DELETE
+// ======================================================
+
+if (doyoungGrowthVisualDelete) {
+
+  doyoungGrowthVisualDelete.addEventListener(
+    "click",
+    async () => {
+
+      if (
+        !currentDoyoungGrowthVisualItem
+      ) {
+        return;
+      }
+
+
+      const ok =
+        confirm(
+          "この写真を削除しますか？🥲"
+        );
+
+      if (!ok) return;
+
+
+      try {
+
+        await deleteDoyoungGrowthVisual(
+          currentDoyoungGrowthVisualItem.id
+        );
+
+        closeDoyoungGrowthModal();
+
+        await renderDoyoungGrowthYearVisuals();
+
+
+      } catch (error) {
+
+        console.error(
+          "DOYOUNG GROWTH DELETE ERROR:",
+          error
+        );
+
+        alert(
+          "削除に失敗しました🥲"
+        );
+
+      }
+
+    }
+  );
+}
+
+
+// ======================================================
+// CANCEL / CLOSE
+// ======================================================
+
+function closeDoyoungGrowthModal() {
+
+  pendingDoyoungGrowthFile =
+    null;
+
+  currentDoyoungGrowthVisualItem =
+    null;
+
+
+  if (doyoungGrowthVisualInput) {
+    doyoungGrowthVisualInput.value =
+      "";
+  }
+
+
+  if (doyoungGrowthVisualPreviewImage) {
+    doyoungGrowthVisualPreviewImage.src =
+      "";
+  }
+
+
+  if (doyoungGrowthVisualPreview) {
+    doyoungGrowthVisualPreview.style.display =
+      "none";
+  }
+
+
+  if (doyoungGrowthVisualMemo) {
+    doyoungGrowthVisualMemo.value =
+      "";
+  }
+
+
+  if (doyoungGrowthVisualDelete) {
+    doyoungGrowthVisualDelete.style.display =
+      "none";
+  }
+
+
+  if (doyoungGrowthVisualModal) {
+    doyoungGrowthVisualModal.style.display =
+      "none";
+  }
+
+}
+
+
+if (doyoungGrowthVisualCancel) {
+
+  doyoungGrowthVisualCancel.addEventListener(
+    "click",
+    () => {
+
+      closeDoyoungGrowthModal();
+
+    }
+  );
+}
+
+
+// ======================================================
+// 🚀 INITIALIZE DOYOUNG GROWTH DB
+// ======================================================
+
+openDoyoungGrowthDB()
+  .catch(
+    error => {
+
+      console.error(
+        "DOYOUNG GROWTH DB ERROR:",
+        error
+      );
+
+    }
+  );
+
+// ======================================================
+// 🐰 DOYOUNG SONG / MEMORIES
+// ======================================================
+const doyoungSongSystem =
+  setupMemberSong({
+    key: "doyoung",
+    displayName: "DOYOUNG",
+    japaneseName: "ドヨン"
+  });
+
+const doyoungMemoriesSystem =
+  setupMemberMemories({
+    key: "doyoung",
+    displayName: "DOYOUNG",
+    japaneseName: "ドヨン"
+  });
+
+// =====================================================
+// 🐰 DOYOUNG CHEMISTRY
+// SHARED CHEMISTRY ENGINE CONNECT
+// =====================================================
+
+const doyoungChemistryOpen =
+  document.getElementById(
+    "doyoungChemistryOpen"
+  );
+
+const doyoungChemistryPage =
+  document.getElementById(
+    "doyoungChemistryPage"
+  );
+
+const doyoungChemistryBack =
+  document.getElementById(
+    "doyoungChemistryBack"
+  );
+
+const doyoungChemistryList =
+  document.getElementById(
+    "doyoungChemistryList"
+  );
+
+const doyoungChemistryDetailPage =
+  document.getElementById(
+    "doyoungChemistryDetailPage"
+  );
+
+const doyoungChemistryDetailBack =
+  document.getElementById(
+    "doyoungChemistryDetailBack"
+  );
+
+const doyoungChemistryDetailName =
+  document.getElementById(
+    "doyoungChemistryDetailName"
+  );
+
+const doyoungChemistryDetailCaption =
+  document.getElementById(
+    "doyoungChemistryDetailCaption"
+  );
+
+const doyoungChemistryAdd =
+  document.getElementById(
+    "doyoungChemistryAdd"
+  );
+
+const doyoungChemistryMemories =
+  document.getElementById(
+    "doyoungChemistryMemories"
+  );
+
+
+let currentDoyoungChemistryPartner =
+  null;
+
+
+// =====================================================
+// 🐰 PARTNERS
+// =====================================================
+
+const doyoungChemistryPartners = [
+  "HYUNSUK",
+  "JIHOON",
+  "YOSHI",
+  "JUNKYU",
+  "JAEHYUK",
+  "ASAHI",
+  "HARUTO",
+  "JEONGWOO",
+  "JUNGHWAN"
+];
+
+
+// =====================================================
+// 🫶 MAKE 9 CHEMISTRY CARDS
+// =====================================================
+
+function renderDoyoungChemistryCards() {
+
+  if (!doyoungChemistryList) {
+    return;
+  }
+
+
+  doyoungChemistryList.innerHTML =
+    "";
+
+
+  doyoungChemistryPartners.forEach(
+    partner => {
+
+      const partnerInfo =
+        chemistryMemberInfo[
+          partner
+        ];
+
+
+      const card =
+        document.createElement(
+          "button"
+        );
+
+      card.type =
+        "button";
+
+      card.className =
+        "jihoon-chemistry-card doyoung-chemistry-card";
+
+      card.dataset.partner =
+        partner;
+
+
+      card.innerHTML = `
+        <span class="jihoon-chemistry-emoji">
+          🐰${partnerInfo?.emoji || "💎"}
+        </span>
+
+        <div>
+          <strong>
+            DOYOUNG × ${partner}
+          </strong>
+
+          <small>
+            CHEMISTRY MEMORY 💎
+          </small>
+        </div>
+
+        <span>→</span>
+      `;
+
+
+      card.addEventListener(
+        "click",
+        async () => {
+
+          currentDoyoungChemistryPartner =
+            partner;
+
+
+          // 💎 SHARED ENGINEへ接続
+          currentHyunsukChemistryPartner =
+            partner;
+
+          currentHyunsukChemistryPairKey =
+            createChemistryPairKey(
+              "DOYOUNG",
+              partner
+            );
+
+          currentSharedChemistryRenderTarget =
+            doyoungChemistryMemories;
+
+
+          if (
+            doyoungChemistryDetailName
+          ) {
+
+            doyoungChemistryDetailName.textContent =
+              `🐰${partnerInfo?.emoji || "💎"} DOYOUNG × ${partner}`;
+
+          }
+
+
+          if (
+            doyoungChemistryDetailCaption
+          ) {
+
+            doyoungChemistryDetailCaption.textContent =
+              `ドヨンと${partner}の好きな瞬間を集めよう 💎`;
+
+          }
+
+
+          doyoungChemistryPage.style.display =
+            "none";
+
+          doyoungChemistryDetailPage.style.display =
+            "block";
+
+          doyoungChemistryDetailPage.scrollTop =
+            0;
+
+
+          await renderSharedChemistryMemories();
+
+
+          document.body.style.overflow =
+            "hidden";
+
+        }
+      );
+
+
+      doyoungChemistryList.appendChild(
+        card
+      );
+
+    }
+  );
+}
+
+
+// =====================================================
+// 🐰 DOYOUNG BOOK → CHEMISTRY
+// =====================================================
+
+if (
+  doyoungChemistryOpen &&
+  doyoungChemistryPage
+) {
+
+  doyoungChemistryOpen.addEventListener(
+    "click",
+    () => {
+
+      if (doyoungBookDetail) {
+
+        doyoungBookDetail.classList.remove(
+          "active"
+        );
+
+      }
+
+
+      renderDoyoungChemistryCards();
+      doyoungChemistryPage.style.display =
+        "block";
+
+      doyoungChemistryPage.scrollTop =
+        0;
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+  );
+}
+
+
+// =====================================================
+// ← CHEMISTRY → DOYOUNG BOOK
+// =====================================================
+
+if (
+  doyoungChemistryBack &&
+  doyoungChemistryPage
+) {
+
+  doyoungChemistryBack.addEventListener(
+    "click",
+    () => {
+
+      doyoungChemistryPage.style.display =
+        "none";
+
+      if (doyoungBookDetail) {
+
+        doyoungBookDetail.classList.add(
+          "active"
+        );
+
+        doyoungBookDetail.scrollTop =
+          0;
+
+      }
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+  );
+}
+
+
+// =====================================================
+// ← DETAIL → CHEMISTRY LIST
+// =====================================================
+
+if (
+  doyoungChemistryDetailBack &&
+  doyoungChemistryDetailPage
+) {
+
+  doyoungChemistryDetailBack.addEventListener(
+    "click",
+    () => {
+
+      doyoungChemistryDetailPage.style.display =
+        "none";
+
+      doyoungChemistryPage.style.display =
+        "block";
+
+      doyoungChemistryPage.scrollTop =
+        0;
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+  );
+}
+
+
+// =====================================================
+// ＋ ADD MEMORY → SHARED MODAL
+// =====================================================
+
+if (doyoungChemistryAdd) {
+
+  doyoungChemistryAdd.addEventListener(
+    "click",
+    () => {
+
+      if (
+        !currentDoyoungChemistryPartner
+      ) {
+        return;
+      }
+
+      currentHyunsukChemistryPartner =
+        currentDoyoungChemistryPartner;
+
+      currentHyunsukChemistryPairKey =
+        createChemistryPairKey(
+          "DOYOUNG",
+          currentDoyoungChemistryPartner
+        );
+
+      currentSharedChemistryRenderTarget =
+        doyoungChemistryMemories;
+
+      currentSharedChemistryImageData =
+        null;
+
+      delete hyunsukChemistryMemorySave
+        .dataset.editId;
+
+      hyunsukChemistryMemoryInput.value =
+        "";
+
+      hyunsukChemistryMemoryMemo.value =
+        "";
+
+      hyunsukChemistryMemoryPreviewImage.src =
+        "";
+
+      hyunsukChemistryMemoryPreview.style.display =
+        "none";
+
+      hyunsukChemistryMemoryDelete.style.display =
+        "none";
+
+      hyunsukChemistryMemorySave.textContent =
+        "💎 SAVE MEMORY";
+
+      hyunsukChemistryMemoryTitle.textContent =
+        `DOYOUNG × ${currentDoyoungChemistryPartner} MEMORY`;
+
+      hyunsukChemistryMemoryModal.style.display =
+        "flex";
+
+      hyunsukChemistryMemoryModal.scrollTop =
+        0;
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+  );
+}
+
+
+// 最初のカード生成
+renderDoyoungChemistryCards();
+
+// ========================================
+// 🦋 HARUTO BOOK OPEN / CLOSE
+// ========================================
+
+const harutoBookOpen =
+  document.getElementById("haruto-book-open");
+
+const harutoBookDetail =
+  document.getElementById("haruto-book-detail");
+
+const harutoBookClose =
+  document.getElementById("haruto-book-close");
+
+
+// HARUTO BOOKを開く
+if (
+  harutoBookOpen &&
+  harutoBookDetail
+) {
+
+  harutoBookOpen.addEventListener(
+    "click",
+    () => {
+
+      harutoBookDetail.classList.add(
+        "active"
+      );
+
+      harutoBookDetail.scrollTop = 0;
+
+      document.body.style.overflow =
+        "hidden";
+    }
+  );
+}
+
+
+// HARUTO BOOKを閉じる
+if (
+  harutoBookClose &&
+  harutoBookDetail
+) {
+
+  harutoBookClose.addEventListener(
+    "click",
+    () => {
+
+      harutoBookDetail.classList.remove(
+        "active"
+      );
+
+      // MEMBER BOOKは後ろで開いたまま
+      document.body.style.overflow =
+        "hidden";
+    }
+  );
+}
+// ========================================
+// 🐨 JUNKYU BOOK OPEN / CLOSE
+// ========================================
+
+const junkyuBookOpen =
+  document.getElementById("junkyu-book-open");
+
+const junkyuBookDetail =
+  document.getElementById("junkyu-book-detail");
+
+const junkyuBookClose =
+  document.getElementById("junkyu-book-close");
+
+
+
+// ======================================================
+// 🦋 HARUTO VISUAL BOOK / RANKING
+// ======================================================
+const harutoVisualSystem =
+  setupMemberVisualBook({
+    key: "haruto",
+    displayName: "HARUTO",
+    japaneseName: "ハルト"
+  });
+
+const harutoVisualRankingSystem =
+  setupMemberVisualRanking({
+    key: "haruto",
+    displayName: "HARUTO",
+    visualSystem: harutoVisualSystem
+  });
+
+// ======================================================
+// 🦋 HARUTO GROWTH HISTORY START
+// 完成型：YEAR DETAIL + EDIT MODAL
+// ======================================================
+
+const harutoGrowthHistoryOpen =
+  document.getElementById("harutoGrowthHistoryOpen");
+
+const harutoGrowthHistoryPage =
+  document.getElementById("harutoGrowthHistoryPage");
+
+const harutoGrowthHistoryBack =
+  document.getElementById("harutoGrowthHistoryBack");
+
+const harutoGrowthYearPage =
+  document.getElementById("harutoGrowthYearPage");
+
+const harutoGrowthYearBack =
+  document.getElementById("harutoGrowthYearBack");
+
+const harutoGrowthYearButtons =
+  document.querySelectorAll(".haruto-growth-year");
+
+const harutoGrowthYearNumber =
+  document.getElementById("harutoGrowthYearNumber");
+
+const harutoGrowthYearTitle =
+  document.getElementById("harutoGrowthYearTitle");
+
+const harutoGrowthYearSubtitle =
+  document.getElementById("harutoGrowthYearSubtitle");
+
+const harutoGrowthYearVisualTitle =
+  document.getElementById("harutoGrowthYearVisualTitle");
+
+const harutoGrowthYearCaption =
+  document.getElementById("harutoGrowthYearCaption");
+
+const harutoGrowthYearVisualGrid =
+  document.getElementById("harutoGrowthYearVisualGrid");
+
+const harutoGrowthYearVisualAdd =
+  document.getElementById("harutoGrowthYearVisualAdd");
+
+const harutoGrowthVisualModal =
+  document.getElementById("harutoGrowthVisualModal");
+
+const harutoGrowthVisualModalKicker =
+  document.getElementById("harutoGrowthVisualModalKicker");
+
+const harutoGrowthVisualInput =
+  document.getElementById("harutoGrowthVisualInput");
+
+const harutoGrowthVisualSelect =
+  document.getElementById("harutoGrowthVisualSelect");
+
+const harutoGrowthVisualPreview =
+  document.getElementById("harutoGrowthVisualPreview");
+
+const harutoGrowthVisualPreviewImage =
+  document.getElementById("harutoGrowthVisualPreviewImage");
+
+const harutoGrowthVisualHair =
+  document.getElementById("harutoGrowthVisualHair");
+
+const harutoGrowthVisualMemo =
+  document.getElementById("harutoGrowthVisualMemo");
+
+const harutoGrowthVisualSave =
+  document.getElementById("harutoGrowthVisualSave");
+
+const harutoGrowthVisualDelete =
+  document.getElementById("harutoGrowthVisualDelete");
+
+const harutoGrowthVisualCancel =
+  document.getElementById("harutoGrowthVisualCancel");
+
+let currentHarutoGrowthYear = "2020";
+
+let pendingHarutoGrowthFile = null;
+
+let currentHarutoGrowthVisualItem = null;
+
+let harutoGrowthDB = null;
+
+const HARUTO_GROWTH_DB =
+  "treasure-day-haruto-growth-db";
+
+const HARUTO_GROWTH_STORE =
+  "harutoGrowthVisuals";
+// ======================================================
+// 💾 HARUTO GROWTH IndexedDB
+// ======================================================
+
+function openHarutoGrowthDB() {
+
+  return new Promise((resolve, reject) => {
+
+    const request =
+      indexedDB.open(
+        HARUTO_GROWTH_DB,
+        1
+      );
+
+    request.onupgradeneeded =
+      event => {
+
+        const db =
+          event.target.result;
+
+        if (
+          !db.objectStoreNames.contains(
+            HARUTO_GROWTH_STORE
+          )
+        ) {
+
+          db.createObjectStore(
+            HARUTO_GROWTH_STORE,
+            {
+              keyPath: "id"
+            }
+          );
+
+        }
+
+      };
+
+
+    request.onsuccess =
+      () => {
+
+        harutoGrowthDB =
+          request.result;
+
+        resolve(
+          harutoGrowthDB
+        );
+
+      };
+
+
+    request.onerror =
+      () => {
+
+        reject(
+          request.error
+        );
+
+      };
+
+  });
+}
+
+
+// ======================================================
+// 📸 IMAGE → DataURL
+// ======================================================
+
+function harutoGrowthImageToDataURL(
+  file
+) {
+
+  return new Promise(
+    (resolve, reject) => {
+
+      const reader =
+        new FileReader();
+
+      reader.onload = () => {
+
+        const img =
+          new Image();
+
+        img.onload = () => {
+
+          const MAX_SIZE = 1600;
+
+          let width =
+            img.naturalWidth;
+
+          let height =
+            img.naturalHeight;
+
+
+          if (
+            width > height &&
+            width > MAX_SIZE
+          ) {
+
+            height =
+              Math.round(
+                height *
+                MAX_SIZE /
+                width
+              );
+
+            width =
+              MAX_SIZE;
+
+          } else if (
+            height >= width &&
+            height > MAX_SIZE
+          ) {
+
+            width =
+              Math.round(
+                width *
+                MAX_SIZE /
+                height
+              );
+
+            height =
+              MAX_SIZE;
+
+          }
+
+
+          const canvas =
+            document.createElement(
+              "canvas"
+            );
+
+          canvas.width =
+            width;
+
+          canvas.height =
+            height;
+
+
+          const ctx =
+            canvas.getContext(
+              "2d"
+            );
+
+          if (!ctx) {
+
+            reject(
+              new Error(
+                "Canvas unavailable"
+              )
+            );
+
+            return;
+
+          }
+
+
+          ctx.drawImage(
+            img,
+            0,
+            0,
+            width,
+            height
+          );
+
+
+          resolve(
+            canvas.toDataURL(
+              "image/jpeg",
+              0.86
+            )
+          );
+
+        };
+
+
+        img.onerror =
+          reject;
+
+        img.src =
+          reader.result;
+
+      };
+
+
+      reader.onerror =
+        reject;
+
+      reader.readAsDataURL(
+        file
+      );
+
+    }
+  );
+}
+
+
+// ======================================================
+// 💾 SAVE NEW
+// ======================================================
+
+async function saveHarutoGrowthVisual(
+  file,
+  year,
+  hairColor,
+  memo
+) {
+
+  if (!harutoGrowthDB) {
+    await openHarutoGrowthDB();
+  }
+
+
+  const imageData =
+    await harutoGrowthImageToDataURL(
+      file
+    );
+
+
+  const item = {
+
+    id:
+      Date.now() +
+      Math.floor(
+        Math.random() * 1000
+      ),
+
+    year:
+      String(year),
+
+    imageData,
+
+    hairColor:
+      hairColor || "OTHER",
+
+    memo:
+      memo || "",
+
+    createdAt:
+      Date.now()
+
+  };
+
+
+  return new Promise(
+    (resolve, reject) => {
+
+      const transaction =
+        harutoGrowthDB.transaction(
+          HARUTO_GROWTH_STORE,
+          "readwrite"
+        );
+
+      const store =
+        transaction.objectStore(
+          HARUTO_GROWTH_STORE
+        );
+
+      const request =
+        store.add(item);
+
+
+      request.onsuccess =
+        () => resolve(item);
+
+      request.onerror =
+        () => reject(
+          request.error
+        );
+
+    }
+  );
+}
+
+
+// ======================================================
+// ✏️ UPDATE
+// ======================================================
+
+function updateHarutoGrowthVisual(
+  item
+) {
+
+  return new Promise(
+    (resolve, reject) => {
+
+      const transaction =
+        harutoGrowthDB.transaction(
+          HARUTO_GROWTH_STORE,
+          "readwrite"
+        );
+
+      const store =
+        transaction.objectStore(
+          HARUTO_GROWTH_STORE
+        );
+
+      const request =
+        store.put(item);
+
+
+      request.onsuccess =
+        () => resolve();
+
+      request.onerror =
+        () => reject(
+          request.error
+        );
+
+    }
+  );
+}
+
+
+// ======================================================
+// 📚 GET YEAR VISUALS
+// ======================================================
+
+async function getHarutoGrowthVisuals(
+  year
+) {
+
+  if (!harutoGrowthDB) {
+    await openHarutoGrowthDB();
+  }
+
+
+  return new Promise(
+    (resolve, reject) => {
+
+      const transaction =
+        harutoGrowthDB.transaction(
+          HARUTO_GROWTH_STORE,
+          "readonly"
+        );
+
+      const store =
+        transaction.objectStore(
+          HARUTO_GROWTH_STORE
+        );
+
+      const request =
+        store.getAll();
+
+
+      request.onsuccess =
+        () => {
+
+          const items =
+            request.result || [];
+
+          resolve(
+            items.filter(
+              item =>
+                String(item.year) ===
+                String(year)
+            )
+          );
+
+        };
+
+
+      request.onerror =
+        () => reject(
+          request.error
+        );
+
+    }
+  );
+}
+
+
+// ======================================================
+// 🗑 DELETE
+// ======================================================
+
+async function deleteHarutoGrowthVisual(
+  id
+) {
+
+  if (!harutoGrowthDB) {
+    await openHarutoGrowthDB();
+  }
+
+
+  return new Promise(
+    (resolve, reject) => {
+
+      const transaction =
+        harutoGrowthDB.transaction(
+          HARUTO_GROWTH_STORE,
+          "readwrite"
+        );
+
+      const store =
+        transaction.objectStore(
+          HARUTO_GROWTH_STORE
+        );
+
+      const request =
+        store.delete(id);
+
+
+      request.onsuccess =
+        () => resolve();
+
+      request.onerror =
+        () => reject(
+          request.error
+        );
+
+    }
+  );
+}
+// ======================================================
+// 🌱 HARUTO GROWTH YEAR INFO
+// ======================================================
+
+const harutoGrowthYearInfo = {
+
+  "2020": {
+    title: "DEBUT ERA 💎"
+  },
+
+  "2021": {
+    title: "2021 ERA 💎"
+  },
+
+  "2022": {
+    title: "2022 ERA 💎"
+  },
+
+  "2023": {
+    title: "2023 ERA 💎"
+  },
+
+  "2024": {
+    title: "2024 ERA 💎"
+  },
+
+  "2025": {
+    title: "2025 ERA 💎"
+  },
+
+  "2026": {
+    title: "NOW ✨"
+  }
+
+};
+
+
+// ======================================================
+// 📸 RENDER YEAR VISUALS
+// ======================================================
+
+async function renderHarutoGrowthYearVisuals() {
+
+  if (!harutoGrowthYearVisualGrid) {
+    return;
+  }
+
+
+  harutoGrowthYearVisualGrid.innerHTML =
+    "";
+
+
+  const items =
+    await getHarutoGrowthVisuals(
+      currentHarutoGrowthYear
+    );
+
+
+  items
+    .sort(
+      (a, b) =>
+        a.createdAt -
+        b.createdAt
+    )
+    .forEach(item => {
+
+      const card =
+        document.createElement(
+          "button"
+        );
+
+      card.type =
+        "button";
+
+ card.className =
+  "jihoon-growth-visual-card haruto-growth-visual-card";
+const photo =
+  document.createElement("div");
+
+photo.className =
+  "jihoon-growth-visual-photo haruto-growth-visual-photo";
+      const img =
+        document.createElement(
+          "img"
+        );
+
+      img.src =
+        item.imageData || "";
+
+      img.alt =
+        `HARUTO ${item.year}`;
+
+      img.loading =
+        "lazy";
+
+      img.decoding =
+        "async";
+
+
+      const info =
+        document.createElement(
+          "div"
+        );
+
+      info.className =
+        "jihoon-growth-visual-info";
+
+
+      const hair =
+        document.createElement(
+          "span"
+        );
+
+      hair.textContent =
+        `🎨 ${item.hairColor || "OTHER"}`;
+
+
+      const memo =
+        document.createElement(
+          "p"
+        );
+
+      memo.textContent =
+        item.memo || "";
+
+
+      info.appendChild(
+        hair
+      );
+
+
+      if (item.memo) {
+
+        info.appendChild(
+          memo
+        );
+
+      }
+
+
+      photo.appendChild(
+  img
+);
+
+card.appendChild(
+  photo
+);
+
+      card.appendChild(
+        info
+      );
+
+
+      // 写真タップ → EDIT
+      card.addEventListener(
+        "click",
+        () => {
+
+          currentHarutoGrowthVisualItem =
+            item;
+
+          pendingHarutoGrowthFile =
+            null;
+
+
+          if (
+            harutoGrowthVisualPreviewImage
+          ) {
+
+            harutoGrowthVisualPreviewImage.src =
+              item.imageData || "";
+
+          }
+
+
+          if (
+            harutoGrowthVisualPreview
+          ) {
+
+            harutoGrowthVisualPreview.style.display =
+              "block";
+
+          }
+
+
+          if (
+            harutoGrowthVisualHair
+          ) {
+
+            harutoGrowthVisualHair.value =
+              item.hairColor ||
+              "OTHER";
+
+          }
+
+
+          if (
+            harutoGrowthVisualMemo
+          ) {
+
+            harutoGrowthVisualMemo.value =
+              item.memo || "";
+
+          }
+
+
+          if (
+            harutoGrowthVisualDelete
+          ) {
+
+            harutoGrowthVisualDelete.style.display =
+              "block";
+
+          }
+
+
+          if (
+            harutoGrowthVisualModalKicker
+          ) {
+
+            harutoGrowthVisualModalKicker.textContent =
+              `📸 ${item.year} VISUAL`;
+
+          }
+
+
+          if (
+            harutoGrowthVisualModal
+          ) {
+
+            harutoGrowthVisualModal.style.display =
+              "flex";
+
+          }
+
+        }
+      );
+
+
+      harutoGrowthYearVisualGrid.appendChild(
+        card
+      );
+
+    });
+
+}
+
+
+// ======================================================
+// 🌱 OPEN YEAR DETAIL
+// ======================================================
+
+async function openHarutoGrowthYear(
+  year
+) {
+
+  currentHarutoGrowthYear =
+    String(year);
+
+
+  const info =
+    harutoGrowthYearInfo[
+      currentHarutoGrowthYear
+    ] || {
+      title:
+        `${currentHarutoGrowthYear} ERA 💎`
+    };
+
+
+  if (
+    harutoGrowthYearNumber
+  ) {
+
+    harutoGrowthYearNumber.textContent =
+      currentHarutoGrowthYear;
+
+  }
+
+
+  if (
+    harutoGrowthYearTitle
+  ) {
+
+    harutoGrowthYearTitle.textContent =
+      info.title;
+
+  }
+
+
+  if (
+    harutoGrowthYearSubtitle
+  ) {
+
+    harutoGrowthYearSubtitle.textContent =
+      `${currentHarutoGrowthYear}年のハルトを振り返ろう 💎`;
+
+  }
+
+
+  if (
+    harutoGrowthYearVisualTitle
+  ) {
+
+    harutoGrowthYearVisualTitle.textContent =
+      `📸 ${currentHarutoGrowthYear} VISUAL`;
+
+  }
+
+
+  if (
+    harutoGrowthYearCaption
+  ) {
+
+    harutoGrowthYearCaption.textContent =
+      `${currentHarutoGrowthYear}年のお気に入りハルトを残そう 💎`;
+
+  }
+
+
+  if (
+    harutoGrowthHistoryPage
+  ) {
+
+    harutoGrowthHistoryPage.style.display =
+      "none";
+
+  }
+
+
+  if (
+    harutoGrowthYearPage
+  ) {
+
+    harutoGrowthYearPage.style.display =
+      "block";
+
+    harutoGrowthYearPage.scrollTop =
+      0;
+
+  }
+
+
+  await renderHarutoGrowthYearVisuals();
+
+}
+
+
+// ======================================================
+// 🌱 YEAR BUTTONS
+// ======================================================
+
+harutoGrowthYearButtons.forEach(
+  button => {
+
+    button.addEventListener(
+      "click",
+      async () => {
+
+        await openHarutoGrowthYear(
+          button.dataset.year
+        );
+
+      }
+    );
+
+  }
+);
+// ======================================================
+// 🌱 OPEN GROWTH HISTORY
+// ======================================================
+
+if (
+  harutoGrowthHistoryOpen &&
+  harutoGrowthHistoryPage
+) {
+
+  harutoGrowthHistoryOpen.addEventListener(
+    "click",
+    () => {
+
+      if (harutoBookDetail) {
+        harutoBookDetail.classList.remove(
+          "active"
+        );
+      }
+
+      harutoGrowthHistoryPage.style.display =
+        "block";
+
+      harutoGrowthHistoryPage.scrollTop =
+        0;
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+  );
+}
+
+
+// ======================================================
+// ← GROWTH HISTORY → HARUTO BOOK
+// ======================================================
+
+if (
+  harutoGrowthHistoryBack &&
+  harutoGrowthHistoryPage
+) {
+
+  harutoGrowthHistoryBack.addEventListener(
+    "click",
+    () => {
+
+      harutoGrowthHistoryPage.style.display =
+        "none";
+
+      if (harutoBookDetail) {
+
+        harutoBookDetail.classList.add(
+          "active"
+        );
+
+        harutoBookDetail.scrollTop =
+          0;
+
+      }
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+  );
+}
+
+
+// ======================================================
+// ← YEAR DETAIL → GROWTH HISTORY
+// ======================================================
+
+if (
+  harutoGrowthYearBack &&
+  harutoGrowthYearPage
+) {
+
+  harutoGrowthYearBack.addEventListener(
+    "click",
+    () => {
+
+      harutoGrowthYearPage.style.display =
+        "none";
+
+      harutoGrowthHistoryPage.style.display =
+        "block";
+
+      harutoGrowthHistoryPage.scrollTop =
+        0;
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+  );
+}
+
+
+// ======================================================
+// ＋ ADD → MODAL
+// ======================================================
+
+if (harutoGrowthYearVisualAdd) {
+
+  harutoGrowthYearVisualAdd.addEventListener(
+    "click",
+    () => {
+
+      currentHarutoGrowthVisualItem =
+        null;
+
+      pendingHarutoGrowthFile =
+        null;
+
+
+      if (harutoGrowthVisualInput) {
+        harutoGrowthVisualInput.value =
+          "";
+      }
+
+
+      if (harutoGrowthVisualMemo) {
+        harutoGrowthVisualMemo.value =
+          "";
+      }
+
+
+      if (harutoGrowthVisualHair) {
+        harutoGrowthVisualHair.value =
+          "BLACK";
+      }
+
+
+      if (harutoGrowthVisualPreviewImage) {
+        harutoGrowthVisualPreviewImage.src =
+          "";
+      }
+
+
+      if (harutoGrowthVisualPreview) {
+        harutoGrowthVisualPreview.style.display =
+          "none";
+      }
+
+
+      if (harutoGrowthVisualDelete) {
+        harutoGrowthVisualDelete.style.display =
+          "none";
+      }
+
+
+      if (harutoGrowthVisualModalKicker) {
+
+        harutoGrowthVisualModalKicker.textContent =
+          `📸 ${currentHarutoGrowthYear} VISUAL`;
+
+      }
+
+
+      if (harutoGrowthVisualModal) {
+
+        harutoGrowthVisualModal.style.display =
+          "flex";
+
+        harutoGrowthVisualModal.scrollTop =
+          0;
+
+      }
+
+    }
+  );
+}
+
+
+// ======================================================
+// 📷 SELECT PHOTO
+// ======================================================
+
+if (
+  harutoGrowthVisualSelect &&
+  harutoGrowthVisualInput
+) {
+
+  harutoGrowthVisualSelect.addEventListener(
+    "click",
+    () => {
+
+      harutoGrowthVisualInput.click();
+
+    }
+  );
+}
+
+
+if (harutoGrowthVisualInput) {
+
+  harutoGrowthVisualInput.addEventListener(
+    "change",
+    () => {
+
+      const file =
+        harutoGrowthVisualInput.files[0];
+
+      if (!file) return;
+
+
+      pendingHarutoGrowthFile =
+        file;
+
+
+      const reader =
+        new FileReader();
+
+
+      reader.onload =
+        () => {
+
+          if (
+            harutoGrowthVisualPreviewImage
+          ) {
+
+            harutoGrowthVisualPreviewImage.src =
+              reader.result;
+
+          }
+
+
+          if (
+            harutoGrowthVisualPreview
+          ) {
+
+            harutoGrowthVisualPreview.style.display =
+              "block";
+
+          }
+
+        };
+
+
+      reader.readAsDataURL(
+        file
+      );
+
+    }
+  );
+}
+
+
+// ======================================================
+// 💎 SAVE / UPDATE
+// ======================================================
+
+if (harutoGrowthVisualSave) {
+
+  harutoGrowthVisualSave.addEventListener(
+    "click",
+    async () => {
+
+      try {
+
+        const hairColor =
+          harutoGrowthVisualHair
+            ? harutoGrowthVisualHair.value
+            : "OTHER";
+
+
+        const memo =
+          harutoGrowthVisualMemo
+            ? harutoGrowthVisualMemo.value.trim()
+            : "";
+
+
+        // ✏️ UPDATE
+        if (
+          currentHarutoGrowthVisualItem
+        ) {
+
+          currentHarutoGrowthVisualItem.hairColor =
+            hairColor;
+
+          currentHarutoGrowthVisualItem.memo =
+            memo;
+
+
+          if (
+            pendingHarutoGrowthFile
+          ) {
+
+            currentHarutoGrowthVisualItem.imageData =
+              await harutoGrowthImageToDataURL(
+                pendingHarutoGrowthFile
+              );
+
+          }
+
+
+          await updateHarutoGrowthVisual(
+            currentHarutoGrowthVisualItem
+          );
+
+        }
+
+        // 📸 NEW
+        else {
+
+          if (!pendingHarutoGrowthFile) {
+
+            alert(
+              "写真を選んでね📸"
+            );
+
+            return;
+
+          }
+
+
+          await saveHarutoGrowthVisual(
+            pendingHarutoGrowthFile,
+            currentHarutoGrowthYear,
+            hairColor,
+            memo
+          );
+
+        }
+
+
+        closeHarutoGrowthModal();
+
+        await renderHarutoGrowthYearVisuals();
+
+
+      } catch (error) {
+
+        console.error(
+          "HARUTO GROWTH SAVE ERROR:",
+          error
+        );
+
+        alert(
+          "保存に失敗しました🥲"
+        );
+
+      }
+
+    }
+  );
+}
+
+
+// ======================================================
+// 🗑 DELETE
+// ======================================================
+
+if (harutoGrowthVisualDelete) {
+
+  harutoGrowthVisualDelete.addEventListener(
+    "click",
+    async () => {
+
+      if (
+        !currentHarutoGrowthVisualItem
+      ) {
+        return;
+      }
+
+
+      const ok =
+        confirm(
+          "この写真を削除しますか？🥲"
+        );
+
+      if (!ok) return;
+
+
+      try {
+
+        await deleteHarutoGrowthVisual(
+          currentHarutoGrowthVisualItem.id
+        );
+
+        closeHarutoGrowthModal();
+
+        await renderHarutoGrowthYearVisuals();
+
+
+      } catch (error) {
+
+        console.error(
+          "HARUTO GROWTH DELETE ERROR:",
+          error
+        );
+
+        alert(
+          "削除に失敗しました🥲"
+        );
+
+      }
+
+    }
+  );
+}
+
+
+// ======================================================
+// CANCEL / CLOSE
+// ======================================================
+
+function closeHarutoGrowthModal() {
+
+  pendingHarutoGrowthFile =
+    null;
+
+  currentHarutoGrowthVisualItem =
+    null;
+
+
+  if (harutoGrowthVisualInput) {
+    harutoGrowthVisualInput.value =
+      "";
+  }
+
+
+  if (harutoGrowthVisualPreviewImage) {
+    harutoGrowthVisualPreviewImage.src =
+      "";
+  }
+
+
+  if (harutoGrowthVisualPreview) {
+    harutoGrowthVisualPreview.style.display =
+      "none";
+  }
+
+
+  if (harutoGrowthVisualMemo) {
+    harutoGrowthVisualMemo.value =
+      "";
+  }
+
+
+  if (harutoGrowthVisualDelete) {
+    harutoGrowthVisualDelete.style.display =
+      "none";
+  }
+
+
+  if (harutoGrowthVisualModal) {
+    harutoGrowthVisualModal.style.display =
+      "none";
+  }
+
+}
+
+
+if (harutoGrowthVisualCancel) {
+
+  harutoGrowthVisualCancel.addEventListener(
+    "click",
+    () => {
+
+      closeHarutoGrowthModal();
+
+    }
+  );
+}
+
+
+// ======================================================
+// 🚀 INITIALIZE HARUTO GROWTH DB
+// ======================================================
+
+openHarutoGrowthDB()
+  .catch(
+    error => {
+
+      console.error(
+        "HARUTO GROWTH DB ERROR:",
+        error
+      );
+
+    }
+  );
+
+// ======================================================
+// 🦋 HARUTO SONG / MEMORIES
+// ======================================================
+const harutoSongSystem =
+  setupMemberSong({
+    key: "haruto",
+    displayName: "HARUTO",
+    japaneseName: "ハルト"
+  });
+
+const harutoMemoriesSystem =
+  setupMemberMemories({
+    key: "haruto",
+    displayName: "HARUTO",
+    japaneseName: "ハルト"
+  });
+
+// =====================================================
+// 🦋 HARUTO CHEMISTRY
+// SHARED CHEMISTRY ENGINE CONNECT
+// =====================================================
+
+const harutoChemistryOpen =
+  document.getElementById(
+    "harutoChemistryOpen"
+  );
+
+const harutoChemistryPage =
+  document.getElementById(
+    "harutoChemistryPage"
+  );
+
+const harutoChemistryBack =
+  document.getElementById(
+    "harutoChemistryBack"
+  );
+
+const harutoChemistryList =
+  document.getElementById(
+    "harutoChemistryList"
+  );
+
+const harutoChemistryDetailPage =
+  document.getElementById(
+    "harutoChemistryDetailPage"
+  );
+
+const harutoChemistryDetailBack =
+  document.getElementById(
+    "harutoChemistryDetailBack"
+  );
+
+const harutoChemistryDetailName =
+  document.getElementById(
+    "harutoChemistryDetailName"
+  );
+
+const harutoChemistryDetailCaption =
+  document.getElementById(
+    "harutoChemistryDetailCaption"
+  );
+
+const harutoChemistryAdd =
+  document.getElementById(
+    "harutoChemistryAdd"
+  );
+
+const harutoChemistryMemories =
+  document.getElementById(
+    "harutoChemistryMemories"
+  );
+
+
+let currentHarutoChemistryPartner =
+  null;
+
+
+// =====================================================
+// 🦋 PARTNERS
+// =====================================================
+
+const harutoChemistryPartners = [
+  "HYUNSUK",
+  "JIHOON",
+  "YOSHI",
+  "JUNKYU",
+  "JAEHYUK",
+  "DOYOUNG",
+  "ASAHI",
+  "JEONGWOO",
+  "JUNGHWAN"
+];
+
+
+// =====================================================
+// 🫶 MAKE 9 CHEMISTRY CARDS
+// =====================================================
+
+function renderHarutoChemistryCards() {
+
+  if (!harutoChemistryList) {
+    return;
+  }
+
+
+  harutoChemistryList.innerHTML =
+    "";
+
+
+  harutoChemistryPartners.forEach(
+    partner => {
+
+      const partnerInfo =
+        chemistryMemberInfo[
+          partner
+        ];
+
+
+      const card =
+        document.createElement(
+          "button"
+        );
+
+      card.type =
+        "button";
+
+      card.className =
+        "jihoon-chemistry-card haruto-chemistry-card";
+
+      card.dataset.partner =
+        partner;
+
+
+      card.innerHTML = `
+        <span class="jihoon-chemistry-emoji">
+          🦋${partnerInfo?.emoji || "💎"}
+        </span>
+
+        <div>
+          <strong>
+            HARUTO × ${partner}
+          </strong>
+
+          <small>
+            CHEMISTRY MEMORY 💎
+          </small>
+        </div>
+
+        <span>→</span>
+      `;
+
+
+      card.addEventListener(
+        "click",
+        async () => {
+
+          currentHarutoChemistryPartner =
+            partner;
+
+
+          // 💎 SHARED ENGINEへ接続
+          currentHyunsukChemistryPartner =
+            partner;
+
+          currentHyunsukChemistryPairKey =
+            createChemistryPairKey(
+              "HARUTO",
+              partner
+            );
+
+          currentSharedChemistryRenderTarget =
+            harutoChemistryMemories;
+
+
+          if (
+            harutoChemistryDetailName
+          ) {
+
+            harutoChemistryDetailName.textContent =
+              `🦋${partnerInfo?.emoji || "💎"} HARUTO × ${partner}`;
+
+          }
+
+
+          if (
+            harutoChemistryDetailCaption
+          ) {
+
+            harutoChemistryDetailCaption.textContent =
+              `ハルトと${partner}の好きな瞬間を集めよう 💎`;
+
+          }
+
+
+          harutoChemistryPage.style.display =
+            "none";
+
+          harutoChemistryDetailPage.style.display =
+            "block";
+
+          harutoChemistryDetailPage.scrollTop =
+            0;
+
+
+          await renderSharedChemistryMemories();
+
+
+          document.body.style.overflow =
+            "hidden";
+
+        }
+      );
+
+
+      harutoChemistryList.appendChild(
+        card
+      );
+
+    }
+  );
+}
+
+
+// =====================================================
+// 🦋 HARUTO BOOK → CHEMISTRY
+// =====================================================
+
+if (
+  harutoChemistryOpen &&
+  harutoChemistryPage
+) {
+
+  harutoChemistryOpen.addEventListener(
+    "click",
+    () => {
+
+      if (harutoBookDetail) {
+
+        harutoBookDetail.classList.remove(
+          "active"
+        );
+
+      }
+
+
+      renderHarutoChemistryCards();
+      harutoChemistryPage.style.display =
+        "block";
+
+      harutoChemistryPage.scrollTop =
+        0;
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+  );
+}
+
+
+// =====================================================
+// ← CHEMISTRY → HARUTO BOOK
+// =====================================================
+
+if (
+  harutoChemistryBack &&
+  harutoChemistryPage
+) {
+
+  harutoChemistryBack.addEventListener(
+    "click",
+    () => {
+
+      harutoChemistryPage.style.display =
+        "none";
+
+      if (harutoBookDetail) {
+
+        harutoBookDetail.classList.add(
+          "active"
+        );
+
+        harutoBookDetail.scrollTop =
+          0;
+
+      }
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+  );
+}
+
+
+// =====================================================
+// ← DETAIL → CHEMISTRY LIST
+// =====================================================
+
+if (
+  harutoChemistryDetailBack &&
+  harutoChemistryDetailPage
+) {
+
+  harutoChemistryDetailBack.addEventListener(
+    "click",
+    () => {
+
+      harutoChemistryDetailPage.style.display =
+        "none";
+
+      harutoChemistryPage.style.display =
+        "block";
+
+      harutoChemistryPage.scrollTop =
+        0;
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+  );
+}
+
+
+// =====================================================
+// ＋ ADD MEMORY → SHARED MODAL
+// =====================================================
+
+if (harutoChemistryAdd) {
+
+  harutoChemistryAdd.addEventListener(
+    "click",
+    () => {
+
+      if (
+        !currentHarutoChemistryPartner
+      ) {
+        return;
+      }
+
+      currentHyunsukChemistryPartner =
+        currentHarutoChemistryPartner;
+
+      currentHyunsukChemistryPairKey =
+        createChemistryPairKey(
+          "HARUTO",
+          currentHarutoChemistryPartner
+        );
+
+      currentSharedChemistryRenderTarget =
+        harutoChemistryMemories;
+
+      currentSharedChemistryImageData =
+        null;
+
+      delete hyunsukChemistryMemorySave
+        .dataset.editId;
+
+      hyunsukChemistryMemoryInput.value =
+        "";
+
+      hyunsukChemistryMemoryMemo.value =
+        "";
+
+      hyunsukChemistryMemoryPreviewImage.src =
+        "";
+
+      hyunsukChemistryMemoryPreview.style.display =
+        "none";
+
+      hyunsukChemistryMemoryDelete.style.display =
+        "none";
+
+      hyunsukChemistryMemorySave.textContent =
+        "💎 SAVE MEMORY";
+
+      hyunsukChemistryMemoryTitle.textContent =
+        `HARUTO × ${currentHarutoChemistryPartner} MEMORY`;
+
+      hyunsukChemistryMemoryModal.style.display =
+        "flex";
+
+      hyunsukChemistryMemoryModal.scrollTop =
+        0;
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+  );
+}
+
+
+// 最初のカード生成
+renderHarutoChemistryCards();
+
+// ========================================
+// 🐺 JEONGWOO BOOK OPEN / CLOSE
+// ========================================
+
+const jeongwooBookOpen =
+  document.getElementById("jeongwoo-book-open");
+
+const jeongwooBookDetail =
+  document.getElementById("jeongwoo-book-detail");
+
+const jeongwooBookClose =
+  document.getElementById("jeongwoo-book-close");
+
+
+// JEONGWOO BOOKを開く
+if (
+  jeongwooBookOpen &&
+  jeongwooBookDetail
+) {
+
+  jeongwooBookOpen.addEventListener(
+    "click",
+    () => {
+
+      jeongwooBookDetail.classList.add(
+        "active"
+      );
+
+      jeongwooBookDetail.scrollTop = 0;
+
+      document.body.style.overflow =
+        "hidden";
+    }
+  );
+}
+
+
+// JEONGWOO BOOKを閉じる
+if (
+  jeongwooBookClose &&
+  jeongwooBookDetail
+) {
+
+  jeongwooBookClose.addEventListener(
+    "click",
+    () => {
+
+      jeongwooBookDetail.classList.remove(
+        "active"
+      );
+
+      // MEMBER BOOKは後ろで開いたまま
+      document.body.style.overflow =
+        "hidden";
+    }
+  );
+}
+// ========================================
+// 🐨 JUNKYU BOOK OPEN / CLOSE
+// ========================================
+
+const junkyuBookOpen =
+  document.getElementById("junkyu-book-open");
+
+const junkyuBookDetail =
+  document.getElementById("junkyu-book-detail");
+
+const junkyuBookClose =
+  document.getElementById("junkyu-book-close");
+
+
+
+// ======================================================
+// 🐺 JEONGWOO VISUAL BOOK / RANKING
+// ======================================================
+const jeongwooVisualSystem =
+  setupMemberVisualBook({
+    key: "jeongwoo",
+    displayName: "JEONGWOO",
+    japaneseName: "ジョンウ"
+  });
+
+const jeongwooVisualRankingSystem =
+  setupMemberVisualRanking({
+    key: "jeongwoo",
+    displayName: "JEONGWOO",
+    visualSystem: jeongwooVisualSystem
+  });
+
+// ======================================================
+// 🐺 JEONGWOO GROWTH HISTORY START
+// 完成型：YEAR DETAIL + EDIT MODAL
+// ======================================================
+
+const jeongwooGrowthHistoryOpen =
+  document.getElementById("jeongwooGrowthHistoryOpen");
+
+const jeongwooGrowthHistoryPage =
+  document.getElementById("jeongwooGrowthHistoryPage");
+
+const jeongwooGrowthHistoryBack =
+  document.getElementById("jeongwooGrowthHistoryBack");
+
+const jeongwooGrowthYearPage =
+  document.getElementById("jeongwooGrowthYearPage");
+
+const jeongwooGrowthYearBack =
+  document.getElementById("jeongwooGrowthYearBack");
+
+const jeongwooGrowthYearButtons =
+  document.querySelectorAll(".jeongwoo-growth-year");
+
+const jeongwooGrowthYearNumber =
+  document.getElementById("jeongwooGrowthYearNumber");
+
+const jeongwooGrowthYearTitle =
+  document.getElementById("jeongwooGrowthYearTitle");
+
+const jeongwooGrowthYearSubtitle =
+  document.getElementById("jeongwooGrowthYearSubtitle");
+
+const jeongwooGrowthYearVisualTitle =
+  document.getElementById("jeongwooGrowthYearVisualTitle");
+
+const jeongwooGrowthYearCaption =
+  document.getElementById("jeongwooGrowthYearCaption");
+
+const jeongwooGrowthYearVisualGrid =
+  document.getElementById("jeongwooGrowthYearVisualGrid");
+
+const jeongwooGrowthYearVisualAdd =
+  document.getElementById("jeongwooGrowthYearVisualAdd");
+
+const jeongwooGrowthVisualModal =
+  document.getElementById("jeongwooGrowthVisualModal");
+
+const jeongwooGrowthVisualModalKicker =
+  document.getElementById("jeongwooGrowthVisualModalKicker");
+
+const jeongwooGrowthVisualInput =
+  document.getElementById("jeongwooGrowthVisualInput");
+
+const jeongwooGrowthVisualSelect =
+  document.getElementById("jeongwooGrowthVisualSelect");
+
+const jeongwooGrowthVisualPreview =
+  document.getElementById("jeongwooGrowthVisualPreview");
+
+const jeongwooGrowthVisualPreviewImage =
+  document.getElementById("jeongwooGrowthVisualPreviewImage");
+
+const jeongwooGrowthVisualHair =
+  document.getElementById("jeongwooGrowthVisualHair");
+
+const jeongwooGrowthVisualMemo =
+  document.getElementById("jeongwooGrowthVisualMemo");
+
+const jeongwooGrowthVisualSave =
+  document.getElementById("jeongwooGrowthVisualSave");
+
+const jeongwooGrowthVisualDelete =
+  document.getElementById("jeongwooGrowthVisualDelete");
+
+const jeongwooGrowthVisualCancel =
+  document.getElementById("jeongwooGrowthVisualCancel");
+
+let currentJeongwooGrowthYear = "2020";
+
+let pendingJeongwooGrowthFile = null;
+
+let currentJeongwooGrowthVisualItem = null;
+
+let jeongwooGrowthDB = null;
+
+const JEONGWOO_GROWTH_DB =
+  "treasure-day-jeongwoo-growth-db";
+
+const JEONGWOO_GROWTH_STORE =
+  "jeongwooGrowthVisuals";
+// ======================================================
+// 💾 JEONGWOO GROWTH IndexedDB
+// ======================================================
+
+function openJeongwooGrowthDB() {
+
+  return new Promise((resolve, reject) => {
+
+    const request =
+      indexedDB.open(
+        JEONGWOO_GROWTH_DB,
+        1
+      );
+
+    request.onupgradeneeded =
+      event => {
+
+        const db =
+          event.target.result;
+
+        if (
+          !db.objectStoreNames.contains(
+            JEONGWOO_GROWTH_STORE
+          )
+        ) {
+
+          db.createObjectStore(
+            JEONGWOO_GROWTH_STORE,
+            {
+              keyPath: "id"
+            }
+          );
+
+        }
+
+      };
+
+
+    request.onsuccess =
+      () => {
+
+        jeongwooGrowthDB =
+          request.result;
+
+        resolve(
+          jeongwooGrowthDB
+        );
+
+      };
+
+
+    request.onerror =
+      () => {
+
+        reject(
+          request.error
+        );
+
+      };
+
+  });
+}
+
+
+// ======================================================
+// 📸 IMAGE → DataURL
+// ======================================================
+
+function jeongwooGrowthImageToDataURL(
+  file
+) {
+
+  return new Promise(
+    (resolve, reject) => {
+
+      const reader =
+        new FileReader();
+
+      reader.onload = () => {
+
+        const img =
+          new Image();
+
+        img.onload = () => {
+
+          const MAX_SIZE = 1600;
+
+          let width =
+            img.naturalWidth;
+
+          let height =
+            img.naturalHeight;
+
+
+          if (
+            width > height &&
+            width > MAX_SIZE
+          ) {
+
+            height =
+              Math.round(
+                height *
+                MAX_SIZE /
+                width
+              );
+
+            width =
+              MAX_SIZE;
+
+          } else if (
+            height >= width &&
+            height > MAX_SIZE
+          ) {
+
+            width =
+              Math.round(
+                width *
+                MAX_SIZE /
+                height
+              );
+
+            height =
+              MAX_SIZE;
+
+          }
+
+
+          const canvas =
+            document.createElement(
+              "canvas"
+            );
+
+          canvas.width =
+            width;
+
+          canvas.height =
+            height;
+
+
+          const ctx =
+            canvas.getContext(
+              "2d"
+            );
+
+          if (!ctx) {
+
+            reject(
+              new Error(
+                "Canvas unavailable"
+              )
+            );
+
+            return;
+
+          }
+
+
+          ctx.drawImage(
+            img,
+            0,
+            0,
+            width,
+            height
+          );
+
+
+          resolve(
+            canvas.toDataURL(
+              "image/jpeg",
+              0.86
+            )
+          );
+
+        };
+
+
+        img.onerror =
+          reject;
+
+        img.src =
+          reader.result;
+
+      };
+
+
+      reader.onerror =
+        reject;
+
+      reader.readAsDataURL(
+        file
+      );
+
+    }
+  );
+}
+
+
+// ======================================================
+// 💾 SAVE NEW
+// ======================================================
+
+async function saveJeongwooGrowthVisual(
+  file,
+  year,
+  hairColor,
+  memo
+) {
+
+  if (!jeongwooGrowthDB) {
+    await openJeongwooGrowthDB();
+  }
+
+
+  const imageData =
+    await jeongwooGrowthImageToDataURL(
+      file
+    );
+
+
+  const item = {
+
+    id:
+      Date.now() +
+      Math.floor(
+        Math.random() * 1000
+      ),
+
+    year:
+      String(year),
+
+    imageData,
+
+    hairColor:
+      hairColor || "OTHER",
+
+    memo:
+      memo || "",
+
+    createdAt:
+      Date.now()
+
+  };
+
+
+  return new Promise(
+    (resolve, reject) => {
+
+      const transaction =
+        jeongwooGrowthDB.transaction(
+          JEONGWOO_GROWTH_STORE,
+          "readwrite"
+        );
+
+      const store =
+        transaction.objectStore(
+          JEONGWOO_GROWTH_STORE
+        );
+
+      const request =
+        store.add(item);
+
+
+      request.onsuccess =
+        () => resolve(item);
+
+      request.onerror =
+        () => reject(
+          request.error
+        );
+
+    }
+  );
+}
+
+
+// ======================================================
+// ✏️ UPDATE
+// ======================================================
+
+function updateJeongwooGrowthVisual(
+  item
+) {
+
+  return new Promise(
+    (resolve, reject) => {
+
+      const transaction =
+        jeongwooGrowthDB.transaction(
+          JEONGWOO_GROWTH_STORE,
+          "readwrite"
+        );
+
+      const store =
+        transaction.objectStore(
+          JEONGWOO_GROWTH_STORE
+        );
+
+      const request =
+        store.put(item);
+
+
+      request.onsuccess =
+        () => resolve();
+
+      request.onerror =
+        () => reject(
+          request.error
+        );
+
+    }
+  );
+}
+
+
+// ======================================================
+// 📚 GET YEAR VISUALS
+// ======================================================
+
+async function getJeongwooGrowthVisuals(
+  year
+) {
+
+  if (!jeongwooGrowthDB) {
+    await openJeongwooGrowthDB();
+  }
+
+
+  return new Promise(
+    (resolve, reject) => {
+
+      const transaction =
+        jeongwooGrowthDB.transaction(
+          JEONGWOO_GROWTH_STORE,
+          "readonly"
+        );
+
+      const store =
+        transaction.objectStore(
+          JEONGWOO_GROWTH_STORE
+        );
+
+      const request =
+        store.getAll();
+
+
+      request.onsuccess =
+        () => {
+
+          const items =
+            request.result || [];
+
+          resolve(
+            items.filter(
+              item =>
+                String(item.year) ===
+                String(year)
+            )
+          );
+
+        };
+
+
+      request.onerror =
+        () => reject(
+          request.error
+        );
+
+    }
+  );
+}
+
+
+// ======================================================
+// 🗑 DELETE
+// ======================================================
+
+async function deleteJeongwooGrowthVisual(
+  id
+) {
+
+  if (!jeongwooGrowthDB) {
+    await openJeongwooGrowthDB();
+  }
+
+
+  return new Promise(
+    (resolve, reject) => {
+
+      const transaction =
+        jeongwooGrowthDB.transaction(
+          JEONGWOO_GROWTH_STORE,
+          "readwrite"
+        );
+
+      const store =
+        transaction.objectStore(
+          JEONGWOO_GROWTH_STORE
+        );
+
+      const request =
+        store.delete(id);
+
+
+      request.onsuccess =
+        () => resolve();
+
+      request.onerror =
+        () => reject(
+          request.error
+        );
+
+    }
+  );
+}
+// ======================================================
+// 🌱 JEONGWOO GROWTH YEAR INFO
+// ======================================================
+
+const jeongwooGrowthYearInfo = {
+
+  "2020": {
+    title: "DEBUT ERA 💎"
+  },
+
+  "2021": {
+    title: "2021 ERA 💎"
+  },
+
+  "2022": {
+    title: "2022 ERA 💎"
+  },
+
+  "2023": {
+    title: "2023 ERA 💎"
+  },
+
+  "2024": {
+    title: "2024 ERA 💎"
+  },
+
+  "2025": {
+    title: "2025 ERA 💎"
+  },
+
+  "2026": {
+    title: "NOW ✨"
+  }
+
+};
+
+
+// ======================================================
+// 📸 RENDER YEAR VISUALS
+// ======================================================
+
+async function renderJeongwooGrowthYearVisuals() {
+
+  if (!jeongwooGrowthYearVisualGrid) {
+    return;
+  }
+
+
+  jeongwooGrowthYearVisualGrid.innerHTML =
+    "";
+
+
+  const items =
+    await getJeongwooGrowthVisuals(
+      currentJeongwooGrowthYear
+    );
+
+
+  items
+    .sort(
+      (a, b) =>
+        a.createdAt -
+        b.createdAt
+    )
+    .forEach(item => {
+
+      const card =
+        document.createElement(
+          "button"
+        );
+
+      card.type =
+        "button";
+
+ card.className =
+  "jihoon-growth-visual-card jeongwoo-growth-visual-card";
+const photo =
+  document.createElement("div");
+
+photo.className =
+  "jihoon-growth-visual-photo jeongwoo-growth-visual-photo";
+      const img =
+        document.createElement(
+          "img"
+        );
+
+      img.src =
+        item.imageData || "";
+
+      img.alt =
+        `JEONGWOO ${item.year}`;
+
+      img.loading =
+        "lazy";
+
+      img.decoding =
+        "async";
+
+
+      const info =
+        document.createElement(
+          "div"
+        );
+
+      info.className =
+        "jihoon-growth-visual-info";
+
+
+      const hair =
+        document.createElement(
+          "span"
+        );
+
+      hair.textContent =
+        `🎨 ${item.hairColor || "OTHER"}`;
+
+
+      const memo =
+        document.createElement(
+          "p"
+        );
+
+      memo.textContent =
+        item.memo || "";
+
+
+      info.appendChild(
+        hair
+      );
+
+
+      if (item.memo) {
+
+        info.appendChild(
+          memo
+        );
+
+      }
+
+
+      photo.appendChild(
+  img
+);
+
+card.appendChild(
+  photo
+);
+
+      card.appendChild(
+        info
+      );
+
+
+      // 写真タップ → EDIT
+      card.addEventListener(
+        "click",
+        () => {
+
+          currentJeongwooGrowthVisualItem =
+            item;
+
+          pendingJeongwooGrowthFile =
+            null;
+
+
+          if (
+            jeongwooGrowthVisualPreviewImage
+          ) {
+
+            jeongwooGrowthVisualPreviewImage.src =
+              item.imageData || "";
+
+          }
+
+
+          if (
+            jeongwooGrowthVisualPreview
+          ) {
+
+            jeongwooGrowthVisualPreview.style.display =
+              "block";
+
+          }
+
+
+          if (
+            jeongwooGrowthVisualHair
+          ) {
+
+            jeongwooGrowthVisualHair.value =
+              item.hairColor ||
+              "OTHER";
+
+          }
+
+
+          if (
+            jeongwooGrowthVisualMemo
+          ) {
+
+            jeongwooGrowthVisualMemo.value =
+              item.memo || "";
+
+          }
+
+
+          if (
+            jeongwooGrowthVisualDelete
+          ) {
+
+            jeongwooGrowthVisualDelete.style.display =
+              "block";
+
+          }
+
+
+          if (
+            jeongwooGrowthVisualModalKicker
+          ) {
+
+            jeongwooGrowthVisualModalKicker.textContent =
+              `📸 ${item.year} VISUAL`;
+
+          }
+
+
+          if (
+            jeongwooGrowthVisualModal
+          ) {
+
+            jeongwooGrowthVisualModal.style.display =
+              "flex";
+
+          }
+
+        }
+      );
+
+
+      jeongwooGrowthYearVisualGrid.appendChild(
+        card
+      );
+
+    });
+
+}
+
+
+// ======================================================
+// 🌱 OPEN YEAR DETAIL
+// ======================================================
+
+async function openJeongwooGrowthYear(
+  year
+) {
+
+  currentJeongwooGrowthYear =
+    String(year);
+
+
+  const info =
+    jeongwooGrowthYearInfo[
+      currentJeongwooGrowthYear
+    ] || {
+      title:
+        `${currentJeongwooGrowthYear} ERA 💎`
+    };
+
+
+  if (
+    jeongwooGrowthYearNumber
+  ) {
+
+    jeongwooGrowthYearNumber.textContent =
+      currentJeongwooGrowthYear;
+
+  }
+
+
+  if (
+    jeongwooGrowthYearTitle
+  ) {
+
+    jeongwooGrowthYearTitle.textContent =
+      info.title;
+
+  }
+
+
+  if (
+    jeongwooGrowthYearSubtitle
+  ) {
+
+    jeongwooGrowthYearSubtitle.textContent =
+      `${currentJeongwooGrowthYear}年のジョンウを振り返ろう 💎`;
+
+  }
+
+
+  if (
+    jeongwooGrowthYearVisualTitle
+  ) {
+
+    jeongwooGrowthYearVisualTitle.textContent =
+      `📸 ${currentJeongwooGrowthYear} VISUAL`;
+
+  }
+
+
+  if (
+    jeongwooGrowthYearCaption
+  ) {
+
+    jeongwooGrowthYearCaption.textContent =
+      `${currentJeongwooGrowthYear}年のお気に入りジョンウを残そう 💎`;
+
+  }
+
+
+  if (
+    jeongwooGrowthHistoryPage
+  ) {
+
+    jeongwooGrowthHistoryPage.style.display =
+      "none";
+
+  }
+
+
+  if (
+    jeongwooGrowthYearPage
+  ) {
+
+    jeongwooGrowthYearPage.style.display =
+      "block";
+
+    jeongwooGrowthYearPage.scrollTop =
+      0;
+
+  }
+
+
+  await renderJeongwooGrowthYearVisuals();
+
+}
+
+
+// ======================================================
+// 🌱 YEAR BUTTONS
+// ======================================================
+
+jeongwooGrowthYearButtons.forEach(
+  button => {
+
+    button.addEventListener(
+      "click",
+      async () => {
+
+        await openJeongwooGrowthYear(
+          button.dataset.year
+        );
+
+      }
+    );
+
+  }
+);
+// ======================================================
+// 🌱 OPEN GROWTH HISTORY
+// ======================================================
+
+if (
+  jeongwooGrowthHistoryOpen &&
+  jeongwooGrowthHistoryPage
+) {
+
+  jeongwooGrowthHistoryOpen.addEventListener(
+    "click",
+    () => {
+
+      if (jeongwooBookDetail) {
+        jeongwooBookDetail.classList.remove(
+          "active"
+        );
+      }
+
+      jeongwooGrowthHistoryPage.style.display =
+        "block";
+
+      jeongwooGrowthHistoryPage.scrollTop =
+        0;
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+  );
+}
+
+
+// ======================================================
+// ← GROWTH HISTORY → JEONGWOO BOOK
+// ======================================================
+
+if (
+  jeongwooGrowthHistoryBack &&
+  jeongwooGrowthHistoryPage
+) {
+
+  jeongwooGrowthHistoryBack.addEventListener(
+    "click",
+    () => {
+
+      jeongwooGrowthHistoryPage.style.display =
+        "none";
+
+      if (jeongwooBookDetail) {
+
+        jeongwooBookDetail.classList.add(
+          "active"
+        );
+
+        jeongwooBookDetail.scrollTop =
+          0;
+
+      }
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+  );
+}
+
+
+// ======================================================
+// ← YEAR DETAIL → GROWTH HISTORY
+// ======================================================
+
+if (
+  jeongwooGrowthYearBack &&
+  jeongwooGrowthYearPage
+) {
+
+  jeongwooGrowthYearBack.addEventListener(
+    "click",
+    () => {
+
+      jeongwooGrowthYearPage.style.display =
+        "none";
+
+      jeongwooGrowthHistoryPage.style.display =
+        "block";
+
+      jeongwooGrowthHistoryPage.scrollTop =
+        0;
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+  );
+}
+
+
+// ======================================================
+// ＋ ADD → MODAL
+// ======================================================
+
+if (jeongwooGrowthYearVisualAdd) {
+
+  jeongwooGrowthYearVisualAdd.addEventListener(
+    "click",
+    () => {
+
+      currentJeongwooGrowthVisualItem =
+        null;
+
+      pendingJeongwooGrowthFile =
+        null;
+
+
+      if (jeongwooGrowthVisualInput) {
+        jeongwooGrowthVisualInput.value =
+          "";
+      }
+
+
+      if (jeongwooGrowthVisualMemo) {
+        jeongwooGrowthVisualMemo.value =
+          "";
+      }
+
+
+      if (jeongwooGrowthVisualHair) {
+        jeongwooGrowthVisualHair.value =
+          "BLACK";
+      }
+
+
+      if (jeongwooGrowthVisualPreviewImage) {
+        jeongwooGrowthVisualPreviewImage.src =
+          "";
+      }
+
+
+      if (jeongwooGrowthVisualPreview) {
+        jeongwooGrowthVisualPreview.style.display =
+          "none";
+      }
+
+
+      if (jeongwooGrowthVisualDelete) {
+        jeongwooGrowthVisualDelete.style.display =
+          "none";
+      }
+
+
+      if (jeongwooGrowthVisualModalKicker) {
+
+        jeongwooGrowthVisualModalKicker.textContent =
+          `📸 ${currentJeongwooGrowthYear} VISUAL`;
+
+      }
+
+
+      if (jeongwooGrowthVisualModal) {
+
+        jeongwooGrowthVisualModal.style.display =
+          "flex";
+
+        jeongwooGrowthVisualModal.scrollTop =
+          0;
+
+      }
+
+    }
+  );
+}
+
+
+// ======================================================
+// 📷 SELECT PHOTO
+// ======================================================
+
+if (
+  jeongwooGrowthVisualSelect &&
+  jeongwooGrowthVisualInput
+) {
+
+  jeongwooGrowthVisualSelect.addEventListener(
+    "click",
+    () => {
+
+      jeongwooGrowthVisualInput.click();
+
+    }
+  );
+}
+
+
+if (jeongwooGrowthVisualInput) {
+
+  jeongwooGrowthVisualInput.addEventListener(
+    "change",
+    () => {
+
+      const file =
+        jeongwooGrowthVisualInput.files[0];
+
+      if (!file) return;
+
+
+      pendingJeongwooGrowthFile =
+        file;
+
+
+      const reader =
+        new FileReader();
+
+
+      reader.onload =
+        () => {
+
+          if (
+            jeongwooGrowthVisualPreviewImage
+          ) {
+
+            jeongwooGrowthVisualPreviewImage.src =
+              reader.result;
+
+          }
+
+
+          if (
+            jeongwooGrowthVisualPreview
+          ) {
+
+            jeongwooGrowthVisualPreview.style.display =
+              "block";
+
+          }
+
+        };
+
+
+      reader.readAsDataURL(
+        file
+      );
+
+    }
+  );
+}
+
+
+// ======================================================
+// 💎 SAVE / UPDATE
+// ======================================================
+
+if (jeongwooGrowthVisualSave) {
+
+  jeongwooGrowthVisualSave.addEventListener(
+    "click",
+    async () => {
+
+      try {
+
+        const hairColor =
+          jeongwooGrowthVisualHair
+            ? jeongwooGrowthVisualHair.value
+            : "OTHER";
+
+
+        const memo =
+          jeongwooGrowthVisualMemo
+            ? jeongwooGrowthVisualMemo.value.trim()
+            : "";
+
+
+        // ✏️ UPDATE
+        if (
+          currentJeongwooGrowthVisualItem
+        ) {
+
+          currentJeongwooGrowthVisualItem.hairColor =
+            hairColor;
+
+          currentJeongwooGrowthVisualItem.memo =
+            memo;
+
+
+          if (
+            pendingJeongwooGrowthFile
+          ) {
+
+            currentJeongwooGrowthVisualItem.imageData =
+              await jeongwooGrowthImageToDataURL(
+                pendingJeongwooGrowthFile
+              );
+
+          }
+
+
+          await updateJeongwooGrowthVisual(
+            currentJeongwooGrowthVisualItem
+          );
+
+        }
+
+        // 📸 NEW
+        else {
+
+          if (!pendingJeongwooGrowthFile) {
+
+            alert(
+              "写真を選んでね📸"
+            );
+
+            return;
+
+          }
+
+
+          await saveJeongwooGrowthVisual(
+            pendingJeongwooGrowthFile,
+            currentJeongwooGrowthYear,
+            hairColor,
+            memo
+          );
+
+        }
+
+
+        closeJeongwooGrowthModal();
+
+        await renderJeongwooGrowthYearVisuals();
+
+
+      } catch (error) {
+
+        console.error(
+          "JEONGWOO GROWTH SAVE ERROR:",
+          error
+        );
+
+        alert(
+          "保存に失敗しました🥲"
+        );
+
+      }
+
+    }
+  );
+}
+
+
+// ======================================================
+// 🗑 DELETE
+// ======================================================
+
+if (jeongwooGrowthVisualDelete) {
+
+  jeongwooGrowthVisualDelete.addEventListener(
+    "click",
+    async () => {
+
+      if (
+        !currentJeongwooGrowthVisualItem
+      ) {
+        return;
+      }
+
+
+      const ok =
+        confirm(
+          "この写真を削除しますか？🥲"
+        );
+
+      if (!ok) return;
+
+
+      try {
+
+        await deleteJeongwooGrowthVisual(
+          currentJeongwooGrowthVisualItem.id
+        );
+
+        closeJeongwooGrowthModal();
+
+        await renderJeongwooGrowthYearVisuals();
+
+
+      } catch (error) {
+
+        console.error(
+          "JEONGWOO GROWTH DELETE ERROR:",
+          error
+        );
+
+        alert(
+          "削除に失敗しました🥲"
+        );
+
+      }
+
+    }
+  );
+}
+
+
+// ======================================================
+// CANCEL / CLOSE
+// ======================================================
+
+function closeJeongwooGrowthModal() {
+
+  pendingJeongwooGrowthFile =
+    null;
+
+  currentJeongwooGrowthVisualItem =
+    null;
+
+
+  if (jeongwooGrowthVisualInput) {
+    jeongwooGrowthVisualInput.value =
+      "";
+  }
+
+
+  if (jeongwooGrowthVisualPreviewImage) {
+    jeongwooGrowthVisualPreviewImage.src =
+      "";
+  }
+
+
+  if (jeongwooGrowthVisualPreview) {
+    jeongwooGrowthVisualPreview.style.display =
+      "none";
+  }
+
+
+  if (jeongwooGrowthVisualMemo) {
+    jeongwooGrowthVisualMemo.value =
+      "";
+  }
+
+
+  if (jeongwooGrowthVisualDelete) {
+    jeongwooGrowthVisualDelete.style.display =
+      "none";
+  }
+
+
+  if (jeongwooGrowthVisualModal) {
+    jeongwooGrowthVisualModal.style.display =
+      "none";
+  }
+
+}
+
+
+if (jeongwooGrowthVisualCancel) {
+
+  jeongwooGrowthVisualCancel.addEventListener(
+    "click",
+    () => {
+
+      closeJeongwooGrowthModal();
+
+    }
+  );
+}
+
+
+// ======================================================
+// 🚀 INITIALIZE JEONGWOO GROWTH DB
+// ======================================================
+
+openJeongwooGrowthDB()
+  .catch(
+    error => {
+
+      console.error(
+        "JEONGWOO GROWTH DB ERROR:",
+        error
+      );
+
+    }
+  );
+
+// ======================================================
+// 🐺 JEONGWOO SONG / MEMORIES
+// ======================================================
+const jeongwooSongSystem =
+  setupMemberSong({
+    key: "jeongwoo",
+    displayName: "JEONGWOO",
+    japaneseName: "ジョンウ"
+  });
+
+const jeongwooMemoriesSystem =
+  setupMemberMemories({
+    key: "jeongwoo",
+    displayName: "JEONGWOO",
+    japaneseName: "ジョンウ"
+  });
+
+// =====================================================
+// 🐺 JEONGWOO CHEMISTRY
+// SHARED CHEMISTRY ENGINE CONNECT
+// =====================================================
+
+const jeongwooChemistryOpen =
+  document.getElementById(
+    "jeongwooChemistryOpen"
+  );
+
+const jeongwooChemistryPage =
+  document.getElementById(
+    "jeongwooChemistryPage"
+  );
+
+const jeongwooChemistryBack =
+  document.getElementById(
+    "jeongwooChemistryBack"
+  );
+
+const jeongwooChemistryList =
+  document.getElementById(
+    "jeongwooChemistryList"
+  );
+
+const jeongwooChemistryDetailPage =
+  document.getElementById(
+    "jeongwooChemistryDetailPage"
+  );
+
+const jeongwooChemistryDetailBack =
+  document.getElementById(
+    "jeongwooChemistryDetailBack"
+  );
+
+const jeongwooChemistryDetailName =
+  document.getElementById(
+    "jeongwooChemistryDetailName"
+  );
+
+const jeongwooChemistryDetailCaption =
+  document.getElementById(
+    "jeongwooChemistryDetailCaption"
+  );
+
+const jeongwooChemistryAdd =
+  document.getElementById(
+    "jeongwooChemistryAdd"
+  );
+
+const jeongwooChemistryMemories =
+  document.getElementById(
+    "jeongwooChemistryMemories"
+  );
+
+
+let currentJeongwooChemistryPartner =
+  null;
+
+
+// =====================================================
+// 🐺 PARTNERS
+// =====================================================
+
+const jeongwooChemistryPartners = [
+  "HYUNSUK",
+  "JIHOON",
+  "YOSHI",
+  "JUNKYU",
+  "JAEHYUK",
+  "DOYOUNG",
+  "HARUTO",
+  "ASAHI",
+  "JUNGHWAN"
+];
+
+
+// =====================================================
+// 🫶 MAKE 9 CHEMISTRY CARDS
+// =====================================================
+
+function renderJeongwooChemistryCards() {
+
+  if (!jeongwooChemistryList) {
+    return;
+  }
+
+
+  jeongwooChemistryList.innerHTML =
+    "";
+
+
+  jeongwooChemistryPartners.forEach(
+    partner => {
+
+      const partnerInfo =
+        chemistryMemberInfo[
+          partner
+        ];
+
+
+      const card =
+        document.createElement(
+          "button"
+        );
+
+      card.type =
+        "button";
+
+      card.className =
+        "jihoon-chemistry-card jeongwoo-chemistry-card";
+
+      card.dataset.partner =
+        partner;
+
+
+      card.innerHTML = `
+        <span class="jihoon-chemistry-emoji">
+          🐺${partnerInfo?.emoji || "💎"}
+        </span>
+
+        <div>
+          <strong>
+            JEONGWOO × ${partner}
+          </strong>
+
+          <small>
+            CHEMISTRY MEMORY 💎
+          </small>
+        </div>
+
+        <span>→</span>
+      `;
+
+
+      card.addEventListener(
+        "click",
+        async () => {
+
+          currentJeongwooChemistryPartner =
+            partner;
+
+
+          // 💎 SHARED ENGINEへ接続
+          currentHyunsukChemistryPartner =
+            partner;
+
+          currentHyunsukChemistryPairKey =
+            createChemistryPairKey(
+              "JEONGWOO",
+              partner
+            );
+
+          currentSharedChemistryRenderTarget =
+            jeongwooChemistryMemories;
+
+
+          if (
+            jeongwooChemistryDetailName
+          ) {
+
+            jeongwooChemistryDetailName.textContent =
+              `🐺${partnerInfo?.emoji || "💎"} JEONGWOO × ${partner}`;
+
+          }
+
+
+          if (
+            jeongwooChemistryDetailCaption
+          ) {
+
+            jeongwooChemistryDetailCaption.textContent =
+              `ジョンウと${partner}の好きな瞬間を集めよう 💎`;
+
+          }
+
+
+          jeongwooChemistryPage.style.display =
+            "none";
+
+          jeongwooChemistryDetailPage.style.display =
+            "block";
+
+          jeongwooChemistryDetailPage.scrollTop =
+            0;
+
+
+          await renderSharedChemistryMemories();
+
+
+          document.body.style.overflow =
+            "hidden";
+
+        }
+      );
+
+
+      jeongwooChemistryList.appendChild(
+        card
+      );
+
+    }
+  );
+}
+
+
+// =====================================================
+// 🐺 JEONGWOO BOOK → CHEMISTRY
+// =====================================================
+
+if (
+  jeongwooChemistryOpen &&
+  jeongwooChemistryPage
+) {
+
+  jeongwooChemistryOpen.addEventListener(
+    "click",
+    () => {
+
+      if (jeongwooBookDetail) {
+
+        jeongwooBookDetail.classList.remove(
+          "active"
+        );
+
+      }
+
+
+      renderJeongwooChemistryCards();
+      jeongwooChemistryPage.style.display =
+        "block";
+
+      jeongwooChemistryPage.scrollTop =
+        0;
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+  );
+}
+
+
+// =====================================================
+// ← CHEMISTRY → JEONGWOO BOOK
+// =====================================================
+
+if (
+  jeongwooChemistryBack &&
+  jeongwooChemistryPage
+) {
+
+  jeongwooChemistryBack.addEventListener(
+    "click",
+    () => {
+
+      jeongwooChemistryPage.style.display =
+        "none";
+
+      if (jeongwooBookDetail) {
+
+        jeongwooBookDetail.classList.add(
+          "active"
+        );
+
+        jeongwooBookDetail.scrollTop =
+          0;
+
+      }
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+  );
+}
+
+
+// =====================================================
+// ← DETAIL → CHEMISTRY LIST
+// =====================================================
+
+if (
+  jeongwooChemistryDetailBack &&
+  jeongwooChemistryDetailPage
+) {
+
+  jeongwooChemistryDetailBack.addEventListener(
+    "click",
+    () => {
+
+      jeongwooChemistryDetailPage.style.display =
+        "none";
+
+      jeongwooChemistryPage.style.display =
+        "block";
+
+      jeongwooChemistryPage.scrollTop =
+        0;
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+  );
+}
+
+
+// =====================================================
+// ＋ ADD MEMORY → SHARED MODAL
+// =====================================================
+
+if (jeongwooChemistryAdd) {
+
+  jeongwooChemistryAdd.addEventListener(
+    "click",
+    () => {
+
+      if (
+        !currentJeongwooChemistryPartner
+      ) {
+        return;
+      }
+
+      currentHyunsukChemistryPartner =
+        currentJeongwooChemistryPartner;
+
+      currentHyunsukChemistryPairKey =
+        createChemistryPairKey(
+          "JEONGWOO",
+          currentJeongwooChemistryPartner
+        );
+
+      currentSharedChemistryRenderTarget =
+        jeongwooChemistryMemories;
+
+      currentSharedChemistryImageData =
+        null;
+
+      delete hyunsukChemistryMemorySave
+        .dataset.editId;
+
+      hyunsukChemistryMemoryInput.value =
+        "";
+
+      hyunsukChemistryMemoryMemo.value =
+        "";
+
+      hyunsukChemistryMemoryPreviewImage.src =
+        "";
+
+      hyunsukChemistryMemoryPreview.style.display =
+        "none";
+
+      hyunsukChemistryMemoryDelete.style.display =
+        "none";
+
+      hyunsukChemistryMemorySave.textContent =
+        "💎 SAVE MEMORY";
+
+      hyunsukChemistryMemoryTitle.textContent =
+        `JEONGWOO × ${currentJeongwooChemistryPartner} MEMORY`;
+
+      hyunsukChemistryMemoryModal.style.display =
+        "flex";
+
+      hyunsukChemistryMemoryModal.scrollTop =
+        0;
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+  );
+}
+
+
+// 最初のカード生成
+renderJeongwooChemistryCards();
+
+// ========================================
+// 🐮 JUNGHWAN BOOK OPEN / CLOSE
+// ========================================
+
+const junghwanBookOpen =
+  document.getElementById("junghwan-book-open");
+
+const junghwanBookDetail =
+  document.getElementById("junghwan-book-detail");
+
+const junghwanBookClose =
+  document.getElementById("junghwan-book-close");
+
+
+// JUNGHWAN BOOKを開く
+if (
+  junghwanBookOpen &&
+  junghwanBookDetail
+) {
+
+  junghwanBookOpen.addEventListener(
+    "click",
+    () => {
+
+      junghwanBookDetail.classList.add(
+        "active"
+      );
+
+      junghwanBookDetail.scrollTop = 0;
+
+      document.body.style.overflow =
+        "hidden";
+    }
+  );
+}
+
+
+// JUNGHWAN BOOKを閉じる
+if (
+  junghwanBookClose &&
+  junghwanBookDetail
+) {
+
+  junghwanBookClose.addEventListener(
+    "click",
+    () => {
+
+      junghwanBookDetail.classList.remove(
+        "active"
+      );
+
+      // MEMBER BOOKは後ろで開いたまま
+      document.body.style.overflow =
+        "hidden";
+    }
+  );
+}
+// ========================================
+// 🐨 JUNKYU BOOK OPEN / CLOSE
+// ========================================
+
+const junkyuBookOpen =
+  document.getElementById("junkyu-book-open");
+
+const junkyuBookDetail =
+  document.getElementById("junkyu-book-detail");
+
+const junkyuBookClose =
+  document.getElementById("junkyu-book-close");
+
+
+
+// ======================================================
+// 🐮 JUNGHWAN VISUAL BOOK / RANKING
+// ======================================================
+const junghwanVisualSystem =
+  setupMemberVisualBook({
+    key: "junghwan",
+    displayName: "JUNGHWAN",
+    japaneseName: "ジョンファン"
+  });
+
+const junghwanVisualRankingSystem =
+  setupMemberVisualRanking({
+    key: "junghwan",
+    displayName: "JUNGHWAN",
+    visualSystem: junghwanVisualSystem
+  });
+
+// ======================================================
+// 🐮 JUNGHWAN GROWTH HISTORY START
+// 完成型：YEAR DETAIL + EDIT MODAL
+// ======================================================
+
+const junghwanGrowthHistoryOpen =
+  document.getElementById("junghwanGrowthHistoryOpen");
+
+const junghwanGrowthHistoryPage =
+  document.getElementById("junghwanGrowthHistoryPage");
+
+const junghwanGrowthHistoryBack =
+  document.getElementById("junghwanGrowthHistoryBack");
+
+const junghwanGrowthYearPage =
+  document.getElementById("junghwanGrowthYearPage");
+
+const junghwanGrowthYearBack =
+  document.getElementById("junghwanGrowthYearBack");
+
+const junghwanGrowthYearButtons =
+  document.querySelectorAll(".junghwan-growth-year");
+
+const junghwanGrowthYearNumber =
+  document.getElementById("junghwanGrowthYearNumber");
+
+const junghwanGrowthYearTitle =
+  document.getElementById("junghwanGrowthYearTitle");
+
+const junghwanGrowthYearSubtitle =
+  document.getElementById("junghwanGrowthYearSubtitle");
+
+const junghwanGrowthYearVisualTitle =
+  document.getElementById("junghwanGrowthYearVisualTitle");
+
+const junghwanGrowthYearCaption =
+  document.getElementById("junghwanGrowthYearCaption");
+
+const junghwanGrowthYearVisualGrid =
+  document.getElementById("junghwanGrowthYearVisualGrid");
+
+const junghwanGrowthYearVisualAdd =
+  document.getElementById("junghwanGrowthYearVisualAdd");
+
+const junghwanGrowthVisualModal =
+  document.getElementById("junghwanGrowthVisualModal");
+
+const junghwanGrowthVisualModalKicker =
+  document.getElementById("junghwanGrowthVisualModalKicker");
+
+const junghwanGrowthVisualInput =
+  document.getElementById("junghwanGrowthVisualInput");
+
+const junghwanGrowthVisualSelect =
+  document.getElementById("junghwanGrowthVisualSelect");
+
+const junghwanGrowthVisualPreview =
+  document.getElementById("junghwanGrowthVisualPreview");
+
+const junghwanGrowthVisualPreviewImage =
+  document.getElementById("junghwanGrowthVisualPreviewImage");
+
+const junghwanGrowthVisualHair =
+  document.getElementById("junghwanGrowthVisualHair");
+
+const junghwanGrowthVisualMemo =
+  document.getElementById("junghwanGrowthVisualMemo");
+
+const junghwanGrowthVisualSave =
+  document.getElementById("junghwanGrowthVisualSave");
+
+const junghwanGrowthVisualDelete =
+  document.getElementById("junghwanGrowthVisualDelete");
+
+const junghwanGrowthVisualCancel =
+  document.getElementById("junghwanGrowthVisualCancel");
+
+let currentJunghwanGrowthYear = "2020";
+
+let pendingJunghwanGrowthFile = null;
+
+let currentJunghwanGrowthVisualItem = null;
+
+let junghwanGrowthDB = null;
+
+const JUNGHWAN_GROWTH_DB =
+  "treasure-day-junghwan-growth-db";
+
+const JUNGHWAN_GROWTH_STORE =
+  "junghwanGrowthVisuals";
+// ======================================================
+// 💾 JUNGHWAN GROWTH IndexedDB
+// ======================================================
+
+function openJunghwanGrowthDB() {
+
+  return new Promise((resolve, reject) => {
+
+    const request =
+      indexedDB.open(
+        JUNGHWAN_GROWTH_DB,
+        1
+      );
+
+    request.onupgradeneeded =
+      event => {
+
+        const db =
+          event.target.result;
+
+        if (
+          !db.objectStoreNames.contains(
+            JUNGHWAN_GROWTH_STORE
+          )
+        ) {
+
+          db.createObjectStore(
+            JUNGHWAN_GROWTH_STORE,
+            {
+              keyPath: "id"
+            }
+          );
+
+        }
+
+      };
+
+
+    request.onsuccess =
+      () => {
+
+        junghwanGrowthDB =
+          request.result;
+
+        resolve(
+          junghwanGrowthDB
+        );
+
+      };
+
+
+    request.onerror =
+      () => {
+
+        reject(
+          request.error
+        );
+
+      };
+
+  });
+}
+
+
+// ======================================================
+// 📸 IMAGE → DataURL
+// ======================================================
+
+function junghwanGrowthImageToDataURL(
+  file
+) {
+
+  return new Promise(
+    (resolve, reject) => {
+
+      const reader =
+        new FileReader();
+
+      reader.onload = () => {
+
+        const img =
+          new Image();
+
+        img.onload = () => {
+
+          const MAX_SIZE = 1600;
+
+          let width =
+            img.naturalWidth;
+
+          let height =
+            img.naturalHeight;
+
+
+          if (
+            width > height &&
+            width > MAX_SIZE
+          ) {
+
+            height =
+              Math.round(
+                height *
+                MAX_SIZE /
+                width
+              );
+
+            width =
+              MAX_SIZE;
+
+          } else if (
+            height >= width &&
+            height > MAX_SIZE
+          ) {
+
+            width =
+              Math.round(
+                width *
+                MAX_SIZE /
+                height
+              );
+
+            height =
+              MAX_SIZE;
+
+          }
+
+
+          const canvas =
+            document.createElement(
+              "canvas"
+            );
+
+          canvas.width =
+            width;
+
+          canvas.height =
+            height;
+
+
+          const ctx =
+            canvas.getContext(
+              "2d"
+            );
+
+          if (!ctx) {
+
+            reject(
+              new Error(
+                "Canvas unavailable"
+              )
+            );
+
+            return;
+
+          }
+
+
+          ctx.drawImage(
+            img,
+            0,
+            0,
+            width,
+            height
+          );
+
+
+          resolve(
+            canvas.toDataURL(
+              "image/jpeg",
+              0.86
+            )
+          );
+
+        };
+
+
+        img.onerror =
+          reject;
+
+        img.src =
+          reader.result;
+
+      };
+
+
+      reader.onerror =
+        reject;
+
+      reader.readAsDataURL(
+        file
+      );
+
+    }
+  );
+}
+
+
+// ======================================================
+// 💾 SAVE NEW
+// ======================================================
+
+async function saveJunghwanGrowthVisual(
+  file,
+  year,
+  hairColor,
+  memo
+) {
+
+  if (!junghwanGrowthDB) {
+    await openJunghwanGrowthDB();
+  }
+
+
+  const imageData =
+    await junghwanGrowthImageToDataURL(
+      file
+    );
+
+
+  const item = {
+
+    id:
+      Date.now() +
+      Math.floor(
+        Math.random() * 1000
+      ),
+
+    year:
+      String(year),
+
+    imageData,
+
+    hairColor:
+      hairColor || "OTHER",
+
+    memo:
+      memo || "",
+
+    createdAt:
+      Date.now()
+
+  };
+
+
+  return new Promise(
+    (resolve, reject) => {
+
+      const transaction =
+        junghwanGrowthDB.transaction(
+          JUNGHWAN_GROWTH_STORE,
+          "readwrite"
+        );
+
+      const store =
+        transaction.objectStore(
+          JUNGHWAN_GROWTH_STORE
+        );
+
+      const request =
+        store.add(item);
+
+
+      request.onsuccess =
+        () => resolve(item);
+
+      request.onerror =
+        () => reject(
+          request.error
+        );
+
+    }
+  );
+}
+
+
+// ======================================================
+// ✏️ UPDATE
+// ======================================================
+
+function updateJunghwanGrowthVisual(
+  item
+) {
+
+  return new Promise(
+    (resolve, reject) => {
+
+      const transaction =
+        junghwanGrowthDB.transaction(
+          JUNGHWAN_GROWTH_STORE,
+          "readwrite"
+        );
+
+      const store =
+        transaction.objectStore(
+          JUNGHWAN_GROWTH_STORE
+        );
+
+      const request =
+        store.put(item);
+
+
+      request.onsuccess =
+        () => resolve();
+
+      request.onerror =
+        () => reject(
+          request.error
+        );
+
+    }
+  );
+}
+
+
+// ======================================================
+// 📚 GET YEAR VISUALS
+// ======================================================
+
+async function getJunghwanGrowthVisuals(
+  year
+) {
+
+  if (!junghwanGrowthDB) {
+    await openJunghwanGrowthDB();
+  }
+
+
+  return new Promise(
+    (resolve, reject) => {
+
+      const transaction =
+        junghwanGrowthDB.transaction(
+          JUNGHWAN_GROWTH_STORE,
+          "readonly"
+        );
+
+      const store =
+        transaction.objectStore(
+          JUNGHWAN_GROWTH_STORE
+        );
+
+      const request =
+        store.getAll();
+
+
+      request.onsuccess =
+        () => {
+
+          const items =
+            request.result || [];
+
+          resolve(
+            items.filter(
+              item =>
+                String(item.year) ===
+                String(year)
+            )
+          );
+
+        };
+
+
+      request.onerror =
+        () => reject(
+          request.error
+        );
+
+    }
+  );
+}
+
+
+// ======================================================
+// 🗑 DELETE
+// ======================================================
+
+async function deleteJunghwanGrowthVisual(
+  id
+) {
+
+  if (!junghwanGrowthDB) {
+    await openJunghwanGrowthDB();
+  }
+
+
+  return new Promise(
+    (resolve, reject) => {
+
+      const transaction =
+        junghwanGrowthDB.transaction(
+          JUNGHWAN_GROWTH_STORE,
+          "readwrite"
+        );
+
+      const store =
+        transaction.objectStore(
+          JUNGHWAN_GROWTH_STORE
+        );
+
+      const request =
+        store.delete(id);
+
+
+      request.onsuccess =
+        () => resolve();
+
+      request.onerror =
+        () => reject(
+          request.error
+        );
+
+    }
+  );
+}
+// ======================================================
+// 🌱 JUNGHWAN GROWTH YEAR INFO
+// ======================================================
+
+const junghwanGrowthYearInfo = {
+
+  "2020": {
+    title: "DEBUT ERA 💎"
+  },
+
+  "2021": {
+    title: "2021 ERA 💎"
+  },
+
+  "2022": {
+    title: "2022 ERA 💎"
+  },
+
+  "2023": {
+    title: "2023 ERA 💎"
+  },
+
+  "2024": {
+    title: "2024 ERA 💎"
+  },
+
+  "2025": {
+    title: "2025 ERA 💎"
+  },
+
+  "2026": {
+    title: "NOW ✨"
+  }
+
+};
+
+
+// ======================================================
+// 📸 RENDER YEAR VISUALS
+// ======================================================
+
+async function renderJunghwanGrowthYearVisuals() {
+
+  if (!junghwanGrowthYearVisualGrid) {
+    return;
+  }
+
+
+  junghwanGrowthYearVisualGrid.innerHTML =
+    "";
+
+
+  const items =
+    await getJunghwanGrowthVisuals(
+      currentJunghwanGrowthYear
+    );
+
+
+  items
+    .sort(
+      (a, b) =>
+        a.createdAt -
+        b.createdAt
+    )
+    .forEach(item => {
+
+      const card =
+        document.createElement(
+          "button"
+        );
+
+      card.type =
+        "button";
+
+ card.className =
+  "jihoon-growth-visual-card junghwan-growth-visual-card";
+const photo =
+  document.createElement("div");
+
+photo.className =
+  "jihoon-growth-visual-photo junghwan-growth-visual-photo";
+      const img =
+        document.createElement(
+          "img"
+        );
+
+      img.src =
+        item.imageData || "";
+
+      img.alt =
+        `JUNGHWAN ${item.year}`;
+
+      img.loading =
+        "lazy";
+
+      img.decoding =
+        "async";
+
+
+      const info =
+        document.createElement(
+          "div"
+        );
+
+      info.className =
+        "jihoon-growth-visual-info";
+
+
+      const hair =
+        document.createElement(
+          "span"
+        );
+
+      hair.textContent =
+        `🎨 ${item.hairColor || "OTHER"}`;
+
+
+      const memo =
+        document.createElement(
+          "p"
+        );
+
+      memo.textContent =
+        item.memo || "";
+
+
+      info.appendChild(
+        hair
+      );
+
+
+      if (item.memo) {
+
+        info.appendChild(
+          memo
+        );
+
+      }
+
+
+      photo.appendChild(
+  img
+);
+
+card.appendChild(
+  photo
+);
+
+      card.appendChild(
+        info
+      );
+
+
+      // 写真タップ → EDIT
+      card.addEventListener(
+        "click",
+        () => {
+
+          currentJunghwanGrowthVisualItem =
+            item;
+
+          pendingJunghwanGrowthFile =
+            null;
+
+
+          if (
+            junghwanGrowthVisualPreviewImage
+          ) {
+
+            junghwanGrowthVisualPreviewImage.src =
+              item.imageData || "";
+
+          }
+
+
+          if (
+            junghwanGrowthVisualPreview
+          ) {
+
+            junghwanGrowthVisualPreview.style.display =
+              "block";
+
+          }
+
+
+          if (
+            junghwanGrowthVisualHair
+          ) {
+
+            junghwanGrowthVisualHair.value =
+              item.hairColor ||
+              "OTHER";
+
+          }
+
+
+          if (
+            junghwanGrowthVisualMemo
+          ) {
+
+            junghwanGrowthVisualMemo.value =
+              item.memo || "";
+
+          }
+
+
+          if (
+            junghwanGrowthVisualDelete
+          ) {
+
+            junghwanGrowthVisualDelete.style.display =
+              "block";
+
+          }
+
+
+          if (
+            junghwanGrowthVisualModalKicker
+          ) {
+
+            junghwanGrowthVisualModalKicker.textContent =
+              `📸 ${item.year} VISUAL`;
+
+          }
+
+
+          if (
+            junghwanGrowthVisualModal
+          ) {
+
+            junghwanGrowthVisualModal.style.display =
+              "flex";
+
+          }
+
+        }
+      );
+
+
+      junghwanGrowthYearVisualGrid.appendChild(
+        card
+      );
+
+    });
+
+}
+
+
+// ======================================================
+// 🌱 OPEN YEAR DETAIL
+// ======================================================
+
+async function openJunghwanGrowthYear(
+  year
+) {
+
+  currentJunghwanGrowthYear =
+    String(year);
+
+
+  const info =
+    junghwanGrowthYearInfo[
+      currentJunghwanGrowthYear
+    ] || {
+      title:
+        `${currentJunghwanGrowthYear} ERA 💎`
+    };
+
+
+  if (
+    junghwanGrowthYearNumber
+  ) {
+
+    junghwanGrowthYearNumber.textContent =
+      currentJunghwanGrowthYear;
+
+  }
+
+
+  if (
+    junghwanGrowthYearTitle
+  ) {
+
+    junghwanGrowthYearTitle.textContent =
+      info.title;
+
+  }
+
+
+  if (
+    junghwanGrowthYearSubtitle
+  ) {
+
+    junghwanGrowthYearSubtitle.textContent =
+      `${currentJunghwanGrowthYear}年のジョンファンを振り返ろう 💎`;
+
+  }
+
+
+  if (
+    junghwanGrowthYearVisualTitle
+  ) {
+
+    junghwanGrowthYearVisualTitle.textContent =
+      `📸 ${currentJunghwanGrowthYear} VISUAL`;
+
+  }
+
+
+  if (
+    junghwanGrowthYearCaption
+  ) {
+
+    junghwanGrowthYearCaption.textContent =
+      `${currentJunghwanGrowthYear}年のお気に入りジョンファンを残そう 💎`;
+
+  }
+
+
+  if (
+    junghwanGrowthHistoryPage
+  ) {
+
+    junghwanGrowthHistoryPage.style.display =
+      "none";
+
+  }
+
+
+  if (
+    junghwanGrowthYearPage
+  ) {
+
+    junghwanGrowthYearPage.style.display =
+      "block";
+
+    junghwanGrowthYearPage.scrollTop =
+      0;
+
+  }
+
+
+  await renderJunghwanGrowthYearVisuals();
+
+}
+
+
+// ======================================================
+// 🌱 YEAR BUTTONS
+// ======================================================
+
+junghwanGrowthYearButtons.forEach(
+  button => {
+
+    button.addEventListener(
+      "click",
+      async () => {
+
+        await openJunghwanGrowthYear(
+          button.dataset.year
+        );
+
+      }
+    );
+
+  }
+);
+// ======================================================
+// 🌱 OPEN GROWTH HISTORY
+// ======================================================
+
+if (
+  junghwanGrowthHistoryOpen &&
+  junghwanGrowthHistoryPage
+) {
+
+  junghwanGrowthHistoryOpen.addEventListener(
+    "click",
+    () => {
+
+      if (junghwanBookDetail) {
+        junghwanBookDetail.classList.remove(
+          "active"
+        );
+      }
+
+      junghwanGrowthHistoryPage.style.display =
+        "block";
+
+      junghwanGrowthHistoryPage.scrollTop =
+        0;
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+  );
+}
+
+
+// ======================================================
+// ← GROWTH HISTORY → JUNGHWAN BOOK
+// ======================================================
+
+if (
+  junghwanGrowthHistoryBack &&
+  junghwanGrowthHistoryPage
+) {
+
+  junghwanGrowthHistoryBack.addEventListener(
+    "click",
+    () => {
+
+      junghwanGrowthHistoryPage.style.display =
+        "none";
+
+      if (junghwanBookDetail) {
+
+        junghwanBookDetail.classList.add(
+          "active"
+        );
+
+        junghwanBookDetail.scrollTop =
+          0;
+
+      }
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+  );
+}
+
+
+// ======================================================
+// ← YEAR DETAIL → GROWTH HISTORY
+// ======================================================
+
+if (
+  junghwanGrowthYearBack &&
+  junghwanGrowthYearPage
+) {
+
+  junghwanGrowthYearBack.addEventListener(
+    "click",
+    () => {
+
+      junghwanGrowthYearPage.style.display =
+        "none";
+
+      junghwanGrowthHistoryPage.style.display =
+        "block";
+
+      junghwanGrowthHistoryPage.scrollTop =
+        0;
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+  );
+}
+
+
+// ======================================================
+// ＋ ADD → MODAL
+// ======================================================
+
+if (junghwanGrowthYearVisualAdd) {
+
+  junghwanGrowthYearVisualAdd.addEventListener(
+    "click",
+    () => {
+
+      currentJunghwanGrowthVisualItem =
+        null;
+
+      pendingJunghwanGrowthFile =
+        null;
+
+
+      if (junghwanGrowthVisualInput) {
+        junghwanGrowthVisualInput.value =
+          "";
+      }
+
+
+      if (junghwanGrowthVisualMemo) {
+        junghwanGrowthVisualMemo.value =
+          "";
+      }
+
+
+      if (junghwanGrowthVisualHair) {
+        junghwanGrowthVisualHair.value =
+          "BLACK";
+      }
+
+
+      if (junghwanGrowthVisualPreviewImage) {
+        junghwanGrowthVisualPreviewImage.src =
+          "";
+      }
+
+
+      if (junghwanGrowthVisualPreview) {
+        junghwanGrowthVisualPreview.style.display =
+          "none";
+      }
+
+
+      if (junghwanGrowthVisualDelete) {
+        junghwanGrowthVisualDelete.style.display =
+          "none";
+      }
+
+
+      if (junghwanGrowthVisualModalKicker) {
+
+        junghwanGrowthVisualModalKicker.textContent =
+          `📸 ${currentJunghwanGrowthYear} VISUAL`;
+
+      }
+
+
+      if (junghwanGrowthVisualModal) {
+
+        junghwanGrowthVisualModal.style.display =
+          "flex";
+
+        junghwanGrowthVisualModal.scrollTop =
+          0;
+
+      }
+
+    }
+  );
+}
+
+
+// ======================================================
+// 📷 SELECT PHOTO
+// ======================================================
+
+if (
+  junghwanGrowthVisualSelect &&
+  junghwanGrowthVisualInput
+) {
+
+  junghwanGrowthVisualSelect.addEventListener(
+    "click",
+    () => {
+
+      junghwanGrowthVisualInput.click();
+
+    }
+  );
+}
+
+
+if (junghwanGrowthVisualInput) {
+
+  junghwanGrowthVisualInput.addEventListener(
+    "change",
+    () => {
+
+      const file =
+        junghwanGrowthVisualInput.files[0];
+
+      if (!file) return;
+
+
+      pendingJunghwanGrowthFile =
+        file;
+
+
+      const reader =
+        new FileReader();
+
+
+      reader.onload =
+        () => {
+
+          if (
+            junghwanGrowthVisualPreviewImage
+          ) {
+
+            junghwanGrowthVisualPreviewImage.src =
+              reader.result;
+
+          }
+
+
+          if (
+            junghwanGrowthVisualPreview
+          ) {
+
+            junghwanGrowthVisualPreview.style.display =
+              "block";
+
+          }
+
+        };
+
+
+      reader.readAsDataURL(
+        file
+      );
+
+    }
+  );
+}
+
+
+// ======================================================
+// 💎 SAVE / UPDATE
+// ======================================================
+
+if (junghwanGrowthVisualSave) {
+
+  junghwanGrowthVisualSave.addEventListener(
+    "click",
+    async () => {
+
+      try {
+
+        const hairColor =
+          junghwanGrowthVisualHair
+            ? junghwanGrowthVisualHair.value
+            : "OTHER";
+
+
+        const memo =
+          junghwanGrowthVisualMemo
+            ? junghwanGrowthVisualMemo.value.trim()
+            : "";
+
+
+        // ✏️ UPDATE
+        if (
+          currentJunghwanGrowthVisualItem
+        ) {
+
+          currentJunghwanGrowthVisualItem.hairColor =
+            hairColor;
+
+          currentJunghwanGrowthVisualItem.memo =
+            memo;
+
+
+          if (
+            pendingJunghwanGrowthFile
+          ) {
+
+            currentJunghwanGrowthVisualItem.imageData =
+              await junghwanGrowthImageToDataURL(
+                pendingJunghwanGrowthFile
+              );
+
+          }
+
+
+          await updateJunghwanGrowthVisual(
+            currentJunghwanGrowthVisualItem
+          );
+
+        }
+
+        // 📸 NEW
+        else {
+
+          if (!pendingJunghwanGrowthFile) {
+
+            alert(
+              "写真を選んでね📸"
+            );
+
+            return;
+
+          }
+
+
+          await saveJunghwanGrowthVisual(
+            pendingJunghwanGrowthFile,
+            currentJunghwanGrowthYear,
+            hairColor,
+            memo
+          );
+
+        }
+
+
+        closeJunghwanGrowthModal();
+
+        await renderJunghwanGrowthYearVisuals();
+
+
+      } catch (error) {
+
+        console.error(
+          "JUNGHWAN GROWTH SAVE ERROR:",
+          error
+        );
+
+        alert(
+          "保存に失敗しました🥲"
+        );
+
+      }
+
+    }
+  );
+}
+
+
+// ======================================================
+// 🗑 DELETE
+// ======================================================
+
+if (junghwanGrowthVisualDelete) {
+
+  junghwanGrowthVisualDelete.addEventListener(
+    "click",
+    async () => {
+
+      if (
+        !currentJunghwanGrowthVisualItem
+      ) {
+        return;
+      }
+
+
+      const ok =
+        confirm(
+          "この写真を削除しますか？🥲"
+        );
+
+      if (!ok) return;
+
+
+      try {
+
+        await deleteJunghwanGrowthVisual(
+          currentJunghwanGrowthVisualItem.id
+        );
+
+        closeJunghwanGrowthModal();
+
+        await renderJunghwanGrowthYearVisuals();
+
+
+      } catch (error) {
+
+        console.error(
+          "JUNGHWAN GROWTH DELETE ERROR:",
+          error
+        );
+
+        alert(
+          "削除に失敗しました🥲"
+        );
+
+      }
+
+    }
+  );
+}
+
+
+// ======================================================
+// CANCEL / CLOSE
+// ======================================================
+
+function closeJunghwanGrowthModal() {
+
+  pendingJunghwanGrowthFile =
+    null;
+
+  currentJunghwanGrowthVisualItem =
+    null;
+
+
+  if (junghwanGrowthVisualInput) {
+    junghwanGrowthVisualInput.value =
+      "";
+  }
+
+
+  if (junghwanGrowthVisualPreviewImage) {
+    junghwanGrowthVisualPreviewImage.src =
+      "";
+  }
+
+
+  if (junghwanGrowthVisualPreview) {
+    junghwanGrowthVisualPreview.style.display =
+      "none";
+  }
+
+
+  if (junghwanGrowthVisualMemo) {
+    junghwanGrowthVisualMemo.value =
+      "";
+  }
+
+
+  if (junghwanGrowthVisualDelete) {
+    junghwanGrowthVisualDelete.style.display =
+      "none";
+  }
+
+
+  if (junghwanGrowthVisualModal) {
+    junghwanGrowthVisualModal.style.display =
+      "none";
+  }
+
+}
+
+
+if (junghwanGrowthVisualCancel) {
+
+  junghwanGrowthVisualCancel.addEventListener(
+    "click",
+    () => {
+
+      closeJunghwanGrowthModal();
+
+    }
+  );
+}
+
+
+// ======================================================
+// 🚀 INITIALIZE JUNGHWAN GROWTH DB
+// ======================================================
+
+openJunghwanGrowthDB()
+  .catch(
+    error => {
+
+      console.error(
+        "JUNGHWAN GROWTH DB ERROR:",
+        error
+      );
+
+    }
+  );
+
+// ======================================================
+// 🐮 JUNGHWAN SONG / MEMORIES
+// ======================================================
+const junghwanSongSystem =
+  setupMemberSong({
+    key: "junghwan",
+    displayName: "JUNGHWAN",
+    japaneseName: "ジョンファン"
+  });
+
+const junghwanMemoriesSystem =
+  setupMemberMemories({
+    key: "junghwan",
+    displayName: "JUNGHWAN",
+    japaneseName: "ジョンファン"
+  });
+
+// =====================================================
+// 🐮 JUNGHWAN CHEMISTRY
+// SHARED CHEMISTRY ENGINE CONNECT
+// =====================================================
+
+const junghwanChemistryOpen =
+  document.getElementById(
+    "junghwanChemistryOpen"
+  );
+
+const junghwanChemistryPage =
+  document.getElementById(
+    "junghwanChemistryPage"
+  );
+
+const junghwanChemistryBack =
+  document.getElementById(
+    "junghwanChemistryBack"
+  );
+
+const junghwanChemistryList =
+  document.getElementById(
+    "junghwanChemistryList"
+  );
+
+const junghwanChemistryDetailPage =
+  document.getElementById(
+    "junghwanChemistryDetailPage"
+  );
+
+const junghwanChemistryDetailBack =
+  document.getElementById(
+    "junghwanChemistryDetailBack"
+  );
+
+const junghwanChemistryDetailName =
+  document.getElementById(
+    "junghwanChemistryDetailName"
+  );
+
+const junghwanChemistryDetailCaption =
+  document.getElementById(
+    "junghwanChemistryDetailCaption"
+  );
+
+const junghwanChemistryAdd =
+  document.getElementById(
+    "junghwanChemistryAdd"
+  );
+
+const junghwanChemistryMemories =
+  document.getElementById(
+    "junghwanChemistryMemories"
+  );
+
+
+let currentJunghwanChemistryPartner =
+  null;
+
+
+// =====================================================
+// 🐮 PARTNERS
+// =====================================================
+
+const junghwanChemistryPartners = [
+  "HYUNSUK",
+  "JIHOON",
+  "YOSHI",
+  "JUNKYU",
+  "JAEHYUK",
+  "DOYOUNG",
+  "HARUTO",
+  "JEONGWOO",
+  "ASAHI"
+];
+
+
+// =====================================================
+// 🫶 MAKE 9 CHEMISTRY CARDS
+// =====================================================
+
+function renderJunghwanChemistryCards() {
+
+  if (!junghwanChemistryList) {
+    return;
+  }
+
+
+  junghwanChemistryList.innerHTML =
+    "";
+
+
+  junghwanChemistryPartners.forEach(
+    partner => {
+
+      const partnerInfo =
+        chemistryMemberInfo[
+          partner
+        ];
+
+
+      const card =
+        document.createElement(
+          "button"
+        );
+
+      card.type =
+        "button";
+
+      card.className =
+        "jihoon-chemistry-card junghwan-chemistry-card";
+
+      card.dataset.partner =
+        partner;
+
+
+      card.innerHTML = `
+        <span class="jihoon-chemistry-emoji">
+          🐮${partnerInfo?.emoji || "💎"}
+        </span>
+
+        <div>
+          <strong>
+            JUNGHWAN × ${partner}
+          </strong>
+
+          <small>
+            CHEMISTRY MEMORY 💎
+          </small>
+        </div>
+
+        <span>→</span>
+      `;
+
+
+      card.addEventListener(
+        "click",
+        async () => {
+
+          currentJunghwanChemistryPartner =
+            partner;
+
+
+          // 💎 SHARED ENGINEへ接続
+          currentHyunsukChemistryPartner =
+            partner;
+
+          currentHyunsukChemistryPairKey =
+            createChemistryPairKey(
+              "JUNGHWAN",
+              partner
+            );
+
+          currentSharedChemistryRenderTarget =
+            junghwanChemistryMemories;
+
+
+          if (
+            junghwanChemistryDetailName
+          ) {
+
+            junghwanChemistryDetailName.textContent =
+              `🐮${partnerInfo?.emoji || "💎"} JUNGHWAN × ${partner}`;
+
+          }
+
+
+          if (
+            junghwanChemistryDetailCaption
+          ) {
+
+            junghwanChemistryDetailCaption.textContent =
+              `ジョンファンと${partner}の好きな瞬間を集めよう 💎`;
+
+          }
+
+
+          junghwanChemistryPage.style.display =
+            "none";
+
+          junghwanChemistryDetailPage.style.display =
+            "block";
+
+          junghwanChemistryDetailPage.scrollTop =
+            0;
+
+
+          await renderSharedChemistryMemories();
+
+
+          document.body.style.overflow =
+            "hidden";
+
+        }
+      );
+
+
+      junghwanChemistryList.appendChild(
+        card
+      );
+
+    }
+  );
+}
+
+
+// =====================================================
+// 🐮 JUNGHWAN BOOK → CHEMISTRY
+// =====================================================
+
+if (
+  junghwanChemistryOpen &&
+  junghwanChemistryPage
+) {
+
+  junghwanChemistryOpen.addEventListener(
+    "click",
+    () => {
+
+      if (junghwanBookDetail) {
+
+        junghwanBookDetail.classList.remove(
+          "active"
+        );
+
+      }
+
+
+      renderJunghwanChemistryCards();
+      junghwanChemistryPage.style.display =
+        "block";
+
+      junghwanChemistryPage.scrollTop =
+        0;
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+  );
+}
+
+
+// =====================================================
+// ← CHEMISTRY → JUNGHWAN BOOK
+// =====================================================
+
+if (
+  junghwanChemistryBack &&
+  junghwanChemistryPage
+) {
+
+  junghwanChemistryBack.addEventListener(
+    "click",
+    () => {
+
+      junghwanChemistryPage.style.display =
+        "none";
+
+      if (junghwanBookDetail) {
+
+        junghwanBookDetail.classList.add(
+          "active"
+        );
+
+        junghwanBookDetail.scrollTop =
+          0;
+
+      }
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+  );
+}
+
+
+// =====================================================
+// ← DETAIL → CHEMISTRY LIST
+// =====================================================
+
+if (
+  junghwanChemistryDetailBack &&
+  junghwanChemistryDetailPage
+) {
+
+  junghwanChemistryDetailBack.addEventListener(
+    "click",
+    () => {
+
+      junghwanChemistryDetailPage.style.display =
+        "none";
+
+      junghwanChemistryPage.style.display =
+        "block";
+
+      junghwanChemistryPage.scrollTop =
+        0;
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+  );
+}
+
+
+// =====================================================
+// ＋ ADD MEMORY → SHARED MODAL
+// =====================================================
+
+if (junghwanChemistryAdd) {
+
+  junghwanChemistryAdd.addEventListener(
+    "click",
+    () => {
+
+      if (
+        !currentJunghwanChemistryPartner
+      ) {
+        return;
+      }
+
+      currentHyunsukChemistryPartner =
+        currentJunghwanChemistryPartner;
+
+      currentHyunsukChemistryPairKey =
+        createChemistryPairKey(
+          "JUNGHWAN",
+          currentJunghwanChemistryPartner
+        );
+
+      currentSharedChemistryRenderTarget =
+        junghwanChemistryMemories;
+
+      currentSharedChemistryImageData =
+        null;
+
+      delete hyunsukChemistryMemorySave
+        .dataset.editId;
+
+      hyunsukChemistryMemoryInput.value =
+        "";
+
+      hyunsukChemistryMemoryMemo.value =
+        "";
+
+      hyunsukChemistryMemoryPreviewImage.src =
+        "";
+
+      hyunsukChemistryMemoryPreview.style.display =
+        "none";
+
+      hyunsukChemistryMemoryDelete.style.display =
+        "none";
+
+      hyunsukChemistryMemorySave.textContent =
+        "💎 SAVE MEMORY";
+
+      hyunsukChemistryMemoryTitle.textContent =
+        `JUNGHWAN × ${currentJunghwanChemistryPartner} MEMORY`;
+
+      hyunsukChemistryMemoryModal.style.display =
+        "flex";
+
+      hyunsukChemistryMemoryModal.scrollTop =
+        0;
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+  );
+}
+
+
+// 最初のカード生成
+renderJunghwanChemistryCards();
