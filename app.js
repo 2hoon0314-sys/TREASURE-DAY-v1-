@@ -6802,1271 +6802,10 @@ function escapeJihoonSongHTML(text) {
 // 最初の表示
 renderJihoonSongs();
 // ========================================
-// 🫶 JIHOON CHEMISTRY
+// 🐶 JIHOON CHEMISTRY
+// Shared engine integration is initialized at the end of this file.
 // ========================================
 
-const jihoonChemistryOpen =
-  document.getElementById("jihoonChemistryOpen");
-
-const jihoonChemistryPage =
-  document.getElementById("jihoonChemistryPage");
-
-const jihoonChemistryBack =
-  document.getElementById("jihoonChemistryBack");
-
-if (
-  jihoonChemistryOpen &&
-  jihoonChemistryPage &&
-  jihoonBookDetail
-) {
-  jihoonChemistryOpen.addEventListener("click", () => {
-
-    jihoonBookDetail.classList.remove("active");
-
-    jihoonChemistryPage.style.display = "block";
-    jihoonChemistryPage.scrollTop = 0;
-
-    document.body.style.overflow = "hidden";
-  });
-}
-
-if (
-  jihoonChemistryBack &&
-  jihoonChemistryPage &&
-  jihoonBookDetail
-) {
-  jihoonChemistryBack.addEventListener("click", () => {
-
-    jihoonChemistryPage.style.display = "none";
-
-    jihoonBookDetail.classList.add("active");
-    jihoonBookDetail.scrollTop = 0;
-
-    document.body.style.overflow = "hidden";
-  });
-}
-// ========================================
-// 🫶 JIHOON CHEMISTRY DETAIL
-// ========================================
-
-const jihoonChemistryCards =
-  document.querySelectorAll(".jihoon-chemistry-card");
-
-const jihoonChemistryJunkyuPage =
-  document.getElementById("jihoonChemistryJunkyuPage");
-
-const jihoonChemistryYoshiPage =
-  document.getElementById("jihoonChemistryYoshiPage");
-
-const jihoonChemistryJunkyuBack =
-  document.getElementById("jihoonChemistryJunkyuBack");
-
-const jihoonChemistryYoshiBack =
-  document.getElementById("jihoonChemistryYoshiBack");
-
-
-// ========================================
-// 🐨 JUNKYU / 🐯 YOSHI OPEN
-// ========================================
-
-jihoonChemistryCards.forEach((card) => {
-
-  card.addEventListener("click", () => {
-
-    const chemistry =
-      card.dataset.chemistry;
-
-    jihoonChemistryPage.style.display =
-      "none";
-
-
-    if (
-      chemistry === "JUNKYU" &&
-      jihoonChemistryJunkyuPage
-    ) {
-
-      jihoonChemistryJunkyuPage.style.display =
-        "block";
-
-      jihoonChemistryJunkyuPage.scrollTop = 0;
-    }
-
-
-    if (
-      chemistry === "YOSHI" &&
-      jihoonChemistryYoshiPage
-    ) {
-
-      jihoonChemistryYoshiPage.style.display =
-        "block";
-
-      jihoonChemistryYoshiPage.scrollTop = 0;
-    }
-
-
-    document.body.style.overflow =
-      "hidden";
-  });
-});
-
-
-// ========================================
-// ← CHEMISTRYに戻る
-// ========================================
-
-if (
-  jihoonChemistryJunkyuBack &&
-  jihoonChemistryJunkyuPage
-) {
-
-  jihoonChemistryJunkyuBack.addEventListener(
-    "click",
-    () => {
-
-      jihoonChemistryJunkyuPage.style.display =
-        "none";
-
-      jihoonChemistryPage.style.display =
-        "block";
-
-      jihoonChemistryPage.scrollTop = 0;
-
-      document.body.style.overflow =
-        "hidden";
-    }
-  );
-}
-
-
-if (
-  jihoonChemistryYoshiBack &&
-  jihoonChemistryYoshiPage
-) {
-
-  jihoonChemistryYoshiBack.addEventListener(
-    "click",
-    () => {
-
-      jihoonChemistryYoshiPage.style.display =
-        "none";
-
-      jihoonChemistryPage.style.display =
-        "block";
-
-      jihoonChemistryPage.scrollTop = 0;
-
-      document.body.style.overflow =
-        "hidden";
-    }
-  );
-}
-// ========================================
-// 🫶 CHEMISTRY MEMORY ENGINE
-// JUNKYU / YOSHI 共通
-// IndexedDB IMAGE SAVE
-// ========================================
-
-const jihoonChemistryJunkyuAdd =
-  document.getElementById("jihoonChemistryJunkyuAdd");
-
-const jihoonChemistryYoshiAdd =
-  document.getElementById("jihoonChemistryYoshiAdd");
-
-const jihoonChemistryJunkyuMemoryList =
-  document.getElementById("jihoonChemistryJunkyuMemoryList");
-
-const jihoonChemistryYoshiMemoryList =
-  document.getElementById("jihoonChemistryYoshiMemoryList");
-
-const jihoonChemistryMemoryModal =
-  document.getElementById("jihoonChemistryMemoryModal");
-
-const jihoonChemistryMemoryTitle =
-  document.getElementById("jihoonChemistryMemoryTitle");
-
-const jihoonChemistryMemoryInput =
-  document.getElementById("jihoonChemistryMemoryInput");
-
-const jihoonChemistryMemorySelect =
-  document.getElementById("jihoonChemistryMemorySelect");
-
-const jihoonChemistryMemoryPreview =
-  document.getElementById("jihoonChemistryMemoryPreview");
-
-const jihoonChemistryMemoryPreviewImage =
-  document.getElementById("jihoonChemistryMemoryPreviewImage");
-
-const jihoonChemistryMemoryMemo =
-  document.getElementById("jihoonChemistryMemoryMemo");
-
-const jihoonChemistryMemorySave =
-  document.getElementById("jihoonChemistryMemorySave");
-
-const jihoonChemistryMemoryDelete =
-  document.getElementById("jihoonChemistryMemoryDelete");
-
-const jihoonChemistryMemoryCancel =
-  document.getElementById("jihoonChemistryMemoryCancel");
-
-
-let currentJihoonChemistry = null;
-let currentJihoonChemistryImageData = null;
-
-
-// ========================================
-// 💎 METADATA LOCAL STORAGE
-// 写真本体は入れない
-// ========================================
-
-let jihoonChemistryMemories = [];
-
-try {
-
-  jihoonChemistryMemories =
-    JSON.parse(
-      localStorage.getItem(
-        "treasure-jihoon-chemistry-memories"
-      )
-    ) || [];
-
-} catch (error) {
-
-  jihoonChemistryMemories = [];
-}
-
-
-function saveJihoonChemistryMemories() {
-
-  localStorage.setItem(
-    "treasure-jihoon-chemistry-memories",
-    JSON.stringify(jihoonChemistryMemories)
-  );
-}
-
-
-// ========================================
-// 📸 CHEMISTRY IMAGE DATABASE
-// ========================================
-
-const JIHOON_CHEMISTRY_DB_NAME =
-  "treasure-jihoon-chemistry-db";
-
-const JIHOON_CHEMISTRY_DB_VERSION = 1;
-
-const JIHOON_CHEMISTRY_IMAGE_STORE =
-  "chemistry-images";
-
-
-function openJihoonChemistryDB() {
-
-  return new Promise((resolve, reject) => {
-
-    const request =
-      indexedDB.open(
-        JIHOON_CHEMISTRY_DB_NAME,
-        JIHOON_CHEMISTRY_DB_VERSION
-      );
-
-    request.onupgradeneeded = (event) => {
-
-      const db =
-        event.target.result;
-
-      if (
-        !db.objectStoreNames.contains(
-          JIHOON_CHEMISTRY_IMAGE_STORE
-        )
-      ) {
-
-        db.createObjectStore(
-          JIHOON_CHEMISTRY_IMAGE_STORE
-        );
-      }
-    };
-
-
-    request.onsuccess = () => {
-
-      resolve(request.result);
-
-    };
-
-
-    request.onerror = () => {
-
-      reject(request.error);
-
-    };
-
-  });
-}
-
-
-// ========================================
-// 📸 IMAGE SAVE
-// ========================================
-
-async function saveJihoonChemistryImage(
-  imageKey,
-  imageData
-) {
-
-  const db =
-    await openJihoonChemistryDB();
-
-
-  return new Promise((resolve, reject) => {
-
-    const transaction =
-      db.transaction(
-        JIHOON_CHEMISTRY_IMAGE_STORE,
-        "readwrite"
-      );
-
-    const store =
-      transaction.objectStore(
-        JIHOON_CHEMISTRY_IMAGE_STORE
-      );
-
-    const request =
-      store.put(
-        imageData,
-        imageKey
-      );
-
-
-    request.onsuccess = () =>
-      resolve();
-
-    request.onerror = () =>
-      reject(request.error);
-
-  });
-}
-
-
-// ========================================
-// 📸 IMAGE LOAD
-// ========================================
-
-async function loadJihoonChemistryImage(
-  imageKey
-) {
-
-  if (!imageKey) return "";
-
-
-  const db =
-    await openJihoonChemistryDB();
-
-
-  return new Promise((resolve, reject) => {
-
-    const transaction =
-      db.transaction(
-        JIHOON_CHEMISTRY_IMAGE_STORE,
-        "readonly"
-      );
-
-    const store =
-      transaction.objectStore(
-        JIHOON_CHEMISTRY_IMAGE_STORE
-      );
-
-    const request =
-      store.get(imageKey);
-
-
-    request.onsuccess = () => {
-
-      resolve(
-        request.result || ""
-      );
-
-    };
-
-
-    request.onerror = () =>
-      reject(request.error);
-
-  });
-}
-
-
-// ========================================
-// 🗑 IMAGE DELETE
-// ========================================
-
-async function deleteJihoonChemistryImage(
-  imageKey
-) {
-
-  if (!imageKey) return;
-
-
-  const db =
-    await openJihoonChemistryDB();
-
-
-  return new Promise((resolve, reject) => {
-
-    const transaction =
-      db.transaction(
-        JIHOON_CHEMISTRY_IMAGE_STORE,
-        "readwrite"
-      );
-
-    const store =
-      transaction.objectStore(
-        JIHOON_CHEMISTRY_IMAGE_STORE
-      );
-
-    const request =
-      store.delete(imageKey);
-
-
-    request.onsuccess = () =>
-      resolve();
-
-    request.onerror = () =>
-      reject(request.error);
-
-  });
-}
-
-
-// ========================================
-// 📸 RESIZE IMAGE
-// ========================================
-
-function resizeJihoonChemistryImage(file) {
-
-  return new Promise((resolve, reject) => {
-
-    const reader =
-      new FileReader();
-
-
-    reader.onload = () => {
-
-      const img =
-        new Image();
-
-
-      img.onload = () => {
-
-        const canvas =
-          document.createElement("canvas");
-
-        const MAX_SIZE = 1600;
-
-        let width =
-          img.naturalWidth;
-
-        let height =
-          img.naturalHeight;
-
-
-        if (
-          width > height &&
-          width > MAX_SIZE
-        ) {
-
-          height =
-            Math.round(
-              height *
-              MAX_SIZE /
-              width
-            );
-
-          width =
-            MAX_SIZE;
-
-        } else if (
-          height >= width &&
-          height > MAX_SIZE
-        ) {
-
-          width =
-            Math.round(
-              width *
-              MAX_SIZE /
-              height
-            );
-
-          height =
-            MAX_SIZE;
-
-        }
-
-
-        canvas.width =
-          width;
-
-        canvas.height =
-          height;
-
-
-        const ctx =
-          canvas.getContext("2d");
-
-
-        ctx.drawImage(
-          img,
-          0,
-          0,
-          width,
-          height
-        );
-
-
-        resolve(
-          canvas.toDataURL(
-            "image/jpeg",
-            0.82
-          )
-        );
-      };
-
-
-      img.onerror = reject;
-
-      img.src =
-        reader.result;
-    };
-
-
-    reader.onerror =
-      reject;
-
-
-    reader.readAsDataURL(file);
-
-  });
-}
-
-
-// ========================================
-// 🫶 ADD OPEN
-// ========================================
-
-function openJihoonChemistryMemoryModal(
-  chemistry
-) {
-
-  currentJihoonChemistry =
-    chemistry;
-
-  currentJihoonChemistryImageData =
-    null;
-
-
-  delete jihoonChemistryMemorySave.dataset.editId;
-
-  jihoonChemistryMemoryInput.value =
-    "";
-
-  jihoonChemistryMemoryMemo.value =
-    "";
-
-  jihoonChemistryMemoryPreviewImage.src =
-    "";
-
-  jihoonChemistryMemoryPreview.style.display =
-    "none";
-
-  jihoonChemistryMemorySave.textContent =
-    "💎 SAVE MEMORY";
-
-  jihoonChemistryMemoryDelete.style.display =
-    "none";
-
-
-  if (chemistry === "JUNKYU") {
-
-    jihoonChemistryMemoryTitle.textContent =
-      "トムジェリの思い出を追加 🐶🐨";
-
-  } else {
-
-    jihoonChemistryMemoryTitle.textContent =
-      "ヨシジフンの思い出を追加 🐯🐶";
-
-  }
-
-
-  jihoonChemistryMemoryModal.style.display =
-    "flex";
-
-  jihoonChemistryMemoryModal.scrollTop =
-    0;
-
-  document.body.style.overflow =
-    "hidden";
-}
-
-
-if (jihoonChemistryJunkyuAdd) {
-
-  jihoonChemistryJunkyuAdd.addEventListener(
-    "click",
-    () => {
-
-      openJihoonChemistryMemoryModal(
-        "JUNKYU"
-      );
-
-    }
-  );
-}
-
-
-if (jihoonChemistryYoshiAdd) {
-
-  jihoonChemistryYoshiAdd.addEventListener(
-    "click",
-    () => {
-
-      openJihoonChemistryMemoryModal(
-        "YOSHI"
-      );
-
-    }
-  );
-}
-
-
-// ========================================
-// 📸 PHOTO SELECT
-// ========================================
-
-if (
-  jihoonChemistryMemorySelect &&
-  jihoonChemistryMemoryInput
-) {
-
-  jihoonChemistryMemorySelect.addEventListener(
-    "click",
-    () => {
-
-      jihoonChemistryMemoryInput.click();
-
-    }
-  );
-}
-
-
-if (jihoonChemistryMemoryInput) {
-
-  jihoonChemistryMemoryInput.addEventListener(
-    "change",
-    async () => {
-
-      const file =
-        jihoonChemistryMemoryInput.files[0];
-
-
-      if (!file) return;
-
-
-      try {
-
-        currentJihoonChemistryImageData =
-          await resizeJihoonChemistryImage(
-            file
-          );
-
-
-        jihoonChemistryMemoryPreviewImage.src =
-          currentJihoonChemistryImageData;
-
-
-        jihoonChemistryMemoryPreview.style.display =
-          "block";
-
-
-      } catch (error) {
-
-        console.error(
-          "CHEMISTRY IMAGE PREVIEW ERROR",
-          error
-        );
-
-        alert(
-          "写真の読み込みに失敗しました😭"
-        );
-
-      }
-    }
-  );
-}
-
-
-// ========================================
-// 💎 SAVE / UPDATE
-// ========================================
-
-if (jihoonChemistryMemorySave) {
-
-  jihoonChemistryMemorySave.addEventListener(
-    "click",
-    async () => {
-
-
-      if (!currentJihoonChemistry) return;
-
-
-      const memo =
-        jihoonChemistryMemoryMemo.value.trim();
-
-
-      const editId =
-        jihoonChemistryMemorySave.dataset.editId
-          ? Number(
-              jihoonChemistryMemorySave.dataset.editId
-            )
-          : null;
-
-
-      try {
-
-        // ===============================
-        // ✏️ UPDATE
-        // ===============================
-
-        if (editId) {
-
-          const item =
-            jihoonChemistryMemories.find(
-              (memory) =>
-                memory.id === editId
-            );
-
-
-          if (!item) return;
-
-
-          item.memo =
-            memo;
-
-
-          if (
-            currentJihoonChemistryImageData
-          ) {
-
-            const newImageKey =
-              "chemistry-" +
-              Date.now() +
-              "-" +
-              Math.random()
-                .toString(36)
-                .slice(2);
-
-
-            await saveJihoonChemistryImage(
-              newImageKey,
-              currentJihoonChemistryImageData
-            );
-
-
-            if (item.imageKey) {
-
-              await deleteJihoonChemistryImage(
-                item.imageKey
-              );
-
-            }
-
-
-            item.imageKey =
-              newImageKey;
-          }
-
-
-        } else {
-
-          // ===============================
-          // 💎 NEW MEMORY
-          // ===============================
-
-          if (
-            !currentJihoonChemistryImageData
-          ) {
-
-            alert(
-              "写真を選んでね 📸"
-            );
-
-            return;
-          }
-
-
-          const imageKey =
-            "chemistry-" +
-            Date.now() +
-            "-" +
-            Math.random()
-              .toString(36)
-              .slice(2);
-
-
-          await saveJihoonChemistryImage(
-            imageKey,
-            currentJihoonChemistryImageData
-          );
-
-
-          jihoonChemistryMemories.unshift({
-            id: Date.now(),
-            chemistry:
-              currentJihoonChemistry,
-            imageKey,
-            memo,
-            createdAt:
-              Date.now()
-          });
-        }
-
-
-        saveJihoonChemistryMemories();
-
-
-        await renderJihoonChemistryMemories();
-
-
-        closeJihoonChemistryMemoryModal();
-
-
-      } catch (error) {
-
-        console.error(
-          "CHEMISTRY MEMORY SAVE ERROR",
-          error
-        );
-
-        alert(
-          "保存に失敗しました😭"
-        );
-
-      }
-
-    }
-  );
-}
-
-
-// ========================================
-// ❌ CANCEL
-// ========================================
-
-if (jihoonChemistryMemoryCancel) {
-
-  jihoonChemistryMemoryCancel.addEventListener(
-    "click",
-    () => {
-
-      closeJihoonChemistryMemoryModal();
-
-    }
-  );
-}
-
-
-function closeJihoonChemistryMemoryModal() {
-
-  jihoonChemistryMemoryModal.style.display =
-    "none";
-
-  jihoonChemistryMemoryInput.value =
-    "";
-
-  jihoonChemistryMemoryMemo.value =
-    "";
-
-  jihoonChemistryMemoryPreviewImage.src =
-    "";
-
-  jihoonChemistryMemoryPreview.style.display =
-    "none";
-
-  currentJihoonChemistryImageData =
-    null;
-
-
-  delete jihoonChemistryMemorySave.dataset.editId;
-
-
-  jihoonChemistryMemorySave.textContent =
-    "💎 SAVE MEMORY";
-
-
-  jihoonChemistryMemoryDelete.style.display =
-    "none";
-
-}
-
-
-// ========================================
-// 🖼️ RENDER
-// ========================================
-
-async function renderJihoonChemistryMemories() {
-
-  await renderJihoonChemistryMemoryList(
-    "JUNKYU",
-    jihoonChemistryJunkyuMemoryList
-  );
-
-
-  await renderJihoonChemistryMemoryList(
-    "YOSHI",
-    jihoonChemistryYoshiMemoryList
-  );
-
-}
-
-
-async function renderJihoonChemistryMemoryList(
-  chemistry,
-  list
-) {
-
-  if (!list) return;
-
-
-  const items =
-    jihoonChemistryMemories
-      .filter(
-        (memory) =>
-          memory.chemistry === chemistry
-      )
-      .sort(
-        (a, b) =>
-          (b.createdAt || 0) -
-          (a.createdAt || 0)
-      );
-
-
-  if (items.length === 0) {
-
-    list.innerHTML = `
-      <div class="jihoon-chemistry-empty">
-        <span>📸</span>
-        <strong>まだ思い出がありません</strong>
-        <small>
-          好きなケミを追加してみよう 💎
-        </small>
-      </div>
-    `;
-
-    return;
-  }
-
-
-  list.innerHTML = "";
-
-
-  for (const item of items) {
-
-    const imageData =
-      await loadJihoonChemistryImage(
-        item.imageKey
-      );
-
-
-    const article =
-      document.createElement(
-        "article"
-      );
-
-
-    article.className =
-      "jihoon-chemistry-memory-card";
-
-
-    article.dataset.id =
-      String(item.id);
-
-
-    article.innerHTML = `
-      <img
-        src="${imageData}"
-        alt="CHEMISTRY MEMORY"
-      >
-
-      ${
-        item.memo
-          ? `
-            <p>
-              ${escapeJihoonChemistryHTML(
-                item.memo
-              )}
-            </p>
-          `
-          : `
-            <p class="jihoon-chemistry-no-note">
-              NO NOTE
-            </p>
-          `
-      }
-    `;
-
-
-    article.addEventListener(
-      "click",
-      () => {
-
-        openJihoonChemistryMemoryEdit(
-          item,
-          imageData
-        );
-
-      }
-    );
-
-
-    list.appendChild(
-      article
-    );
-  }
-}
-
-
-// ========================================
-// ✏️ EDIT OPEN
-// ========================================
-
-function openJihoonChemistryMemoryEdit(
-  item,
-  imageData
-) {
-
-  currentJihoonChemistry =
-    item.chemistry;
-
-
-  currentJihoonChemistryImageData =
-    null;
-
-
-  jihoonChemistryMemoryPreviewImage.src =
-    imageData || "";
-
-
-  jihoonChemistryMemoryPreview.style.display =
-    imageData
-      ? "block"
-      : "none";
-
-
-  jihoonChemistryMemoryMemo.value =
-    item.memo || "";
-
-
-  jihoonChemistryMemorySave.dataset.editId =
-    String(item.id);
-
-
-  jihoonChemistryMemorySave.textContent =
-    "💎 UPDATE MEMORY";
-
-
-  jihoonChemistryMemoryDelete.dataset.deleteId =
-    String(item.id);
-
-
-  jihoonChemistryMemoryDelete.style.display =
-    "block";
-
-
-  jihoonChemistryMemoryModal.style.display =
-    "flex";
-
-
-  jihoonChemistryMemoryModal.scrollTop =
-    0;
-
-
-  document.body.style.overflow =
-    "hidden";
-}
-
-
-// ========================================
-// 🗑 DELETE
-// ========================================
-
-if (jihoonChemistryMemoryDelete) {
-
-  jihoonChemistryMemoryDelete.addEventListener(
-    "click",
-    async () => {
-
-      const id =
-        Number(
-          jihoonChemistryMemoryDelete.dataset.deleteId
-        );
-
-
-      if (!id) return;
-
-
-      const ok =
-        confirm(
-          "このCHEMISTRY MEMORYを削除する？🥲"
-        );
-
-
-      if (!ok) return;
-
-
-      const item =
-        jihoonChemistryMemories.find(
-          (memory) =>
-            memory.id === id
-        );
-
-
-      try {
-
-        if (
-          item &&
-          item.imageKey
-        ) {
-
-          await deleteJihoonChemistryImage(
-            item.imageKey
-          );
-
-        }
-
-
-        jihoonChemistryMemories =
-          jihoonChemistryMemories.filter(
-            (memory) =>
-              memory.id !== id
-          );
-
-
-        saveJihoonChemistryMemories();
-
-
-        await renderJihoonChemistryMemories();
-
-
-        closeJihoonChemistryMemoryModal();
-
-
-      } catch (error) {
-
-        console.error(
-          "CHEMISTRY MEMORY DELETE ERROR",
-          error
-        );
-
-
-        alert(
-          "削除に失敗しました😭"
-        );
-
-      }
-
-    }
-  );
-}
-
-
-// ========================================
-// 🛡 HTML ESCAPE
-// ========================================
-
-function escapeJihoonChemistryHTML(text) {
-
-  return String(text)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
-}
-
-
-// ========================================
-// 🚚 OLD DATA MIGRATION
-// localStorage画像 → IndexedDB
-// ========================================
-
-async function migrateJihoonChemistryImages() {
-
-  let changed =
-    false;
-
-
-  for (
-    const item of
-    jihoonChemistryMemories
-  ) {
-
-    // 旧版 imageData が残っている場合
-    if (
-      item.imageData &&
-      !item.imageKey
-    ) {
-
-      const imageKey =
-        "chemistry-migrate-" +
-        Date.now() +
-        "-" +
-        Math.random()
-          .toString(36)
-          .slice(2);
-
-
-      await saveJihoonChemistryImage(
-        imageKey,
-        item.imageData
-      );
-
-
-      item.imageKey =
-        imageKey;
-
-
-      delete item.imageData;
-
-
-      changed =
-        true;
-    }
-  }
-
-
-  if (changed) {
-
-    saveJihoonChemistryMemories();
-
-  }
-}
-
-
-// ========================================
-// 💎 INITIALIZE
-// ========================================
-
-migrateJihoonChemistryImages()
-  .then(async () => {
-
-    await renderJihoonChemistryMemories();
-
-  })
-  .catch((error) => {
-
-    console.error(
-      "CHEMISTRY DB INIT ERROR",
-      error
-    );
-
-  });
 // =========================================
 // 📸 JIHOON VISUAL BOOK - IndexedDB SAVE
 // =========================================
@@ -12985,10 +11724,8 @@ if (hyunsukChemistryMemorySave) {
             pairKey:
               currentHyunsukChemistryPairKey,
 
-            members: [
-              "HYUNSUK",
-              currentHyunsukChemistryPartner
-            ],
+            members:
+              currentHyunsukChemistryPairKey.split("-"),
 
             imageKey,
 
@@ -31245,3 +29982,180 @@ if (junghwanChemistryAdd) {
 
 // 最初のカード生成
 renderJunghwanChemistryCards();
+
+
+// =====================================================
+// 🐶 JIHOON CHEMISTRY - SHARED ENGINE INTEGRATION
+// =====================================================
+
+const jihoonChemistryOpenShared = document.getElementById("jihoonChemistryOpen");
+const jihoonChemistryPageShared = document.getElementById("jihoonChemistryPage");
+const jihoonChemistryBackShared = document.getElementById("jihoonChemistryBack");
+const jihoonChemistryListShared = document.getElementById("jihoonChemistryList");
+const jihoonChemistryDetailPageShared = document.getElementById("jihoonChemistryDetailPage");
+const jihoonChemistryDetailBackShared = document.getElementById("jihoonChemistryDetailBack");
+const jihoonChemistryDetailEmojiShared = document.getElementById("jihoonChemistryDetailEmoji");
+const jihoonChemistryDetailTitleShared = document.getElementById("jihoonChemistryDetailTitle");
+const jihoonChemistryDetailCaptionShared = document.getElementById("jihoonChemistryDetailCaption");
+const jihoonChemistryMemoryListShared = document.getElementById("jihoonChemistryMemoryList");
+const jihoonChemistryAddShared = document.getElementById("jihoonChemistryAdd");
+
+let currentJihoonChemistryPartnerShared = null;
+
+const jihoonChemistryPartnersShared = [
+  "HYUNSUK", "YOSHI", "JUNKYU", "JAEHYUK", "ASAHI",
+  "DOYOUNG", "HARUTO", "JEONGWOO", "JUNGHWAN"
+];
+
+function renderJihoonSharedChemistryCards() {
+  if (!jihoonChemistryListShared) return;
+  jihoonChemistryListShared.innerHTML = "";
+
+  jihoonChemistryPartnersShared.forEach((partner) => {
+    const info = chemistryMemberInfo[partner];
+    const card = document.createElement("button");
+    card.type = "button";
+    card.className = "jihoon-chemistry-card";
+    card.dataset.partner = partner;
+    card.innerHTML = `
+      <span class="jihoon-chemistry-emoji">🐶${info?.emoji || "💎"}</span>
+      <div><strong>JIHOON × ${partner}</strong><small>CHEMISTRY MEMORY 💎</small></div>
+      <span>→</span>`;
+
+    card.addEventListener("click", async () => {
+      currentJihoonChemistryPartnerShared = partner;
+      currentHyunsukChemistryPartner = partner;
+      currentHyunsukChemistryPairKey = createChemistryPairKey("JIHOON", partner);
+      currentSharedChemistryRenderTarget = jihoonChemistryMemoryListShared;
+
+      if (jihoonChemistryDetailEmojiShared)
+        jihoonChemistryDetailEmojiShared.textContent = "🐶" + (info?.emoji || "💎");
+      if (jihoonChemistryDetailTitleShared)
+        jihoonChemistryDetailTitleShared.textContent = `JIHOON × ${partner}`;
+      if (jihoonChemistryDetailCaptionShared)
+        jihoonChemistryDetailCaptionShared.textContent = `ジフンと${partner}の好きな瞬間を集めよう 💎`;
+
+      jihoonChemistryPageShared.style.display = "none";
+      jihoonChemistryDetailPageShared.style.display = "block";
+      jihoonChemistryDetailPageShared.scrollTop = 0;
+      await renderSharedChemistryMemories();
+      document.body.style.overflow = "hidden";
+    });
+
+    jihoonChemistryListShared.appendChild(card);
+  });
+}
+
+if (jihoonChemistryOpenShared && jihoonChemistryPageShared) {
+  jihoonChemistryOpenShared.addEventListener("click", () => {
+    if (jihoonBookDetail) jihoonBookDetail.classList.remove("active");
+    renderJihoonSharedChemistryCards();
+    jihoonChemistryPageShared.style.display = "block";
+    jihoonChemistryPageShared.scrollTop = 0;
+    document.body.style.overflow = "hidden";
+  });
+}
+
+if (jihoonChemistryBackShared) {
+  jihoonChemistryBackShared.addEventListener("click", () => {
+    jihoonChemistryPageShared.style.display = "none";
+    if (jihoonBookDetail) {
+      jihoonBookDetail.classList.add("active");
+      jihoonBookDetail.scrollTop = 0;
+    }
+    document.body.style.overflow = "hidden";
+  });
+}
+
+if (jihoonChemistryDetailBackShared) {
+  jihoonChemistryDetailBackShared.addEventListener("click", () => {
+    jihoonChemistryDetailPageShared.style.display = "none";
+    jihoonChemistryPageShared.style.display = "block";
+    jihoonChemistryPageShared.scrollTop = 0;
+    document.body.style.overflow = "hidden";
+  });
+}
+
+if (jihoonChemistryAddShared) {
+  jihoonChemistryAddShared.addEventListener("click", () => {
+    if (!currentJihoonChemistryPartnerShared) return;
+    currentHyunsukChemistryPartner = currentJihoonChemistryPartnerShared;
+    currentHyunsukChemistryPairKey = createChemistryPairKey("JIHOON", currentJihoonChemistryPartnerShared);
+    currentSharedChemistryRenderTarget = jihoonChemistryMemoryListShared;
+    currentSharedChemistryImageData = null;
+    delete hyunsukChemistryMemorySave.dataset.editId;
+    hyunsukChemistryMemoryInput.value = "";
+    hyunsukChemistryMemoryMemo.value = "";
+    hyunsukChemistryMemoryPreviewImage.src = "";
+    hyunsukChemistryMemoryPreview.style.display = "none";
+    hyunsukChemistryMemoryDelete.style.display = "none";
+    hyunsukChemistryMemorySave.textContent = "💎 SAVE MEMORY";
+    hyunsukChemistryMemoryTitle.textContent = `JIHOON × ${currentJihoonChemistryPartnerShared} MEMORY`;
+    hyunsukChemistryMemoryModal.style.display = "flex";
+    hyunsukChemistryMemoryModal.scrollTop = 0;
+    document.body.style.overflow = "hidden";
+  });
+}
+
+// Old JIHOON JUNKYU/YOSHI data -> shared chemistry (one-time migration)
+const JIHOON_SHARED_MIGRATION_KEY = "treasure-jihoon-chemistry-shared-migrated-v1";
+
+function openOldJihoonChemistryDBShared() {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open("treasure-jihoon-chemistry-db", 1);
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+    request.onupgradeneeded = (event) => {
+      const db = event.target.result;
+      if (!db.objectStoreNames.contains("chemistry-images")) db.createObjectStore("chemistry-images");
+    };
+  });
+}
+
+async function loadOldJihoonChemistryImageShared(imageKey) {
+  if (!imageKey) return "";
+  const db = await openOldJihoonChemistryDBShared();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction("chemistry-images", "readonly");
+    const request = tx.objectStore("chemistry-images").get(imageKey);
+    request.onsuccess = () => resolve(request.result || "");
+    request.onerror = () => reject(request.error);
+  });
+}
+
+async function migrateOldJihoonChemistryShared() {
+  if (localStorage.getItem(JIHOON_SHARED_MIGRATION_KEY) === "done") return;
+  let oldItems = [];
+  try { oldItems = JSON.parse(localStorage.getItem("treasure-jihoon-chemistry-memories")) || []; }
+  catch (error) { oldItems = []; }
+
+  for (const oldItem of oldItems) {
+    const partner = String(oldItem.chemistry || "").toUpperCase();
+    if (!jihoonChemistryPartnersShared.includes(partner)) continue;
+    const migrationId = `jihoon-old-${oldItem.id}`;
+    if (sharedChemistryMemories.some((item) => item.migrationId === migrationId)) continue;
+
+    let imageData = oldItem.imageData || "";
+    if (!imageData && oldItem.imageKey) {
+      try { imageData = await loadOldJihoonChemistryImageShared(oldItem.imageKey); }
+      catch (error) { console.error("OLD JIHOON IMAGE LOAD ERROR", error); }
+    }
+    if (!imageData) continue;
+
+    const imageKey = "jihoon-shared-migrate-" + Date.now() + "-" + Math.random().toString(36).slice(2);
+    await saveSharedChemistryImage(imageKey, imageData);
+    sharedChemistryMemories.push({
+      id: Number(oldItem.id) || Date.now() + Math.floor(Math.random() * 1000),
+      pairKey: createChemistryPairKey("JIHOON", partner),
+      members: createChemistryPairKey("JIHOON", partner).split("-"),
+      imageKey, memo: oldItem.memo || "",
+      createdAt: oldItem.createdAt || oldItem.id || Date.now(),
+      migrationId
+    });
+  }
+  saveSharedChemistryMemories();
+  localStorage.setItem(JIHOON_SHARED_MIGRATION_KEY, "done");
+}
+
+renderJihoonSharedChemistryCards();
+migrateOldJihoonChemistryShared().catch((error) => console.error("JIHOON SHARED MIGRATION ERROR", error));
