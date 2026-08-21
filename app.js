@@ -18336,6 +18336,97 @@ const jaehyukMemoriesSystem =
     japaneseName: "ジェヒョク"
 
   });
+<!-- =========================================
+     🦁 JAEHYUK CHEMISTRY
+========================================= -->
+
+<section
+  id="jaehyukChemistryPage"
+  class="jihoon-chemistry-page"
+  style="display: none;"
+>
+
+  <button
+    type="button"
+    id="jaehyukChemistryBack"
+    class="jihoon-chemistry-back"
+  >
+    ← JAEHYUK BOOKに戻る
+  </button>
+
+  <div class="jihoon-chemistry-inner">
+
+    <div class="jihoon-chemistry-kicker">
+      🦁 JAEHYUK CHEMISTRY
+    </div>
+
+    <h2>MY FAVORITE CHEMISTRY 💎</h2>
+
+    <p class="jihoon-chemistry-subtitle">
+      ジェヒョクとメンバーの<br>
+      好きな瞬間を集めよう 🦁
+    </p>
+
+    <div
+      id="jaehyukChemistryList"
+      class="jihoon-chemistry-list"
+    ></div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================
+     🦁 JAEHYUK CHEMISTRY DETAIL
+========================================= -->
+
+<section
+  id="jaehyukChemistryDetailPage"
+  class="jihoon-chemistry-detail-page"
+  style="display: none;"
+>
+
+  <button
+    type="button"
+    id="jaehyukChemistryDetailBack"
+    class="jihoon-chemistry-detail-back"
+  >
+    ← CHEMISTRYに戻る
+  </button>
+
+  <div class="jihoon-chemistry-detail-inner">
+
+    <div
+      id="jaehyukChemistryDetailName"
+      class="jihoon-chemistry-detail-kicker"
+    >
+      CHEMISTRY MEMORY 💎
+    </div>
+
+    <h2>MY CHEMISTRY MEMORY 💎</h2>
+
+    <p
+      id="jaehyukChemistryDetailCaption"
+      class="jihoon-chemistry-detail-subtitle"
+    ></p>
+
+    <div
+      id="jaehyukChemistryMemories"
+      class="jihoon-chemistry-memory-list"
+    ></div>
+
+    <button
+      type="button"
+      id="jaehyukChemistryAdd"
+      class="jihoon-chemistry-add"
+    >
+      + ADD MEMORY
+    </button>
+
+  </div>
+
+</section>
 // =====================================================
 // 🌱 YOSHI GROWTH HISTORY
 // 2020 - 2026 共通YEARシステム
