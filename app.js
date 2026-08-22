@@ -32935,20 +32935,39 @@ function renderMusicWorldcupHistory() {
 
       `;
 
-      card.addEventListener(
-        "click",
-        () => {
+     card.addEventListener(
+  "click",
+  () => {
 
-          musicWorldcupHistory.style.display =
-            "none";
+    const previousRecord =
+      originalIndex > 0
+        ? history[
+            originalIndex - 1
+          ]
+        : null;
 
-          renderMusicWorldcupResult(
-            record.ranking,
-            record.completedAt
-          );
 
-        }
-      );
+    const previousRanking =
+      previousRecord &&
+      Array.isArray(
+        previousRecord.ranking
+      )
+        ? previousRecord.ranking
+        : null;
+
+
+    musicWorldcupHistory.style.display =
+      "none";
+
+
+    renderMusicWorldcupResult(
+      record.ranking,
+      record.completedAt,
+      previousRanking
+    );
+
+  }
+);
 
       musicWorldcupHistoryList
         .appendChild(card);
