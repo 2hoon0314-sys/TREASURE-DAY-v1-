@@ -33629,21 +33629,31 @@ if (
         "music-worldcup-result-row";
 
 
-      row.innerHTML = `
+     row.innerHTML = `
 
-        <div class="music-worldcup-result-rank">
-          ${index + 1}
-        </div>
+  <div class="music-worldcup-result-rank">
+    ${index + 1}
+  </div>
 
-        <strong>
-          ${song.title}
-        </strong>
+  <strong>
+    ${song.title}
+  </strong>
 
-        <span>
-          ${song.year}
+  ${
+    changeText
+      ? `
+        <span class="music-worldcup-rank-change">
+          ${changeText}
         </span>
+      `
+      : ""
+  }
 
-      `;
+  <span>
+    ${song.year}
+  </span>
+
+`;
 
 
       musicWorldcupResultList
