@@ -33574,7 +33574,46 @@ if (musicWorldcupResultDate) {
             item.id === songId
         );
 
+let changeText =
+  "";
 
+
+if (
+  Array.isArray(previousRanking)
+) {
+
+  const previousIndex =
+    previousRanking.indexOf(
+      songId
+    );
+
+
+  if (previousIndex !== -1) {
+
+    const difference =
+      previousIndex - index;
+
+
+    if (difference > 0) {
+
+      changeText =
+        `↑ ${difference}`;
+
+    } else if (difference < 0) {
+
+      changeText =
+        `↓ ${Math.abs(difference)}`;
+
+    } else {
+
+      changeText =
+        "—";
+
+    }
+
+  }
+
+}
       if (!song) {
         return;
       }
