@@ -32962,7 +32962,8 @@ function renderMusicWorldcupHistory() {
 
     musicWorldcupHistory.style.display =
       "none";
-
+musicWorldcupResultFromHistory =
+  true;
 
     renderMusicWorldcupResult(
       record.ranking,
