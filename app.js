@@ -33718,7 +33718,8 @@ const savedResult =
 
   musicWorldcupResult.style.display =
     "none";
-
+musicWorldcupHistory.style.display =
+  "none";
 
   if (
     musicWorldcupContinueButton
