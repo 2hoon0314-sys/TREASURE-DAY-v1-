@@ -31473,7 +31473,10 @@ const musicAlbumDetailYear =
   document.getElementById(
     "music-album-detail-year"
   );
-
+const musicAlbumDetailReleaseDate =
+  document.getElementById(
+    "music-album-detail-release-date"
+  );
 const musicAlbumDetailTitle =
   document.getElementById(
     "music-album-detail-title"
