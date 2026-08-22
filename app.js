@@ -30273,33 +30273,7 @@ if (
 // 今回は入口のみ。中身は次から順番に実装。
 // ======================================================
 
-const musicComingSoonButtons = [
-  "music-worldcup-open"
-];
 
-musicComingSoonButtons.forEach(
-  (id) => {
-
-    const button =
-      document.getElementById(id);
-
-    if (!button) {
-      return;
-    }
-
-    button.addEventListener(
-      "click",
-      () => {
-
-        console.log(
-          `${id} READY FOR NEXT STEP 💎`
-        );
-
-      }
-    );
-
-  }
-);
 // ======================================================
 // 🎧 TREASURE MUSIC MASTER DATA
 // ======================================================
