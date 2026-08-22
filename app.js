@@ -31544,30 +31544,113 @@ musicAlbumDetailReleaseDate.textContent =
     `💿 ${album.type}`;
 
 
-  /*
-    次の作業でここに
-    収録曲を連動させる！
+ const albumSongs =
+  album.tracks
+    .map(songId =>
+      treasureSongs.find(
+        song =>
+          song.id === songId
+      )
+    )
+    .filter(Boolean);
 
-    今は詳細ページが
-    正常に開くか確認する段階。
-  */
 
-  musicAlbumTrackCount.textContent =
-    "TRACK LIST COMING NEXT";
+musicAlbumTrackCount.textContent =
+  `${albumSongs.length} TRACKS`;
 
 
-  musicAlbumTrackList.innerHTML = `
+musicAlbumTrackList.innerHTML =
+  "";
 
-    <div class="music-album-track-empty">
 
-      🎧 TRACK LIST<br>
+albumSongs.forEach(
+  (song, index) => {
 
-      このアルバムの収録曲を<br>
-      次にTREASURE MUSICと連動します 💎
+    const favorite =
+      isMusicFavorite(
+        song.id
+      );
 
-    </div>
 
-  `;
+    const trackCard =
+      document.createElement(
+        "div"
+      );
+
+    trackCard.className =
+      "music-album-track-card";
+
+
+    trackCard.innerHTML = `
+
+      <div class="music-album-track-number">
+        ${String(index + 1).padStart(2, "0")}
+      </div>
+
+      <div class="music-album-track-info">
+
+        <strong>
+          ${song.title}
+        </strong>
+
+      </div>
+
+      <button
+        type="button"
+        class="
+          music-album-track-favorite
+          ${favorite ? "active" : ""}
+        "
+        aria-label="favorite"
+      >
+        ${favorite ? "♥" : "♡"}
+      </button>
+
+    `;
+
+
+    const favoriteButton =
+      trackCard.querySelector(
+        ".music-album-track-favorite"
+      );
+
+
+    favoriteButton
+      .addEventListener(
+        "click",
+        event => {
+
+          event.stopPropagation();
+
+          toggleMusicFavorite(
+            song.id
+          );
+
+
+          // ALBUM DETAIL更新
+          openMusicAlbumDetail(
+            currentMusicAlbumId
+          );
+
+
+          // ALL SONGS更新
+          renderMusicSongs();
+
+
+          // FAVORITES更新
+          renderMusicFavorites();
+
+        }
+      );
+
+
+    musicAlbumTrackList
+      .appendChild(
+        trackCard
+      );
+
+  }
+);
 
 
   musicDiscographyPage.style.display =
