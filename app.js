@@ -32525,7 +32525,10 @@ const musicWorldcupHistoryBack =
   document.getElementById(
     "music-worldcup-history-back"
   );
-
+const musicWorldcupResultHistoryBack =
+  document.getElementById(
+    "music-worldcup-result-history-back"
+  );
 // ======================================================
 // STATE
 // ======================================================
