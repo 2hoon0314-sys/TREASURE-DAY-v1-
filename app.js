@@ -33437,22 +33437,7 @@ if (
       "click",
       () => {
 
-        let result = [];
-
-        try {
-
-          result =
-            JSON.parse(
-              localStorage.getItem(
-                MUSIC_WORLDCUP_RESULT_KEY
-              )
-            ) || [];
-
-        } catch (error) {
-
-          result = [];
-
-        }
+       
 
 
         if (
