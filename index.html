@@ -1728,6 +1728,558 @@
 
   opacity: .55;
 }
+/* =========================================
+   🏆 TREASURE WORLD CUP
+========================================= */
+
+.music-worldcup-page {
+  position: fixed;
+  inset: 0;
+  z-index: 20060;
+  overflow-y: auto;
+
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(255, 232, 180, .78),
+      transparent 38%
+    ),
+    radial-gradient(
+      circle at bottom left,
+      rgba(225, 230, 255, .9),
+      transparent 44%
+    ),
+    #fafbff;
+
+  color: #243447;
+}
+
+.music-worldcup-inner {
+  width: min(100% - 32px, 520px);
+  margin: 0 auto;
+  padding: 28px 0 100px;
+}
+
+
+/* START */
+
+.music-worldcup-start-hero {
+  position: relative;
+  overflow: hidden;
+
+  margin: 25px 0 22px;
+  padding: 31px 24px;
+
+  border-radius: 31px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.95),
+      rgba(255,240,204,.86)
+    );
+
+  box-shadow:
+    0 13px 34px
+    rgba(100,100,140,.1);
+}
+
+.music-worldcup-mini {
+  display: block;
+
+  margin-bottom: 9px;
+
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .15em;
+
+  opacity: .43;
+}
+
+.music-worldcup-start-hero h1 {
+  position: relative;
+  z-index: 2;
+
+  margin: 0 0 16px;
+
+  font-size: 48px;
+  line-height: .92;
+  letter-spacing: -.05em;
+}
+
+.music-worldcup-start-hero p {
+  position: relative;
+  z-index: 2;
+
+  margin: 0;
+
+  font-size: 12px;
+  line-height: 1.8;
+
+  opacity: .55;
+}
+
+.music-worldcup-big-trophy {
+  position: absolute;
+
+  right: 14px;
+  top: 30px;
+
+  font-size: 105px;
+  line-height: 1;
+
+  opacity: .08;
+}
+
+
+/* START INFO */
+
+.music-worldcup-start-info {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 9px;
+
+  margin-bottom: 18px;
+}
+
+.music-worldcup-start-info > div {
+  padding: 16px 8px;
+
+  text-align: center;
+
+  border-radius: 19px;
+
+  background:
+    rgba(255,255,255,.78);
+
+  box-shadow:
+    0 5px 17px
+    rgba(70,100,140,.06);
+}
+
+.music-worldcup-start-info strong {
+  display: block;
+
+  margin-bottom: 4px;
+
+  font-size: 20px;
+}
+
+.music-worldcup-start-info span {
+  display: block;
+
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: .08em;
+
+  opacity: .43;
+}
+
+
+/* BUTTONS */
+
+.music-worldcup-main-button {
+  width: 100%;
+
+  padding: 15px 18px;
+
+  border: none;
+  border-radius: 19px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffe5a3,
+      #e0e6ff
+    );
+
+  color: inherit;
+
+  font-size: 11px;
+  font-weight: 900;
+
+  letter-spacing: .06em;
+
+  box-shadow:
+    0 9px 24px
+    rgba(90,100,140,.1);
+}
+
+.music-worldcup-continue-button {
+  width: 100%;
+
+  margin-top: 10px;
+  padding: 13px;
+
+  border: none;
+  border-radius: 17px;
+
+  background:
+    rgba(255,255,255,.75);
+
+  color: inherit;
+
+  font-size: 10px;
+  font-weight: 900;
+}
+
+
+/* BATTLE */
+
+.music-worldcup-progress-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  margin: 28px 3px 10px;
+}
+
+.music-worldcup-progress-head small {
+  display: block;
+
+  margin-bottom: 3px;
+
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: .12em;
+
+  opacity: .42;
+}
+
+.music-worldcup-progress-head strong {
+  font-size: 23px;
+}
+
+.music-worldcup-progress-head > span {
+  font-size: 9px;
+  font-weight: 800;
+
+  opacity: .45;
+}
+
+.music-worldcup-progress {
+  height: 8px;
+
+  margin-bottom: 28px;
+
+  overflow: hidden;
+
+  border-radius: 999px;
+
+  background:
+    rgba(220,229,242,.8);
+}
+
+.music-worldcup-progress-bar {
+  width: 0%;
+  height: 100%;
+
+  border-radius: inherit;
+
+  background:
+    linear-gradient(
+      90deg,
+      #ffd779,
+      #d8ddff
+    );
+
+  transition: width .25s ease;
+}
+
+
+/* QUESTION */
+
+.music-worldcup-question {
+  margin-bottom: 20px;
+
+  text-align: center;
+}
+
+.music-worldcup-question small {
+  display: block;
+
+  margin-bottom: 6px;
+
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: .14em;
+
+  opacity: .4;
+}
+
+.music-worldcup-question h2 {
+  margin: 0;
+
+  font-size: 20px;
+}
+
+
+/* VS */
+
+.music-worldcup-versus {
+  display: grid;
+  gap: 12px;
+}
+
+.music-worldcup-choice {
+  width: 100%;
+
+  min-height: 155px;
+
+  padding: 22px;
+
+  border: none;
+  border-radius: 27px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  background:
+    rgba(255,255,255,.9);
+
+  color: inherit;
+
+  box-shadow:
+    0 10px 27px
+    rgba(70,100,140,.09);
+
+  transition:
+    transform .15s ease,
+    box-shadow .15s ease;
+}
+
+.music-worldcup-choice:active {
+  transform: scale(.98);
+
+  box-shadow:
+    0 5px 15px
+    rgba(70,100,140,.07);
+}
+
+.music-worldcup-choice-year {
+  margin-bottom: 10px;
+
+  padding: 5px 9px;
+
+  border-radius: 999px;
+
+  background:
+    rgba(224,238,255,.8);
+
+  font-size: 9px;
+  font-weight: 900;
+
+  opacity: .65;
+}
+
+.music-worldcup-choice strong {
+  display: block;
+
+  max-width: 100%;
+
+  text-align: center;
+
+  font-size: 24px;
+  line-height: 1.15;
+
+  word-break: break-word;
+}
+
+.music-worldcup-choice small {
+  display: block;
+
+  margin-top: 13px;
+
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: .1em;
+
+  opacity: .32;
+}
+
+.music-worldcup-vs {
+  text-align: center;
+
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: .2em;
+
+  opacity: .35;
+}
+
+
+/* RESULT */
+
+.music-worldcup-result-hero {
+  margin: 28px 0 22px;
+
+  padding: 27px 22px;
+
+  border-radius: 29px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.94),
+      rgba(255,237,190,.82)
+    );
+
+  box-shadow:
+    0 11px 30px
+    rgba(90,100,140,.08);
+}
+
+.music-worldcup-result-hero > span {
+  display: block;
+
+  margin-bottom: 9px;
+
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: .13em;
+
+  opacity: .48;
+}
+
+.music-worldcup-result-hero h1 {
+  margin: 0 0 12px;
+
+  font-size: 38px;
+  line-height: 1;
+  letter-spacing: -.04em;
+}
+
+.music-worldcup-result-hero p {
+  margin: 0;
+
+  font-size: 11px;
+  line-height: 1.7;
+
+  opacity: .5;
+}
+
+
+/* WINNER */
+
+.music-worldcup-winner {
+  margin-bottom: 19px;
+}
+
+.music-worldcup-winner-card {
+  padding: 25px 20px;
+
+  text-align: center;
+
+  border-radius: 28px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #fff2ba,
+      #fffaf0
+    );
+
+  box-shadow:
+    0 12px 30px
+    rgba(120,100,60,.11);
+}
+
+.music-worldcup-winner-card span {
+  display: block;
+
+  margin-bottom: 8px;
+
+  font-size: 25px;
+}
+
+.music-worldcup-winner-card small {
+  display: block;
+
+  margin-bottom: 7px;
+
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: .11em;
+
+  opacity: .45;
+}
+
+.music-worldcup-winner-card strong {
+  display: block;
+
+  font-size: 25px;
+  line-height: 1.2;
+}
+
+
+/* RESULT LIST */
+
+.music-worldcup-result-list {
+  display: grid;
+  gap: 8px;
+
+  margin-bottom: 22px;
+}
+
+.music-worldcup-result-row {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 12px 14px;
+
+  border-radius: 18px;
+
+  background:
+    rgba(255,255,255,.82);
+}
+
+.music-worldcup-result-rank {
+  width: 34px;
+
+  text-align: center;
+
+  font-size: 10px;
+  font-weight: 900;
+
+  opacity: .45;
+}
+
+.music-worldcup-result-row strong {
+  flex: 1;
+
+  font-size: 11px;
+}
+
+.music-worldcup-result-row span {
+  font-size: 9px;
+
+  opacity: .4;
+}
+
+
+/* RESTART */
+
+.music-worldcup-restart {
+  width: 100%;
+
+  margin-top: 10px;
+  padding: 13px;
+
+  border: none;
+  border-radius: 17px;
+
+  background:
+    rgba(255,255,255,.72);
+
+  color: inherit;
+
+  font-size: 10px;
+  font-weight: 900;
+}  
 </style>
 </head>
 <body>
