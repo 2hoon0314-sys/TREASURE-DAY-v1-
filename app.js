@@ -32796,6 +32796,168 @@ function migrateFirstMusicWorldcupResultToHistory() {
 
 }
 // ======================================================
+// 🏆 WORLD CUP HISTORY RENDER
+// ======================================================
+
+function renderMusicWorldcupHistory() {
+
+  if (
+    !musicWorldcupHistoryList ||
+    !musicWorldcupHistoryEmpty
+  ) {
+    return;
+  }
+
+  const history =
+    loadMusicWorldcupHistory();
+
+  musicWorldcupHistoryList.innerHTML =
+    "";
+
+  if (history.length === 0) {
+
+    musicWorldcupHistoryEmpty.style.display =
+      "block";
+
+    return;
+  }
+
+  musicWorldcupHistoryEmpty.style.display =
+    "none";
+
+  const newestFirst =
+    [...history].reverse();
+
+  newestFirst.forEach(
+    (record, reverseIndex) => {
+
+      const originalIndex =
+        history.length -
+        reverseIndex -
+        1;
+
+      const winner =
+        treasureSongs.find(
+          song =>
+            song.id ===
+            record.ranking[0]
+        );
+
+      const second =
+        treasureSongs.find(
+          song =>
+            song.id ===
+            record.ranking[1]
+        );
+
+      const third =
+        treasureSongs.find(
+          song =>
+            song.id ===
+            record.ranking[2]
+        );
+
+      const date =
+        record.completedAt
+          ? new Date(
+              record.completedAt
+            )
+          : null;
+
+      const dateText =
+        date
+          ? date.toLocaleString(
+              "ja-JP",
+              {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+                hour: "2-digit",
+                minute: "2-digit"
+              }
+            )
+          : "日時記録なし";
+
+      const card =
+        document.createElement(
+          "button"
+        );
+
+      card.type =
+        "button";
+
+      card.className =
+        "music-worldcup-history-card";
+
+      card.dataset.historyIndex =
+        String(originalIndex);
+
+      card.innerHTML = `
+
+        <div class="music-worldcup-history-card-head">
+
+          <strong>
+            🏆 WORLD CUP #${String(
+              originalIndex + 1
+            ).padStart(2, "0")}
+          </strong>
+
+          <span>
+            ${dateText}
+          </span>
+
+        </div>
+
+        <div class="music-worldcup-history-top3">
+
+          <div class="music-worldcup-history-rank">
+            <span>🥇</span>
+            <strong>
+              ${winner ? winner.title : "-"}
+            </strong>
+          </div>
+
+          <div class="music-worldcup-history-rank">
+            <span>🥈</span>
+            <strong>
+              ${second ? second.title : "-"}
+            </strong>
+          </div>
+
+          <div class="music-worldcup-history-rank">
+            <span>🥉</span>
+            <strong>
+              ${third ? third.title : "-"}
+            </strong>
+          </div>
+
+        </div>
+
+      `;
+
+      card.addEventListener(
+        "click",
+        () => {
+
+          musicWorldcupHistory.style.display =
+            "none";
+
+          renderMusicWorldcupResult(
+            record.ranking,
+            record.completedAt
+          );
+
+        }
+      );
+
+      musicWorldcupHistoryList
+        .appendChild(card);
+
+    }
+  );
+
+}
+// ======================================================
 // START NEW WORLD CUP
 // ======================================================
 
