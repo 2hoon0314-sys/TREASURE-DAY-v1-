@@ -31532,7 +31532,10 @@ function openMusicAlbumDetail(albumId) {
   musicAlbumDetailYear.textContent =
     album.year;
 
-
+musicAlbumDetailReleaseDate.textContent =
+  album.releaseDate
+    .replaceAll("-", ".");
+  
   musicAlbumDetailTitle.textContent =
     album.title;
 
