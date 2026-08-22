@@ -32489,6 +32489,15 @@ const musicWorldcupApplyRanking =
 const musicWorldcupRestart =
   document.getElementById(
     "music-worldcup-restart"
+    const musicWorldcupLastResultButton =
+  document.getElementById(
+    "music-worldcup-last-result-button"
+  );
+
+const musicWorldcupResultDate =
+  document.getElementById(
+    "music-worldcup-result-date"
+  );
   );
 
 
