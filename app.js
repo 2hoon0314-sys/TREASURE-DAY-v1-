@@ -32501,7 +32501,30 @@ const musicWorldcupResultDate =
   document.getElementById(
     "music-worldcup-result-date"
   );
+const musicWorldcupHistoryButton =
+  document.getElementById(
+    "music-worldcup-history-button"
+  );
 
+const musicWorldcupHistory =
+  document.getElementById(
+    "music-worldcup-history"
+  );
+
+const musicWorldcupHistoryList =
+  document.getElementById(
+    "music-worldcup-history-list"
+  );
+
+const musicWorldcupHistoryEmpty =
+  document.getElementById(
+    "music-worldcup-history-empty"
+  );
+
+const musicWorldcupHistoryBack =
+  document.getElementById(
+    "music-worldcup-history-back"
+  );
 
 // ======================================================
 // STATE
