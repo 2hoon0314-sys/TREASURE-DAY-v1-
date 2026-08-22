@@ -34078,3 +34078,34 @@ musicWorldcupResultFromHistory =
     );
 
 }
+// ======================================================
+// 🏆 RESULT → HISTORY
+// ======================================================
+
+if (
+  musicWorldcupResultHistoryBack
+) {
+
+  musicWorldcupResultHistoryBack
+    .addEventListener(
+      "click",
+      () => {
+
+        musicWorldcupResult.style.display =
+          "none";
+
+        musicWorldcupHistory.style.display =
+          "block";
+
+        musicWorldcupResultFromHistory =
+          false;
+
+        renderMusicWorldcupHistory();
+
+        musicWorldcupPage.scrollTop =
+          0;
+
+      }
+    );
+
+}
