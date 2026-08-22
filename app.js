@@ -31099,3 +31099,336 @@ if (
   );
 
 }
+// ======================================================
+// 💿 TREASURE DISCOGRAPHY DATA
+// ======================================================
+
+const treasureAlbums = [
+
+  {
+    id: 1,
+    year: 2020,
+    title: "THE FIRST STEP : CHAPTER ONE",
+    type: "SINGLE ALBUM",
+    image:
+      "images/albums/album01_chapter1.jpg"
+  },
+
+  {
+    id: 2,
+    year: 2020,
+    title: "THE FIRST STEP : CHAPTER TWO",
+    type: "SINGLE ALBUM",
+    image:
+      "images/albums/album02_chapter2.jpg"
+  },
+
+  {
+    id: 3,
+    year: 2020,
+    title: "THE FIRST STEP : CHAPTER THREE",
+    type: "SINGLE ALBUM",
+    image:
+      "images/albums/album03_chapter3.jpg"
+  },
+
+  {
+    id: 4,
+    year: 2021,
+    title: "THE FIRST STEP : TREASURE EFFECT",
+    type: "1ST FULL ALBUM",
+    image:
+      "images/albums/album04_treasure_effect.jpg"
+  },
+
+  {
+    id: 5,
+    year: 2022,
+    title: "THE SECOND STEP : CHAPTER ONE",
+    type: "MINI ALBUM",
+    image:
+      "images/albums/album05_second_step1.jpg"
+  },
+
+  {
+    id: 6,
+    year: 2022,
+    title: "THE SECOND STEP : CHAPTER TWO",
+    type: "MINI ALBUM",
+    image:
+      "images/albums/album06_second_step2.jpg"
+  },
+
+  {
+    id: 7,
+    year: 2023,
+    title: "REBOOT",
+    type: "2ND FULL ALBUM",
+    image:
+      "images/albums/album07_reboot.jpg"
+  },
+
+  {
+    id: 8,
+    year: 2023,
+    title: "B.O.M.B (KABOOM ver.)",
+    type: "DIGITAL SINGLE",
+    image:
+      "images/albums/album08_bomb_kaboom.jpg"
+  },
+
+  {
+    id: 9,
+    year: 2024,
+    title: "KING KONG",
+    type: "DIGITAL SINGLE",
+    image:
+      "images/albums/album09_king_kong.jpg"
+  },
+
+  {
+    id: 10,
+    year: 2024,
+    title: "LAST NIGHT",
+    type: "DIGITAL SINGLE",
+    image:
+      "images/albums/album10_last_night.jpg"
+  },
+
+  {
+    id: 11,
+    year: 2025,
+    title: "PLEASURE",
+    type: "SPECIAL MINI ALBUM",
+    image:
+      "images/albums/album11_pleasure.jpg"
+  },
+
+  {
+    id: 12,
+    year: 2025,
+    title: "LOVE PULSE",
+    type: "MINI ALBUM",
+    image:
+      "images/albums/album12_love_pulse.jpg"
+  },
+
+  {
+    id: 13,
+    year: 2026,
+    title: "NEW WAV",
+    type: "MINI ALBUM",
+    image:
+      "images/albums/album13_new_wav.jpg"
+  }
+
+];
+
+
+// ======================================================
+// 💿 DISCOGRAPHY SYSTEM
+// ======================================================
+
+const musicDiscographyOpen =
+  document.getElementById(
+    "music-discography-open"
+  );
+
+const musicDiscographyPage =
+  document.getElementById(
+    "music-discography-page"
+  );
+
+const musicDiscographyBack =
+  document.getElementById(
+    "music-discography-back"
+  );
+
+const musicDiscographyList =
+  document.getElementById(
+    "music-discography-list"
+  );
+
+
+// ======================================================
+// RENDER DISCOGRAPHY
+// ======================================================
+
+function renderMusicDiscography() {
+
+  if (!musicDiscographyList) {
+    return;
+  }
+
+  musicDiscographyList.innerHTML = "";
+
+
+  const years = [
+    ...new Set(
+      treasureAlbums.map(
+        album => album.year
+      )
+    )
+  ].sort(
+    (a, b) => a - b
+  );
+
+
+  years.forEach(year => {
+
+    const albums =
+      treasureAlbums.filter(
+        album => album.year === year
+      );
+
+
+    const section =
+      document.createElement("section");
+
+    section.className =
+      "music-discography-year";
+
+
+    section.innerHTML = `
+
+      <div class="music-discography-year-head">
+
+        <strong>
+          ${year}
+        </strong>
+
+        <span></span>
+
+      </div>
+
+      <div
+        class="music-discography-grid"
+      ></div>
+
+    `;
+
+
+    const grid =
+      section.querySelector(
+        ".music-discography-grid"
+      );
+
+
+    albums.forEach(album => {
+
+      const card =
+        document.createElement("article");
+
+      card.className =
+        "music-album-card";
+
+
+      card.innerHTML = `
+
+        <button
+          type="button"
+          class="music-album-cover-button"
+          data-album-id="${album.id}"
+          aria-label="${album.title}"
+        >
+
+          <img
+            class="music-album-cover"
+            src="${album.image}"
+            alt="${album.title}"
+          >
+
+        </button>
+
+
+        <div class="music-album-info">
+
+          <strong>
+            ${album.title}
+          </strong>
+
+          <span>
+            ${album.year}
+          </span>
+
+          <span class="music-album-type">
+            💿 ${album.type}
+          </span>
+
+        </div>
+
+      `;
+
+
+      grid.appendChild(card);
+
+    });
+
+
+    musicDiscographyList
+      .appendChild(section);
+
+  });
+
+}
+
+
+// ======================================================
+// MUSIC → DISCOGRAPHY
+// ======================================================
+
+if (
+  musicDiscographyOpen &&
+  musicDiscographyPage
+) {
+
+  musicDiscographyOpen
+    .addEventListener(
+      "click",
+      () => {
+
+        renderMusicDiscography();
+
+        musicPage.style.display =
+          "none";
+
+        musicDiscographyPage
+          .style.display =
+          "block";
+
+        musicDiscographyPage
+          .scrollTop = 0;
+
+      }
+    );
+
+}
+
+
+// ======================================================
+// DISCOGRAPHY → MUSIC
+// ======================================================
+
+if (
+  musicDiscographyBack &&
+  musicDiscographyPage
+) {
+
+  musicDiscographyBack
+    .addEventListener(
+      "click",
+      () => {
+
+        musicDiscographyPage
+          .style.display =
+          "none";
+
+        musicPage.style.display =
+          "block";
+
+        musicPage.scrollTop = 0;
+
+      }
+    );
+
+}
