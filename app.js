@@ -32396,3 +32396,1134 @@ if (
     );
 
 }
+// ======================================================
+// 🏆 TREASURE WORLD CUP
+// ======================================================
+
+const MUSIC_WORLDCUP_STATE_KEY =
+  "treasure-music-worldcup-state";
+
+const MUSIC_WORLDCUP_RESULT_KEY =
+  "treasure-music-worldcup-result";
+
+
+const musicWorldcupOpen =
+  document.getElementById(
+    "music-worldcup-open"
+  );
+
+const musicWorldcupPage =
+  document.getElementById(
+    "music-worldcup-page"
+  );
+
+const musicWorldcupBack =
+  document.getElementById(
+    "music-worldcup-back"
+  );
+
+const musicWorldcupStart =
+  document.getElementById(
+    "music-worldcup-start"
+  );
+
+const musicWorldcupBattle =
+  document.getElementById(
+    "music-worldcup-battle"
+  );
+
+const musicWorldcupResult =
+  document.getElementById(
+    "music-worldcup-result"
+  );
+
+const musicWorldcupStartButton =
+  document.getElementById(
+    "music-worldcup-start-button"
+  );
+
+const musicWorldcupContinueButton =
+  document.getElementById(
+    "music-worldcup-continue-button"
+  );
+
+const musicWorldcupSongCount =
+  document.getElementById(
+    "music-worldcup-song-count"
+  );
+
+const musicWorldcupBattleNumber =
+  document.getElementById(
+    "music-worldcup-battle-number"
+  );
+
+const musicWorldcupProgressText =
+  document.getElementById(
+    "music-worldcup-progress-text"
+  );
+
+const musicWorldcupProgressBar =
+  document.getElementById(
+    "music-worldcup-progress-bar"
+  );
+
+const musicWorldcupChoiceA =
+  document.getElementById(
+    "music-worldcup-choice-a"
+  );
+
+const musicWorldcupChoiceB =
+  document.getElementById(
+    "music-worldcup-choice-b"
+  );
+
+const musicWorldcupChoiceAYear =
+  document.getElementById(
+    "music-worldcup-choice-a-year"
+  );
+
+const musicWorldcupChoiceBYear =
+  document.getElementById(
+    "music-worldcup-choice-b-year"
+  );
+
+const musicWorldcupChoiceATitle =
+  document.getElementById(
+    "music-worldcup-choice-a-title"
+  );
+
+const musicWorldcupChoiceBTitle =
+  document.getElementById(
+    "music-worldcup-choice-b-title"
+  );
+
+const musicWorldcupWinner =
+  document.getElementById(
+    "music-worldcup-winner"
+  );
+
+const musicWorldcupResultList =
+  document.getElementById(
+    "music-worldcup-result-list"
+  );
+
+const musicWorldcupApplyRanking =
+  document.getElementById(
+    "music-worldcup-apply-ranking"
+  );
+
+const musicWorldcupRestart =
+  document.getElementById(
+    "music-worldcup-restart"
+  );
+
+
+// ======================================================
+// STATE
+// ======================================================
+
+let musicWorldcupState = null;
+
+
+// ======================================================
+// HELPERS
+// ======================================================
+
+function shuffleMusicWorldcupSongs(items) {
+
+  const array = [...items];
+
+  for (
+    let i = array.length - 1;
+    i > 0;
+    i--
+  ) {
+
+    const j =
+      Math.floor(
+        Math.random() * (i + 1)
+      );
+
+    [
+      array[i],
+      array[j]
+    ] = [
+      array[j],
+      array[i]
+    ];
+
+  }
+
+  return array;
+
+}
+
+
+function saveMusicWorldcupState() {
+
+  if (!musicWorldcupState) {
+    return;
+  }
+
+  localStorage.setItem(
+    MUSIC_WORLDCUP_STATE_KEY,
+    JSON.stringify(
+      musicWorldcupState
+    )
+  );
+
+}
+
+
+function loadMusicWorldcupState() {
+
+  try {
+
+    const saved =
+      JSON.parse(
+        localStorage.getItem(
+          MUSIC_WORLDCUP_STATE_KEY
+        )
+      );
+
+    if (
+      saved &&
+      Array.isArray(saved.sorted) &&
+      Array.isArray(saved.remaining)
+    ) {
+
+      return saved;
+
+    }
+
+  } catch (error) {
+    console.error(
+      "WORLD CUP STATE LOAD ERROR:",
+      error
+    );
+  }
+
+  return null;
+
+}
+
+
+function clearMusicWorldcupState() {
+
+  localStorage.removeItem(
+    MUSIC_WORLDCUP_STATE_KEY
+  );
+
+}
+
+
+function saveMusicWorldcupResult(
+  result
+) {
+
+  localStorage.setItem(
+    MUSIC_WORLDCUP_RESULT_KEY,
+    JSON.stringify(result)
+  );
+
+}
+
+
+// ======================================================
+// START NEW WORLD CUP
+// ======================================================
+
+function startNewMusicWorldcup() {
+
+  const shuffled =
+    shuffleMusicWorldcupSongs(
+      treasureSongs.map(
+        song => song.id
+      )
+    );
+
+
+  /*
+    insertion sort型。
+
+    最初の1曲をsortedに置いて、
+    残りを1曲ずつ既存順位へ挿入していく。
+
+    2択だけで全順位を作れる。
+  */
+
+  musicWorldcupState = {
+
+    sorted: [
+      shuffled[0]
+    ],
+
+    remaining:
+      shuffled.slice(1),
+
+    currentSongId: null,
+
+    compareIndex: null,
+
+    low: null,
+
+    high: null,
+
+    battleCount: 0,
+
+    completed: false
+
+  };
+
+
+  prepareNextMusicWorldcupSong();
+
+  saveMusicWorldcupState();
+
+}
+
+
+// ======================================================
+// NEXT SONG
+// ======================================================
+
+function prepareNextMusicWorldcupSong() {
+
+  if (
+    !musicWorldcupState
+  ) {
+    return;
+  }
+
+
+  // 全曲終了
+  if (
+    musicWorldcupState
+      .remaining.length === 0
+  ) {
+
+    finishMusicWorldcup();
+    return;
+
+  }
+
+
+  musicWorldcupState.currentSongId =
+    musicWorldcupState
+      .remaining.shift();
+
+
+  // 二分探索で順位位置を探す
+  musicWorldcupState.low =
+    0;
+
+  musicWorldcupState.high =
+    musicWorldcupState
+      .sorted.length;
+
+
+  prepareMusicWorldcupComparison();
+
+}
+
+
+// ======================================================
+// PREPARE COMPARISON
+// ======================================================
+
+function prepareMusicWorldcupComparison() {
+
+  const state =
+    musicWorldcupState;
+
+
+  if (!state) {
+    return;
+  }
+
+
+  /*
+    low === high になったら
+    挿入位置確定
+  */
+
+  if (
+    state.low >= state.high
+  ) {
+
+    state.sorted.splice(
+      state.low,
+      0,
+      state.currentSongId
+    );
+
+
+    state.currentSongId =
+      null;
+
+
+    state.compareIndex =
+      null;
+
+
+    saveMusicWorldcupState();
+
+
+    prepareNextMusicWorldcupSong();
+
+    return;
+
+  }
+
+
+  state.compareIndex =
+    Math.floor(
+      (
+        state.low +
+        state.high
+      ) / 2
+    );
+
+
+  state.battleCount++;
+
+
+  saveMusicWorldcupState();
+
+  renderMusicWorldcupBattle();
+
+}
+
+
+// ======================================================
+// CURRENT SONGS
+// ======================================================
+
+function getCurrentMusicWorldcupSongs() {
+
+  if (
+    !musicWorldcupState
+  ) {
+    return null;
+  }
+
+
+  const newSong =
+    treasureSongs.find(
+      song =>
+        song.id ===
+        musicWorldcupState.currentSongId
+    );
+
+
+  const rankedSongId =
+    musicWorldcupState
+      .sorted[
+        musicWorldcupState
+          .compareIndex
+      ];
+
+
+  const rankedSong =
+    treasureSongs.find(
+      song =>
+        song.id ===
+        rankedSongId
+    );
+
+
+  if (
+    !newSong ||
+    !rankedSong
+  ) {
+    return null;
+  }
+
+
+  return {
+    newSong,
+    rankedSong
+  };
+
+}
+
+
+// ======================================================
+// RENDER BATTLE
+// ======================================================
+
+function renderMusicWorldcupBattle() {
+
+  const songs =
+    getCurrentMusicWorldcupSongs();
+
+
+  if (!songs) {
+    return;
+  }
+
+
+  musicWorldcupStart.style.display =
+    "none";
+
+  musicWorldcupResult.style.display =
+    "none";
+
+  musicWorldcupBattle.style.display =
+    "block";
+
+
+  /*
+    左右を毎回ランダムにする。
+    同じ側ばかり選ぶクセ対策🤣
+  */
+
+  const reverse =
+    Math.random() < 0.5;
+
+
+  const songA =
+    reverse
+      ? songs.rankedSong
+      : songs.newSong;
+
+
+  const songB =
+    reverse
+      ? songs.newSong
+      : songs.rankedSong;
+
+
+  musicWorldcupChoiceA.dataset.songId =
+    String(songA.id);
+
+  musicWorldcupChoiceB.dataset.songId =
+    String(songB.id);
+
+
+  musicWorldcupChoiceAYear.textContent =
+    songA.year;
+
+  musicWorldcupChoiceBYear.textContent =
+    songB.year;
+
+
+  musicWorldcupChoiceATitle.textContent =
+    songA.title;
+
+  musicWorldcupChoiceBTitle.textContent =
+    songB.title;
+
+
+  musicWorldcupBattleNumber.textContent =
+    musicWorldcupState
+      .battleCount;
+
+
+  const completedSongs =
+    musicWorldcupState
+      .sorted.length;
+
+
+  const totalSongs =
+    treasureSongs.length;
+
+
+  musicWorldcupProgressText.textContent =
+    `${completedSongs} / ${totalSongs} SONGS`;
+
+
+  const progress =
+    Math.min(
+      100,
+      (
+        completedSongs /
+        totalSongs
+      ) * 100
+    );
+
+
+  musicWorldcupProgressBar.style.width =
+    `${progress}%`;
+
+}
+
+
+// ======================================================
+// CHOOSE SONG
+// ======================================================
+
+function chooseMusicWorldcupSong(
+  selectedSongId
+) {
+
+  if (
+    !musicWorldcupState
+  ) {
+    return;
+  }
+
+
+  const state =
+    musicWorldcupState;
+
+
+  const currentSongId =
+    state.currentSongId;
+
+
+  const rankedSongId =
+    state.sorted[
+      state.compareIndex
+    ];
+
+
+  /*
+    sortedは
+    1位 → 最下位
+    の順。
+
+    新曲が比較相手より好き
+    → より上側を探索
+
+    比較相手の方が好き
+    → より下側を探索
+  */
+
+
+  if (
+    Number(selectedSongId) ===
+    currentSongId
+  ) {
+
+    // 新曲の方が上
+    state.high =
+      state.compareIndex;
+
+  } else if (
+    Number(selectedSongId) ===
+    rankedSongId
+  ) {
+
+    // 既存曲の方が上
+    state.low =
+      state.compareIndex + 1;
+
+  } else {
+
+    return;
+
+  }
+
+
+  saveMusicWorldcupState();
+
+  prepareMusicWorldcupComparison();
+
+}
+
+
+// ======================================================
+// CHOICE EVENTS
+// ======================================================
+
+if (musicWorldcupChoiceA) {
+
+  musicWorldcupChoiceA
+    .addEventListener(
+      "click",
+      () => {
+
+        chooseMusicWorldcupSong(
+          Number(
+            musicWorldcupChoiceA
+              .dataset.songId
+          )
+        );
+
+      }
+    );
+
+}
+
+
+if (musicWorldcupChoiceB) {
+
+  musicWorldcupChoiceB
+    .addEventListener(
+      "click",
+      () => {
+
+        chooseMusicWorldcupSong(
+          Number(
+            musicWorldcupChoiceB
+              .dataset.songId
+          )
+        );
+
+      }
+    );
+
+}
+
+
+// ======================================================
+// FINISH
+// ======================================================
+
+function finishMusicWorldcup() {
+
+  if (
+    !musicWorldcupState
+  ) {
+    return;
+  }
+
+
+  musicWorldcupState.completed =
+    true;
+
+
+  const result =
+    [
+      ...musicWorldcupState.sorted
+    ];
+
+
+  saveMusicWorldcupResult(
+    result
+  );
+
+
+  clearMusicWorldcupState();
+
+
+  musicWorldcupState =
+    null;
+
+
+  renderMusicWorldcupResult(
+    result
+  );
+
+}
+
+
+// ======================================================
+// RESULT
+// ======================================================
+
+function renderMusicWorldcupResult(
+  result
+) {
+
+  if (
+    !Array.isArray(result) ||
+    result.length === 0
+  ) {
+    return;
+  }
+
+
+  musicWorldcupStart.style.display =
+    "none";
+
+  musicWorldcupBattle.style.display =
+    "none";
+
+  musicWorldcupResult.style.display =
+    "block";
+
+
+  const winner =
+    treasureSongs.find(
+      song =>
+        song.id === result[0]
+    );
+
+
+  if (winner) {
+
+    musicWorldcupWinner.innerHTML = `
+
+      <div class="music-worldcup-winner-card">
+
+        <span>
+          🏆
+        </span>
+
+        <small>
+          MY No.1 SONG
+        </small>
+
+        <strong>
+          ${winner.title}
+        </strong>
+
+      </div>
+
+    `;
+
+  }
+
+
+  musicWorldcupResultList.innerHTML =
+    "";
+
+
+  result.forEach(
+    (songId, index) => {
+
+      const song =
+        treasureSongs.find(
+          item =>
+            item.id === songId
+        );
+
+
+      if (!song) {
+        return;
+      }
+
+
+      const row =
+        document.createElement(
+          "div"
+        );
+
+
+      row.className =
+        "music-worldcup-result-row";
+
+
+      row.innerHTML = `
+
+        <div class="music-worldcup-result-rank">
+          ${index + 1}
+        </div>
+
+        <strong>
+          ${song.title}
+        </strong>
+
+        <span>
+          ${song.year}
+        </span>
+
+      `;
+
+
+      musicWorldcupResultList
+        .appendChild(
+          row
+        );
+
+    }
+  );
+
+
+  musicWorldcupPage.scrollTop =
+    0;
+
+}
+
+
+// ======================================================
+// START BUTTON
+// ======================================================
+
+if (musicWorldcupStartButton) {
+
+  musicWorldcupStartButton
+    .addEventListener(
+      "click",
+      () => {
+
+        /*
+          途中データがある時に
+          START押下した場合は確認
+        */
+
+        const oldState =
+          loadMusicWorldcupState();
+
+
+        if (oldState) {
+
+          const restart =
+            window.confirm(
+              "途中のWORLD CUPがあります。\n最初からやり直しますか？"
+            );
+
+
+          if (!restart) {
+            return;
+          }
+
+        }
+
+
+        clearMusicWorldcupState();
+
+        startNewMusicWorldcup();
+
+      }
+    );
+
+}
+
+
+// ======================================================
+// CONTINUE
+// ======================================================
+
+if (
+  musicWorldcupContinueButton
+) {
+
+  musicWorldcupContinueButton
+    .addEventListener(
+      "click",
+      () => {
+
+        const saved =
+          loadMusicWorldcupState();
+
+
+        if (!saved) {
+          return;
+        }
+
+
+        musicWorldcupState =
+          saved;
+
+
+        renderMusicWorldcupBattle();
+
+      }
+    );
+
+}
+
+
+// ======================================================
+// OPEN WORLD CUP
+// ======================================================
+
+function openMusicWorldcup() {
+
+  if (
+    musicWorldcupSongCount
+  ) {
+
+    musicWorldcupSongCount
+      .textContent =
+      treasureSongs.length;
+
+  }
+
+
+  const savedState =
+    loadMusicWorldcupState();
+
+
+  musicWorldcupStart.style.display =
+    "block";
+
+  musicWorldcupBattle.style.display =
+    "none";
+
+  musicWorldcupResult.style.display =
+    "none";
+
+
+  if (
+    musicWorldcupContinueButton
+  ) {
+
+    musicWorldcupContinueButton
+      .style.display =
+      savedState
+        ? "block"
+        : "none";
+
+  }
+
+
+  musicPage.style.display =
+    "none";
+
+
+  musicWorldcupPage.style.display =
+    "block";
+
+
+  musicWorldcupPage.scrollTop =
+    0;
+
+}
+
+
+if (
+  musicWorldcupOpen &&
+  musicWorldcupPage
+) {
+
+  musicWorldcupOpen
+    .addEventListener(
+      "click",
+      openMusicWorldcup
+    );
+
+}
+
+
+// ======================================================
+// WORLD CUP → MUSIC
+// ======================================================
+
+if (
+  musicWorldcupBack &&
+  musicWorldcupPage
+) {
+
+  musicWorldcupBack
+    .addEventListener(
+      "click",
+      () => {
+
+        /*
+          battle中ならstateは毎回保存済み。
+          そのまま閉じてOK。
+        */
+
+        musicWorldcupPage.style.display =
+          "none";
+
+
+        musicPage.style.display =
+          "block";
+
+
+        musicPage.scrollTop =
+          0;
+
+      }
+    );
+
+}
+
+
+// ======================================================
+// APPLY TOP10 → MY RANKING
+// ======================================================
+
+if (
+  musicWorldcupApplyRanking
+) {
+
+  musicWorldcupApplyRanking
+    .addEventListener(
+      "click",
+      () => {
+
+        let result = [];
+
+        try {
+
+          result =
+            JSON.parse(
+              localStorage.getItem(
+                MUSIC_WORLDCUP_RESULT_KEY
+              )
+            ) || [];
+
+        } catch (error) {
+
+          result = [];
+
+        }
+
+
+        if (
+          result.length === 0
+        ) {
+          return;
+        }
+
+
+        const top10 =
+          result.slice(
+            0,
+            10
+          );
+
+
+        localStorage.setItem(
+          MUSIC_RANKING_KEY,
+          JSON.stringify(top10)
+        );
+
+
+        window.alert(
+          "👑 WORLD CUP TOP10を\nMY RANKINGに反映しました！"
+        );
+
+      }
+    );
+
+}
+
+
+// ======================================================
+// RESTART
+// ======================================================
+
+if (musicWorldcupRestart) {
+
+  musicWorldcupRestart
+    .addEventListener(
+      "click",
+      () => {
+
+        const restart =
+          window.confirm(
+            "WORLD CUPを最初からやり直しますか？"
+          );
+
+
+        if (!restart) {
+          return;
+        }
+
+
+        clearMusicWorldcupState();
+
+
+        musicWorldcupResult.style.display =
+          "none";
+
+
+        musicWorldcupStart.style.display =
+          "block";
+
+
+        if (
+          musicWorldcupContinueButton
+        ) {
+
+          musicWorldcupContinueButton
+            .style.display =
+            "none";
+
+        }
+
+
+        musicWorldcupPage.scrollTop =
+          0;
+
+      }
+    );
+
+}
