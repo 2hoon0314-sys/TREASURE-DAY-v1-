@@ -32621,7 +32621,64 @@ function saveMusicWorldcupResult(
   );
 
 }
+function loadMusicWorldcupResult() {
 
+  try {
+
+    const saved =
+      JSON.parse(
+        localStorage.getItem(
+          MUSIC_WORLDCUP_RESULT_KEY
+        )
+      );
+
+
+    // 新形式
+    if (
+      saved &&
+      Array.isArray(saved.ranking)
+    ) {
+
+      return {
+        ranking:
+          saved.ranking,
+
+        completedAt:
+          saved.completedAt || null
+      };
+
+    }
+
+
+    // 旧形式
+    // さっき完走した結果はこれ！
+    if (
+      Array.isArray(saved)
+    ) {
+
+      return {
+        ranking:
+          saved,
+
+        completedAt:
+          null
+      };
+
+    }
+
+  } catch (error) {
+
+    console.error(
+      "WORLD CUP RESULT LOAD ERROR:",
+      error
+    );
+
+  }
+
+
+  return null;
+
+}
 
 // ======================================================
 // START NEW WORLD CUP
