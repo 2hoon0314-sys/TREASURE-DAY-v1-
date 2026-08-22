@@ -33488,10 +33488,7 @@ renderMusicWorldcupResult(
   savedResult.ranking,
   savedResult.completedAt
 );
-renderMusicWorldcupResult(
-  savedResult.ranking,
-  savedResult.completedAt
-);
+
 
 }
 
