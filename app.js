@@ -31652,7 +31652,7 @@ albumSongs.forEach(
   }
 );
 
-
+loadMusicAlbumArchive(album);
   musicDiscographyPage.style.display =
     "none";
 
