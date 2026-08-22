@@ -33418,7 +33418,7 @@ if (musicWorldcupResultDate) {
 // ======================================================
 // START BUTTON
 // ======================================================
-
+migrateFirstMusicWorldcupResultToHistory();
 if (musicWorldcupStartButton) {
 
   musicWorldcupStartButton
