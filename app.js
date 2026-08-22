@@ -33422,7 +33422,17 @@ const savedResult =
         : "none";
 
   }
+if (
+  musicWorldcupLastResultButton
+) {
 
+  musicWorldcupLastResultButton
+    .style.display =
+    savedResult
+      ? "block"
+      : "none";
+
+}
 
   musicPage.style.display =
     "none";
