@@ -33084,21 +33084,25 @@ function finishMusicWorldcup() {
     ];
 
 
-  saveMusicWorldcupResult(
-    result
-  );
+ saveMusicWorldcupResult(
+  result
+);
 
 
-  clearMusicWorldcupState();
+const savedResult =
+  loadMusicWorldcupResult();
 
 
-  musicWorldcupState =
-    null;
+clearMusicWorldcupState();
+
+musicWorldcupState =
+  null;
 
 
-  renderMusicWorldcupResult(
-    result
-  );
+renderMusicWorldcupResult(
+  savedResult.ranking,
+  savedResult.completedAt
+);
 
 }
 
