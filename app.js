@@ -33324,7 +33324,8 @@ function openMusicWorldcup() {
 
   const savedState =
     loadMusicWorldcupState();
-
+const savedResult =
+  loadMusicWorldcupResult();
 
   musicWorldcupStart.style.display =
     "block";
