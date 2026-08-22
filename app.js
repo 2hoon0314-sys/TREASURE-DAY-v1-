@@ -31732,3 +31732,280 @@ if (
     );
 
 }
+// ======================================================
+// 💎 THIS ALBUM & ME
+// ======================================================
+
+const MUSIC_ALBUM_ARCHIVE_KEY =
+  "treasure-music-album-archive";
+
+
+const musicAlbumFirstImpression =
+  document.getElementById(
+    "music-album-first-impression"
+  );
+
+const musicAlbumNumberOneSong =
+  document.getElementById(
+    "music-album-number-one-song"
+  );
+
+const musicAlbumNumberOneStage =
+  document.getElementById(
+    "music-album-number-one-stage"
+  );
+
+const musicAlbumMemory =
+  document.getElementById(
+    "music-album-memory"
+  );
+
+const musicAlbumArchiveSave =
+  document.getElementById(
+    "music-album-archive-save"
+  );
+
+const musicAlbumArchiveSaved =
+  document.getElementById(
+    "music-album-archive-saved"
+  );
+
+
+// ======================================================
+// LOAD ALL ALBUM ARCHIVES
+// ======================================================
+
+function loadMusicAlbumArchives() {
+
+  try {
+
+    const saved =
+      JSON.parse(
+        localStorage.getItem(
+          MUSIC_ALBUM_ARCHIVE_KEY
+        )
+      );
+
+    return (
+      saved &&
+      typeof saved === "object"
+    )
+      ? saved
+      : {};
+
+  } catch (error) {
+
+    return {};
+
+  }
+
+}
+
+
+// ======================================================
+// SAVE ALL
+// ======================================================
+
+function saveMusicAlbumArchives(
+  archives
+) {
+
+  localStorage.setItem(
+    MUSIC_ALBUM_ARCHIVE_KEY,
+    JSON.stringify(archives)
+  );
+
+}
+
+
+// ======================================================
+// LOAD ONE ALBUM
+// ======================================================
+
+function loadMusicAlbumArchive(
+  album
+) {
+
+  if (!album) return;
+
+
+  const archives =
+    loadMusicAlbumArchives();
+
+
+  const saved =
+    archives[album.id] || {};
+
+
+  if (musicAlbumFirstImpression) {
+
+    musicAlbumFirstImpression.value =
+      saved.firstImpression || "";
+
+  }
+
+
+  if (musicAlbumNumberOneStage) {
+
+    musicAlbumNumberOneStage.value =
+      saved.numberOneStage || "";
+
+  }
+
+
+  if (musicAlbumMemory) {
+
+    musicAlbumMemory.value =
+      saved.memory || "";
+
+  }
+
+
+  // No.1 SONG候補を毎回そのアルバムから生成
+  if (musicAlbumNumberOneSong) {
+
+    musicAlbumNumberOneSong.innerHTML = `
+
+      <option value="">
+        選んでね 🎧
+      </option>
+
+    `;
+
+
+    const albumSongs =
+      album.tracks
+        .map(songId =>
+          treasureSongs.find(
+            song =>
+              song.id === songId
+          )
+        )
+        .filter(Boolean);
+
+
+    albumSongs.forEach(song => {
+
+      const option =
+        document.createElement(
+          "option"
+        );
+
+      option.value =
+        String(song.id);
+
+      option.textContent =
+        song.title;
+
+      musicAlbumNumberOneSong
+        .appendChild(
+          option
+        );
+
+    });
+
+
+    musicAlbumNumberOneSong.value =
+      saved.numberOneSong
+        ? String(saved.numberOneSong)
+        : "";
+
+  }
+
+
+  if (musicAlbumArchiveSaved) {
+
+    musicAlbumArchiveSaved.style.display =
+      "none";
+
+  }
+
+}
+
+
+// ======================================================
+// SAVE CURRENT ALBUM
+// ======================================================
+
+if (musicAlbumArchiveSave) {
+
+  musicAlbumArchiveSave
+    .addEventListener(
+      "click",
+      () => {
+
+        if (!currentMusicAlbumId) {
+          return;
+        }
+
+
+        const archives =
+          loadMusicAlbumArchives();
+
+
+        archives[
+          currentMusicAlbumId
+        ] = {
+
+          firstImpression:
+            musicAlbumFirstImpression
+              ? musicAlbumFirstImpression
+                  .value.trim()
+              : "",
+
+
+          numberOneSong:
+            musicAlbumNumberOneSong &&
+            musicAlbumNumberOneSong.value
+              ? Number(
+                  musicAlbumNumberOneSong
+                    .value
+                )
+              : null,
+
+
+          numberOneStage:
+            musicAlbumNumberOneStage
+              ? musicAlbumNumberOneStage
+                  .value.trim()
+              : "",
+
+
+          memory:
+            musicAlbumMemory
+              ? musicAlbumMemory
+                  .value.trim()
+              : ""
+
+        };
+
+
+        saveMusicAlbumArchives(
+          archives
+        );
+
+
+        if (musicAlbumArchiveSaved) {
+
+          musicAlbumArchiveSaved
+            .style.display =
+            "block";
+
+
+          setTimeout(
+            () => {
+
+              musicAlbumArchiveSaved
+                .style.display =
+                "none";
+
+            },
+            1600
+          );
+
+        }
+
+      }
+    );
+
+}
