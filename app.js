@@ -33511,28 +33511,26 @@ if (
       "click",
       () => {
 
-       
-
+        const savedResult =
+          loadMusicWorldcupResult();
 
         if (
-          result.length === 0
+          !savedResult ||
+          savedResult.ranking.length === 0
         ) {
           return;
         }
 
-
         const top10 =
-          result.slice(
+          savedResult.ranking.slice(
             0,
             10
           );
-
 
         localStorage.setItem(
           MUSIC_RANKING_KEY,
           JSON.stringify(top10)
         );
-
 
         window.alert(
           "👑 WORLD CUP TOP10を\nMY RANKINGに反映しました！"
@@ -33542,7 +33540,6 @@ if (
     );
 
 }
-
 
 // ======================================================
 // RESTART
