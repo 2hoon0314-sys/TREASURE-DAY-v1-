@@ -33108,9 +33108,9 @@ function finishMusicWorldcup() {
 // ======================================================
 
 function renderMusicWorldcupResult(
-  result
+  result,
+  completedAt = null
 ) {
-
   if (
     !Array.isArray(result) ||
     result.length === 0
