@@ -32715,7 +32715,33 @@ if (
   return null;
 
 }
+function loadMusicWorldcupHistory() {
 
+  try {
+
+    const saved =
+      JSON.parse(
+        localStorage.getItem(
+          MUSIC_WORLDCUP_HISTORY_KEY
+        )
+      );
+
+    return Array.isArray(saved)
+      ? saved
+      : [];
+
+  } catch (error) {
+
+    console.error(
+      "WORLD CUP HISTORY LOAD ERROR:",
+      error
+    );
+
+    return [];
+
+  }
+
+}
 // ======================================================
 // START NEW WORLD CUP
 // ======================================================
