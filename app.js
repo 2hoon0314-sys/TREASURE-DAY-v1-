@@ -33515,6 +33515,17 @@ function renderMusicWorldcupResult(
 
   musicWorldcupResult.style.display =
     "block";
+  if (
+  musicWorldcupResultHistoryBack
+) {
+
+  musicWorldcupResultHistoryBack
+    .style.display =
+    musicWorldcupResultFromHistory
+      ? "block"
+      : "none";
+
+}
 if (musicWorldcupResultDate) {
 
   if (completedAt) {
