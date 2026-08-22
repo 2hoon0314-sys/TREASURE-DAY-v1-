@@ -34066,7 +34066,8 @@ if (
         if (!savedResult) {
           return;
         }
-
+musicWorldcupResultFromHistory =
+  false;
 
         renderMusicWorldcupResult(
           savedResult.ranking,
