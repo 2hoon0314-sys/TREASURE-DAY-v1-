@@ -31108,72 +31108,87 @@ const treasureAlbums = [
     id: 1,
     year: 2020,
     title: "THE FIRST STEP : CHAPTER ONE",
-    type: "SINGLE ALBUM",
-    image:
-      "images/albums/album01_chapter1.jpg"
+    type: "1st SINGLE ALBUM",
+    releaseDate: "2020-08-07",
+    image: "images/albums/album01_chapter1.jpg",
+    tracks: [1, 2]
   },
 
   {
     id: 2,
     year: 2020,
     title: "THE FIRST STEP : CHAPTER TWO",
-    type: "SINGLE ALBUM",
-    image:
-      "images/albums/album02_chapter2.jpg"
+    type: "2nd SINGLE ALBUM",
+    releaseDate: "2020-09-18",
+    image: "images/albums/album02_chapter2.jpg",
+    tracks: [3, 4]
   },
 
   {
     id: 3,
     year: 2020,
     title: "THE FIRST STEP : CHAPTER THREE",
-    type: "SINGLE ALBUM",
-    image:
-      "images/albums/album03_chapter3.jpg"
+    type: "3rd SINGLE ALBUM",
+    releaseDate: "2020-11-06",
+    image: "images/albums/album03_chapter3.jpg",
+    tracks: [5, 6]
   },
 
   {
     id: 4,
     year: 2021,
     title: "THE FIRST STEP : TREASURE EFFECT",
-    type: "1ST FULL ALBUM",
-    image:
-      "images/albums/album04_treasure_effect.jpg"
+    type: "1st FULL ALBUM",
+    releaseDate: "2021-01-11",
+    image: "images/albums/album04_treasure_effect.jpg",
+
+    // 53曲マスターに入っている曲のみ連動
+    tracks: [7, 8, 9, 1, 2, 3, 4, 5, 6, 10],
+
+    bonusTracks: [
+      "I LOVE YOU Mellow Mood. (CD only)",
+      "MMM Rock Ver. (CD only)"
+    ]
   },
 
   {
     id: 5,
     year: 2022,
     title: "THE SECOND STEP : CHAPTER ONE",
-    type: "MINI ALBUM",
-    image:
-      "images/albums/album05_second_step1.jpg"
+    type: "1st MINI ALBUM",
+    releaseDate: "2022-02-15",
+    image: "images/albums/album05_second_step1.jpg",
+    tracks: [13, 14, 15, 16, 17, 18]
   },
 
   {
     id: 6,
     year: 2022,
     title: "THE SECOND STEP : CHAPTER TWO",
-    type: "MINI ALBUM",
-    image:
-      "images/albums/album06_second_step2.jpg"
+    type: "2nd MINI ALBUM",
+    releaseDate: "2022-10-04",
+    image: "images/albums/album06_second_step2.jpg",
+    tracks: [19, 20, 21, 22, 23, 24]
   },
 
   {
     id: 7,
     year: 2023,
     title: "REBOOT",
-    type: "2ND FULL ALBUM",
-    image:
-      "images/albums/album07_reboot.jpg"
+    type: "2nd FULL ALBUM",
+    releaseDate: "2023-07-28",
+    image: "images/albums/album07_reboot.jpg",
+    tracks: [28, 29, 30, 27, 31, 32, 33, 34, 35, 36]
   },
 
   {
     id: 8,
     year: 2023,
-    title: "B.O.M.B (KABOOM ver.)",
+    title: "B.O.M.B (kaboom ver.)",
     type: "DIGITAL SINGLE",
-    image:
-      "images/albums/album08_bomb_kaboom.jpg"
+    releaseDate: "2023-10-20",
+    image: "images/albums/album08_bomb_kaboom.jpg",
+    tracks: [37]
   },
 
   {
@@ -31181,8 +31196,9 @@ const treasureAlbums = [
     year: 2024,
     title: "KING KONG",
     type: "DIGITAL SINGLE",
-    image:
-      "images/albums/album09_king_kong.jpg"
+    releaseDate: "2024-05-28",
+    image: "images/albums/album09_king_kong.jpg",
+    tracks: [40]
   },
 
   {
@@ -31190,8 +31206,9 @@ const treasureAlbums = [
     year: 2024,
     title: "LAST NIGHT",
     type: "DIGITAL SINGLE",
-    image:
-      "images/albums/album10_last_night.jpg"
+    releaseDate: "2024-12-05",
+    image: "images/albums/album10_last_night.jpg",
+    tracks: [42]
   },
 
   {
@@ -31199,30 +31216,32 @@ const treasureAlbums = [
     year: 2025,
     title: "PLEASURE",
     type: "SPECIAL MINI ALBUM",
-    image:
-      "images/albums/album11_pleasure.jpg"
+    releaseDate: "2025-03-07",
+    image: "images/albums/album11_pleasure.jpg",
+    tracks: [43, 44, 45, 42]
   },
 
   {
     id: 12,
     year: 2025,
     title: "LOVE PULSE",
-    type: "MINI ALBUM",
-    image:
-      "images/albums/album12_love_pulse.jpg"
+    type: "3rd MINI ALBUM",
+    releaseDate: "2025-09-01",
+    image: "images/albums/album12_love_pulse.jpg",
+    tracks: [46, 47, 48, 49]
   },
 
   {
     id: 13,
     year: 2026,
     title: "NEW WAV",
-    type: "MINI ALBUM",
-    image:
-      "images/albums/album13_new_wav.jpg"
+    type: "4th MINI ALBUM",
+    releaseDate: "2026-06-01",
+    image: "images/albums/album13_new_wav.jpg",
+    tracks: [50, 51, 52, 53]
   }
 
 ];
-
 
 // ======================================================
 // 💿 DISCOGRAPHY SYSTEM
