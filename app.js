@@ -32534,7 +32534,8 @@ const musicWorldcupResultHistoryBack =
 // ======================================================
 
 let musicWorldcupState = null;
-
+let musicWorldcupResultFromHistory =
+  false;
 
 // ======================================================
 // HELPERS
