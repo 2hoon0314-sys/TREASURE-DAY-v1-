@@ -33472,7 +33472,8 @@ renderMusicWorldcupResult(
 
 function renderMusicWorldcupResult(
   result,
-  completedAt = null
+  completedAt = null,
+  previousRanking = null
 ) {
   if (
     !Array.isArray(result) ||
