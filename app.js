@@ -32652,20 +32652,31 @@ function loadMusicWorldcupResult() {
 
 
     // 旧形式
-    // さっき完走した結果はこれ！
-    if (
-      Array.isArray(saved)
-    ) {
+// 初回WORLD CUP結果を日時つきで新形式へ変換
+if (
+  Array.isArray(saved)
+) {
 
-      return {
-        ranking:
-          saved,
+  const migrated = {
 
-        completedAt:
-          null
-      };
+    ranking:
+      saved,
 
-    }
+    completedAt:
+      "2026-08-22T21:30:00+09:00"
+
+  };
+
+
+  localStorage.setItem(
+    MUSIC_WORLDCUP_RESULT_KEY,
+    JSON.stringify(migrated)
+  );
+
+
+  return migrated;
+
+}
 
   } catch (error) {
 
