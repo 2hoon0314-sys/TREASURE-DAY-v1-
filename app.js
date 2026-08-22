@@ -30274,7 +30274,6 @@ if (
 // ======================================================
 
 const musicComingSoonButtons = [
-  "music-ranking-open",
   "music-worldcup-open"
 ];
 
