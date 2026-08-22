@@ -33481,7 +33481,13 @@ clearMusicWorldcupState();
 musicWorldcupState =
   null;
 
+musicWorldcupResultFromHistory =
+  false;
 
+renderMusicWorldcupResult(
+  savedResult.ranking,
+  savedResult.completedAt
+);
 renderMusicWorldcupResult(
   savedResult.ranking,
   savedResult.completedAt
