@@ -31431,3 +31431,196 @@ if (
     );
 
 }
+// ======================================================
+// 💿 ALBUM DETAIL
+// ======================================================
+
+const musicAlbumDetailPage =
+  document.getElementById(
+    "music-album-detail-page"
+  );
+
+const musicAlbumDetailBack =
+  document.getElementById(
+    "music-album-detail-back"
+  );
+
+const musicAlbumDetailCover =
+  document.getElementById(
+    "music-album-detail-cover"
+  );
+
+const musicAlbumDetailYear =
+  document.getElementById(
+    "music-album-detail-year"
+  );
+
+const musicAlbumDetailTitle =
+  document.getElementById(
+    "music-album-detail-title"
+  );
+
+const musicAlbumDetailType =
+  document.getElementById(
+    "music-album-detail-type"
+  );
+
+const musicAlbumTrackCount =
+  document.getElementById(
+    "music-album-track-count"
+  );
+
+const musicAlbumTrackList =
+  document.getElementById(
+    "music-album-track-list"
+  );
+
+
+let currentMusicAlbumId = null;
+
+
+// ======================================================
+// OPEN ALBUM
+// ======================================================
+
+function openMusicAlbumDetail(albumId) {
+
+  const album =
+    treasureAlbums.find(
+      item =>
+        item.id === Number(albumId)
+    );
+
+  if (!album) {
+    return;
+  }
+
+
+  currentMusicAlbumId =
+    album.id;
+
+
+  musicAlbumDetailCover.src =
+    album.image;
+
+  musicAlbumDetailCover.alt =
+    album.title;
+
+
+  musicAlbumDetailYear.textContent =
+    album.year;
+
+
+  musicAlbumDetailTitle.textContent =
+    album.title;
+
+
+  musicAlbumDetailType.textContent =
+    `💿 ${album.type}`;
+
+
+  /*
+    次の作業でここに
+    収録曲を連動させる！
+
+    今は詳細ページが
+    正常に開くか確認する段階。
+  */
+
+  musicAlbumTrackCount.textContent =
+    "TRACK LIST COMING NEXT";
+
+
+  musicAlbumTrackList.innerHTML = `
+
+    <div class="music-album-track-empty">
+
+      🎧 TRACK LIST<br>
+
+      このアルバムの収録曲を<br>
+      次にTREASURE MUSICと連動します 💎
+
+    </div>
+
+  `;
+
+
+  musicDiscographyPage.style.display =
+    "none";
+
+
+  musicAlbumDetailPage.style.display =
+    "block";
+
+
+  musicAlbumDetailPage.scrollTop =
+    0;
+
+}
+
+
+// ======================================================
+// DISCOGRAPHY ALBUM CLICK
+// ======================================================
+
+if (musicDiscographyList) {
+
+  musicDiscographyList
+    .addEventListener(
+      "click",
+      event => {
+
+        const button =
+          event.target.closest(
+            ".music-album-cover-button"
+          );
+
+
+        if (!button) {
+          return;
+        }
+
+
+        const albumId =
+          Number(
+            button.dataset.albumId
+          );
+
+
+        openMusicAlbumDetail(
+          albumId
+        );
+
+      }
+    );
+
+}
+
+
+// ======================================================
+// ALBUM DETAIL → DISCOGRAPHY
+// ======================================================
+
+if (
+  musicAlbumDetailBack &&
+  musicAlbumDetailPage
+) {
+
+  musicAlbumDetailBack
+    .addEventListener(
+      "click",
+      () => {
+
+        musicAlbumDetailPage
+          .style.display =
+          "none";
+
+
+        musicDiscographyPage
+          .style.display =
+          "block";
+
+      }
+    );
+
+}
