@@ -32742,6 +32742,59 @@ function loadMusicWorldcupHistory() {
   }
 
 }
+function saveMusicWorldcupHistory(
+  history
+) {
+
+  localStorage.setItem(
+    MUSIC_WORLDCUP_HISTORY_KEY,
+    JSON.stringify(history)
+  );
+
+}
+function migrateFirstMusicWorldcupResultToHistory() {
+
+  const history =
+    loadMusicWorldcupHistory();
+
+  // すでに履歴があるなら何もしない
+  if (history.length > 0) {
+    return;
+  }
+
+
+  const lastResult =
+    loadMusicWorldcupResult();
+
+  if (
+    !lastResult ||
+    !Array.isArray(lastResult.ranking) ||
+    lastResult.ranking.length === 0
+  ) {
+    return;
+  }
+
+
+  const firstRecord = {
+
+    id:
+      "worldcup-1",
+
+    completedAt:
+      lastResult.completedAt ||
+      "2026-08-22T21:30:00+09:00",
+
+    ranking:
+      [...lastResult.ranking]
+
+  };
+
+
+  saveMusicWorldcupHistory(
+    [firstRecord]
+  );
+
+}
 // ======================================================
 // START NEW WORLD CUP
 // ======================================================
