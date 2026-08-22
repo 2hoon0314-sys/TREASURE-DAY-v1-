@@ -33131,7 +33131,24 @@ function renderMusicWorldcupResult(
 
   musicWorldcupResult.style.display =
     "block";
+if (musicWorldcupResultDate) {
 
+  if (completedAt) {
+
+    const date =
+      new Date(completedAt);
+
+    musicWorldcupResultDate.textContent =
+      `🕘 ${date.toLocaleString("ja-JP")}`;
+
+  } else {
+
+    musicWorldcupResultDate.textContent =
+      "🕘 実施日時：記録なし";
+
+  }
+
+}
 
   const winner =
     treasureSongs.find(
