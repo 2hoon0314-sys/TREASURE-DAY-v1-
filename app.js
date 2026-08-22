@@ -33425,7 +33425,32 @@ function finishMusicWorldcup() {
 
 const savedResult =
   loadMusicWorldcupResult();
+const history =
+  loadMusicWorldcupHistory();
 
+
+const newRecord = {
+
+  id:
+    `worldcup-${history.length + 1}`,
+
+  completedAt:
+    savedResult.completedAt,
+
+  ranking:
+    [...savedResult.ranking]
+
+};
+
+
+history.push(
+  newRecord
+);
+
+
+saveMusicWorldcupHistory(
+  history
+);
 
 clearMusicWorldcupState();
 
