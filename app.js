@@ -33378,17 +33378,6 @@ if (
     );
 
 }
-if (
-  musicWorldcupLastResultButton
-) {
-
-  musicWorldcupLastResultButton
-    .style.display =
-    savedResult
-      ? "block"
-      : "none";
-
-}
 
 // ======================================================
 // OPEN WORLD CUP
