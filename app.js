@@ -33689,6 +33689,38 @@ if (
 
 }
 // ======================================================
+// 🏆 HISTORY → WORLD CUP
+// ======================================================
+
+if (
+  musicWorldcupHistoryBack
+) {
+
+  musicWorldcupHistoryBack
+    .addEventListener(
+      "click",
+      () => {
+
+        musicWorldcupHistory.style.display =
+          "none";
+
+        musicWorldcupBattle.style.display =
+          "none";
+
+        musicWorldcupResult.style.display =
+          "none";
+
+        musicWorldcupStart.style.display =
+          "block";
+
+        musicWorldcupPage.scrollTop =
+          0;
+
+      }
+    );
+
+}
+// ======================================================
 // OPEN WORLD CUP
 // ======================================================
 
