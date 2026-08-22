@@ -32379,7 +32379,8 @@ const MUSIC_WORLDCUP_STATE_KEY =
 
 const MUSIC_WORLDCUP_RESULT_KEY =
   "treasure-music-worldcup-result";
-
+const MUSIC_WORLDCUP_HISTORY_KEY =
+  "treasure-music-worldcup-history";
 
 const musicWorldcupOpen =
   document.getElementById(
