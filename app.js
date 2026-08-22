@@ -33536,3 +33536,30 @@ if (musicWorldcupRestart) {
     );
 
 }
+if (
+  musicWorldcupLastResultButton
+) {
+
+  musicWorldcupLastResultButton
+    .addEventListener(
+      "click",
+      () => {
+
+        const savedResult =
+          loadMusicWorldcupResult();
+
+
+        if (!savedResult) {
+          return;
+        }
+
+
+        renderMusicWorldcupResult(
+          savedResult.ranking,
+          savedResult.completedAt
+        );
+
+      }
+    );
+
+}
