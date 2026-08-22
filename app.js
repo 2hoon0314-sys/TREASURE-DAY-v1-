@@ -32595,9 +32595,20 @@ function saveMusicWorldcupResult(
   result
 ) {
 
+  const data = {
+
+    completedAt:
+      new Date().toISOString(),
+
+    ranking:
+      result
+
+  };
+
+
   localStorage.setItem(
     MUSIC_WORLDCUP_RESULT_KEY,
-    JSON.stringify(result)
+    JSON.stringify(data)
   );
 
 }
