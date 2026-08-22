@@ -32009,3 +32009,391 @@ if (musicAlbumArchiveSave) {
     );
 
 }
+// ======================================================
+// 👑 MUSIC MY RANKING
+// ======================================================
+
+const MUSIC_RANKING_KEY =
+  "treasure-music-ranking";
+
+
+const musicRankingOpen =
+  document.getElementById(
+    "music-ranking-open"
+  );
+
+const musicRankingPage =
+  document.getElementById(
+    "music-ranking-page"
+  );
+
+const musicRankingBack =
+  document.getElementById(
+    "music-ranking-back"
+  );
+
+const musicRankingList =
+  document.getElementById(
+    "music-ranking-list"
+  );
+
+const musicRankingSave =
+  document.getElementById(
+    "music-ranking-save"
+  );
+
+const musicRankingSaved =
+  document.getElementById(
+    "music-ranking-saved"
+  );
+
+
+// ======================================================
+// LOAD RANKING
+// ======================================================
+
+function loadMusicRanking() {
+
+  try {
+
+    const saved =
+      JSON.parse(
+        localStorage.getItem(
+          MUSIC_RANKING_KEY
+        )
+      );
+
+    return Array.isArray(saved)
+      ? saved
+      : [];
+
+  } catch (error) {
+
+    return [];
+
+  }
+
+}
+
+
+// ======================================================
+// CREATE RANKING
+// ======================================================
+
+function renderMusicRanking() {
+
+  if (!musicRankingList) {
+    return;
+  }
+
+
+  const savedRanking =
+    loadMusicRanking();
+
+
+  musicRankingList.innerHTML =
+    "";
+
+
+  for (
+    let position = 1;
+    position <= 10;
+    position++
+  ) {
+
+    const row =
+      document.createElement(
+        "div"
+      );
+
+    row.className =
+      "music-ranking-row";
+
+
+    const rankLabel =
+      position === 1
+        ? "👑 1"
+        : String(position);
+
+
+    row.innerHTML = `
+
+      <div class="music-ranking-position">
+        ${rankLabel}
+      </div>
+
+      <select
+        class="music-ranking-select"
+        data-position="${position}"
+      >
+
+        <option value="">
+          曲を選ぶ 🎧
+        </option>
+
+      </select>
+
+    `;
+
+
+    const select =
+      row.querySelector(
+        ".music-ranking-select"
+      );
+
+
+    treasureSongs.forEach(song => {
+
+      const option =
+        document.createElement(
+          "option"
+        );
+
+      option.value =
+        String(song.id);
+
+      option.textContent =
+        `${song.title} · ${song.year}`;
+
+      select.appendChild(
+        option
+      );
+
+    });
+
+
+    const savedSongId =
+      savedRanking[
+        position - 1
+      ];
+
+
+    if (savedSongId) {
+
+      select.value =
+        String(savedSongId);
+
+    }
+
+
+    musicRankingList
+      .appendChild(
+        row
+      );
+
+  }
+
+
+  updateMusicRankingOptions();
+
+}
+
+
+// ======================================================
+// PREVENT DUPLICATES
+// ======================================================
+
+function updateMusicRankingOptions() {
+
+  const selects = [
+    ...document.querySelectorAll(
+      ".music-ranking-select"
+    )
+  ];
+
+
+  const selectedIds =
+    selects
+      .map(
+        select =>
+          select.value
+      )
+      .filter(Boolean);
+
+
+  selects.forEach(select => {
+
+    const currentValue =
+      select.value;
+
+
+    [
+      ...select.options
+    ].forEach(option => {
+
+      if (!option.value) {
+        return;
+      }
+
+
+      option.disabled =
+        selectedIds.includes(
+          option.value
+        ) &&
+        option.value !==
+          currentValue;
+
+    });
+
+  });
+
+}
+
+
+// ======================================================
+// SELECT CHANGE
+// ======================================================
+
+if (musicRankingList) {
+
+  musicRankingList
+    .addEventListener(
+      "change",
+      event => {
+
+        if (
+          !event.target.classList
+            .contains(
+              "music-ranking-select"
+            )
+        ) {
+          return;
+        }
+
+
+        updateMusicRankingOptions();
+
+      }
+    );
+
+}
+
+
+// ======================================================
+// SAVE
+// ======================================================
+
+if (musicRankingSave) {
+
+  musicRankingSave
+    .addEventListener(
+      "click",
+      () => {
+
+        const selects = [
+          ...document.querySelectorAll(
+            ".music-ranking-select"
+          )
+        ];
+
+
+        const ranking =
+          selects.map(
+            select =>
+              select.value
+                ? Number(
+                    select.value
+                  )
+                : null
+          );
+
+
+        localStorage.setItem(
+          MUSIC_RANKING_KEY,
+          JSON.stringify(
+            ranking
+          )
+        );
+
+
+        if (musicRankingSaved) {
+
+          musicRankingSaved
+            .style.display =
+            "block";
+
+
+          setTimeout(
+            () => {
+
+              musicRankingSaved
+                .style.display =
+                "none";
+
+            },
+            1600
+          );
+
+        }
+
+      }
+    );
+
+}
+
+
+// ======================================================
+// MUSIC → RANKING
+// ======================================================
+
+if (
+  musicRankingOpen &&
+  musicRankingPage
+) {
+
+  musicRankingOpen
+    .addEventListener(
+      "click",
+      () => {
+
+        renderMusicRanking();
+
+
+        musicPage.style.display =
+          "none";
+
+
+        musicRankingPage
+          .style.display =
+          "block";
+
+
+        musicRankingPage
+          .scrollTop = 0;
+
+      }
+    );
+
+}
+
+
+// ======================================================
+// RANKING → MUSIC
+// ======================================================
+
+if (
+  musicRankingBack &&
+  musicRankingPage
+) {
+
+  musicRankingBack
+    .addEventListener(
+      "click",
+      () => {
+
+        musicRankingPage
+          .style.display =
+          "none";
+
+
+        musicPage.style.display =
+          "block";
+
+
+        musicPage.scrollTop =
+          0;
+
+      }
+    );
+
+}
