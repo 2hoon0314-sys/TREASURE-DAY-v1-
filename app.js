@@ -30524,7 +30524,125 @@ updateMyTreasureStats();
 
     }
   );
+// --------------------------
+// 🎤 LIVE LIFE
+// --------------------------
 
+const liveLifeEl =
+  document.getElementById(
+    "stats-live-life"
+  );
+
+
+// 🏟️ SEAT MEMORYに記録された会場
+const venueNames =
+  seatMemoriesForStats
+    .map(memory =>
+      (memory.venue || "").trim()
+    )
+    .filter(Boolean);
+
+
+// 会場の種類数
+const uniqueVenues =
+  [...new Set(venueNames)];
+
+const venueCount =
+  uniqueVenues.length;
+
+
+// 👑 一番多く行った会場
+const venueCounter = {};
+
+venueNames.forEach(venue => {
+
+  venueCounter[venue] =
+    (venueCounter[venue] || 0) + 1;
+
+});
+
+
+let mostVisitedVenue = "まだ記録なし";
+let mostVisitedCount = 0;
+
+Object.entries(venueCounter)
+  .forEach(([venue, count]) => {
+
+    if (count > mostVisitedCount) {
+
+      mostVisitedVenue = venue;
+      mostVisitedCount = count;
+
+    }
+
+  });
+
+
+// ⭐ ★★★★★ SEAT
+const fiveStarSeats =
+  seatMemoriesForStats.filter(memory => {
+
+    return Number(memory.rating) === 5;
+
+  }).length;
+
+
+// HTMLへ反映
+if (liveLifeEl) {
+
+  liveLifeEl.innerHTML = `
+
+    <div class="stats-live-grid">
+
+      <div class="stats-live-item">
+        <span>🎤</span>
+        <strong>${totalEvents}</strong>
+        <small>EVENTS</small>
+      </div>
+
+      <div class="stats-live-item">
+        <span>🏟️</span>
+        <strong>${venueCount}</strong>
+        <small>VENUES</small>
+      </div>
+
+    </div>
+
+
+    <div class="stats-live-highlight">
+
+      <small>👑 MOST VISITED VENUE</small>
+
+      <strong>
+        ${mostVisitedVenue}
+      </strong>
+
+      ${
+        mostVisitedCount > 0
+          ? `<span>${mostVisitedCount} TIMES</span>`
+          : ""
+      }
+
+    </div>
+
+
+    <div class="stats-live-highlight">
+
+      <small>⭐ FIVE-STAR SEATS</small>
+
+      <strong>
+        ${fiveStarSeats}
+      </strong>
+
+      <span>
+        MY BEST SEATS
+      </span>
+
+    </div>
+
+  `;
+
+}
 }
 
 
