@@ -30723,6 +30723,202 @@ if (memoryLifeEl) {
   `;
 
 }  
+// --------------------------
+// 🎧 MUSIC LIFE
+// --------------------------
+
+const musicLifeEl =
+  document.getElementById(
+    "stats-music-life"
+  );
+
+
+// ❤️ FAVORITES
+const musicFavoritesForStats =
+  getStatsJSON(
+    "treasure-music-favorites",
+    []
+  );
+
+const musicFavoriteCount =
+  Array.isArray(musicFavoritesForStats)
+    ? musicFavoritesForStats.length
+    : 0;
+
+
+// 👑 MY RANKING No.1
+const musicRankingForStats =
+  getStatsJSON(
+    "treasure-music-ranking",
+    []
+  );
+
+const myNo1SongId =
+  Array.isArray(musicRankingForStats)
+    ? musicRankingForStats.find(
+        id => id !== null
+      )
+    : null;
+
+const myNo1Song =
+  treasureSongs.find(
+    song =>
+      song.id === Number(myNo1SongId)
+  );
+
+const myNo1SongTitle =
+  myNo1Song
+    ? myNo1Song.title
+    : "まだ未設定";
+
+
+// 🏆 最新WORLD CUP CHAMPION
+const worldcupHistoryForStats =
+  getStatsJSON(
+    "treasure-music-worldcup-history",
+    []
+  );
+
+let worldcupWinnerId = null;
+
+if (
+  Array.isArray(worldcupHistoryForStats) &&
+  worldcupHistoryForStats.length > 0
+) {
+
+  const latestWorldcup =
+    worldcupHistoryForStats[
+      worldcupHistoryForStats.length - 1
+    ];
+
+  if (
+    latestWorldcup &&
+    Array.isArray(latestWorldcup.ranking)
+  ) {
+
+    worldcupWinnerId =
+      latestWorldcup.ranking[0];
+
+  }
+
+}
+
+
+// HISTORYが無い旧データも救済
+if (!worldcupWinnerId) {
+
+  const lastWorldcupForStats =
+    getStatsJSON(
+      "treasure-music-worldcup-result",
+      null
+    );
+
+  if (
+    lastWorldcupForStats &&
+    Array.isArray(
+      lastWorldcupForStats.ranking
+    )
+  ) {
+
+    worldcupWinnerId =
+      lastWorldcupForStats.ranking[0];
+
+  }
+
+}
+
+
+const worldcupWinner =
+  treasureSongs.find(
+    song =>
+      song.id === Number(worldcupWinnerId)
+  );
+
+const worldcupWinnerTitle =
+  worldcupWinner
+    ? worldcupWinner.title
+    : "まだ大会なし";
+
+
+// 🎲 TODAY'S SONG
+const todaySongForStats =
+  localStorage.getItem(
+    "treasure-today-song"
+  ) || "まだ抽選してない";
+
+
+// HTMLへ反映
+if (musicLifeEl) {
+
+  musicLifeEl.innerHTML = `
+
+    <div class="stats-music-grid">
+
+      <div class="stats-music-item">
+
+        <span>❤️</span>
+
+        <strong>
+          ${musicFavoriteCount}
+          <small>/ 53</small>
+        </strong>
+
+        <p>FAVORITE SONGS</p>
+
+      </div>
+
+
+      <div class="stats-music-item">
+
+        <span>👑</span>
+
+        <strong>
+          ${myNo1SongTitle}
+        </strong>
+
+        <p>MY No.1 SONG</p>
+
+      </div>
+
+    </div>
+
+
+    <div class="stats-music-highlight">
+
+      <small>
+        🏆 WORLD CUP CHAMPION
+      </small>
+
+      <strong>
+        ${worldcupWinnerTitle}
+      </strong>
+
+      <span>
+        CURRENT CHAMPION
+      </span>
+
+    </div>
+
+
+    <div class="stats-music-highlight">
+
+      <small>
+        🎲 TODAY'S SONG
+      </small>
+
+      <strong>
+        ${todaySongForStats}
+      </strong>
+
+      <span>
+        TODAY'S TREASURE MUSIC
+      </span>
+
+    </div>
+
+  `;
+
+}  
 }
 // HOME → STATS
 if (
