@@ -31040,6 +31040,104 @@ if (memberSongEl) {
       : "まだ未設定";
 
 } 
+// --------------------------
+// 💎 YOUR TREASURE PROFILE
+// --------------------------
+
+const profileMemberEl =
+  document.getElementById(
+    "stats-profile-member"
+  );
+
+const profileEventsEl =
+  document.getElementById(
+    "stats-profile-events"
+  );
+
+const profileMemoriesEl =
+  document.getElementById(
+    "stats-profile-memories"
+  );
+
+const profileSongEl =
+  document.getElementById(
+    "stats-profile-song"
+  );
+
+const profileVenueEl =
+  document.getElementById(
+    "stats-profile-venue"
+  );
+
+const profileLevelEl =
+  document.getElementById(
+    "stats-profile-level"
+  );
+
+
+// 💎 MEMBER
+if (profileMemberEl) {
+  profileMemberEl.textContent =
+    myTreasureMember;
+}
+
+
+// 🎤 EVENTS
+if (profileEventsEl) {
+  profileEventsEl.textContent =
+    totalEvents;
+}
+
+
+// 📸 MEMORIES
+if (profileMemoriesEl) {
+  profileMemoriesEl.textContent =
+    totalMemories;
+}
+
+
+// ❤️ MY No.1 SONG
+if (profileSongEl) {
+  profileSongEl.textContent =
+    myNo1SongTitle;
+}
+
+
+// 🏟️ HOME VENUE
+if (profileVenueEl) {
+
+  profileVenueEl.textContent =
+    mostVisitedCount > 0
+      ? mostVisitedVenue
+      : "まだ記録なし";
+
+}
+
+
+// ✦ TREASURE LIFE LEVEL
+const treasureLifePoints =
+  totalMemories +
+  (totalEvents * 2) +
+  totalFavorites +
+  (totalWorldcups * 5);
+
+const treasureLifeLevel =
+  Math.min(
+    99,
+    Math.floor(
+      treasureLifePoints / 25
+    ) + 1
+  );
+
+
+if (profileLevelEl) {
+
+  profileLevelEl.textContent =
+    `✦ ${String(
+      treasureLifeLevel
+    ).padStart(2, "0")}`;
+
+}  
 }
 // ============================================
 // 📸 VISUAL KING STATS
