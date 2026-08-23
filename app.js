@@ -30642,7 +30642,7 @@ updateMyTreasureStats();
 
     }
   );
-
+}
 
 
 
