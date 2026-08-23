@@ -31181,9 +31181,12 @@ if (
 
   statsPageOpen.addEventListener(
     "click",
-    () => {
-updateMyTreasureStats();
-      // HOMEを隠す
+   () => {
+
+  updateMyTreasureStats();
+  updateVisualKingStats();
+
+  // HOMEを隠す
       if (homePage) {
         homePage.style.display =
           "none";
