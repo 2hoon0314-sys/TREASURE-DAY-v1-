@@ -30267,7 +30267,90 @@ if (
 
 }
 
+// ============================================
+// 📊 MY TREASURE STATS
+// FIRST STAGE
+// ============================================
 
+const statsPageOpen =
+  document.getElementById(
+    "stats-page-open"
+  );
+
+const statsPage =
+  document.getElementById(
+    "stats-page"
+  );
+
+const statsPageBack =
+  document.getElementById(
+    "stats-page-back"
+  );
+
+
+// HOME → STATS
+if (
+  statsPageOpen &&
+  statsPage
+) {
+
+  statsPageOpen.addEventListener(
+    "click",
+    () => {
+
+      // HOMEを隠す
+      if (homePage) {
+        homePage.style.display =
+          "none";
+      }
+
+      // STATSを表示
+      statsPage.style.display =
+        "block";
+
+      // STATSの一番上から表示
+      statsPage.scrollTop = 0;
+
+      window.scrollTo(
+        0,
+        0
+      );
+
+    }
+  );
+
+}
+
+
+// STATS → HOME
+if (
+  statsPageBack &&
+  statsPage
+) {
+
+  statsPageBack.addEventListener(
+    "click",
+    () => {
+
+      // STATSを閉じる
+      statsPage.style.display =
+        "none";
+
+      // HOMEを復活
+      if (homePage) {
+        homePage.style.display =
+          "block";
+      }
+
+      window.scrollTo(
+        0,
+        0
+      );
+
+    }
+  );
+
+}
 // ======================================================
 // 🎧 MUSIC MENU
 // 今回は入口のみ。中身は次から順番に実装。
