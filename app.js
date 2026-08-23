@@ -30287,7 +30287,213 @@ const statsPageBack =
     "stats-page-back"
   );
 
+// ============================================
+// 📊 STATS DATA
+// ============================================
 
+function getStatsJSON(key, fallback) {
+
+  try {
+
+    const saved =
+      JSON.parse(
+        localStorage.getItem(key)
+      );
+
+    return saved ?? fallback;
+
+  } catch (error) {
+
+    console.error(
+      "STATS LOAD ERROR:",
+      key,
+      error
+    );
+
+    return fallback;
+
+  }
+
+}
+
+
+function updateMyTreasureStats() {
+
+  // --------------------------
+  // 📸 MEMORIES
+  // PHOTO + EVENT + SEAT + DIARY
+  // --------------------------
+
+  const photoMemories =
+    getStatsJSON(
+      "treasure-memories",
+      []
+    );
+
+  const eventMemories =
+    getStatsJSON(
+      "treasure-event-memories",
+      {}
+    );
+
+  const seatMemoriesForStats =
+    getStatsJSON(
+      "treasure-seat-memories",
+      []
+    );
+
+  const diaryPostsForStats =
+    getStatsJSON(
+      "treasure-diary",
+      []
+    );
+
+
+  const photoCount =
+    Array.isArray(photoMemories)
+      ? photoMemories.length
+      : 0;
+
+  const eventMemoryCount =
+    eventMemories &&
+    typeof eventMemories === "object"
+      ? Object.keys(eventMemories).length
+      : 0;
+
+  const seatCount =
+    Array.isArray(seatMemoriesForStats)
+      ? seatMemoriesForStats.length
+      : 0;
+
+  const diaryCount =
+    Array.isArray(diaryPostsForStats)
+      ? diaryPostsForStats.length
+      : 0;
+
+
+  const totalMemories =
+    photoCount +
+    eventMemoryCount +
+    seatCount +
+    diaryCount;
+
+
+
+  // --------------------------
+  // 🎤 EVENTS
+  // PLANに登録されているイベント数
+  // --------------------------
+
+  const planEvents =
+    getStatsJSON(
+      "treasure-plan-events",
+      []
+    );
+
+  const totalEvents =
+    Array.isArray(planEvents)
+      ? planEvents.length
+      : 0;
+
+
+
+  // --------------------------
+  // ❤️ FAVORITE SONGS
+  // --------------------------
+
+  const favoriteSongs =
+    getStatsJSON(
+      "treasure-music-favorites",
+      []
+    );
+
+  const totalFavorites =
+    Array.isArray(favoriteSongs)
+      ? favoriteSongs.length
+      : 0;
+
+
+
+  // --------------------------
+  // 🏆 WORLD CUPS
+  // --------------------------
+
+  const worldcupHistory =
+    getStatsJSON(
+      "treasure-music-worldcup-history",
+      []
+    );
+
+  let totalWorldcups =
+    Array.isArray(worldcupHistory)
+      ? worldcupHistory.length
+      : 0;
+
+
+  // HISTORYがまだ無くても
+  // LAST RESULTだけ存在する旧データ用
+  if (totalWorldcups === 0) {
+
+    const lastWorldcup =
+      getStatsJSON(
+        "treasure-music-worldcup-result",
+        null
+      );
+
+    if (lastWorldcup) {
+      totalWorldcups = 1;
+    }
+
+  }
+
+
+
+  // --------------------------
+  // 📊 HTMLへ反映
+  // --------------------------
+
+  const totalMemoriesEl =
+    document.getElementById(
+      "stats-total-memories"
+    );
+
+  const totalEventsEl =
+    document.getElementById(
+      "stats-total-events"
+    );
+
+  const totalFavoritesEl =
+    document.getElementById(
+      "stats-total-favorites"
+    );
+
+  const totalWorldcupsEl =
+    document.getElementById(
+      "stats-total-worldcups"
+    );
+
+
+  if (totalMemoriesEl) {
+    totalMemoriesEl.textContent =
+      totalMemories;
+  }
+
+  if (totalEventsEl) {
+    totalEventsEl.textContent =
+      totalEvents;
+  }
+
+  if (totalFavoritesEl) {
+    totalFavoritesEl.textContent =
+      totalFavorites;
+  }
+
+  if (totalWorldcupsEl) {
+    totalWorldcupsEl.textContent =
+      totalWorldcups;
+  }
+
+}
 // HOME → STATS
 if (
   statsPageOpen &&
