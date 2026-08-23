@@ -30919,6 +30919,127 @@ if (musicLifeEl) {
   `;
 
 }  
+ // --------------------------
+// 🫶 MEMBER & CHEMISTRY
+// --------------------------
+
+const favoriteMemberEl =
+  document.getElementById(
+    "stats-favorite-member"
+  );
+
+const favoriteChemistryEl =
+  document.getElementById(
+    "stats-favorite-chemistry"
+  );
+
+const memberSongEl =
+  document.getElementById(
+    "stats-member-song"
+  );
+
+
+// 💎 MY TREASURE
+const myTreasureMember =
+  localStorage.getItem(
+    "treasure-member"
+  ) || "JIHOON";
+
+if (favoriteMemberEl) {
+  favoriteMemberEl.textContent =
+    myTreasureMember;
+}
+
+
+// 🫶 FAVORITE CHEMISTRY
+const chemistryForStats =
+  getStatsJSON(
+    "treasure-shared-chemistry-memories",
+    []
+  );
+
+const chemistryCounter = {};
+
+if (Array.isArray(chemistryForStats)) {
+
+  chemistryForStats.forEach(item => {
+
+    const pairKey =
+      item.pairKey || "";
+
+    if (!pairKey) return;
+
+    chemistryCounter[pairKey] =
+      (chemistryCounter[pairKey] || 0) + 1;
+
+  });
+
+}
+
+
+let favoriteChemistry =
+  "まだ記録なし";
+
+let favoriteChemistryCount =
+  0;
+
+Object.entries(chemistryCounter)
+  .forEach(([pairKey, count]) => {
+
+    if (count > favoriteChemistryCount) {
+
+      favoriteChemistry =
+        pairKey.replace("-", " × ");
+
+      favoriteChemistryCount =
+        count;
+
+    }
+
+  });
+
+
+if (favoriteChemistryEl) {
+
+  favoriteChemistryEl.textContent =
+    favoriteChemistry;
+
+}
+
+
+// 🎧 MEMBER SONG
+const memberSongKey =
+  `treasure-${myTreasureMember.toLowerCase()}-songs`;
+
+const memberSongsForStats =
+  getStatsJSON(
+    memberSongKey,
+    []
+  );
+
+
+let favoriteMemberSong =
+  null;
+
+if (Array.isArray(memberSongsForStats)) {
+
+  favoriteMemberSong =
+    memberSongsForStats.find(
+      song =>
+        song.favorite === true
+    ) || null;
+
+}
+
+
+if (memberSongEl) {
+
+  memberSongEl.textContent =
+    favoriteMemberSong
+      ? favoriteMemberSong.title
+      : "まだ未設定";
+
+} 
 }
 // HOME → STATS
 if (
