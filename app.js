@@ -31041,6 +31041,138 @@ if (memberSongEl) {
 
 } 
 }
+// ============================================
+// 📸 VISUAL KING STATS
+// ============================================
+
+async function updateVisualKingStats() {
+
+  const visualKingEl =
+    document.getElementById(
+      "stats-visual-king"
+    );
+
+  if (!visualKingEl) return;
+
+
+  const visualMembers = [
+
+    {
+      name: "JIHOON",
+      getVisuals: getJihoonVisuals
+    },
+
+    {
+      name: "HYUNSUK",
+      getVisuals: getHyunsukVisuals
+    },
+
+    {
+      name: "YOSHI",
+      getVisuals: () =>
+        yoshiVisualSystem.getVisuals()
+    },
+
+    {
+      name: "JUNKYU",
+      getVisuals: () =>
+        junkyuVisualSystem.getVisuals()
+    },
+
+    {
+      name: "JAEHYUK",
+      getVisuals: () =>
+        jaehyukVisualSystem.getVisuals()
+    },
+
+    {
+      name: "ASAHI",
+      getVisuals: () =>
+        asahiVisualSystem.getVisuals()
+    },
+
+    {
+      name: "DOYOUNG",
+      getVisuals: () =>
+        doyoungVisualSystem.getVisuals()
+    },
+
+    {
+      name: "HARUTO",
+      getVisuals: () =>
+        harutoVisualSystem.getVisuals()
+    },
+
+    {
+      name: "JEONGWOO",
+      getVisuals: () =>
+        jeongwooVisualSystem.getVisuals()
+    },
+
+    {
+      name: "JUNGHWAN",
+      getVisuals: () =>
+        junghwanVisualSystem.getVisuals()
+    }
+
+  ];
+
+
+  let visualKing =
+    "まだFAVORITEなし";
+
+  let visualKingCount =
+    0;
+
+
+  for (const member of visualMembers) {
+
+    try {
+
+      const visuals =
+        await member.getVisuals();
+
+      const favoriteCount =
+        Array.isArray(visuals)
+          ? visuals.filter(
+              visual =>
+                visual.favorite === true
+            ).length
+          : 0;
+
+
+      if (
+        favoriteCount >
+        visualKingCount
+      ) {
+
+        visualKing =
+          member.name;
+
+        visualKingCount =
+          favoriteCount;
+
+      }
+
+    } catch (error) {
+
+      console.error(
+        "VISUAL KING LOAD ERROR:",
+        member.name,
+        error
+      );
+
+    }
+
+  }
+
+
+  visualKingEl.textContent =
+    visualKingCount > 0
+      ? `${visualKing} (${visualKingCount})`
+      : "まだFAVORITEなし";
+
+}
 // HOME → STATS
 if (
   statsPageOpen &&
