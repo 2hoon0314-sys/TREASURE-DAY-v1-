@@ -3016,7 +3016,114 @@
 
   opacity: .45;
 }
+/* ---------- MEMORY LIFE ---------- */
 
+.stats-memory-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 10px;
+
+  margin-bottom: 12px;
+}
+
+
+.stats-memory-item {
+  min-height: 112px;
+
+  padding: 17px 10px;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 19px;
+
+  background:
+    rgba(245, 240, 255, .72);
+
+  text-align: center;
+}
+
+
+.stats-memory-item > span {
+  margin-bottom: 6px;
+
+  font-size: 22px;
+}
+
+
+.stats-memory-item strong {
+  font-size: 25px;
+  line-height: 1;
+
+  font-weight: 900;
+}
+
+
+.stats-memory-item small {
+  margin-top: 7px;
+
+  font-size: 8px;
+  font-weight: 900;
+
+  letter-spacing: .1em;
+
+  opacity: .42;
+}
+
+
+/* 👑 MOST ACTIVE MEMORY */
+
+.stats-memory-highlight {
+  margin-top: 10px;
+
+  padding: 18px;
+
+  display: flex;
+  flex-direction: column;
+
+  border-radius: 19px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(244, 249, 255, .95),
+      rgba(244, 236, 255, .9)
+    );
+}
+
+
+.stats-memory-highlight small {
+  margin-bottom: 7px;
+
+  font-size: 8px;
+  font-weight: 900;
+
+  letter-spacing: .1em;
+
+  opacity: .43;
+}
+
+
+.stats-memory-highlight strong {
+  font-size: 17px;
+
+  line-height: 1.35;
+}
+
+
+.stats-memory-highlight span {
+  margin-top: 5px;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  opacity: .45;
+}
 /* ---------- DETAIL CARD ---------- */
 
 .stats-detail-card,
