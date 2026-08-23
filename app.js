@@ -30643,7 +30643,7 @@ updateMyTreasureStats();
     }
   );
 
-}
+
 
 
 // STATS → HOME
