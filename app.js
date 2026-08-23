@@ -30611,6 +30611,118 @@ if (liveLifeEl) {
   `;
 
 }
+// --------------------------
+// 📸 MEMORY LIFE
+// --------------------------
+
+const memoryLifeEl =
+  document.getElementById(
+    "stats-memory-life"
+  );
+
+
+// 一番記録数が多いカテゴリーを決める
+const memoryCategories = [
+  {
+    name: "PHOTO MEMORY",
+    icon: "📸",
+    count: photoCount
+  },
+  {
+    name: "EVENT MEMORY",
+    icon: "🎫",
+    count: eventMemoryCount
+  },
+  {
+    name: "SEAT MEMORY",
+    icon: "💺",
+    count: seatCount
+  },
+  {
+    name: "DIARY",
+    icon: "📖",
+    count: diaryCount
+  }
+];
+
+
+let mostActiveMemory = null;
+
+memoryCategories.forEach(category => {
+
+  if (
+    !mostActiveMemory ||
+    category.count > mostActiveMemory.count
+  ) {
+
+    mostActiveMemory = category;
+
+  }
+
+});
+
+
+// HTMLへ反映
+if (memoryLifeEl) {
+
+  memoryLifeEl.innerHTML = `
+
+    <div class="stats-memory-grid">
+
+      <div class="stats-memory-item">
+        <span>📸</span>
+        <strong>${photoCount}</strong>
+        <small>PHOTO MEMORY</small>
+      </div>
+
+      <div class="stats-memory-item">
+        <span>🎫</span>
+        <strong>${eventMemoryCount}</strong>
+        <small>EVENT MEMORY</small>
+      </div>
+
+      <div class="stats-memory-item">
+        <span>💺</span>
+        <strong>${seatCount}</strong>
+        <small>SEAT MEMORY</small>
+      </div>
+
+      <div class="stats-memory-item">
+        <span>📖</span>
+        <strong>${diaryCount}</strong>
+        <small>DIARY</small>
+      </div>
+
+    </div>
+
+
+    <div class="stats-memory-highlight">
+
+      <small>
+        👑 MOST ACTIVE MEMORY
+      </small>
+
+      <strong>
+        ${
+          mostActiveMemory &&
+          mostActiveMemory.count > 0
+            ? `${mostActiveMemory.icon} ${mostActiveMemory.name}`
+            : "まだ記録なし"
+        }
+      </strong>
+
+      ${
+        mostActiveMemory &&
+        mostActiveMemory.count > 0
+          ? `<span>${mostActiveMemory.count} MEMORIES</span>`
+          : ""
+      }
+
+    </div>
+
+  `;
+
+}  
 }
 // HOME → STATS
 if (
