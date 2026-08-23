@@ -30503,7 +30503,7 @@ if (
   statsPageOpen.addEventListener(
     "click",
     () => {
-
+updateMyTreasureStats();
       // HOMEを隠す
       if (homePage) {
         homePage.style.display =
