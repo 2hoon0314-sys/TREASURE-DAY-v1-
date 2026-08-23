@@ -30492,38 +30492,6 @@ function updateMyTreasureStats() {
     totalWorldcupsEl.textContent =
       totalWorldcups;
   }
-
-}
-// HOME → STATS
-if (
-  statsPageOpen &&
-  statsPage
-) {
-
-  statsPageOpen.addEventListener(
-    "click",
-    () => {
-updateMyTreasureStats();
-      // HOMEを隠す
-      if (homePage) {
-        homePage.style.display =
-          "none";
-      }
-
-      // STATSを表示
-      statsPage.style.display =
-        "block";
-
-      // STATSの一番上から表示
-      statsPage.scrollTop = 0;
-
-      window.scrollTo(
-        0,
-        0
-      );
-
-    }
-  );
 // --------------------------
 // 🎤 LIVE LIFE
 // --------------------------
@@ -30643,6 +30611,38 @@ if (liveLifeEl) {
   `;
 
 }
+}
+// HOME → STATS
+if (
+  statsPageOpen &&
+  statsPage
+) {
+
+  statsPageOpen.addEventListener(
+    "click",
+    () => {
+updateMyTreasureStats();
+      // HOMEを隠す
+      if (homePage) {
+        homePage.style.display =
+          "none";
+      }
+
+      // STATSを表示
+      statsPage.style.display =
+        "block";
+
+      // STATSの一番上から表示
+      statsPage.scrollTop = 0;
+
+      window.scrollTo(
+        0,
+        0
+      );
+
+    }
+  );
+
 }
 
 
