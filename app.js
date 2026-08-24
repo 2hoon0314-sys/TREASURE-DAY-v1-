@@ -33067,7 +33067,56 @@ if (treasureCalendarFormSave) {
 
       }
 
+const editId =
+  treasureCalendarForm
+    ? treasureCalendarForm.dataset.editId
+    : "";
 
+if (editId) {
+
+  const targetEvent =
+    treasureCalendarEvents.find(
+      item =>
+        item.id === editId
+    );
+
+  if (targetEvent) {
+
+    targetEvent.title =
+      title;
+
+    targetEvent.time =
+      treasureCalendarEventTime
+        ? treasureCalendarEventTime.value
+        : "";
+
+    targetEvent.category =
+      treasureCalendarEventCategory
+        ? treasureCalendarEventCategory.value
+        : "MY PLAN";
+
+    targetEvent.memo =
+      treasureCalendarEventMemo
+        ? treasureCalendarEventMemo.value.trim()
+        : "";
+
+    delete treasureCalendarForm.dataset.editId;
+
+    saveTreasureCalendarEvents();
+
+    treasureCalendarEventTitle.value = "";
+    treasureCalendarEventTime.value = "";
+    treasureCalendarEventMemo.value = "";
+
+    treasureCalendarForm.style.display =
+      "none";
+
+    renderTreasureCalendarDayEvents();
+    renderTreasureCalendar();
+
+    return;
+  }
+}
       const newEvent = {
 
         id:
