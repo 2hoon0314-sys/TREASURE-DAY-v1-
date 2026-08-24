@@ -3744,6 +3744,192 @@ background:
   font-size: 9px;
   opacity: .58;
 }
+ /* =========================================
+   🏅 BADGE DETAIL
+========================================= */
+
+.stats-badge-card {
+  cursor: pointer;
+  transition:
+    transform .18s ease,
+    box-shadow .18s ease;
+}
+
+.stats-badge-card:active {
+  transform: scale(.985);
+}
+
+
+.treasure-badge-detail-modal {
+  position: fixed;
+  inset: 0;
+
+  z-index: 99999;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+
+  padding: 20px;
+
+  background:
+    rgba(30, 45, 70, .18);
+
+  backdrop-filter: blur(8px);
+
+  opacity: 0;
+  transition: opacity .25s ease;
+}
+
+.treasure-badge-detail-modal.show {
+  opacity: 1;
+}
+
+
+.treasure-badge-detail-card {
+  position: relative;
+
+  width: min(100%, 480px);
+
+  padding: 32px 24px 28px;
+
+  border-radius: 30px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.98),
+      rgba(239,245,255,.98),
+      rgba(246,237,255,.98)
+    );
+
+  box-shadow:
+    0 20px 60px
+    rgba(60, 80, 120, .18);
+
+  text-align: center;
+
+  transform: translateY(25px);
+  transition: transform .25s ease;
+}
+
+.treasure-badge-detail-modal.show
+.treasure-badge-detail-card {
+  transform: translateY(0);
+}
+
+
+.treasure-badge-detail-close {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+
+  width: 36px;
+  height: 36px;
+
+  border: none;
+  border-radius: 50%;
+
+  background:
+    rgba(230, 238, 248, .9);
+
+  font-size: 22px;
+
+  color: #243447;
+}
+
+
+.treasure-badge-detail-icon {
+  width: 72px;
+  height: 72px;
+
+  margin: 4px auto 18px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 24px;
+
+  background:
+    rgba(255,255,255,.88);
+
+  font-size: 34px;
+
+  box-shadow:
+    0 8px 25px
+    rgba(80, 100, 150, .08);
+}
+
+
+.treasure-badge-detail-card > small {
+  display: block;
+
+  margin-bottom: 8px;
+
+  font-size: 9px;
+  font-weight: 900;
+
+  letter-spacing: .14em;
+
+  opacity: .45;
+}
+
+
+.treasure-badge-detail-card h2 {
+  margin: 0 0 10px;
+
+  font-size: 24px;
+
+  letter-spacing: -.02em;
+}
+
+
+.treasure-badge-detail-card > p {
+  margin: 0 0 24px;
+
+  font-size: 12px;
+  line-height: 1.8;
+
+  opacity: .6;
+}
+
+
+.treasure-badge-detail-info {
+  display: grid;
+  gap: 10px;
+}
+
+
+.treasure-badge-detail-info div {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 14px;
+
+  padding: 13px 15px;
+
+  border-radius: 16px;
+
+  background:
+    rgba(255,255,255,.72);
+}
+
+
+.treasure-badge-detail-info span {
+  font-size: 9px;
+  font-weight: 900;
+
+  letter-spacing: .09em;
+
+  opacity: .45;
+}
+
+
+.treasure-badge-detail-info strong {
+  font-size: 11px;
+} 
 </style>
 </head>
 <body>
