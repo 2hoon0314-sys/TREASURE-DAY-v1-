@@ -32519,7 +32519,12 @@ function openTreasureCalendarDay(
   ) {
     return;
   }
-
+treasureCalendarSelectedKey =
+  makeTreasureCalendarDateKey(
+    year,
+    month,
+    day
+  );
   const dateText =
     `${year}.` +
     `${String(month + 1).padStart(2, "0")}.` +
