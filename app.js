@@ -32475,8 +32475,7 @@ if (treasureCalendarNext) {
 }
 
 
-// 初期生成
-renderTreasureCalendar();
+
 // STATS → HOME
 if (
   statsPageBack &&
