@@ -32064,6 +32064,113 @@ if (
     }
   );
 }
+// ============================================
+// 🎲 JIHOON PHOTO ROULETTE DRAW
+// ============================================
+
+const jihoonRoulettePhotos = [
+  {
+    file: "weverse_20260116131428_671209511.jpeg",
+    year: 2026
+  },
+  {
+    file: "weverse_20251106023034_3375579092.jpeg",
+    year: 2025
+  },
+  {
+    file: "IMG_0804.jpeg",
+    year: 2025
+  }
+];
+
+const jihoonRouletteImage =
+  document.getElementById(
+    "jihoon-roulette-image"
+  );
+
+const jihoonRouletteEmpty =
+  document.getElementById(
+    "jihoon-roulette-empty"
+  );
+
+const jihoonRouletteYear =
+  document.getElementById(
+    "jihoon-roulette-year"
+  );
+
+const jihoonRouletteDraw =
+  document.getElementById(
+    "jihoon-roulette-draw"
+  );
+
+let lastJihoonRouletteIndex = -1;
+
+function drawJihoonPhoto() {
+
+  if (
+    !jihoonRouletteImage ||
+    !jihoonRouletteYear ||
+    jihoonRoulettePhotos.length === 0
+  ) {
+    return;
+  }
+
+  let randomIndex =
+    Math.floor(
+      Math.random() *
+      jihoonRoulettePhotos.length
+    );
+
+  // 2枚以上ある場合は
+  // 直前と同じ写真をなるべく避ける
+  if (
+    jihoonRoulettePhotos.length > 1
+  ) {
+
+    while (
+      randomIndex ===
+      lastJihoonRouletteIndex
+    ) {
+
+      randomIndex =
+        Math.floor(
+          Math.random() *
+          jihoonRoulettePhotos.length
+        );
+
+    }
+
+  }
+
+  lastJihoonRouletteIndex =
+    randomIndex;
+
+  const selectedPhoto =
+    jihoonRoulettePhotos[randomIndex];
+
+  jihoonRouletteImage.src =
+    selectedPhoto.file;
+
+  jihoonRouletteImage.style.display =
+    "block";
+
+  if (jihoonRouletteEmpty) {
+    jihoonRouletteEmpty.style.display =
+      "none";
+  }
+
+  jihoonRouletteYear.textContent =
+    selectedPhoto.year;
+}
+
+if (jihoonRouletteDraw) {
+
+  jihoonRouletteDraw.addEventListener(
+    "click",
+    drawJihoonPhoto
+  );
+
+}
 // STATS → HOME
 if (
   statsPageBack &&
