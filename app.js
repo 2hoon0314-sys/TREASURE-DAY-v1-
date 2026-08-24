@@ -32313,6 +32313,24 @@ function renderTreasureCalendar() {
 
     button.textContent =
       day;
+    const dateKey =
+  makeTreasureCalendarDateKey(
+    year,
+    month,
+    day
+  );
+
+const hasEvent =
+  treasureCalendarEvents.some(
+    event =>
+      event.date === dateKey
+  );
+
+if (hasEvent) {
+  button.classList.add(
+    "has-event"
+  );
+}
 button.addEventListener(
   "click",
   () => {
