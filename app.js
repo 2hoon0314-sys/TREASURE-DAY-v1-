@@ -32313,7 +32313,16 @@ function renderTreasureCalendar() {
 
     button.textContent =
       day;
-
+button.addEventListener(
+  "click",
+  () => {
+    openTreasureCalendarDay(
+      year,
+      month,
+      day
+    );
+  }
+);
 
     const isToday =
       year ===
