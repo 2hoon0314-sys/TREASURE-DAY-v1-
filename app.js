@@ -32353,10 +32353,7 @@ if (
     "click",
     () => {
 
-      if (homePage) {
-        homePage.style.display =
-          "none";
-      }
+     
 
       treasureCalendarPage.style.display =
         "block";
@@ -32391,10 +32388,7 @@ if (
       treasureCalendarPage.style.display =
         "none";
 
-      if (homePage) {
-        homePage.style.display =
-          "block";
-      }
+     
 
       document.body.style.overflow =
         "";
