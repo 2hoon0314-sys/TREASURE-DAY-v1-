@@ -32488,6 +32488,136 @@ if (
   );
 
 }
+// ============================================
+// 📅 CALENDAR DAY DETAIL
+// ============================================
+
+const treasureCalendarDayDetail =
+  document.getElementById(
+    "treasure-calendar-day-detail"
+  );
+
+const treasureCalendarDayBack =
+  document.getElementById(
+    "treasure-calendar-day-back"
+  );
+
+const treasureCalendarSelectedDate =
+  document.getElementById(
+    "treasure-calendar-selected-date"
+  );
+
+function openTreasureCalendarDay(
+  year,
+  month,
+  day
+) {
+
+  if (
+    !treasureCalendarDayDetail ||
+    !treasureCalendarSelectedDate
+  ) {
+    return;
+  }
+
+  const dateText =
+    `${year}.` +
+    `${String(month + 1).padStart(2, "0")}.` +
+    `${String(day).padStart(2, "0")}`;
+
+  treasureCalendarSelectedDate.textContent =
+    dateText;
+
+  // 月間カレンダー部分を隠す
+  const calendarCard =
+    document.querySelector(
+      ".treasure-calendar-card"
+    );
+
+  const calendarHero =
+    document.querySelector(
+      ".treasure-calendar-hero"
+    );
+
+  const calendarNote =
+    document.querySelector(
+      ".treasure-calendar-today-note"
+    );
+
+  if (calendarCard) {
+    calendarCard.style.display =
+      "none";
+  }
+
+  if (calendarHero) {
+    calendarHero.style.display =
+      "none";
+  }
+
+  if (calendarNote) {
+    calendarNote.style.display =
+      "none";
+  }
+
+  treasureCalendarDayDetail.style.display =
+    "block";
+
+  treasureCalendarPage.scrollTop =
+    0;
+
+}
+
+
+// ============================================
+// ← DAY DETAIL → CALENDAR
+// ============================================
+
+if (treasureCalendarDayBack) {
+
+  treasureCalendarDayBack.addEventListener(
+    "click",
+    () => {
+
+      const calendarCard =
+        document.querySelector(
+          ".treasure-calendar-card"
+        );
+
+      const calendarHero =
+        document.querySelector(
+          ".treasure-calendar-hero"
+        );
+
+      const calendarNote =
+        document.querySelector(
+          ".treasure-calendar-today-note"
+        );
+
+      treasureCalendarDayDetail.style.display =
+        "none";
+
+      if (calendarCard) {
+        calendarCard.style.display =
+          "block";
+      }
+
+      if (calendarHero) {
+        calendarHero.style.display =
+          "block";
+      }
+
+      if (calendarNote) {
+        calendarNote.style.display =
+          "block";
+      }
+
+      treasureCalendarPage.scrollTop =
+        0;
+
+    }
+  );
+
+}
 // ======================================================
 // 🎧 MUSIC MENU
 // 今回は入口のみ。中身は次から順番に実装。
