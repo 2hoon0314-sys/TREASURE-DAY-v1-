@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TREASURE DAY 💎</title>
-<link rel="stylesheet" href="style.css?v=15">
+<link rel="stylesheet" href="style.css?v=16">
 <style>
 
 /* =========================================
@@ -3560,12 +3560,189 @@ background:
 
 .stats-achievements {
   min-height: 85px;
+  display: block;
+  text-align: left;
+}
 
+.stats-badge-summary {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
 
-  text-align: center;
+.stats-badge-summary div {
+  display: grid;
+  gap: 3px;
+}
+
+.stats-badge-summary small,
+.stats-level-progress-head {
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: .1em;
+  opacity: .48;
+}
+
+.stats-badge-summary strong {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.stats-badge-summary > span {
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: rgba(226, 238, 255, .82);
+  font-size: 9px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.stats-level-progress {
+  margin-bottom: 19px;
+}
+
+.stats-level-progress-head {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 7px;
+}
+
+.stats-level-progress-track {
+  height: 7px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(210, 220, 235, .5);
+}
+
+.stats-level-progress-bar {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #c6e8ff, #d9c9ff);
+  transition: width .45s ease;
+}
+
+.stats-badge-grid {
+  display: grid;
+  gap: 10px;
+}
+
+.stats-badge-card {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 13px;
+  border-radius: 18px;
+  background: rgba(247, 250, 255, .82);
+  border: 1px solid rgba(120, 150, 190, .08);
+}
+
+.stats-badge-card.unlocked {
+  background: linear-gradient(135deg, rgba(238, 248, 255, .95), rgba(247, 238, 255, .94));
+  box-shadow: 0 6px 18px rgba(80, 110, 160, .08);
+}
+
+.stats-badge-card.locked {
+  opacity: .58;
+}
+
+.stats-badge-icon {
+  flex: 0 0 46px;
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, .88);
+  font-size: 22px;
+}
+
+.stats-badge-copy {
+  flex: 1;
+  min-width: 0;
+}
+
+.stats-badge-copy strong {
+  display: block;
+  margin-bottom: 2px;
+  font-size: 11px;
+  letter-spacing: .04em;
+}
+
+.stats-badge-copy p {
+  margin: 0 0 7px;
+  font-size: 9px;
+  line-height: 1.45;
+  opacity: .58;
+}
+
+.stats-badge-copy small {
+  display: block;
+  margin-top: 5px;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: .06em;
+  opacity: .62;
+}
+
+.stats-badge-progress {
+  height: 5px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(205, 216, 232, .5);
+}
+
+.stats-badge-progress div {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #c9eaff, #dccbff);
+}
+
+.treasure-badge-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  z-index: 50000;
+  width: min(calc(100% - 32px), 420px);
+  padding: 16px 18px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, .96);
+  box-shadow: 0 16px 45px rgba(55, 80, 120, .18);
+  backdrop-filter: blur(14px);
+  transform: translate(-50%, 24px);
+  opacity: 0;
+  transition: .32s ease;
+  pointer-events: none;
+}
+
+.treasure-badge-toast.show {
+  transform: translate(-50%, 0);
+  opacity: 1;
+}
+
+.treasure-badge-toast small,
+.treasure-badge-toast strong,
+.treasure-badge-toast span {
+  display: block;
+}
+
+.treasure-badge-toast small {
+  margin-bottom: 5px;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: .12em;
+  opacity: .52;
+}
+
+.treasure-badge-toast strong {
+  margin-bottom: 4px;
+  font-size: 15px;
+}
+
+.treasure-badge-toast span {
+  font-size: 9px;
+  opacity: .58;
 }
 </style>
 </head>
@@ -16599,3 +16776,7 @@ class="memory-song-input"
 
 </body>
 </html>
+app.js
+コード
+index.html
+HTML
