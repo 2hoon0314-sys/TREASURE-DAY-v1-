@@ -32868,7 +32868,64 @@ function renderTreasureCalendarDayEvents() {
         );
 
       }
+// ============================================
+// ✏️ EDIT SCHEDULE
+// ============================================
 
+const editButton =
+  document.createElement("button");
+
+editButton.type = "button";
+
+editButton.className =
+  "treasure-calendar-event-edit";
+
+editButton.textContent =
+  "EDIT";
+
+editButton.addEventListener(
+  "click",
+  () => {
+
+    // 保存済み内容をフォームへ戻す
+    if (treasureCalendarEventTitle) {
+      treasureCalendarEventTitle.value =
+        event.title || "";
+    }
+
+    if (treasureCalendarEventTime) {
+      treasureCalendarEventTime.value =
+        event.time || "";
+    }
+
+    if (treasureCalendarEventCategory) {
+      treasureCalendarEventCategory.value =
+        event.category || "MY PLAN";
+    }
+
+    if (treasureCalendarEventMemo) {
+      treasureCalendarEventMemo.value =
+        event.memo || "";
+    }
+
+    // 編集する予定IDをフォームに記録
+    treasureCalendarForm.dataset.editId =
+      event.id;
+
+    treasureCalendarForm.style.display =
+      "block";
+
+    treasureCalendarForm.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+
+  }
+);
+
+card.appendChild(
+  editButton
+);
 // ============================================
 // 🗑 DELETE SCHEDULE
 // ============================================
