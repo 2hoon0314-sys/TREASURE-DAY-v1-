@@ -31728,7 +31728,13 @@ function openTreasureBadgeDetail(badgeId) {
             / ${badge.target}
           </strong>
         </div>
+<div>
+  <span>CATEGORY</span>
 
+  <strong>
+    ${badge.category}
+  </strong>
+</div>
         ${
           unlocked
             ? `
