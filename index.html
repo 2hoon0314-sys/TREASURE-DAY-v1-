@@ -4891,7 +4891,89 @@ background:
   >
     ＋ ADD SCHEDULE
   </button>
+<!-- =========================================
+     ➕ CALENDAR ADD SCHEDULE FORM
+========================================= -->
 
+<div
+  id="treasure-calendar-form"
+  class="treasure-calendar-form"
+  style="display: none;"
+>
+
+  <div class="treasure-calendar-form-head">
+    <small>NEW SCHEDULE</small>
+    <h3>予定を追加 💎</h3>
+  </div>
+
+  <label class="treasure-calendar-field">
+    <span>TITLE *</span>
+
+    <input
+      type="text"
+      id="treasure-calendar-event-title"
+      placeholder="例：TREASURE LIVE"
+    >
+  </label>
+
+
+  <label class="treasure-calendar-field">
+    <span>TIME</span>
+
+    <input
+      type="time"
+      id="treasure-calendar-event-time"
+    >
+  </label>
+
+
+  <label class="treasure-calendar-field">
+    <span>CATEGORY</span>
+
+    <select id="treasure-calendar-event-category">
+      <option value="LIVE">🎤 LIVE / EVENT</option>
+      <option value="RELEASE">💿 RELEASE</option>
+      <option value="BIRTHDAY">🎂 BIRTHDAY</option>
+      <option value="MEDIA">📺 MEDIA</option>
+      <option value="TICKET">🎫 TICKET</option>
+      <option value="TRIP">✈️ TRIP</option>
+      <option value="MY PLAN">💎 MY PLAN</option>
+    </select>
+  </label>
+
+
+  <label class="treasure-calendar-field">
+    <span>MEMO</span>
+
+    <textarea
+      id="treasure-calendar-event-memo"
+      rows="4"
+      placeholder="会場・持ち物・応募締切など..."
+    ></textarea>
+  </label>
+
+
+  <div class="treasure-calendar-form-actions">
+
+    <button
+      type="button"
+      id="treasure-calendar-form-cancel"
+      class="treasure-calendar-form-cancel"
+    >
+      CANCEL
+    </button>
+
+    <button
+      type="button"
+      id="treasure-calendar-form-save"
+      class="treasure-calendar-form-save"
+    >
+      SAVE 💎
+    </button>
+
+  </div>
+
+</div>
 </div>
 </section>
  <!-- =========================================
