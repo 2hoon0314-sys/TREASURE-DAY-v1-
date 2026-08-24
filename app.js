@@ -31419,7 +31419,10 @@ if (achievementsEl) {
         );
 
         return `
-          <article class="stats-badge-card ${unlocked ? "unlocked" : "locked"}">
+         <article
+  class="stats-badge-card ${unlocked ? "unlocked" : "locked"}"
+  data-badge-id="${badge.id}"
+>
             <div class="stats-badge-icon">
               ${unlocked ? badge.icon : "🔒"}
             </div>
