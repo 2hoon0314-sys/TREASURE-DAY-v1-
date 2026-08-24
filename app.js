@@ -32030,6 +32030,40 @@ if (
   );
 
 }
+// JIHOON PHOTO ROULETTE → HOME
+const jihoonRouletteBack =
+  document.getElementById("jihoon-roulette-back");
+
+if (
+  jihoonRouletteBack &&
+  jihoonRoulettePage
+) {
+  jihoonRouletteBack.addEventListener(
+    "click",
+    () => {
+
+      // PHOTO ROULETTEを閉じる
+      jihoonRoulettePage.style.display =
+        "none";
+
+      // HOMEを表示
+      if (homePage) {
+        homePage.style.display =
+          "block";
+      }
+
+      // スクロールを戻す
+      document.body.style.overflow =
+        "";
+
+      window.scrollTo(
+        0,
+        0
+      );
+
+    }
+  );
+}
 // STATS → HOME
 if (
   statsPageBack &&
