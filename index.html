@@ -5146,6 +5146,404 @@ background:
 </div>
 </div>
 </section>
+  // ============================================
+// 📅 CALENDAR SCHEDULE DATA
+// ============================================
+
+const treasureCalendarStorageKey =
+  "treasure-calendar-events";
+
+let treasureCalendarEvents = [];
+
+try {
+
+  treasureCalendarEvents =
+    JSON.parse(
+      localStorage.getItem(
+        treasureCalendarStorageKey
+      )
+    ) || [];
+
+} catch (error) {
+
+  treasureCalendarEvents = [];
+
+}
+
+
+// 選択中の日付
+let treasureCalendarSelectedKey = "";
+
+
+// FORM DOM
+const treasureCalendarAddEvent =
+  document.getElementById(
+    "treasure-calendar-add-event"
+  );
+
+const treasureCalendarForm =
+  document.getElementById(
+    "treasure-calendar-form"
+  );
+
+const treasureCalendarFormCancel =
+  document.getElementById(
+    "treasure-calendar-form-cancel"
+  );
+
+const treasureCalendarFormSave =
+  document.getElementById(
+    "treasure-calendar-form-save"
+  );
+
+const treasureCalendarEventTitle =
+  document.getElementById(
+    "treasure-calendar-event-title"
+  );
+
+const treasureCalendarEventTime =
+  document.getElementById(
+    "treasure-calendar-event-time"
+  );
+
+const treasureCalendarEventCategory =
+  document.getElementById(
+    "treasure-calendar-event-category"
+  );
+
+const treasureCalendarEventMemo =
+  document.getElementById(
+    "treasure-calendar-event-memo"
+  );
+
+const treasureCalendarEventList =
+  document.getElementById(
+    "treasure-calendar-event-list"
+  );
+
+
+// ============================================
+// 💾 SAVE
+// ============================================
+
+function saveTreasureCalendarEvents() {
+
+  localStorage.setItem(
+    treasureCalendarStorageKey,
+    JSON.stringify(
+      treasureCalendarEvents
+    )
+  );
+
+}
+
+
+// ============================================
+// 📅 DATE KEY
+// ============================================
+
+function makeTreasureCalendarDateKey(
+  year,
+  month,
+  day
+) {
+
+  return (
+    `${year}-` +
+    `${String(month + 1).padStart(2, "0")}-` +
+    `${String(day).padStart(2, "0")}`
+  );
+
+}
+
+
+// ============================================
+// 📋 DAY EVENT LIST
+// ============================================
+
+function renderTreasureCalendarDayEvents() {
+
+  if (!treasureCalendarEventList) {
+    return;
+  }
+
+  treasureCalendarEventList.innerHTML =
+    "";
+
+  const events =
+    treasureCalendarEvents.filter(
+      event =>
+        event.date ===
+        treasureCalendarSelectedKey
+    );
+
+
+  if (events.length === 0) {
+
+    treasureCalendarEventList.innerHTML =
+      `
+        <div class="treasure-calendar-event-card">
+          <strong>予定なし 💎</strong>
+          <small>
+            ＋ ADD SCHEDULE から追加できます
+          </small>
+        </div>
+      `;
+
+    return;
+  }
+
+
+  events
+    .sort((a, b) =>
+      (a.time || "").localeCompare(
+        b.time || ""
+      )
+    )
+    .forEach(event => {
+
+      const card =
+        document.createElement(
+          "div"
+        );
+
+      card.className =
+        "treasure-calendar-event-card";
+
+
+      const category =
+        document.createElement(
+          "div"
+        );
+
+      category.className =
+        "treasure-calendar-event-category";
+
+      category.textContent =
+        event.category || "MY PLAN";
+
+
+      const title =
+        document.createElement(
+          "strong"
+        );
+
+      title.textContent =
+        event.title;
+
+
+      const time =
+        document.createElement(
+          "small"
+        );
+
+      time.textContent =
+        event.time
+          ? `🕒 ${event.time}`
+          : "🕒 TIME未設定";
+
+
+      card.appendChild(
+        category
+      );
+
+      card.appendChild(
+        title
+      );
+
+      card.appendChild(
+        time
+      );
+
+
+      if (event.memo) {
+
+        const memo =
+          document.createElement(
+            "div"
+          );
+
+        memo.className =
+          "treasure-calendar-event-memo";
+
+        memo.textContent =
+          event.memo;
+
+        card.appendChild(
+          memo
+        );
+
+      }
+
+
+      treasureCalendarEventList.appendChild(
+        card
+      );
+
+    });
+
+}
+
+
+// ============================================
+// ➕ OPEN FORM
+// ============================================
+
+if (treasureCalendarAddEvent) {
+
+  treasureCalendarAddEvent.addEventListener(
+    "click",
+    () => {
+
+      if (!treasureCalendarForm) {
+        return;
+      }
+
+      treasureCalendarForm.style.display =
+        "block";
+
+      treasureCalendarForm.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+
+    }
+  );
+
+}
+
+
+// ============================================
+// ✖ CANCEL
+// ============================================
+
+if (treasureCalendarFormCancel) {
+
+  treasureCalendarFormCancel.addEventListener(
+    "click",
+    () => {
+
+      if (treasureCalendarForm) {
+        treasureCalendarForm.style.display =
+          "none";
+      }
+
+    }
+  );
+
+}
+
+
+// ============================================
+// 💎 SAVE SCHEDULE
+// ============================================
+
+if (treasureCalendarFormSave) {
+
+  treasureCalendarFormSave.addEventListener(
+    "click",
+    () => {
+
+      const title =
+        treasureCalendarEventTitle
+          ? treasureCalendarEventTitle
+              .value
+              .trim()
+          : "";
+
+      if (!title) {
+
+        alert(
+          "予定のタイトルを入れてね💎"
+        );
+
+        return;
+
+      }
+
+
+      if (!treasureCalendarSelectedKey) {
+
+        alert(
+          "日付を選び直してね💎"
+        );
+
+        return;
+
+      }
+
+
+      const newEvent = {
+
+        id:
+          "calendar-" +
+          Date.now(),
+
+        date:
+          treasureCalendarSelectedKey,
+
+        title:
+          title,
+
+        time:
+          treasureCalendarEventTime
+            ? treasureCalendarEventTime
+                .value
+            : "",
+
+        category:
+          treasureCalendarEventCategory
+            ? treasureCalendarEventCategory
+                .value
+            : "MY PLAN",
+
+        memo:
+          treasureCalendarEventMemo
+            ? treasureCalendarEventMemo
+                .value
+                .trim()
+            : ""
+
+      };
+
+
+      treasureCalendarEvents.push(
+        newEvent
+      );
+
+      saveTreasureCalendarEvents();
+
+
+      // フォーム初期化
+      if (treasureCalendarEventTitle) {
+        treasureCalendarEventTitle.value =
+          "";
+      }
+
+      if (treasureCalendarEventTime) {
+        treasureCalendarEventTime.value =
+          "";
+      }
+
+      if (treasureCalendarEventMemo) {
+        treasureCalendarEventMemo.value =
+          "";
+      }
+
+      if (treasureCalendarForm) {
+        treasureCalendarForm.style.display =
+          "none";
+      }
+
+
+      renderTreasureCalendarDayEvents();
+
+      renderTreasureCalendar();
+
+    }
+  );
+
+}
  <!-- =========================================
      📊 MY TREASURE STATS ENTRY
 ========================================= -->
