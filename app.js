@@ -32869,7 +32869,51 @@ function renderTreasureCalendarDayEvents() {
 
       }
 
+// ============================================
+// 🗑 DELETE SCHEDULE
+// ============================================
 
+const deleteButton =
+  document.createElement("button");
+
+deleteButton.type = "button";
+
+deleteButton.className =
+  "treasure-calendar-event-delete";
+
+deleteButton.textContent =
+  "DELETE";
+
+deleteButton.addEventListener(
+  "click",
+  () => {
+
+    const ok = confirm(
+      `「${event.title}」を削除しますか？`
+    );
+
+    if (!ok) {
+      return;
+    }
+
+    treasureCalendarEvents =
+      treasureCalendarEvents.filter(
+        item =>
+          item.id !== event.id
+      );
+
+    saveTreasureCalendarEvents();
+
+    renderTreasureCalendarDayEvents();
+
+    renderTreasureCalendar();
+
+  }
+);
+
+card.appendChild(
+  deleteButton
+);
       treasureCalendarEventList.appendChild(
         card
       );
