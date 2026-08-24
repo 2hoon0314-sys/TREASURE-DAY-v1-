@@ -31114,30 +31114,428 @@ if (profileVenueEl) {
 }
 
 
-// ✦ TREASURE LIFE LEVEL
-const treasureLifePoints =
-  totalMemories +
-  (totalEvents * 2) +
-  totalFavorites +
-  (totalWorldcups * 5);
+// ============================================
+// ✦ TREASURE LIFE LEVEL + 🏅 MY BADGES v1
+// ============================================
 
-const treasureLifeLevel =
-  Math.min(
+// MEMBER BOOKの「記録あり」判定
+// PHOTO MEMORYでMEMBER指定がある、または
+// そのメンバーのMEMBER SONGに記録があれば1人として数える
+const treasureMembersForBadges = [
+  "HYUNSUK",
+  "JIHOON",
+  "YOSHI",
+  "JUNKYU",
+  "JAEHYUK",
+  "ASAHI",
+  "DOYOUNG",
+  "HARUTO",
+  "JEONGWOO",
+  "JUNGHWAN"
+];
+
+const memberBookRecordedMembers =
+  treasureMembersForBadges.filter(memberName => {
+
+    const hasPhotoMemory =
+      Array.isArray(photoMemories) &&
+      photoMemories.some(memory =>
+        String(memory.member || "")
+          .trim()
+          .toUpperCase() === memberName
+      );
+
+    const memberSongs =
+      getStatsJSON(
+        `treasure-${memberName.toLowerCase()}-songs`,
+        []
+      );
+
+    const hasMemberSong =
+      Array.isArray(memberSongs) &&
+      memberSongs.length > 0;
+
+    return hasPhotoMemory || hasMemberSong;
+  });
+
+const memberBookRecordCount =
+  memberBookRecordedMembers.length;
+
+const chemistryMemoryCount =
+  Array.isArray(chemistryForStats)
+    ? chemistryForStats.length
+    : 0;
+
+
+// --------------------------------------------
+// 🏅 BADGE DEFINITIONS
+// --------------------------------------------
+const treasureBadgeDefinitions = [
+  {
+    id: "first-memory",
+    icon: "🌱",
+    name: "FIRST MEMORY",
+    description: "最初のMEMORYを残した",
+    current: totalMemories,
+    target: 1
+  },
+  {
+    id: "memory-keeper",
+    icon: "💾",
+    name: "MEMORY KEEPER",
+    description: "MEMORYを10件残した",
+    current: totalMemories,
+    target: 10
+  },
+  {
+    id: "memory-master",
+    icon: "📸",
+    name: "MEMORY MASTER",
+    description: "MEMORYを50件残した",
+    current: totalMemories,
+    target: 50
+  },
+  {
+    id: "first-seat",
+    icon: "💺",
+    name: "FIRST SEAT",
+    description: "最初のSEAT MEMORYを残した",
+    current: seatCount,
+    target: 1
+  },
+  {
+    id: "five-star-seat",
+    icon: "⭐",
+    name: "5 STAR SEAT",
+    description: "★★★★★のSEATを残した",
+    current: fiveStarSeats,
+    target: 1
+  },
+  {
+    id: "first-event",
+    icon: "🎤",
+    name: "FIRST EVENT",
+    description: "最初のEVENTを登録した",
+    current: totalEvents,
+    target: 1
+  },
+  {
+    id: "ten-events",
+    icon: "💎",
+    name: "10 EVENTS",
+    description: "EVENTを10件登録した",
+    current: totalEvents,
+    target: 10
+  },
+  {
+    id: "treasure-listener",
+    icon: "🎧",
+    name: "TREASURE LISTENER",
+    description: "FAVORITE SONGを10曲集めた",
+    current: totalFavorites,
+    target: 10
+  },
+  {
+    id: "worldcup-champion",
+    icon: "🏆",
+    name: "WORLD CUP CHAMPION",
+    description: "WORLD CUPを初めて完走した",
+    current: totalWorldcups,
+    target: 1
+  },
+  {
+    id: "worldcup-master",
+    icon: "👑",
+    name: "WORLD CUP MASTER",
+    description: "WORLD CUPを5回完走した",
+    current: totalWorldcups,
+    target: 5
+  },
+  {
+    id: "chemistry-lover",
+    icon: "🤝",
+    name: "CHEMISTRY LOVER",
+    description: "CHEMISTRY MEMORYを20件残した",
+    current: chemistryMemoryCount,
+    target: 20
+  },
+  {
+    id: "member-book-master",
+    icon: "📖",
+    name: "MEMBER BOOK MASTER",
+    description: "10人全員のMEMBER BOOKに記録を残した",
+    current: memberBookRecordCount,
+    target: 10
+  }
+];
+
+const unlockedBadgeIds =
+  treasureBadgeDefinitions
+    .filter(badge => badge.current >= badge.target)
+    .map(badge => badge.id);
+
+
+// --------------------------------------------
+// ✦ TREASURE LIFE EXP
+// MEMORY 10 / EVENT 15 / SEAT 20 / FAVORITE 5
+// WORLD CUP 25 / MEMBER BOOK 15 / CHEMISTRY 10
+// BADGE 30
+// --------------------------------------------
+const treasureLifeExp =
+  (totalMemories * 10) +
+  (totalEvents * 15) +
+  (seatCount * 20) +
+  (totalFavorites * 5) +
+  (totalWorldcups * 25) +
+  (memberBookRecordCount * 15) +
+  (chemistryMemoryCount * 10) +
+  (unlockedBadgeIds.length * 30);
+
+const treasureLevelThresholds = [
+  0,
+  100,
+  250,
+  450,
+  700,
+  1000,
+  1400,
+  1900,
+  2500,
+  3200
+];
+
+let treasureLifeLevel = 1;
+
+for (
+  let i = 0;
+  i < treasureLevelThresholds.length;
+  i++
+) {
+  if (treasureLifeExp >= treasureLevelThresholds[i]) {
+    treasureLifeLevel = i + 1;
+  }
+}
+
+// LEVEL 10以降は400EXPごとに1UP（最大99）
+if (
+  treasureLifeExp >=
+  treasureLevelThresholds[
+    treasureLevelThresholds.length - 1
+  ]
+) {
+  treasureLifeLevel = Math.min(
     99,
-    Math.floor(
-      treasureLifePoints / 25
-    ) + 1
+    10 + Math.floor(
+      (
+        treasureLifeExp -
+        treasureLevelThresholds[
+          treasureLevelThresholds.length - 1
+        ]
+      ) / 400
+    )
   );
-
+}
 
 if (profileLevelEl) {
-
   profileLevelEl.textContent =
-    `✦ ${String(
-      treasureLifeLevel
-    ).padStart(2, "0")}`;
+    `✦ ${String(treasureLifeLevel).padStart(2, "0")}`;
 
-}  
+  profileLevelEl.title =
+    `${treasureLifeExp} EXP`;
+}
+
+
+// --------------------------------------------
+// 🏅 BADGESをHTMLへ反映
+// --------------------------------------------
+const achievementsEl =
+  document.getElementById(
+    "stats-achievements"
+  );
+
+if (achievementsEl) {
+
+  const unlockedCount =
+    unlockedBadgeIds.length;
+
+  achievementsEl.innerHTML = `
+    <div class="stats-badge-summary">
+      <div>
+        <small>ACHIEVEMENT PROGRESS</small>
+        <strong>${unlockedCount} / ${treasureBadgeDefinitions.length}</strong>
+      </div>
+      <span>✦ LEVEL ${String(treasureLifeLevel).padStart(2, "0")}</span>
+    </div>
+
+    <div class="stats-level-progress">
+      <div class="stats-level-progress-head">
+        <span>${treasureLifeExp} EXP</span>
+        <span>
+          ${
+            treasureLifeLevel < 10
+              ? `NEXT ${treasureLevelThresholds[treasureLifeLevel]} EXP`
+              : "TREASURE LIFE"
+          }
+        </span>
+      </div>
+      <div class="stats-level-progress-track">
+        <div
+          class="stats-level-progress-bar"
+          style="width:${(() => {
+            if (treasureLifeLevel >= 10) return 100;
+            const currentBase =
+              treasureLevelThresholds[
+                treasureLifeLevel - 1
+              ];
+            const nextBase =
+              treasureLevelThresholds[
+                treasureLifeLevel
+              ];
+            return Math.max(
+              0,
+              Math.min(
+                100,
+                ((treasureLifeExp - currentBase) /
+                  (nextBase - currentBase)) * 100
+              )
+            );
+          })()}%"
+        ></div>
+      </div>
+    </div>
+
+    <div class="stats-badge-grid">
+      ${treasureBadgeDefinitions.map(badge => {
+
+        const unlocked =
+          badge.current >= badge.target;
+
+        const progress = Math.max(
+          0,
+          Math.min(
+            100,
+            (badge.current / badge.target) * 100
+          )
+        );
+
+        return `
+          <article class="stats-badge-card ${unlocked ? "unlocked" : "locked"}">
+            <div class="stats-badge-icon">
+              ${unlocked ? badge.icon : "🔒"}
+            </div>
+            <div class="stats-badge-copy">
+              <strong>${badge.name}</strong>
+              <p>${badge.description}</p>
+              <div class="stats-badge-progress">
+                <div style="width:${progress}%"></div>
+              </div>
+              <small>
+                ${
+                  unlocked
+                    ? "UNLOCKED 💎"
+                    : `${badge.current} / ${badge.target}`
+                }
+              </small>
+            </div>
+          </article>
+        `;
+      }).join("")}
+    </div>
+  `;
+}
+
+
+// --------------------------------------------
+// ✨ 初解除時だけACHIEVEMENT演出
+// 既存データで一気に複数解除された場合も
+// ポップアップは1回だけにして、全IDは保存する
+// --------------------------------------------
+const unlockedBadgeStorageKey =
+  "treasure-unlocked-badges-v1";
+
+const previouslyUnlockedBadges =
+  getStatsJSON(
+    unlockedBadgeStorageKey,
+    []
+  );
+
+const previousBadgeSet =
+  new Set(
+    Array.isArray(previouslyUnlockedBadges)
+      ? previouslyUnlockedBadges
+      : []
+  );
+
+const newlyUnlockedBadges =
+  treasureBadgeDefinitions.filter(badge =>
+    badge.current >= badge.target &&
+    !previousBadgeSet.has(badge.id)
+  );
+
+if (newlyUnlockedBadges.length > 0) {
+
+  localStorage.setItem(
+    unlockedBadgeStorageKey,
+    JSON.stringify(unlockedBadgeIds)
+  );
+
+  // STATSを初めて開いた時に既存実績が大量にある場合も
+  // 1枚だけ上品に表示する
+  const newestBadge =
+    newlyUnlockedBadges[
+      newlyUnlockedBadges.length - 1
+    ];
+
+  const oldToast =
+    document.getElementById(
+      "treasure-badge-toast"
+    );
+
+  if (oldToast) oldToast.remove();
+
+  const badgeToast =
+    document.createElement("div");
+
+  badgeToast.id =
+    "treasure-badge-toast";
+
+  badgeToast.className =
+    "treasure-badge-toast";
+
+  badgeToast.innerHTML = `
+    <small>🏅 ACHIEVEMENT UNLOCKED</small>
+    <strong>${newestBadge.icon} ${newestBadge.name}</strong>
+    <span>
+      ${
+        newlyUnlockedBadges.length > 1
+          ? `+${newlyUnlockedBadges.length - 1} MORE BADGES 💎`
+          : newestBadge.description
+      }
+    </span>
+  `;
+
+  document.body.appendChild(badgeToast);
+
+  requestAnimationFrame(() => {
+    badgeToast.classList.add("show");
+  });
+
+  setTimeout(() => {
+    badgeToast.classList.remove("show");
+    setTimeout(() => badgeToast.remove(), 350);
+  }, 3200);
+
+} else if (
+  !localStorage.getItem(
+    unlockedBadgeStorageKey
+  )
+) {
+  // 解除0件でも初期化だけしておく
+  localStorage.setItem(
+    unlockedBadgeStorageKey,
+    JSON.stringify([])
+  );
+}
 }
 // ============================================
 // 📸 VISUAL KING STATS
