@@ -31475,7 +31475,50 @@ const previousBadgeSet =
       ? previouslyUnlockedBadges
       : []
   );
+// --------------------------------------------
+// 🗓️ OLD BADGE DATE MIGRATION
+// 日付機能追加前に解除済みだったBADGEを救済
+// --------------------------------------------
 
+const badgeDateToday =
+  new Date().toLocaleDateString(
+    "ja-JP",
+    {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit"
+    }
+  ).replaceAll("/", ".");
+
+let badgeDatesChanged = false;
+
+treasureBadgeDefinitions.forEach(badge => {
+
+  const unlocked =
+    badge.current >= badge.target;
+
+  if (
+    unlocked &&
+    !unlockedBadgeDates[badge.id]
+  ) {
+
+    unlockedBadgeDates[badge.id] =
+      badgeDateToday;
+
+    badgeDatesChanged = true;
+
+  }
+
+});
+
+if (badgeDatesChanged) {
+
+  localStorage.setItem(
+    unlockedBadgeDateStorageKey,
+    JSON.stringify(unlockedBadgeDates)
+  );
+
+}
 const newlyUnlockedBadges =
   treasureBadgeDefinitions.filter(badge =>
     badge.current >= badge.target &&
