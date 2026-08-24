@@ -15133,6 +15133,161 @@ id="junkyuVisualBook"
   </div>
 
 </section> 
+  // ============================================
+// 🏅 BADGE DETAIL
+// ============================================
+
+function openTreasureBadgeDetail(badgeId) {
+
+  const badge =
+    treasureBadgeDefinitions.find(
+      item => item.id === badgeId
+    );
+
+  if (!badge) return;
+
+  const unlocked =
+    badge.current >= badge.target;
+
+  const remain =
+    Math.max(
+      0,
+      badge.target - badge.current
+    );
+
+  const unlockDate =
+    unlockedBadgeDates[badge.id] || "—";
+
+  const oldModal =
+    document.getElementById(
+      "treasure-badge-detail-modal"
+    );
+
+  if (oldModal) oldModal.remove();
+
+  const modal =
+    document.createElement("div");
+
+  modal.id =
+    "treasure-badge-detail-modal";
+
+  modal.className =
+    "treasure-badge-detail-modal";
+
+  modal.innerHTML = `
+    <div class="treasure-badge-detail-card">
+
+      <button
+        type="button"
+        class="treasure-badge-detail-close"
+      >
+        ×
+      </button>
+
+      <div class="treasure-badge-detail-icon">
+        ${unlocked ? badge.icon : "🔒"}
+      </div>
+
+      <small>
+        ${unlocked ? "ACHIEVEMENT UNLOCKED" : "LOCKED ACHIEVEMENT"}
+      </small>
+
+      <h2>${badge.name}</h2>
+
+      <p>${badge.description}</p>
+
+      <div class="treasure-badge-detail-info">
+
+        <div>
+          <span>STATUS</span>
+          <strong>
+            ${unlocked ? "UNLOCKED 💎" : "LOCKED 🔒"}
+          </strong>
+        </div>
+
+        <div>
+          <span>PROGRESS</span>
+          <strong>
+            ${Math.min(badge.current, badge.target)}
+            / ${badge.target}
+          </strong>
+        </div>
+
+        ${
+          unlocked
+            ? `
+              <div>
+                <span>UNLOCKED</span>
+                <strong>${unlockDate}</strong>
+              </div>
+            `
+            : `
+              <div>
+                <span>TO UNLOCK</span>
+                <strong>あと ${remain}</strong>
+              </div>
+            `
+        }
+
+      </div>
+
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+
+  requestAnimationFrame(() => {
+    modal.classList.add("show");
+  });
+
+  const closeButton =
+    modal.querySelector(
+      ".treasure-badge-detail-close"
+    );
+
+  const closeModal = () => {
+    modal.classList.remove("show");
+
+    setTimeout(() => {
+      modal.remove();
+    }, 250);
+  };
+
+  closeButton.addEventListener(
+    "click",
+    closeModal
+  );
+
+  modal.addEventListener(
+    "click",
+    event => {
+
+      if (event.target === modal) {
+        closeModal();
+      }
+
+    }
+  );
+
+}
+
+
+document
+  .querySelectorAll(".stats-badge-card")
+  .forEach(card => {
+
+    card.addEventListener(
+      "click",
+      () => {
+
+        openTreasureBadgeDetail(
+          card.dataset.badgeId
+        );
+
+      }
+    );
+
+  });
   <!-- =========================================
      🎧 MY TREASURE MUSIC
 ========================================= -->
