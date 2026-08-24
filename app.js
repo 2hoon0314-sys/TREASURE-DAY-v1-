@@ -31452,7 +31452,14 @@ if (achievementsEl) {
 // --------------------------------------------
 const unlockedBadgeStorageKey =
   "treasure-unlocked-badges-v1";
+const unlockedBadgeDateStorageKey =
+  "treasure-unlocked-badge-dates-v1";
 
+const unlockedBadgeDates =
+  getStatsJSON(
+    unlockedBadgeDateStorageKey,
+    {}
+  );
 const previouslyUnlockedBadges =
   getStatsJSON(
     unlockedBadgeStorageKey,
