@@ -32171,6 +32171,291 @@ if (jihoonRouletteDraw) {
   );
 
 }
+// ============================================
+// 📅 TREASURE CALENDAR
+// ============================================
+
+const treasureCalendarOpen =
+  document.getElementById(
+    "treasure-calendar-open"
+  );
+
+const treasureCalendarPage =
+  document.getElementById(
+    "treasure-calendar-page"
+  );
+
+const treasureCalendarBack =
+  document.getElementById(
+    "treasure-calendar-back"
+  );
+
+const treasureCalendarPrev =
+  document.getElementById(
+    "treasure-calendar-prev"
+  );
+
+const treasureCalendarNext =
+  document.getElementById(
+    "treasure-calendar-next"
+  );
+
+const treasureCalendarTitle =
+  document.getElementById(
+    "treasure-calendar-title"
+  );
+
+const treasureCalendarGrid =
+  document.getElementById(
+    "treasure-calendar-grid"
+  );
+
+
+// 今表示している月
+let treasureCalendarDate =
+  new Date();
+
+treasureCalendarDate.setDate(1);
+
+
+// ============================================
+// 📅 CALENDAR RENDER
+// ============================================
+
+function renderTreasureCalendar() {
+
+  if (
+    !treasureCalendarGrid ||
+    !treasureCalendarTitle
+  ) {
+    return;
+  }
+
+  treasureCalendarGrid.innerHTML =
+    "";
+
+
+  const year =
+    treasureCalendarDate.getFullYear();
+
+  const month =
+    treasureCalendarDate.getMonth();
+
+
+  treasureCalendarTitle.textContent =
+    `${year}.${String(
+      month + 1
+    ).padStart(2, "0")}`;
+
+
+  // 月初の曜日
+  const firstWeekday =
+    new Date(
+      year,
+      month,
+      1
+    ).getDay();
+
+
+  // その月の日数
+  const daysInMonth =
+    new Date(
+      year,
+      month + 1,
+      0
+    ).getDate();
+
+
+  // TODAY
+  const today =
+    new Date();
+
+
+  // 月初まで空白
+  for (
+    let i = 0;
+    i < firstWeekday;
+    i++
+  ) {
+
+    const empty =
+      document.createElement(
+        "div"
+      );
+
+    empty.className =
+      "treasure-calendar-empty-day";
+
+    treasureCalendarGrid.appendChild(
+      empty
+    );
+
+  }
+
+
+  // 日付
+  for (
+    let day = 1;
+    day <= daysInMonth;
+    day++
+  ) {
+
+    const button =
+      document.createElement(
+        "button"
+      );
+
+    button.type =
+      "button";
+
+    button.className =
+      "treasure-calendar-day";
+
+    button.textContent =
+      day;
+
+
+    const isToday =
+      year ===
+        today.getFullYear() &&
+      month ===
+        today.getMonth() &&
+      day ===
+        today.getDate();
+
+
+    if (isToday) {
+      button.classList.add(
+        "today"
+      );
+    }
+
+
+    treasureCalendarGrid.appendChild(
+      button
+    );
+
+  }
+
+}
+
+
+// ============================================
+// 🏠 HOME → CALENDAR
+// ============================================
+
+if (
+  treasureCalendarOpen &&
+  treasureCalendarPage
+) {
+
+  treasureCalendarOpen.addEventListener(
+    "click",
+    () => {
+
+      if (homePage) {
+        homePage.style.display =
+          "none";
+      }
+
+      treasureCalendarPage.style.display =
+        "block";
+
+      treasureCalendarPage.scrollTop =
+        0;
+
+      document.body.style.overflow =
+        "hidden";
+
+      renderTreasureCalendar();
+
+    }
+  );
+
+}
+
+
+// ============================================
+// 📅 CALENDAR → HOME
+// ============================================
+
+if (
+  treasureCalendarBack &&
+  treasureCalendarPage
+) {
+
+  treasureCalendarBack.addEventListener(
+    "click",
+    () => {
+
+      treasureCalendarPage.style.display =
+        "none";
+
+      if (homePage) {
+        homePage.style.display =
+          "block";
+      }
+
+      document.body.style.overflow =
+        "";
+
+      window.scrollTo(
+        0,
+        0
+      );
+
+    }
+  );
+
+}
+
+
+// ============================================
+// ‹ PREVIOUS MONTH
+// ============================================
+
+if (treasureCalendarPrev) {
+
+  treasureCalendarPrev.addEventListener(
+    "click",
+    () => {
+
+      treasureCalendarDate.setMonth(
+        treasureCalendarDate.getMonth() - 1
+      );
+
+      renderTreasureCalendar();
+
+    }
+  );
+
+}
+
+
+// ============================================
+// NEXT MONTH ›
+// ============================================
+
+if (treasureCalendarNext) {
+
+  treasureCalendarNext.addEventListener(
+    "click",
+    () => {
+
+      treasureCalendarDate.setMonth(
+        treasureCalendarDate.getMonth() + 1
+      );
+
+      renderTreasureCalendar();
+
+    }
+  );
+
+}
+
+
+// 初期生成
+renderTreasureCalendar();
 // STATS → HOME
 if (
   statsPageBack &&
