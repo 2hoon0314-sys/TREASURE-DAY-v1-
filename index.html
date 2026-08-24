@@ -4549,6 +4549,176 @@ background:
 .treasure-calendar-add-event:active {
   transform: scale(0.98);
 }  
+  /* =========================================
+   ➕ CALENDAR ADD SCHEDULE FORM
+========================================= */
+
+.treasure-calendar-form {
+  margin-top: 18px;
+  padding: 20px;
+
+  border-radius: 24px;
+
+  background: rgba(255,255,255,.9);
+
+  box-shadow:
+    0 10px 28px
+    rgba(70,105,150,.08);
+}
+
+.treasure-calendar-form-head {
+  margin-bottom: 18px;
+}
+
+.treasure-calendar-form-head small {
+  display: block;
+
+  margin-bottom: 6px;
+
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: .13em;
+
+  opacity: .4;
+}
+
+.treasure-calendar-form-head h3 {
+  margin: 0;
+
+  font-size: 18px;
+}
+
+.treasure-calendar-field {
+  display: grid;
+  gap: 7px;
+
+  margin-bottom: 14px;
+}
+
+.treasure-calendar-field span {
+  font-size: 9px;
+  font-weight: 900;
+
+  letter-spacing: .1em;
+
+  opacity: .45;
+}
+
+.treasure-calendar-field input,
+.treasure-calendar-field select,
+.treasure-calendar-field textarea {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  border: none;
+  outline: none;
+
+  border-radius: 16px;
+
+  padding: 13px 14px;
+
+  background:
+    rgba(238,245,252,.92);
+
+  color: inherit;
+
+  font: inherit;
+  font-size: 12px;
+}
+
+.treasure-calendar-field textarea {
+  resize: vertical;
+}
+
+.treasure-calendar-form-actions {
+  display: grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap: 10px;
+
+  margin-top: 18px;
+}
+
+.treasure-calendar-form-cancel,
+.treasure-calendar-form-save {
+  border: none;
+
+  padding: 14px;
+
+  border-radius: 17px;
+
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.treasure-calendar-form-cancel {
+  background:
+    rgba(235,239,245,.9);
+
+  color: inherit;
+}
+
+.treasure-calendar-form-save {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(214,239,255,.98),
+      rgba(237,225,255,.98)
+    );
+
+  color: #38536c;
+}
+
+.treasure-calendar-event-card {
+  position: relative;
+}
+
+.treasure-calendar-event-category {
+  display: inline-flex;
+
+  margin-bottom: 8px;
+  padding: 5px 8px;
+
+  border-radius: 999px;
+
+  background:
+    rgba(225,239,255,.8);
+
+  font-size: 8px;
+  font-weight: 900;
+
+  letter-spacing: .05em;
+}
+
+.treasure-calendar-event-memo {
+  margin-top: 7px;
+
+  font-size: 10px;
+  line-height: 1.6;
+
+  opacity: .58;
+}
+
+.treasure-calendar-day.has-event::before {
+  content: "";
+
+  position: absolute;
+
+  bottom: 5px;
+  left: 50%;
+
+  width: 5px;
+  height: 5px;
+
+  transform: translateX(-50%);
+
+  border-radius: 50%;
+
+  background: #82b7e8;
+}
 </style>
 </head>
 <body>
