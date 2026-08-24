@@ -31994,7 +31994,42 @@ if (
 }
 
 
+// ============================================
+// 🎲 JIHOON PHOTO ROULETTE OPEN / CLOSE
+// ============================================
 
+const jihoonRouletteOpen =
+  document.getElementById(
+    "jihoon-roulette-open"
+  );
+
+const jihoonRoulettePage =
+  document.getElementById(
+    "jihoon-roulette-page"
+  );
+
+if (
+  jihoonRouletteOpen &&
+  jihoonRoulettePage
+) {
+
+  jihoonRouletteOpen.addEventListener(
+    "click",
+    () => {
+
+      jihoonRoulettePage.style.display =
+        "block";
+
+      jihoonRoulettePage.scrollTop =
+        0;
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+  );
+
+}
 // STATS → HOME
 if (
   statsPageBack &&
