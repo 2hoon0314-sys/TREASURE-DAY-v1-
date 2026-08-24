@@ -4437,6 +4437,118 @@ background:
 
   opacity: .43;
 }
+/* =========================================
+   📅 CALENDAR DAY DETAIL
+========================================= */
+
+.treasure-calendar-day-detail {
+  width: min(100% - 32px, 520px);
+  margin: 0 auto;
+  padding: 20px 0 110px;
+}
+
+.treasure-calendar-day-hero {
+  margin: 18px 0 24px;
+  padding: 26px 22px;
+
+  border-radius: 28px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(222, 242, 255, 0.95),
+      rgba(242, 231, 255, 0.95)
+    );
+
+  box-shadow:
+    0 12px 32px rgba(70, 105, 150, 0.1);
+}
+
+.treasure-calendar-day-hero small {
+  display: block;
+
+  margin-bottom: 9px;
+
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.15em;
+
+  opacity: 0.45;
+}
+
+.treasure-calendar-day-hero h2 {
+  margin: 0 0 8px;
+
+  font-size: 30px;
+  letter-spacing: -0.03em;
+}
+
+.treasure-calendar-day-hero p {
+  margin: 0;
+
+  font-size: 11px;
+  opacity: 0.55;
+}
+
+.treasure-calendar-event-list {
+  display: grid;
+  gap: 10px;
+
+  margin-bottom: 16px;
+}
+
+.treasure-calendar-event-card {
+  padding: 16px 17px;
+
+  border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.84);
+
+  box-shadow:
+    0 6px 20px rgba(70, 105, 150, 0.07);
+}
+
+.treasure-calendar-event-card strong {
+  display: block;
+
+  margin-bottom: 5px;
+
+  font-size: 13px;
+}
+
+.treasure-calendar-event-card small {
+  font-size: 9px;
+  opacity: 0.5;
+}
+
+.treasure-calendar-add-event {
+  width: 100%;
+
+  border: none;
+  border-radius: 20px;
+
+  padding: 16px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(215, 239, 255, 0.95),
+      rgba(238, 229, 255, 0.95)
+    );
+
+  color: #243447;
+
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+
+  box-shadow:
+    0 7px 22px rgba(70, 105, 150, 0.08);
+}
+
+.treasure-calendar-add-event:active {
+  transform: scale(0.98);
+}  
 </style>
 </head>
 <body>
