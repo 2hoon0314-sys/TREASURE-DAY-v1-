@@ -32566,7 +32566,7 @@ treasureCalendarSelectedKey =
 
   treasureCalendarDayDetail.style.display =
     "block";
-
+renderTreasureCalendarDayEvents();
   treasureCalendarPage.scrollTop =
     0;
 
