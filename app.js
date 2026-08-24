@@ -31486,6 +31486,35 @@ if (newlyUnlockedBadges.length > 0) {
     JSON.stringify(unlockedBadgeIds)
   );
 
+  // --------------------------------------------
+  // 🗓️ BADGE UNLOCK DATE
+  // 初めて解除した日だけ保存する
+  // --------------------------------------------
+  const today =
+    new Date().toLocaleDateString(
+      "ja-JP",
+      {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit"
+      }
+    ).replaceAll("/", ".");
+
+  newlyUnlockedBadges.forEach(badge => {
+
+    // 一度記録した解除日は上書きしない
+    if (!unlockedBadgeDates[badge.id]) {
+      unlockedBadgeDates[badge.id] =
+        today;
+    }
+
+  });
+
+  localStorage.setItem(
+    unlockedBadgeDateStorageKey,
+    JSON.stringify(unlockedBadgeDates)
+  );
+
   // STATSを初めて開いた時に既存実績が大量にある場合も
   // 1枚だけ上品に表示する
   const newestBadge =
