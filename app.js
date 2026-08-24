@@ -31176,6 +31176,7 @@ const treasureBadgeDefinitions = [
     icon: "🌱",
     name: "FIRST MEMORY",
     description: "最初のMEMORYを残した",
+   category: "MEMORY"
     current: totalMemories,
     target: 1
   },
@@ -31184,7 +31185,8 @@ const treasureBadgeDefinitions = [
     icon: "💾",
     name: "MEMORY KEEPER",
     description: "MEMORYを10件残した",
-    current: totalMemories,
+    category: "MEMORY"
+      current: totalMemories,
     target: 10
   },
   {
@@ -31192,7 +31194,8 @@ const treasureBadgeDefinitions = [
     icon: "📸",
     name: "MEMORY MASTER",
     description: "MEMORYを50件残した",
-    current: totalMemories,
+    category: "MEMORY"
+      current: totalMemories,
     target: 50
   },
   {
@@ -31200,7 +31203,8 @@ const treasureBadgeDefinitions = [
     icon: "💺",
     name: "FIRST SEAT",
     description: "最初のSEAT MEMORYを残した",
-    current: seatCount,
+    category: "EVENT & SEAT"
+      current: seatCount,
     target: 1
   },
   {
@@ -31208,7 +31212,8 @@ const treasureBadgeDefinitions = [
     icon: "⭐",
     name: "5 STAR SEAT",
     description: "★★★★★のSEATを残した",
-    current: fiveStarSeats,
+    category: "EVENT & SEAT
+      current: fiveStarSeats,
     target: 1
   },
   {
@@ -31216,7 +31221,8 @@ const treasureBadgeDefinitions = [
     icon: "🎤",
     name: "FIRST EVENT",
     description: "最初のEVENTを登録した",
-    current: totalEvents,
+    category: "EVENT & SEAT
+      current: totalEvents,
     target: 1
   },
   {
@@ -31224,7 +31230,8 @@ const treasureBadgeDefinitions = [
     icon: "💎",
     name: "10 EVENTS",
     description: "EVENTを10件登録した",
-    current: totalEvents,
+    category: "EVENT & SEAT
+      current: totalEvents,
     target: 10
   },
   {
@@ -31232,7 +31239,8 @@ const treasureBadgeDefinitions = [
     icon: "🎧",
     name: "TREASURE LISTENER",
     description: "FAVORITE SONGを10曲集めた",
-    current: totalFavorites,
+    category: "MUSIC"
+      current: totalFavorites,
     target: 10
   },
   {
@@ -31240,7 +31248,8 @@ const treasureBadgeDefinitions = [
     icon: "🏆",
     name: "WORLD CUP CHAMPION",
     description: "WORLD CUPを初めて完走した",
-    current: totalWorldcups,
+   category: "MUSIC"
+      current: totalWorldcups,
     target: 1
   },
   {
@@ -31248,7 +31257,8 @@ const treasureBadgeDefinitions = [
     icon: "👑",
     name: "WORLD CUP MASTER",
     description: "WORLD CUPを5回完走した",
-    current: totalWorldcups,
+    category: "MUSIC"
+      current: totalWorldcups,
     target: 5
   },
   {
@@ -31256,7 +31266,8 @@ const treasureBadgeDefinitions = [
     icon: "🤝",
     name: "CHEMISTRY LOVER",
     description: "CHEMISTRY MEMORYを20件残した",
-    current: chemistryMemoryCount,
+    category: "MEMBER"
+      current: chemistryMemoryCount,
     target: 20
   },
   {
@@ -31264,7 +31275,8 @@ const treasureBadgeDefinitions = [
     icon: "📖",
     name: "MEMBER BOOK MASTER",
     description: "10人全員のMEMBER BOOKに記録を残した",
-    current: memberBookRecordCount,
+    category: "MEMBER"
+      current: memberBookRecordCount,
     target: 10
   }
 ];
