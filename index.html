@@ -7707,7 +7707,67 @@ background:
 >
   DELETE FROM MY COLLECTION
 </button>
+<!-- =========================================
+     💎 MY CARD INFO
+========================================= -->
 
+<div class="trading-card-my-info">
+
+  <div class="trading-card-my-info-head">
+    <small>MY CARD INFO</small>
+    <strong>このカードとの思い出</strong>
+  </div>
+
+  <label>
+    <span>📅 入手日</span>
+
+    <input
+      type="date"
+      id="trading-card-detail-acquired-date"
+    >
+  </label>
+
+
+  <label>
+    <span>📍 入手方法・場所</span>
+
+    <input
+      type="text"
+      id="trading-card-detail-acquired-from"
+      placeholder="例：TOWER RECORDS / 交換 / イベント"
+    >
+  </label>
+
+
+  <label>
+    <span>📝 MEMO</span>
+
+    <textarea
+      id="trading-card-detail-memo"
+      rows="4"
+      placeholder="思い出やメモを自由に残そう 💎"
+    ></textarea>
+  </label>
+
+
+  <button
+    type="button"
+    id="trading-card-detail-save-my-info"
+    class="trading-card-detail-save-my-info"
+  >
+    SAVE MY CARD INFO
+  </button>
+
+
+  <div
+    id="trading-card-detail-my-info-message"
+    class="trading-card-detail-my-info-message"
+    style="display:none;"
+  >
+    SAVED 💎
+  </div>
+
+</div>
     <div class="trading-card-detail-more">
 
       <small>MORE INFO</small>
