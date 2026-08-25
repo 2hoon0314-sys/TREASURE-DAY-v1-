@@ -38160,28 +38160,14 @@ if (
   }
 
 
-  // --------------------------------------
-  // EMPTY
-  // --------------------------------------
+// --------------------------------------
+// EMPTY
+// --------------------------------------
 
-  grid.innerHTML = "";
+grid.innerHTML = "";
 
 
-  if (cardsToShow.length === 0) {
-
-    grid.innerHTML = `
-
-      <div class="trading-card-empty">
-
-        <div class="trading-card-empty-icon">
-          🃏
-        </div>
-
-        <strong>
-          ${
-            tradingCardActiveMember ===
-            "ALL"
-              if (cardsToShow.length === 0) {
+if (cardsToShow.length === 0) {
 
   let emptyTitle =
     "YOUR CARD BOOK IS EMPTY";
@@ -38238,26 +38224,6 @@ if (
   return;
 
 }
-              : "NO CARDS YET"
-          }
-        </strong>
-
-        <p>
-          ${
-            tradingCardActiveMember ===
-            "ALL"
-              ? "最初のTREASUREを<br>コレクションに追加しよう 💎"
-              : `${tradingCardActiveMember}のカードは<br>まだ登録されていません 💎`
-          }
-        </p>
-
-      </div>
-
-    `;
-
-    return;
-
-  }
 
 
   // --------------------------------------
