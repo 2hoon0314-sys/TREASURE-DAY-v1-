@@ -33264,6 +33264,76 @@ if (
   );
 
 }
+// ============================================
+// 🛍️ MY COLLECTION
+// ============================================
+
+const treasureCollectionOpen =
+  document.getElementById(
+    "treasure-collection-open"
+  );
+
+const treasureCollectionPage =
+  document.getElementById(
+    "treasure-collection-page"
+  );
+
+const treasureCollectionBack =
+  document.getElementById(
+    "treasure-collection-back"
+  );
+
+
+// HOME → COLLECTION
+if (
+  treasureCollectionOpen &&
+  treasureCollectionPage
+) {
+
+  treasureCollectionOpen.addEventListener(
+    "click",
+    () => {
+
+      treasureCollectionPage.style.display =
+        "block";
+
+      treasureCollectionPage.scrollTop =
+        0;
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+  );
+
+}
+
+
+// COLLECTION → HOME
+if (
+  treasureCollectionBack &&
+  treasureCollectionPage
+) {
+
+  treasureCollectionBack.addEventListener(
+    "click",
+    () => {
+
+      treasureCollectionPage.style.display =
+        "none";
+
+      document.body.style.overflow =
+        "";
+
+      window.scrollTo(
+        0,
+        0
+      );
+
+    }
+  );
+
+}
 // ======================================================
 // 🎧 MUSIC MENU
 // 今回は入口のみ。中身は次から順番に実装。
