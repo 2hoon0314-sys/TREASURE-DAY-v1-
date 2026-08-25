@@ -128,8 +128,8 @@ const treasureCardDatabase = [
     sourceUrl:
       "https://ygex.jp/treasure/discography/detail.php?id=1021509",
 
-    masterImage:
-      "cards/PC-2026-NEWWAV-JH-001.png"
+   masterImage:
+  "cards/PC-2026-NEWWAV-JH-001.jpg"
   },
 
 
