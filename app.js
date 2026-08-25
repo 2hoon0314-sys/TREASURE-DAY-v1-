@@ -455,6 +455,12 @@ if (pastEventsPage) {
   pastEventsPage.style.display =
     pageName === "past-events" ? "block" : "none";
 }
+  if (reminderPage) {
+  reminderPage.style.display =
+    pageName === "reminder"
+      ? "block"
+      : "none";
+}
   if (notificationPage) {
   notificationPage.style.display =
     pageName === "notifications" ? "block" : "none";
