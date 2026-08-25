@@ -39254,3 +39254,4 @@ function addTradingCardTestData() {
   );
 
 }
+addTradingCardTestData();
