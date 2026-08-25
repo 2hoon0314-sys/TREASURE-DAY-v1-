@@ -37851,3 +37851,125 @@ if (tradingCardAnalyze) {
   );
 
 }
+if (
+  tradingCardResultBack &&
+  tradingCardResultPage
+) {
+
+  tradingCardResultBack.addEventListener(
+    "click",
+    () => {
+
+      tradingCardResultPage.style.display =
+        "none";
+
+      if (tradingCardScanPage) {
+
+        tradingCardScanPage.style.display =
+          "block";
+
+        tradingCardScanPage.scrollTop =
+          0;
+
+      }
+
+    }
+  );
+
+}
+// ========================================
+// 💾 SAVE TO MY CARD BOOK
+// ========================================
+
+if (tradingCardSave) {
+
+  tradingCardSave.addEventListener(
+    "click",
+    () => {
+
+      if (!currentTradingCardMatch) {
+        return;
+      }
+
+
+      let ownedCards = [];
+
+      try {
+
+        ownedCards =
+          JSON.parse(
+            localStorage.getItem(
+              "treasure-owned-cards"
+            )
+          ) || [];
+
+      } catch (error) {
+
+        ownedCards = [];
+
+      }
+
+
+      const alreadyOwned =
+        ownedCards.some(
+          item =>
+            item.cardId ===
+            currentTradingCardMatch.id
+        );
+
+
+      if (!alreadyOwned) {
+
+        ownedCards.push({
+
+          cardId:
+            currentTradingCardMatch.id,
+
+          favorite:
+            false,
+
+          quantity:
+            1,
+
+          addedAt:
+            new Date().toISOString()
+
+        });
+
+      } else {
+
+        const ownedCard =
+          ownedCards.find(
+            item =>
+              item.cardId ===
+              currentTradingCardMatch.id
+          );
+
+        /*
+          同じトレカをもう1枚持ってる場合
+          ダブり枚数として増やす
+        */
+
+        ownedCard.quantity =
+          (ownedCard.quantity || 1) + 1;
+
+      }
+
+
+      localStorage.setItem(
+        "treasure-owned-cards",
+        JSON.stringify(ownedCards)
+      );
+
+
+      if (tradingCardSaveMessage) {
+
+        tradingCardSaveMessage.style.display =
+          "block";
+
+      }
+
+    }
+  );
+
+}
