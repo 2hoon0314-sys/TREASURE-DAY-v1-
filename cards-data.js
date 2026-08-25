@@ -256,8 +256,8 @@ const treasureCardDatabase = [
     sourceUrl:
       "https://treasure-official.jp/news/detail?postId=f4f6aad3-38b1-4098-b94f-5168073395cb",
 
-    masterImage:
-      "cards/PC-2026-PULSEON-KD-JH-001.png"
+   masterImage:
+  "cards/PC-2026-PULSEON-KD-JH-001.png"
   }
 
 ];
