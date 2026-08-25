@@ -38365,3 +38365,19 @@ tradingCardFilters.forEach(
 
   }
 );
+// ========================================
+// 🃏 OPEN時に最新データ表示
+// ========================================
+
+if (tradingCardBookOpen) {
+
+  tradingCardBookOpen.addEventListener(
+    "click",
+    () => {
+
+      renderTradingCardBook();
+
+    }
+  );
+
+}
