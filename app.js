@@ -37973,3 +37973,350 @@ if (tradingCardSave) {
   );
 
 }
+// ========================================
+// 🃏 RENDER MY CARD BOOK
+// ========================================
+
+let tradingCardActiveMember =
+  "ALL";
+
+
+function getOwnedTradingCards() {
+
+  try {
+
+    const saved =
+      JSON.parse(
+        localStorage.getItem(
+          "treasure-owned-cards"
+        )
+      );
+
+    return Array.isArray(saved)
+      ? saved
+      : [];
+
+  } catch (error) {
+
+    return [];
+
+  }
+
+}
+
+
+function saveOwnedTradingCards(cards) {
+
+  localStorage.setItem(
+    "treasure-owned-cards",
+    JSON.stringify(cards)
+  );
+
+}
+
+
+// ========================================
+// 💎 CARD BOOK DISPLAY
+// ========================================
+
+function renderTradingCardBook() {
+
+  const grid =
+    document.getElementById(
+      "trading-card-grid"
+    );
+
+  const totalElement =
+    document.getElementById(
+      "trading-card-total"
+    );
+
+  const favoriteTotalElement =
+    document.getElementById(
+      "trading-card-favorite-total"
+    );
+
+
+  if (!grid) {
+    return;
+  }
+
+
+  const ownedCards =
+    getOwnedTradingCards();
+
+
+  // --------------------------------------
+  // TOTAL
+  // quantityも含めた総所持枚数
+  // --------------------------------------
+
+  const totalQuantity =
+    ownedCards.reduce(
+      (total, card) =>
+        total + (card.quantity || 1),
+      0
+    );
+
+
+  if (totalElement) {
+
+    totalElement.textContent =
+      totalQuantity;
+
+  }
+
+
+  // --------------------------------------
+  // FAVORITES
+  // --------------------------------------
+
+  const favoriteCount =
+    ownedCards.filter(
+      card => card.favorite
+    ).length;
+
+
+  if (favoriteTotalElement) {
+
+    favoriteTotalElement.textContent =
+      favoriteCount;
+
+  }
+
+
+  // --------------------------------------
+  // MEMBER FILTER
+  // --------------------------------------
+
+  let cardsToShow =
+    ownedCards;
+
+
+  if (
+    tradingCardActiveMember !==
+    "ALL"
+  ) {
+
+    cardsToShow =
+      ownedCards.filter(
+        ownedCard => {
+
+          const masterCard =
+            treasureCardDatabase.find(
+              card =>
+                card.id ===
+                ownedCard.cardId
+            );
+
+          return (
+            masterCard &&
+            masterCard.member ===
+              tradingCardActiveMember
+          );
+
+        }
+      );
+
+  }
+
+
+  // --------------------------------------
+  // EMPTY
+  // --------------------------------------
+
+  grid.innerHTML = "";
+
+
+  if (cardsToShow.length === 0) {
+
+    grid.innerHTML = `
+
+      <div class="trading-card-empty">
+
+        <div class="trading-card-empty-icon">
+          🃏
+        </div>
+
+        <strong>
+          ${
+            tradingCardActiveMember ===
+            "ALL"
+              ? "YOUR CARD BOOK IS EMPTY"
+              : "NO CARDS YET"
+          }
+        </strong>
+
+        <p>
+          ${
+            tradingCardActiveMember ===
+            "ALL"
+              ? "最初のTREASUREを<br>コレクションに追加しよう 💎"
+              : `${tradingCardActiveMember}のカードは<br>まだ登録されていません 💎`
+          }
+        </p>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  // --------------------------------------
+  // CARD GRID
+  // --------------------------------------
+
+  cardsToShow.forEach(
+    ownedCard => {
+
+      const masterCard =
+        treasureCardDatabase.find(
+          card =>
+            card.id ===
+            ownedCard.cardId
+        );
+
+
+      if (!masterCard) {
+        return;
+      }
+
+
+      const item =
+        document.createElement(
+          "article"
+        );
+
+
+      item.className =
+        "trading-card-item";
+
+
+      item.innerHTML = `
+
+        <div
+          class="trading-card-item-image-wrap"
+        >
+
+          <img
+            class="trading-card-item-image"
+            src="${masterCard.masterImage}"
+            alt="${masterCard.member}"
+          >
+
+          <button
+            type="button"
+            class="
+              trading-card-item-favorite
+              ${
+                ownedCard.favorite
+                  ? "active"
+                  : ""
+              }
+            "
+          >
+            ${
+              ownedCard.favorite
+                ? "♥"
+                : "♡"
+            }
+          </button>
+
+          ${
+            (ownedCard.quantity || 1) > 1
+              ? `
+                <span
+                  class="trading-card-item-quantity"
+                >
+                  ×${ownedCard.quantity}
+                </span>
+              `
+              : ""
+          }
+
+        </div>
+
+
+        <div
+          class="trading-card-item-info"
+        >
+
+          <strong>
+            ${masterCard.member}
+          </strong>
+
+          <small>
+            ${masterCard.source}
+          </small>
+
+          <small>
+            ${masterCard.store}
+          </small>
+
+        </div>
+
+      `;
+
+
+      // ====================================
+      // ♡ FAVORITE
+      // ====================================
+
+      const favoriteButton =
+        item.querySelector(
+          ".trading-card-item-favorite"
+        );
+
+
+      if (favoriteButton) {
+
+        favoriteButton.addEventListener(
+          "click",
+          event => {
+
+            event.stopPropagation();
+
+
+            const latestCards =
+              getOwnedTradingCards();
+
+
+            const target =
+              latestCards.find(
+                card =>
+                  card.cardId ===
+                  ownedCard.cardId
+              );
+
+
+            if (!target) {
+              return;
+            }
+
+
+            target.favorite =
+              !target.favorite;
+
+
+            saveOwnedTradingCards(
+              latestCards
+            );
+
+
+            renderTradingCardBook();
+
+          }
+        );
+
+      }
+
+
+      grid.appendChild(item);
+
+    }
+  );
+
+}
