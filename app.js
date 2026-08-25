@@ -37794,3 +37794,60 @@ function showTradingCardResult(card) {
   }
 
 }
+// ========================================
+// 🔎 ANALYZE CARD
+// ========================================
+
+if (tradingCardAnalyze) {
+
+  tradingCardAnalyze.addEventListener(
+    "click",
+    () => {
+
+      if (
+        !tradingCardScanInput ||
+        !tradingCardScanInput.files ||
+        !tradingCardScanInput.files[0]
+      ) {
+        return;
+      }
+
+
+      tradingCardAnalyze.disabled =
+        true;
+
+      tradingCardAnalyze.textContent =
+        "🔎 ANALYZING...";
+
+
+      /*
+        今はCARD DB #001で
+        RESULT処理とSAVE処理を先に完成させる。
+
+        次のSTEPでここを
+        実画像照合エンジンに差し替える。
+      */
+
+      setTimeout(
+        () => {
+
+          const card =
+            treasureCardDatabase[0];
+
+          showTradingCardResult(card);
+
+
+          tradingCardAnalyze.textContent =
+            "✨ ANALYZE CARD";
+
+          tradingCardAnalyze.disabled =
+            false;
+
+        },
+        700
+      );
+
+    }
+  );
+
+}
