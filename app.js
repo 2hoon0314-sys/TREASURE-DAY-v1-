@@ -38003,7 +38003,8 @@ renderTradingCardBook();
 
 let tradingCardActiveMember =
   "ALL";
-
+let tradingCardViewMode =
+  "ALL";
 
 function getOwnedTradingCards() {
 
