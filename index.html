@@ -5403,6 +5403,407 @@ background:
 
   opacity: .5;
 }
+  /* =========================================
+   📷 TRADING CARD SCANNER
+========================================= */
+
+.trading-card-scan-page {
+  position: fixed;
+  inset: 0;
+  z-index: 31000;
+
+  overflow-y: auto;
+
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(214, 238, 255, .95),
+      transparent 38%
+    ),
+    radial-gradient(
+      circle at bottom left,
+      rgba(239, 225, 255, .9),
+      transparent 42%
+    ),
+    #f8fbff;
+
+  color: #243447;
+}
+
+
+.trading-card-scan-inner {
+  width: min(100% - 36px, 500px);
+
+  margin: 0 auto;
+
+  padding:
+    24px
+    0
+    110px;
+}
+
+
+/* BACK */
+
+.trading-card-scan-back {
+  border: none;
+
+  padding: 10px 3px;
+
+  background: transparent;
+
+  color: #52718c;
+
+  font-size: 12px;
+  font-weight: 900;
+}
+
+
+/* HEADER */
+
+.trading-card-scan-header {
+  padding:
+    30px
+    4px
+    25px;
+}
+
+
+.trading-card-scan-header small {
+  display: block;
+
+  margin-bottom: 10px;
+
+  font-size: 10px;
+  font-weight: 900;
+
+  letter-spacing: .16em;
+
+  opacity: .45;
+}
+
+
+.trading-card-scan-header h1 {
+  margin:
+    0
+    0
+    15px;
+
+  font-size:
+    clamp(
+      38px,
+      11vw,
+      52px
+    );
+
+  line-height: .95;
+
+  letter-spacing: -.05em;
+}
+
+
+.trading-card-scan-header p {
+  margin: 0;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  line-height: 1.8;
+
+  opacity: .52;
+}
+
+
+/* SCANNER AREA */
+
+.trading-card-scanner {
+  display: flex;
+
+  justify-content: center;
+
+  padding:
+    12px
+    0
+    25px;
+}
+
+
+/*
+  実物トレカに近い
+  約 55 : 85 の縦長比率
+*/
+
+.trading-card-scan-frame {
+  position: relative;
+
+  width: min(
+    72vw,
+    280px
+  );
+
+  aspect-ratio: 55 / 85;
+
+  overflow: hidden;
+
+  border-radius: 22px;
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      .72
+    );
+
+  box-shadow:
+    0
+    15px
+    45px
+    rgba(
+      60,
+      90,
+      130,
+      .13
+    );
+}
+
+
+/* PREVIEW */
+
+.trading-card-scan-preview {
+  position: absolute;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+
+  display: none;
+
+  background: #fff;
+}
+
+
+/* PLACEHOLDER */
+
+.trading-card-scan-placeholder {
+  position: absolute;
+
+  inset: 0;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 25px;
+
+  text-align: center;
+}
+
+
+.trading-card-scan-placeholder span {
+  margin-bottom: 14px;
+
+  font-size: 38px;
+}
+
+
+.trading-card-scan-placeholder strong {
+  margin-bottom: 9px;
+
+  font-size: 11px;
+  font-weight: 900;
+
+  letter-spacing: .09em;
+}
+
+
+.trading-card-scan-placeholder small {
+  max-width: 180px;
+
+  font-size: 9px;
+
+  line-height: 1.6;
+
+  opacity: .45;
+}
+
+
+/* SCAN CORNERS */
+
+.scan-corner {
+  position: absolute;
+
+  width: 30px;
+  height: 30px;
+
+  z-index: 5;
+}
+
+
+.scan-corner.top-left {
+  top: 13px;
+  left: 13px;
+
+  border-top:
+    3px solid #8ab9e8;
+
+  border-left:
+    3px solid #8ab9e8;
+
+  border-radius:
+    8px 0 0 0;
+}
+
+
+.scan-corner.top-right {
+  top: 13px;
+  right: 13px;
+
+  border-top:
+    3px solid #8ab9e8;
+
+  border-right:
+    3px solid #8ab9e8;
+
+  border-radius:
+    0 8px 0 0;
+}
+
+
+.scan-corner.bottom-left {
+  bottom: 13px;
+  left: 13px;
+
+  border-bottom:
+    3px solid #8ab9e8;
+
+  border-left:
+    3px solid #8ab9e8;
+
+  border-radius:
+    0 0 0 8px;
+}
+
+
+.scan-corner.bottom-right {
+  right: 13px;
+  bottom: 13px;
+
+  border-right:
+    3px solid #8ab9e8;
+
+  border-bottom:
+    3px solid #8ab9e8;
+
+  border-radius:
+    0 0 8px 0;
+}
+
+
+/* BUTTONS */
+
+.trading-card-select-image,
+.trading-card-analyze {
+  width: 100%;
+
+  border: none;
+
+  border-radius: 20px;
+
+  padding: 16px;
+
+  font-size: 11px;
+  font-weight: 900;
+
+  letter-spacing: .07em;
+}
+
+
+.trading-card-select-image {
+  margin-bottom: 11px;
+
+  background: #fff;
+
+  color: #334b61;
+
+  box-shadow:
+    0
+    7px
+    22px
+    rgba(
+      60,
+      90,
+      130,
+      .08
+    );
+}
+
+
+.trading-card-analyze {
+  background:
+    linear-gradient(
+      135deg,
+      #d8edff,
+      #eee3ff
+    );
+
+  color: #334b61;
+
+  box-shadow:
+    0
+    8px
+    24px
+    rgba(
+      60,
+      90,
+      130,
+      .10
+    );
+}
+
+
+.trading-card-analyze:disabled {
+  opacity: .35;
+}
+
+
+/* MANUAL */
+
+.trading-card-manual {
+  display: block;
+
+  width: 100%;
+
+  margin-top: 22px;
+
+  border: none;
+
+  background: transparent;
+
+  color: #718399;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  letter-spacing: .05em;
+
+  line-height: 1.8;
+}
+
+
+.trading-card-manual strong {
+  display: block;
+
+  color: #405a73;
+
+  font-size: 10px;
+}
 </style>
 </head>
 <body>
