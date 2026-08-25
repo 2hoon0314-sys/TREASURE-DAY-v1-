@@ -384,6 +384,8 @@ const memoryPage = document.getElementById("memory-page");
 const settingsPage = document.getElementById("settings-page");
 const pastEventsPage = document.getElementById("past-events-page");
 const notificationPage = document.getElementById("notification-page");
+const dataPage =
+  document.getElementById("data-page");
 function showPage(pageName) {
 // ========================================
 // 📱 下タブ移動時：MEMBER系画面を全部閉じる
