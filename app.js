@@ -39018,3 +39018,108 @@ if (tradingCardDetailDelete) {
   );
 
 }
+// ========================================
+// 💎 SAVE MY CARD INFO
+// ========================================
+
+const tradingCardDetailSaveMyInfo =
+  document.getElementById(
+    "trading-card-detail-save-my-info"
+  );
+
+
+if (tradingCardDetailSaveMyInfo) {
+
+  tradingCardDetailSaveMyInfo.addEventListener(
+    "click",
+    () => {
+
+      if (!currentTradingCardDetailId) {
+        return;
+      }
+
+
+      const ownedCards =
+        getOwnedTradingCards();
+
+
+      const target =
+        ownedCards.find(
+          card =>
+            card.cardId ===
+            currentTradingCardDetailId
+        );
+
+
+      if (!target) {
+        return;
+      }
+
+
+      const acquiredDateInput =
+        document.getElementById(
+          "trading-card-detail-acquired-date"
+        );
+
+      const acquiredFromInput =
+        document.getElementById(
+          "trading-card-detail-acquired-from"
+        );
+
+      const memoInput =
+        document.getElementById(
+          "trading-card-detail-memo"
+        );
+
+
+      target.acquiredDate =
+        acquiredDateInput
+          ? acquiredDateInput.value
+          : "";
+
+
+      target.acquiredFrom =
+        acquiredFromInput
+          ? acquiredFromInput.value.trim()
+          : "";
+
+
+      target.memo =
+        memoInput
+          ? memoInput.value.trim()
+          : "";
+
+
+      saveOwnedTradingCards(
+        ownedCards
+      );
+
+
+      const message =
+        document.getElementById(
+          "trading-card-detail-my-info-message"
+        );
+
+
+      if (message) {
+
+        message.style.display =
+          "block";
+
+
+        setTimeout(
+          () => {
+
+            message.style.display =
+              "none";
+
+          },
+          1500
+        );
+
+      }
+
+    }
+  );
+
+}
