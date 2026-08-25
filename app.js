@@ -557,6 +557,57 @@ if (backToSettingsBtn) {
     window.scrollTo(0, 0);
   });
 }
+// ========================================
+// 💾 DATA MANAGEMENT
+// ========================================
+
+const dataSetting =
+  document.getElementById(
+    "data-setting"
+  );
+
+const backToSettingsFromData =
+  document.getElementById(
+    "back-to-settings-from-data"
+  );
+
+
+if (dataSetting) {
+
+  dataSetting.addEventListener(
+    "click",
+    () => {
+
+      showPage("data");
+
+      window.scrollTo(
+        0,
+        0
+      );
+
+    }
+  );
+
+}
+
+
+if (backToSettingsFromData) {
+
+  backToSettingsFromData.addEventListener(
+    "click",
+    () => {
+
+      showPage("settings");
+
+      window.scrollTo(
+        0,
+        0
+      );
+
+    }
+  );
+
+}
 const pastEventsBtn = document.getElementById("past-events-btn");
 
 if (pastEventsBtn) {
