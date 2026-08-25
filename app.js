@@ -37609,33 +37609,57 @@ if (
 
 const treasureCardDatabase = [
 
-  {
-    id: "PC-2026-VIVI-TWR-JH",
+ {
+  id: "PC-2026-VIVI-TWR-JH",
 
-    group: "TREASURE",
+  group: "TREASURE",
 
-    member: "JIHOON",
+  member: "JIHOON",
 
-    year: 2026,
+  year: 2026,
 
-    source:
-      "ViVi 2026.05",
+  source:
+    "ViVi 2026年5月号",
 
-    type:
-      "MAGAZINE STORE BENEFIT",
+  releaseDate:
+    "2026.03.23",
 
-    store:
-      "TOWER RECORDS",
+  publisher:
+    "講談社",
 
-    category:
-      "PHOTOCARD",
+  category:
+    "MAGAZINE",
 
-    set:
-      "1/10",
+  type:
+    "STORE BENEFIT",
 
-    masterImage:
-      "cards/PC-2026-VIVI-TWR-JH.png"
-  }
+  store:
+    "TOWER RECORDS",
+
+  officialName:
+    "TREASURE ランダムセルフィートレカ",
+
+  card:
+    "Random Selfie Photocard",
+
+  set:
+    "1/10",
+
+  distribution:
+    "TOWER RECORDS",
+
+  note:
+    "ViVi 2026年5月号 タワーレコードオリジナル先着購入特典",
+
+  albumInclusion:
+    false,
+
+  popupBenefit:
+    false,
+
+  masterImage:
+    "cards/PC-2026-VIVI-TWR-JH.png"
+}
 
 ];
 
@@ -38382,3 +38406,208 @@ if (tradingCardBookOpen) {
 
 }
 renderTradingCardBook();
+// ========================================
+// 🃏 MASTER CARD DETAIL
+// ========================================
+
+const tradingCardDetailPage =
+  document.getElementById(
+    "trading-card-detail-page"
+  );
+
+const tradingCardDetailBack =
+  document.getElementById(
+    "trading-card-detail-back"
+  );
+
+let currentTradingCardDetailId =
+  null;
+
+
+// ========================================
+// OPEN DETAIL
+// ========================================
+
+function openTradingCardDetail(cardId) {
+
+  const masterCard =
+    treasureCardDatabase.find(
+      card =>
+        card.id === cardId
+    );
+
+
+  if (!masterCard) {
+    return;
+  }
+
+
+  const ownedCards =
+    getOwnedTradingCards();
+
+
+  const ownedCard =
+    ownedCards.find(
+      card =>
+        card.cardId === cardId
+    );
+
+
+  if (!ownedCard) {
+    return;
+  }
+
+
+  currentTradingCardDetailId =
+    cardId;
+
+
+  const setText = (
+    id,
+    value
+  ) => {
+
+    const element =
+      document.getElementById(id);
+
+    if (element) {
+
+      element.textContent =
+        value ?? "—";
+
+    }
+
+  };
+
+
+  const image =
+    document.getElementById(
+      "trading-card-detail-image"
+    );
+
+
+  if (image) {
+
+    image.src =
+      masterCard.masterImage;
+
+  }
+
+
+  setText(
+    "trading-card-detail-member",
+    masterCard.member
+  );
+
+  setText(
+    "trading-card-detail-code",
+    masterCard.id
+  );
+
+  setText(
+    "trading-card-detail-group",
+    masterCard.group
+  );
+
+  setText(
+    "trading-card-detail-year",
+    masterCard.year
+  );
+
+  setText(
+    "trading-card-detail-source",
+    masterCard.source
+  );
+
+  setText(
+    "trading-card-detail-category",
+    masterCard.category
+  );
+
+  setText(
+    "trading-card-detail-type",
+    masterCard.type
+  );
+
+  setText(
+    "trading-card-detail-store",
+    masterCard.store
+  );
+
+  setText(
+    "trading-card-detail-official-name",
+    masterCard.officialName
+  );
+
+  setText(
+    "trading-card-detail-set",
+    masterCard.set
+  );
+
+  setText(
+    "trading-card-detail-release",
+    masterCard.releaseDate
+  );
+
+  setText(
+    "trading-card-detail-publisher",
+    masterCard.publisher
+  );
+
+  setText(
+    "trading-card-detail-distribution",
+    masterCard.distribution
+  );
+
+  setText(
+    "trading-card-detail-note",
+    masterCard.note
+  );
+
+
+  setText(
+    "trading-card-detail-quantity",
+    `×${ownedCard.quantity || 1}`
+  );
+
+
+  const favoriteButton =
+    document.getElementById(
+      "trading-card-detail-favorite"
+    );
+
+
+  if (favoriteButton) {
+
+    favoriteButton.classList.toggle(
+      "active",
+      !!ownedCard.favorite
+    );
+
+    favoriteButton.textContent =
+      ownedCard.favorite
+        ? "♥ FAVORITE"
+        : "♡ FAVORITE";
+
+  }
+
+
+  if (tradingCardBookPage) {
+
+    tradingCardBookPage.style.display =
+      "none";
+
+  }
+
+
+  if (tradingCardDetailPage) {
+
+    tradingCardDetailPage.style.display =
+      "block";
+
+    tradingCardDetailPage.scrollTop =
+      0;
+
+  }
+
+}
