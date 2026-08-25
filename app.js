@@ -37960,7 +37960,7 @@ if (tradingCardSave) {
         "treasure-owned-cards",
         JSON.stringify(ownedCards)
       );
-
+renderTradingCardBook();
 
       if (tradingCardSaveMessage) {
 
