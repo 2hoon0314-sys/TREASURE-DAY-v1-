@@ -38578,7 +38578,62 @@ function openTradingCardDetail(cardId) {
     "trading-card-detail-quantity",
     `×${ownedCard.quantity || 1}`
   );
+// ========================================
+// 💎 MY CARD INFOを読み込む
+// ========================================
 
+const acquiredDateInput =
+  document.getElementById(
+    "trading-card-detail-acquired-date"
+  );
+
+const acquiredFromInput =
+  document.getElementById(
+    "trading-card-detail-acquired-from"
+  );
+
+const memoInput =
+  document.getElementById(
+    "trading-card-detail-memo"
+  );
+
+
+if (acquiredDateInput) {
+
+  acquiredDateInput.value =
+    ownedCard.acquiredDate || "";
+
+}
+
+
+if (acquiredFromInput) {
+
+  acquiredFromInput.value =
+    ownedCard.acquiredFrom || "";
+
+}
+
+
+if (memoInput) {
+
+  memoInput.value =
+    ownedCard.memo || "";
+
+}
+
+
+const myInfoMessage =
+  document.getElementById(
+    "trading-card-detail-my-info-message"
+  );
+
+
+if (myInfoMessage) {
+
+  myInfoMessage.style.display =
+    "none";
+
+}
 
   const favoriteButton =
     document.getElementById(
