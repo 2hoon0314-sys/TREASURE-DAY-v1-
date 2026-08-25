@@ -6630,6 +6630,50 @@ background:
   font-size: 9px;
   font-weight: 900;
 }
+/* =========================================
+   ❤️ CARD BOOK FAVORITES FILTER
+========================================= */
+
+.trading-card-summary-button {
+  border: none;
+
+  text-align: left;
+
+  color: inherit;
+
+  font-family: inherit;
+
+  cursor: pointer;
+}
+
+
+.trading-card-summary-button.active {
+  box-shadow:
+    0 0 0 2px
+    rgba(171, 211, 245, .55),
+    0 8px 25px
+    rgba(70,105,150,.10);
+}
+
+
+#trading-card-show-favorites.active {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.92),
+      rgba(255,231,241,.88)
+    );
+}
+
+
+#trading-card-show-all.active {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.92),
+      rgba(225,241,255,.88)
+    );
+}  
 </style>
 </head>
 <body>
