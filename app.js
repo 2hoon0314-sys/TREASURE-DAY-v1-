@@ -38705,3 +38705,261 @@ if (tradingCardDetailFavorite) {
   );
 
 }
+// ========================================
+// 🃏 CARD QUANTITY CONTROL
+// ========================================
+
+const tradingCardDetailMinus =
+  document.getElementById(
+    "trading-card-detail-minus"
+  );
+
+const tradingCardDetailPlus =
+  document.getElementById(
+    "trading-card-detail-plus"
+  );
+
+const tradingCardDetailDelete =
+  document.getElementById(
+    "trading-card-detail-delete"
+  );
+
+
+// ----------------------------------------
+// ＋ 1 CARD
+// ----------------------------------------
+
+if (tradingCardDetailPlus) {
+
+  tradingCardDetailPlus.addEventListener(
+    "click",
+    () => {
+
+      if (!currentTradingCardDetailId) {
+        return;
+      }
+
+
+      const ownedCards =
+        getOwnedTradingCards();
+
+
+      const target =
+        ownedCards.find(
+          card =>
+            card.cardId ===
+            currentTradingCardDetailId
+        );
+
+
+      if (!target) {
+        return;
+      }
+
+
+      target.quantity =
+        (target.quantity || 1) + 1;
+
+
+      saveOwnedTradingCards(
+        ownedCards
+      );
+
+
+      renderTradingCardBook();
+
+
+      openTradingCardDetail(
+        currentTradingCardDetailId
+      );
+
+    }
+  );
+
+}
+
+
+// ----------------------------------------
+// − 1 CARD
+// ----------------------------------------
+
+if (tradingCardDetailMinus) {
+
+  tradingCardDetailMinus.addEventListener(
+    "click",
+    () => {
+
+      if (!currentTradingCardDetailId) {
+        return;
+      }
+
+
+      const ownedCards =
+        getOwnedTradingCards();
+
+
+      const target =
+        ownedCards.find(
+          card =>
+            card.cardId ===
+            currentTradingCardDetailId
+        );
+
+
+      if (!target) {
+        return;
+      }
+
+
+      const currentQuantity =
+        target.quantity || 1;
+
+
+      if (currentQuantity <= 1) {
+
+        const remove =
+          window.confirm(
+            "このカードをMY COLLECTIONから削除しますか？"
+          );
+
+
+        if (!remove) {
+          return;
+        }
+
+
+        const nextCards =
+          ownedCards.filter(
+            card =>
+              card.cardId !==
+              currentTradingCardDetailId
+          );
+
+
+        saveOwnedTradingCards(
+          nextCards
+        );
+
+
+        currentTradingCardDetailId =
+          null;
+
+
+        if (tradingCardDetailPage) {
+          tradingCardDetailPage.style.display =
+            "none";
+        }
+
+
+        if (tradingCardBookPage) {
+
+          tradingCardBookPage.style.display =
+            "block";
+
+          tradingCardBookPage.scrollTop =
+            0;
+
+        }
+
+
+        renderTradingCardBook();
+
+        return;
+
+      }
+
+
+      target.quantity =
+        currentQuantity - 1;
+
+
+      saveOwnedTradingCards(
+        ownedCards
+      );
+
+
+      renderTradingCardBook();
+
+
+      openTradingCardDetail(
+        currentTradingCardDetailId
+      );
+
+    }
+  );
+
+}
+
+
+// ----------------------------------------
+// DELETE ALL COPIES
+// ----------------------------------------
+
+if (tradingCardDetailDelete) {
+
+  tradingCardDetailDelete.addEventListener(
+    "click",
+    () => {
+
+      if (!currentTradingCardDetailId) {
+        return;
+      }
+
+
+      const remove =
+        window.confirm(
+          "このカードをMY COLLECTIONから完全に削除しますか？"
+        );
+
+
+      if (!remove) {
+        return;
+      }
+
+
+      const ownedCards =
+        getOwnedTradingCards();
+
+
+      const nextCards =
+        ownedCards.filter(
+          card =>
+            card.cardId !==
+            currentTradingCardDetailId
+        );
+
+
+      saveOwnedTradingCards(
+        nextCards
+      );
+
+
+      currentTradingCardDetailId =
+        null;
+
+
+      if (tradingCardDetailPage) {
+
+        tradingCardDetailPage.style.display =
+          "none";
+
+      }
+
+
+      if (tradingCardBookPage) {
+
+        tradingCardBookPage.style.display =
+          "block";
+
+        tradingCardBookPage.scrollTop =
+          0;
+
+      }
+
+
+      renderTradingCardBook();
+
+    }
+  );
+
+}
