@@ -37427,3 +37427,179 @@ if (
     }
   );
 }
+// ========================================
+// 📷 TRADING CARD SCANNER
+// ========================================
+
+const tradingCardAdd =
+  document.getElementById(
+    "trading-card-add"
+  );
+
+const tradingCardScanPage =
+  document.getElementById(
+    "trading-card-scan-page"
+  );
+
+const tradingCardScanBack =
+  document.getElementById(
+    "trading-card-scan-back"
+  );
+
+const tradingCardScanInput =
+  document.getElementById(
+    "trading-card-scan-input"
+  );
+
+const tradingCardSelectImage =
+  document.getElementById(
+    "trading-card-select-image"
+  );
+
+const tradingCardScanPreview =
+  document.getElementById(
+    "trading-card-scan-preview"
+  );
+
+const tradingCardScanPlaceholder =
+  document.getElementById(
+    "trading-card-scan-placeholder"
+  );
+
+const tradingCardAnalyze =
+  document.getElementById(
+    "trading-card-analyze"
+  );
+
+
+// ----------------------------------------
+// CARD BOOK → SCANNER
+// ----------------------------------------
+
+if (
+  tradingCardAdd &&
+  tradingCardScanPage
+) {
+
+  tradingCardAdd.addEventListener(
+    "click",
+    () => {
+
+      if (tradingCardBookPage) {
+        tradingCardBookPage.style.display =
+          "none";
+      }
+
+      tradingCardScanPage.style.display =
+        "block";
+
+      tradingCardScanPage.scrollTop = 0;
+
+    }
+  );
+
+}
+
+
+// ----------------------------------------
+// SCANNER → CARD BOOK
+// ----------------------------------------
+
+if (
+  tradingCardScanBack &&
+  tradingCardScanPage
+) {
+
+  tradingCardScanBack.addEventListener(
+    "click",
+    () => {
+
+      tradingCardScanPage.style.display =
+        "none";
+
+      if (tradingCardBookPage) {
+
+        tradingCardBookPage.style.display =
+          "block";
+
+        tradingCardBookPage.scrollTop = 0;
+
+      }
+
+    }
+  );
+
+}
+
+
+// ----------------------------------------
+// OPEN CAMERA / PHOTO PICKER
+// ----------------------------------------
+
+if (
+  tradingCardSelectImage &&
+  tradingCardScanInput
+) {
+
+  tradingCardSelectImage.addEventListener(
+    "click",
+    () => {
+
+      tradingCardScanInput.click();
+
+    }
+  );
+
+}
+
+
+// ----------------------------------------
+// CARD IMAGE PREVIEW
+// ----------------------------------------
+
+if (
+  tradingCardScanInput &&
+  tradingCardScanPreview
+) {
+
+  tradingCardScanInput.addEventListener(
+    "change",
+    () => {
+
+      const file =
+        tradingCardScanInput.files[0];
+
+      if (!file) {
+        return;
+      }
+
+      const imageURL =
+        URL.createObjectURL(file);
+
+
+      tradingCardScanPreview.src =
+        imageURL;
+
+      tradingCardScanPreview.style.display =
+        "block";
+
+
+      if (tradingCardScanPlaceholder) {
+
+        tradingCardScanPlaceholder.style.display =
+          "none";
+
+      }
+
+
+      if (tradingCardAnalyze) {
+
+        tradingCardAnalyze.disabled =
+          false;
+
+      }
+
+    }
+  );
+
+}
