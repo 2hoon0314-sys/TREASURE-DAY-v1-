@@ -38217,7 +38217,16 @@ function renderTradingCardBook() {
 
       item.className =
         "trading-card-item";
+item.addEventListener(
+  "click",
+  () => {
 
+    openTradingCardDetail(
+      ownedCard.cardId
+    );
+
+  }
+);
 
       item.innerHTML = `
 
