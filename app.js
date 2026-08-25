@@ -37347,3 +37347,83 @@ if (
     );
 
 }
+// ========================================
+// 🃏 TRADING CARD BOOK
+// ========================================
+
+const tradingCardBookOpen =
+  document.getElementById(
+    "trading-card-book-open"
+  );
+
+const tradingCardBookPage =
+  document.getElementById(
+    "trading-card-book-page"
+  );
+
+const tradingCardBookBack =
+  document.getElementById(
+    "trading-card-book-back"
+  );
+
+const treasureCollectionPageForCards =
+  document.getElementById(
+    "treasure-collection-page"
+  );
+
+
+// COLLECTION → CARD BOOK
+
+if (
+  tradingCardBookOpen &&
+  tradingCardBookPage
+) {
+
+  tradingCardBookOpen.addEventListener(
+    "click",
+    () => {
+
+      if (treasureCollectionPageForCards) {
+        treasureCollectionPageForCards.style.display =
+          "none";
+      }
+
+      tradingCardBookPage.style.display =
+        "block";
+
+      tradingCardBookPage.scrollTop = 0;
+
+      document.body.style.overflow =
+        "hidden";
+    }
+  );
+}
+
+
+// CARD BOOK → COLLECTION
+
+if (
+  tradingCardBookBack &&
+  tradingCardBookPage
+) {
+
+  tradingCardBookBack.addEventListener(
+    "click",
+    () => {
+
+      tradingCardBookPage.style.display =
+        "none";
+
+      if (treasureCollectionPageForCards) {
+        treasureCollectionPageForCards.style.display =
+          "block";
+
+        treasureCollectionPageForCards.scrollTop =
+          0;
+      }
+
+      document.body.style.overflow =
+        "hidden";
+    }
+  );
+}
