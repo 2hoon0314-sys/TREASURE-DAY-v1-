@@ -38181,7 +38181,63 @@ if (
           ${
             tradingCardActiveMember ===
             "ALL"
-              ? "YOUR CARD BOOK IS EMPTY"
+              if (cardsToShow.length === 0) {
+
+  let emptyTitle =
+    "YOUR CARD BOOK IS EMPTY";
+
+  let emptyMessage =
+    "最初のTREASUREを<br>コレクションに追加しよう 💎";
+
+
+  if (
+    tradingCardViewMode ===
+    "FAVORITES"
+  ) {
+
+    emptyTitle =
+      "NO FAVORITES YET";
+
+    emptyMessage =
+      "お気に入りのカードに<br>♡をつけてみよう 💎";
+
+  } else if (
+    tradingCardActiveMember !==
+    "ALL"
+  ) {
+
+    emptyTitle =
+      "NO CARDS YET";
+
+    emptyMessage =
+      `${tradingCardActiveMember}のカードは<br>まだ登録されていません 💎`;
+
+  }
+
+
+  grid.innerHTML = `
+
+    <div class="trading-card-empty">
+
+      <div class="trading-card-empty-icon">
+        🃏
+      </div>
+
+      <strong>
+        ${emptyTitle}
+      </strong>
+
+      <p>
+        ${emptyMessage}
+      </p>
+
+    </div>
+
+  `;
+
+  return;
+
+}
               : "NO CARDS YET"
           }
         </strong>
@@ -39139,3 +39195,82 @@ if (tradingCardDetailSaveMyInfo) {
   );
 
 }
+// ========================================
+// ❤️ FAVORITES VIEW
+// ========================================
+
+const tradingCardShowAll =
+  document.getElementById(
+    "trading-card-show-all"
+  );
+
+const tradingCardShowFavorites =
+  document.getElementById(
+    "trading-card-show-favorites"
+  );
+
+
+function updateTradingCardViewButtons() {
+
+  if (tradingCardShowAll) {
+
+    tradingCardShowAll.classList.toggle(
+      "active",
+      tradingCardViewMode === "ALL"
+    );
+
+  }
+
+
+  if (tradingCardShowFavorites) {
+
+    tradingCardShowFavorites.classList.toggle(
+      "active",
+      tradingCardViewMode ===
+        "FAVORITES"
+    );
+
+  }
+
+}
+
+
+if (tradingCardShowAll) {
+
+  tradingCardShowAll.addEventListener(
+    "click",
+    () => {
+
+      tradingCardViewMode =
+        "ALL";
+
+      updateTradingCardViewButtons();
+
+      renderTradingCardBook();
+
+    }
+  );
+
+}
+
+
+if (tradingCardShowFavorites) {
+
+  tradingCardShowFavorites.addEventListener(
+    "click",
+    () => {
+
+      tradingCardViewMode =
+        "FAVORITES";
+
+      updateTradingCardViewButtons();
+
+      renderTradingCardBook();
+
+    }
+  );
+
+}
+
+
+updateTradingCardViewButtons();
