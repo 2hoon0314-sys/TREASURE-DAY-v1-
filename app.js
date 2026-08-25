@@ -38651,3 +38651,57 @@ if (
   );
 
 }
+const tradingCardDetailFavorite =
+  document.getElementById(
+    "trading-card-detail-favorite"
+  );
+
+
+if (tradingCardDetailFavorite) {
+
+  tradingCardDetailFavorite.addEventListener(
+    "click",
+    () => {
+
+      if (!currentTradingCardDetailId) {
+        return;
+      }
+
+
+      const ownedCards =
+        getOwnedTradingCards();
+
+
+      const target =
+        ownedCards.find(
+          card =>
+            card.cardId ===
+            currentTradingCardDetailId
+        );
+
+
+      if (!target) {
+        return;
+      }
+
+
+      target.favorite =
+        !target.favorite;
+
+
+      saveOwnedTradingCards(
+        ownedCards
+      );
+
+
+      renderTradingCardBook();
+
+
+      openTradingCardDetail(
+        currentTradingCardDetailId
+      );
+
+    }
+  );
+
+}
