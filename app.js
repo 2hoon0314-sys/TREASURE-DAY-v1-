@@ -38620,3 +38620,34 @@ function openTradingCardDetail(cardId) {
   }
 
 }
+if (
+  tradingCardDetailBack &&
+  tradingCardDetailPage
+) {
+
+  tradingCardDetailBack.addEventListener(
+    "click",
+    () => {
+
+      tradingCardDetailPage.style.display =
+        "none";
+
+
+      if (tradingCardBookPage) {
+
+        tradingCardBookPage.style.display =
+          "block";
+
+        tradingCardBookPage.scrollTop =
+          0;
+
+      }
+
+
+      currentTradingCardDetailId =
+        null;
+
+    }
+  );
+
+}
