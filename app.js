@@ -37603,3 +37603,194 @@ if (
   );
 
 }
+// ========================================
+// 🃏 TREASURE CARD DATABASE
+// ========================================
+
+const treasureCardDatabase = [
+
+  {
+    id: "PC-2026-VIVI-TWR-JH",
+
+    group: "TREASURE",
+
+    member: "JIHOON",
+
+    year: 2026,
+
+    source:
+      "ViVi 2026.05",
+
+    type:
+      "MAGAZINE STORE BENEFIT",
+
+    store:
+      "TOWER RECORDS",
+
+    category:
+      "PHOTOCARD",
+
+    set:
+      "1/10",
+
+    masterImage:
+      "cards/PC-2026-VIVI-TWR-JH.png"
+  }
+
+];
+
+
+// 現在SCANで見つかったカード
+let currentTradingCardMatch = null;
+
+
+// ========================================
+// ✨ RESULT ELEMENTS
+// ========================================
+
+const tradingCardResultPage =
+  document.getElementById(
+    "trading-card-result-page"
+  );
+
+const tradingCardResultBack =
+  document.getElementById(
+    "trading-card-result-back"
+  );
+
+const tradingCardResultImage =
+  document.getElementById(
+    "trading-card-result-image"
+  );
+
+const tradingCardResultMember =
+  document.getElementById(
+    "trading-card-result-member"
+  );
+
+const tradingCardResultYear =
+  document.getElementById(
+    "trading-card-result-year"
+  );
+
+const tradingCardResultSource =
+  document.getElementById(
+    "trading-card-result-source"
+  );
+
+const tradingCardResultType =
+  document.getElementById(
+    "trading-card-result-type"
+  );
+
+const tradingCardResultStore =
+  document.getElementById(
+    "trading-card-result-store"
+  );
+
+const tradingCardResultCategory =
+  document.getElementById(
+    "trading-card-result-category"
+  );
+
+const tradingCardResultCode =
+  document.getElementById(
+    "trading-card-result-code"
+  );
+
+const tradingCardSave =
+  document.getElementById(
+    "trading-card-save"
+  );
+
+const tradingCardSaveMessage =
+  document.getElementById(
+    "trading-card-save-message"
+  );
+
+
+// ========================================
+// ✨ SHOW CARD RESULT
+// ========================================
+
+function showTradingCardResult(card) {
+
+  if (!card) {
+    return;
+  }
+
+  currentTradingCardMatch =
+    card;
+
+
+  if (tradingCardResultImage) {
+    tradingCardResultImage.src =
+      card.masterImage;
+  }
+
+
+  if (tradingCardResultMember) {
+    tradingCardResultMember.textContent =
+      card.member;
+  }
+
+
+  if (tradingCardResultYear) {
+    tradingCardResultYear.textContent =
+      card.year;
+  }
+
+
+  if (tradingCardResultSource) {
+    tradingCardResultSource.textContent =
+      card.source;
+  }
+
+
+  if (tradingCardResultType) {
+    tradingCardResultType.textContent =
+      card.type;
+  }
+
+
+  if (tradingCardResultStore) {
+    tradingCardResultStore.textContent =
+      card.store;
+  }
+
+
+  if (tradingCardResultCategory) {
+    tradingCardResultCategory.textContent =
+      card.category;
+  }
+
+
+  if (tradingCardResultCode) {
+    tradingCardResultCode.textContent =
+      card.id;
+  }
+
+
+  if (tradingCardSaveMessage) {
+    tradingCardSaveMessage.style.display =
+      "none";
+  }
+
+
+  if (tradingCardScanPage) {
+    tradingCardScanPage.style.display =
+      "none";
+  }
+
+
+  if (tradingCardResultPage) {
+
+    tradingCardResultPage.style.display =
+      "block";
+
+    tradingCardResultPage.scrollTop =
+      0;
+
+  }
+
+}
