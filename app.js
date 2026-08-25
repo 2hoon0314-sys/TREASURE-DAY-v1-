@@ -38464,8 +38464,15 @@ function openTradingCardDetail(cardId) {
 
     if (element) {
 
-      element.textContent =
-        value ?? "—";
+     const displayValue =
+  value === null ||
+  value === undefined ||
+  String(value).trim() === ""
+    ? "—"
+    : value;
+
+element.textContent =
+  displayValue;
 
     }
 
