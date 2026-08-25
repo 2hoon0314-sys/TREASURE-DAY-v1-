@@ -566,6 +566,57 @@ if (backToSettingsBtn) {
   });
 }
 // ========================================
+// 🔒 PRIVATE / SHARED MODE
+// ========================================
+
+const modeSetting =
+  document.getElementById(
+    "mode-setting"
+  );
+
+const backToSettingsFromMode =
+  document.getElementById(
+    "back-to-settings-from-mode"
+  );
+
+
+if (modeSetting) {
+
+  modeSetting.addEventListener(
+    "click",
+    () => {
+
+      showPage("mode");
+
+      window.scrollTo(
+        0,
+        0
+      );
+
+    }
+  );
+
+}
+
+
+if (backToSettingsFromMode) {
+
+  backToSettingsFromMode.addEventListener(
+    "click",
+    () => {
+
+      showPage("settings");
+
+      window.scrollTo(
+        0,
+        0
+      );
+
+    }
+  );
+
+}
+// ========================================
 // 💾 DATA MANAGEMENT
 // ========================================
 
