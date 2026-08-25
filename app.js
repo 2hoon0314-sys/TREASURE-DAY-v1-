@@ -33188,6 +33188,82 @@ if (editId) {
   );
 
 }
+// ============================================
+// 🕰️ MY TREASURE TIMELINE
+// ============================================
+
+const treasureTimelineOpen =
+  document.getElementById(
+    "treasure-timeline-open"
+  );
+
+const treasureTimelinePage =
+  document.getElementById(
+    "treasure-timeline-page"
+  );
+
+const treasureTimelineBack =
+  document.getElementById(
+    "treasure-timeline-back"
+  );
+
+
+// ============================================
+// 🏠 HOME → TIMELINE
+// ============================================
+
+if (
+  treasureTimelineOpen &&
+  treasureTimelinePage
+) {
+
+  treasureTimelineOpen.addEventListener(
+    "click",
+    () => {
+
+      treasureTimelinePage.style.display =
+        "block";
+
+      treasureTimelinePage.scrollTop =
+        0;
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+  );
+
+}
+
+
+// ============================================
+// 🕰️ TIMELINE → HOME
+// ============================================
+
+if (
+  treasureTimelineBack &&
+  treasureTimelinePage
+) {
+
+  treasureTimelineBack.addEventListener(
+    "click",
+    () => {
+
+      treasureTimelinePage.style.display =
+        "none";
+
+      document.body.style.overflow =
+        "";
+
+      window.scrollTo(
+        0,
+        0
+      );
+
+    }
+  );
+
+}
 // ======================================================
 // 🎧 MUSIC MENU
 // 今回は入口のみ。中身は次から順番に実装。
