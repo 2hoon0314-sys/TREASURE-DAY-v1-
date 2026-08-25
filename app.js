@@ -39193,3 +39193,64 @@ if (tradingCardShowFavorites) {
 
 
 updateTradingCardViewButtons();
+// ========================================
+// 🧪 TEMP: ADD TEST CARDS
+// 4種類表示テスト用
+// ========================================
+
+function addTradingCardTestData() {
+
+  const ownedCards =
+    getOwnedTradingCards();
+
+  const testCardIds = [
+    "PC-2026-VIVI-TWR-JH",
+    "PC-2026-NEWWAV-JH-001",
+    "PC-2026-STAGE-NAD-JH-001",
+    "PC-2026-PULSEON-KD-JH-001"
+  ];
+
+
+  testCardIds.forEach(
+    (cardId) => {
+
+      const exists =
+        ownedCards.some(
+          card =>
+            card.cardId === cardId
+        );
+
+
+      if (!exists) {
+
+        ownedCards.push({
+          cardId: cardId,
+          favorite: false,
+          quantity: 1,
+          addedAt:
+            new Date().toISOString(),
+          acquiredDate: "",
+          acquiredFrom: "",
+          memo: ""
+        });
+
+      }
+
+    }
+  );
+
+
+  saveOwnedTradingCards(
+    ownedCards
+  );
+
+
+  renderTradingCardBook();
+
+
+  console.log(
+    "🧪 TEST CARDS ADDED",
+    ownedCards
+  );
+
+}
