@@ -6226,6 +6226,134 @@ background:
 
   </div>
 </section>
+  <!-- =========================================
+     📷 TRADING CARD SCANNER
+========================================= -->
+
+<section
+  id="trading-card-scan-page"
+  class="trading-card-scan-page"
+  style="display: none;"
+>
+
+  <div class="trading-card-scan-inner">
+
+    <button
+      type="button"
+      id="trading-card-scan-back"
+      class="trading-card-scan-back"
+    >
+      ← CARD BOOKに戻る
+    </button>
+
+
+    <!-- HEADER -->
+
+    <div class="trading-card-scan-header">
+
+      <small>
+        PHOTOCARD SCANNER
+      </small>
+
+      <h1>
+        SCAN<br>
+        YOUR CARD 📷
+      </h1>
+
+      <p>
+        トレカを読み込んで、<br>
+        カードデータを探します 💎
+      </p>
+
+    </div>
+
+
+    <!-- SCANNER -->
+
+    <div class="trading-card-scanner">
+
+      <div
+        id="trading-card-scan-frame"
+        class="trading-card-scan-frame"
+      >
+
+        <img
+          id="trading-card-scan-preview"
+          class="trading-card-scan-preview"
+          alt=""
+        >
+
+        <div
+          id="trading-card-scan-placeholder"
+          class="trading-card-scan-placeholder"
+        >
+          <span>🃏</span>
+
+          <strong>
+            PLACE CARD HERE
+          </strong>
+
+          <small>
+            トレカ全体が見える画像を選んでください
+          </small>
+        </div>
+
+
+        <!-- SCAN CORNERS -->
+
+        <i class="scan-corner top-left"></i>
+        <i class="scan-corner top-right"></i>
+        <i class="scan-corner bottom-left"></i>
+        <i class="scan-corner bottom-right"></i>
+
+      </div>
+
+    </div>
+
+
+    <!-- IMAGE INPUT -->
+
+    <input
+      type="file"
+      id="trading-card-scan-input"
+      accept="image/*"
+      capture="environment"
+      hidden
+    >
+
+
+    <button
+      type="button"
+      id="trading-card-select-image"
+      class="trading-card-select-image"
+    >
+      📷 SELECT / SCAN CARD
+    </button>
+
+
+    <button
+      type="button"
+      id="trading-card-analyze"
+      class="trading-card-analyze"
+      disabled
+    >
+      ✨ ANALYZE CARD
+    </button>
+
+
+    <button
+      type="button"
+      id="trading-card-manual"
+      class="trading-card-manual"
+    >
+      CAN'T FIND YOUR CARD?
+      <strong>MANUAL REGISTER →</strong>
+    </button>
+
+
+  </div>
+
+</section>
  <!-- =========================================
      📊 MY TREASURE STATS ENTRY
 ========================================= -->
