@@ -38116,7 +38116,21 @@ function renderTradingCardBook() {
 
   let cardsToShow =
     ownedCards;
+// --------------------------------------
+// ❤️ FAVORITES FILTER
+// --------------------------------------
 
+if (
+  tradingCardViewMode ===
+  "FAVORITES"
+) {
+
+  cardsToShow =
+    cardsToShow.filter(
+      card => card.favorite
+    );
+
+}
 
   if (
     tradingCardActiveMember !==
