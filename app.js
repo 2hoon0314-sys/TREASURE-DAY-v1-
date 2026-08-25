@@ -463,6 +463,12 @@ if (pastEventsPage) {
       ? "block"
       : "none";
 }
+  if (modePage) {
+  modePage.style.display =
+    pageName === "mode"
+      ? "block"
+      : "none";
+}
   if (homeTab) {
     homeTab.classList.toggle(
       "active",
