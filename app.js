@@ -675,6 +675,55 @@ if (backToSettingsFromData) {
   );
 
 }
+// ========================================
+// 🔔 REMINDER HUB
+// ========================================
+
+const reminderHubBtn =
+  document.getElementById(
+    "reminder-hub-btn"
+  );
+
+const backToPlanFromReminder =
+  document.getElementById(
+    "back-to-plan-from-reminder"
+  );
+
+if (reminderHubBtn) {
+
+  reminderHubBtn.addEventListener(
+    "click",
+    () => {
+
+      showPage("reminder");
+
+      window.scrollTo(
+        0,
+        0
+      );
+
+    }
+  );
+
+}
+
+if (backToPlanFromReminder) {
+
+  backToPlanFromReminder.addEventListener(
+    "click",
+    () => {
+
+      showPage("plan");
+
+      window.scrollTo(
+        0,
+        0
+      );
+
+    }
+  );
+
+}
 const pastEventsBtn = document.getElementById("past-events-btn");
 
 if (pastEventsBtn) {
