@@ -38320,3 +38320,48 @@ function renderTradingCardBook() {
   );
 
 }
+// ========================================
+// 👤 MEMBER FILTER
+// ========================================
+
+const tradingCardFilters =
+  document.querySelectorAll(
+    ".trading-card-filter"
+  );
+
+
+tradingCardFilters.forEach(
+  button => {
+
+    button.addEventListener(
+      "click",
+      () => {
+
+        tradingCardActiveMember =
+          button.dataset.member ||
+          "ALL";
+
+
+        tradingCardFilters.forEach(
+          filterButton => {
+
+            filterButton.classList.remove(
+              "active"
+            );
+
+          }
+        );
+
+
+        button.classList.add(
+          "active"
+        );
+
+
+        renderTradingCardBook();
+
+      }
+    );
+
+  }
+);
