@@ -38381,3 +38381,4 @@ if (tradingCardBookOpen) {
   );
 
 }
+renderTradingCardBook();
