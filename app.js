@@ -455,6 +455,12 @@ if (pastEventsPage) {
   notificationPage.style.display =
     pageName === "notifications" ? "block" : "none";
 }
+  if (dataPage) {
+  dataPage.style.display =
+    pageName === "data"
+      ? "block"
+      : "none";
+}
   if (homeTab) {
     homeTab.classList.toggle(
       "active",
