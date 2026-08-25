@@ -5133,6 +5133,276 @@ background:
 .treasure-collection-card:active {
   transform: scale(.98);
 }  
+  /* =========================================
+   🃏 TRADING CARD BOOK
+========================================= */
+
+.trading-card-book-page {
+  position: fixed;
+  inset: 0;
+  z-index: 30000;
+
+  overflow-y: auto;
+
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(216, 238, 255, .95),
+      transparent 38%
+    ),
+    radial-gradient(
+      circle at bottom left,
+      rgba(240, 226, 255, .9),
+      transparent 42%
+    ),
+    #f8fbff;
+
+  color: #243447;
+}
+
+.trading-card-book-inner {
+  width: min(100% - 32px, 520px);
+  margin: 0 auto;
+  padding: 24px 0 100px;
+}
+
+
+/* BACK */
+
+.trading-card-book-back {
+  border: none;
+
+  padding: 10px 4px;
+
+  background: transparent;
+
+  color: #476782;
+
+  font-size: 12px;
+  font-weight: 900;
+
+  cursor: pointer;
+}
+
+
+/* HERO */
+
+.trading-card-book-hero {
+  padding: 34px 5px 28px;
+}
+
+.trading-card-book-hero small {
+  display: block;
+
+  margin-bottom: 10px;
+
+  font-size: 10px;
+  font-weight: 900;
+
+  letter-spacing: .16em;
+
+  opacity: .45;
+}
+
+.trading-card-book-hero h1 {
+  margin: 0 0 17px;
+
+  font-size: clamp(38px, 11vw, 52px);
+
+  line-height: .95;
+
+  letter-spacing: -.05em;
+}
+
+.trading-card-book-hero p {
+  margin: 0;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  line-height: 1.8;
+
+  opacity: .52;
+}
+
+
+/* SUMMARY */
+
+.trading-card-summary {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  gap: 12px;
+
+  margin-bottom: 20px;
+}
+
+.trading-card-summary-item {
+  padding: 20px;
+
+  border-radius: 23px;
+
+  background: rgba(255,255,255,.82);
+
+  box-shadow:
+    0 7px 22px
+    rgba(70,105,150,.08);
+}
+
+.trading-card-summary-item small {
+  display: block;
+
+  margin-bottom: 8px;
+
+  font-size: 9px;
+  font-weight: 900;
+
+  letter-spacing: .1em;
+
+  opacity: .42;
+}
+
+.trading-card-summary-item strong {
+  display: block;
+
+  font-size: 28px;
+  line-height: 1;
+}
+
+
+/* MEMBER FILTER */
+
+.trading-card-toolbar {
+  margin-bottom: 14px;
+}
+
+.trading-card-filter-wrap {
+  display: flex;
+
+  gap: 8px;
+
+  overflow-x: auto;
+
+  padding: 3px 1px 10px;
+
+  scrollbar-width: none;
+}
+
+.trading-card-filter-wrap::-webkit-scrollbar {
+  display: none;
+}
+
+.trading-card-filter {
+  flex: 0 0 auto;
+
+  border: none;
+
+  padding: 9px 14px;
+
+  border-radius: 999px;
+
+  background: rgba(255,255,255,.78);
+
+  color: inherit;
+
+  font-size: 9px;
+  font-weight: 900;
+
+  letter-spacing: .05em;
+}
+
+.trading-card-filter.active {
+  background: #dceeff;
+
+  box-shadow:
+    0 5px 15px
+    rgba(80,120,170,.12);
+}
+
+
+/* ADD CARD */
+
+.trading-card-add {
+  width: 100%;
+
+  margin-bottom: 20px;
+
+  padding: 15px;
+
+  border: none;
+  border-radius: 19px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #dceeff,
+      #eee5ff
+    );
+
+  color: #32465b;
+
+  font-size: 11px;
+  font-weight: 900;
+
+  letter-spacing: .08em;
+
+  box-shadow:
+    0 7px 20px
+    rgba(70,105,150,.09);
+}
+
+
+/* CARD GRID */
+
+.trading-card-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 16px 12px;
+}
+
+
+/* EMPTY */
+
+.trading-card-empty {
+  grid-column: 1 / -1;
+
+  padding: 55px 25px;
+
+  text-align: center;
+
+  border-radius: 27px;
+
+  background: rgba(255,255,255,.7);
+}
+
+.trading-card-empty-icon {
+  margin-bottom: 15px;
+
+  font-size: 36px;
+}
+
+.trading-card-empty strong {
+  display: block;
+
+  margin-bottom: 10px;
+
+  font-size: 11px;
+  font-weight: 900;
+
+  letter-spacing: .08em;
+}
+
+.trading-card-empty p {
+  margin: 0;
+
+  font-size: 11px;
+  line-height: 1.8;
+
+  opacity: .5;
+}
 </style>
 </head>
 <body>
