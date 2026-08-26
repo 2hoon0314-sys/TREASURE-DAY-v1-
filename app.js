@@ -385,6 +385,10 @@ const settingsPage = document.getElementById("settings-page");
 const pastEventsPage = document.getElementById("past-events-page");
 const reminderPage =
   document.getElementById("reminder-page");
+const reminderDeadlinePage =
+  document.getElementById(
+    "reminder-deadline-page"
+  );
 const notificationPage = document.getElementById("notification-page");
 const dataPage =
   document.getElementById("data-page");
