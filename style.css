@@ -8813,3 +8813,86 @@ z-index: 1400;
   background: #91baf2;
   color: #ffffff;
 }
+/* ========================================
+   🎫 DEADLINE LIST
+======================================== */
+
+.reminder-deadline-list {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+
+.reminder-deadline-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+
+  padding: 20px;
+
+  border-radius: 24px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 8px 24px
+    rgba(70, 100, 145, 0.09);
+}
+
+
+.reminder-deadline-item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+
+.reminder-deadline-item-info strong {
+  display: block;
+
+  margin-bottom: 10px;
+
+  font-size: 17px;
+  line-height: 1.4;
+
+  color: #172033;
+}
+
+
+.reminder-deadline-item-date,
+.reminder-deadline-item-time {
+  margin-top: 5px;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  color: #71839d;
+}
+
+
+.reminder-deadline-item-memo {
+  margin-top: 10px;
+
+  font-size: 11px;
+  line-height: 1.6;
+
+  color: #8b98ab;
+}
+
+
+.reminder-deadline-delete {
+  flex-shrink: 0;
+
+  border: none;
+  border-radius: 15px;
+
+  padding: 10px 13px;
+
+  background: #edf2f8;
+
+  color: #667890;
+
+  font-size: 11px;
+  font-weight: 800;
+}
