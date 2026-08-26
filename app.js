@@ -37604,6 +37604,174 @@ if (
 
 }
 // ========================================
+// 🧠 SIMPLE CARD IMAGE MATCH
+// ========================================
+
+async function getImageSignature(src) {
+
+  return new Promise((resolve, reject) => {
+
+    const img = new Image();
+
+    img.onload = () => {
+
+      const canvas =
+        document.createElement("canvas");
+
+      const size = 32;
+
+      canvas.width = size;
+      canvas.height = size;
+
+      const ctx =
+        canvas.getContext("2d");
+
+      ctx.drawImage(
+        img,
+        0,
+        0,
+        size,
+        size
+      );
+
+      const imageData =
+        ctx.getImageData(
+          0,
+          0,
+          size,
+          size
+        );
+
+      const data =
+        imageData.data;
+
+      let r = 0;
+      let g = 0;
+      let b = 0;
+
+      let count = 0;
+
+
+      for (
+        let i = 0;
+        i < data.length;
+        i += 4
+      ) {
+
+        r += data[i];
+        g += data[i + 1];
+        b += data[i + 2];
+
+        count++;
+
+      }
+
+
+      resolve({
+        r: r / count,
+        g: g / count,
+        b: b / count
+      });
+
+    };
+
+
+    img.onerror = reject;
+
+    img.src = src;
+
+  });
+
+}
+
+
+
+function compareImageSignatures(
+  a,
+  b
+) {
+
+  const distance =
+    Math.sqrt(
+      Math.pow(a.r - b.r, 2) +
+      Math.pow(a.g - b.g, 2) +
+      Math.pow(a.b - b.b, 2)
+    );
+
+
+  return distance;
+
+}
+
+
+
+async function findBestTradingCardMatch(
+  scanImageSrc
+) {
+
+  const scanSignature =
+    await getImageSignature(
+      scanImageSrc
+    );
+
+
+  let bestCard = null;
+  let bestDistance =
+    Infinity;
+
+
+  for (
+    const card of treasureCardDatabase
+  ) {
+
+    try {
+
+      const masterSignature =
+        await getImageSignature(
+          card.masterImage
+        );
+
+
+      const distance =
+        compareImageSignatures(
+          scanSignature,
+          masterSignature
+        );
+
+
+      if (
+        distance <
+        bestDistance
+      ) {
+
+        bestDistance =
+          distance;
+
+        bestCard =
+          card;
+
+      }
+
+    } catch (error) {
+
+      console.log(
+        "MASTER IMAGE LOAD ERROR",
+        card.id,
+        error
+      );
+
+    }
+
+  }
+
+
+  return {
+    card: bestCard,
+    distance: bestDistance
+  };
+
+}
+// ========================================
 // 🃏 TREASURE CARD DATABASE
 // ========================================
 
