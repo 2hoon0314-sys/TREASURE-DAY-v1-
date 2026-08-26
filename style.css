@@ -8896,3 +8896,60 @@ z-index: 1400;
   font-size: 11px;
   font-weight: 800;
 }
+/* ========================================
+   ⏳ DEADLINE COUNTDOWN
+======================================== */
+
+.reminder-deadline-item {
+  position: relative;
+  padding-top: 52px;
+}
+
+
+.reminder-deadline-countdown {
+  position: absolute;
+
+  top: 16px;
+  left: 18px;
+
+  display: inline-flex;
+  align-items: center;
+
+  padding: 6px 11px;
+
+  border-radius: 999px;
+
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+}
+
+
+.reminder-deadline-countdown.normal {
+  background: #eaf2ff;
+  color: #6783ad;
+}
+
+
+.reminder-deadline-countdown.soon {
+  background: #fff0cc;
+  color: #9c7424;
+}
+
+
+.reminder-deadline-countdown.tomorrow {
+  background: #ffe5cf;
+  color: #b6662d;
+}
+
+
+.reminder-deadline-countdown.today {
+  background: #ffd9e3;
+  color: #b94d6d;
+}
+
+
+.reminder-deadline-countdown.expired {
+  background: #eceff3;
+  color: #8a94a3;
+}
