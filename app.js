@@ -799,8 +799,7 @@ card.appendChild(pastBadge);
     card.appendChild(info);
     pastEventsList.appendChild(card);
   });
-}
-// ========================================
+}// ========================================
 // 🎫 APPLICATION DEADLINE
 // ========================================
 
@@ -814,6 +813,86 @@ const backToReminderFromDeadline =
     "back-to-reminder-from-deadline"
   );
 
+const reminderDeadlineAddBtn =
+  document.getElementById(
+    "reminder-deadline-add-btn"
+  );
+
+const reminderDeadlineForm =
+  document.getElementById(
+    "reminder-deadline-form"
+  );
+
+const reminderDeadlineCancel =
+  document.getElementById(
+    "reminder-deadline-cancel"
+  );
+
+const reminderDeadlineTitle =
+  document.getElementById(
+    "reminder-deadline-title"
+  );
+
+const reminderDeadlineDate =
+  document.getElementById(
+    "reminder-deadline-date"
+  );
+
+const reminderDeadlineTime =
+  document.getElementById(
+    "reminder-deadline-time"
+  );
+
+const reminderDeadlineMemo =
+  document.getElementById(
+    "reminder-deadline-memo"
+  );
+
+const reminderDeadlineSave =
+  document.getElementById(
+    "reminder-deadline-save"
+  );
+
+const reminderDeadlineList =
+  document.getElementById(
+    "reminder-deadline-list"
+  );
+
+const reminderDeadlineEmpty =
+  document.querySelector(
+    ".reminder-deadline-empty"
+  );
+
+
+let reminderDeadlines = [];
+
+let editingReminderDeadlineId =
+  null;
+
+
+// ========================================
+// 💾 LOAD DEADLINES
+// ========================================
+
+try {
+
+  reminderDeadlines =
+    JSON.parse(
+      localStorage.getItem(
+        "treasure-reminder-deadlines"
+      )
+    ) || [];
+
+} catch (error) {
+
+  reminderDeadlines = [];
+
+}
+
+
+// ========================================
+// 🚪 PAGE OPEN / BACK
+// ========================================
 
 if (reminderDeadlineBtn) {
 
@@ -855,21 +934,60 @@ if (backToReminderFromDeadline) {
   );
 
 }
-const reminderDeadlineAddBtn =
-  document.getElementById(
-    "reminder-deadline-add-btn"
-  );
 
-const reminderDeadlineForm =
-  document.getElementById(
-    "reminder-deadline-form"
-  );
 
-const reminderDeadlineCancel =
-  document.getElementById(
-    "reminder-deadline-cancel"
-  );
+// ========================================
+// 🧹 RESET FORM
+// ========================================
 
+function resetReminderDeadlineForm() {
+
+  editingReminderDeadlineId =
+    null;
+
+
+  if (reminderDeadlineTitle) {
+    reminderDeadlineTitle.value =
+      "";
+  }
+
+  if (reminderDeadlineDate) {
+    reminderDeadlineDate.value =
+      "";
+  }
+
+  if (reminderDeadlineTime) {
+    reminderDeadlineTime.value =
+      "";
+  }
+
+  if (reminderDeadlineMemo) {
+    reminderDeadlineMemo.value =
+      "";
+  }
+
+
+  if (reminderDeadlineForm) {
+
+    reminderDeadlineForm.style.display =
+      "none";
+
+  }
+
+
+  if (reminderDeadlineAddBtn) {
+
+    reminderDeadlineAddBtn.style.display =
+      "block";
+
+  }
+
+}
+
+
+// ========================================
+// ➕ OPEN ADD FORM
+// ========================================
 
 if (
   reminderDeadlineAddBtn &&
@@ -879,6 +997,30 @@ if (
   reminderDeadlineAddBtn.addEventListener(
     "click",
     () => {
+
+      editingReminderDeadlineId =
+        null;
+
+      if (reminderDeadlineTitle) {
+        reminderDeadlineTitle.value =
+          "";
+      }
+
+      if (reminderDeadlineDate) {
+        reminderDeadlineDate.value =
+          "";
+      }
+
+      if (reminderDeadlineTime) {
+        reminderDeadlineTime.value =
+          "";
+      }
+
+      if (reminderDeadlineMemo) {
+        reminderDeadlineMemo.value =
+          "";
+      }
+
 
       reminderDeadlineForm.style.display =
         "grid";
@@ -892,98 +1034,20 @@ if (
 }
 
 
-if (
-  reminderDeadlineCancel &&
-  reminderDeadlineForm &&
-  reminderDeadlineAddBtn
-) {
+// ========================================
+// ❌ CANCEL
+// ========================================
+
+if (reminderDeadlineCancel) {
 
   reminderDeadlineCancel.addEventListener(
     "click",
     () => {
 
-      reminderDeadlineForm.style.display =
-        "none";
+      resetReminderDeadlineForm();
 
-      reminderDeadlineAddBtn.style.display =
-        "block";
-editingReminderDeadlineId =
-  null;
-      if (reminderDeadlineTitle) {
-  reminderDeadlineTitle.value = "";
-}
-
-if (reminderDeadlineDate) {
-  reminderDeadlineDate.value = "";
-}
-
-if (reminderDeadlineTime) {
-  reminderDeadlineTime.value = "";
-}
-
-if (reminderDeadlineMemo) {
-  reminderDeadlineMemo.value = "";
-}
     }
   );
-
-}
-// ========================================
-// 💾 DEADLINE DATA
-// ========================================
-
-const reminderDeadlineTitle =
-  document.getElementById(
-    "reminder-deadline-title"
-  );
-
-const reminderDeadlineDate =
-  document.getElementById(
-    "reminder-deadline-date"
-  );
-
-const reminderDeadlineTime =
-  document.getElementById(
-    "reminder-deadline-time"
-  );
-
-const reminderDeadlineMemo =
-  document.getElementById(
-    "reminder-deadline-memo"
-  );
-
-const reminderDeadlineSave =
-  document.getElementById(
-    "reminder-deadline-save"
-  );
-
-const reminderDeadlineList =
-  document.getElementById(
-    "reminder-deadline-list"
-  );
-
-const reminderDeadlineEmpty =
-  document.querySelector(
-    ".reminder-deadline-empty"
-  );
-
-
-let reminderDeadlines = [];
-let editingReminderDeadlineId =
-  null;
-
-try {
-
-  reminderDeadlines =
-    JSON.parse(
-      localStorage.getItem(
-        "treasure-reminder-deadlines"
-      )
-    ) || [];
-
-} catch (error) {
-
-  reminderDeadlines = [];
 
 }
 
@@ -1017,19 +1081,13 @@ function renderReminderDeadlines() {
             `${b.date}T${b.time || "23:59"}`
           );
 
-
-        return (
-          dateA -
-          dateB
-        );
+        return dateA - dateB;
 
       }
     );
 
 
-  if (
-    reminderDeadlineEmpty
-  ) {
+  if (reminderDeadlineEmpty) {
 
     reminderDeadlineEmpty.style.display =
       sortedDeadlines.length === 0
@@ -1041,87 +1099,92 @@ function renderReminderDeadlines() {
 
   sortedDeadlines.forEach(
     (deadline) => {
-const now =
-  new Date();
 
-now.setHours(
-  0,
-  0,
-  0,
-  0
-);
+      // ========================================
+      // ⏳ COUNTDOWN
+      // ========================================
 
+      const now =
+        new Date();
 
-const deadlineDate =
-  new Date(
-    deadline.date +
-    "T00:00:00"
-  );
+      now.setHours(
+        0,
+        0,
+        0,
+        0
+      );
 
 
-const diffDays =
-  Math.ceil(
-    (
-      deadlineDate -
-      now
-    ) /
-    (
-      1000 *
-      60 *
-      60 *
-      24
-    )
-  );
+      const deadlineDate =
+        new Date(
+          deadline.date +
+          "T00:00:00"
+        );
 
 
-let countdownText =
-  "";
+      const diffDays =
+        Math.ceil(
+          (
+            deadlineDate -
+            now
+          ) /
+          (
+            1000 *
+            60 *
+            60 *
+            24
+          )
+        );
 
-let countdownClass =
-  "";
+
+      let countdownText =
+        "";
+
+      let countdownClass =
+        "";
 
 
-if (
-  diffDays < 0
-) {
+      if (diffDays < 0) {
 
-  countdownText =
-    "期限切れ";
+        countdownText =
+          "期限切れ";
 
-  countdownClass =
-    "expired";
+        countdownClass =
+          "expired";
 
-} else if (
-  diffDays === 0
-) {
+      } else if (diffDays === 0) {
 
-  countdownText =
-    "TODAY";
+        countdownText =
+          "TODAY";
 
-  countdownClass =
-    "today";
+        countdownClass =
+          "today";
 
-} else if (
-  diffDays === 1
-) {
+      } else if (diffDays === 1) {
 
-  countdownText =
-    "明日";
+        countdownText =
+          "明日";
 
-  countdownClass =
-    "tomorrow";
+        countdownClass =
+          "tomorrow";
 
-} else {
+      } else {
 
-  countdownText =
-    `あと${diffDays}日`;
+        countdownText =
+          `あと${diffDays}日`;
 
-  countdownClass =
-    diffDays <= 3
-      ? "soon"
-      : "normal";
+        countdownClass =
+          diffDays <= 3
+            ? "soon"
+            : "normal";
 
-}
+      }
+
+
+      // ========================================
+      // CARD
+      // ========================================
+
       const card =
         document.createElement(
           "article"
@@ -1129,17 +1192,20 @@ if (
 
       card.className =
         "reminder-deadline-item";
-const countdownBadge =
-  document.createElement(
-    "span"
-  );
 
-countdownBadge.className =
-  "reminder-deadline-countdown " +
-  countdownClass;
 
-countdownBadge.textContent =
-  countdownText;
+      const countdownBadge =
+        document.createElement(
+          "span"
+        );
+
+      countdownBadge.className =
+        "reminder-deadline-countdown " +
+        countdownClass;
+
+      countdownBadge.textContent =
+        countdownText;
+
 
       const info =
         document.createElement(
@@ -1202,9 +1268,7 @@ countdownBadge.textContent =
       );
 
 
-      if (
-        deadline.memo
-      ) {
+      if (deadline.memo) {
 
         const memo =
           document.createElement(
@@ -1223,29 +1287,95 @@ countdownBadge.textContent =
 
       }
 
-const editButton =
-  document.createElement(
-    "button"
-  );
 
-editButton.type =
-  "button";
+      // ========================================
+      // ✏️ EDIT
+      // ========================================
 
-editButton.className =
-  "reminder-deadline-edit";
+      const editButton =
+        document.createElement(
+          "button"
+        );
 
-editButton.textContent =
-  "編集";
+      editButton.type =
+        "button";
 
-editButton.addEventListener(
-  "click",
-  () => {
+      editButton.className =
+        "reminder-deadline-edit";
 
-    editingReminderDeadlineId =
-      deadline.id;
+      editButton.textContent =
+        "編集";
 
-  }
-);
+
+      editButton.addEventListener(
+        "click",
+        () => {
+
+          editingReminderDeadlineId =
+            deadline.id;
+
+
+          if (reminderDeadlineTitle) {
+
+            reminderDeadlineTitle.value =
+              deadline.title || "";
+
+          }
+
+
+          if (reminderDeadlineDate) {
+
+            reminderDeadlineDate.value =
+              deadline.date || "";
+
+          }
+
+
+          if (reminderDeadlineTime) {
+
+            reminderDeadlineTime.value =
+              deadline.time || "";
+
+          }
+
+
+          if (reminderDeadlineMemo) {
+
+            reminderDeadlineMemo.value =
+              deadline.memo || "";
+
+          }
+
+
+          if (reminderDeadlineForm) {
+
+            reminderDeadlineForm.style.display =
+              "grid";
+
+          }
+
+
+          if (reminderDeadlineAddBtn) {
+
+            reminderDeadlineAddBtn.style.display =
+              "none";
+
+          }
+
+
+          window.scrollTo(
+            0,
+            0
+          );
+
+        }
+      );
+
+
+      // ========================================
+      // 🗑️ DELETE
+      // ========================================
+
       const deleteButton =
         document.createElement(
           "button"
@@ -1286,34 +1416,41 @@ editButton.addEventListener(
         }
       );
 
-card.appendChild(
-  countdownBadge
-);
-    const actions =
-  document.createElement(
-    "div"
-  );
 
-actions.className =
-  "reminder-deadline-actions";
+      // ========================================
+      // ACTIONS
+      // ========================================
 
+      const actions =
+        document.createElement(
+          "div"
+        );
 
-actions.appendChild(
-  editButton
-);
-
-actions.appendChild(
-  deleteButton
-);
+      actions.className =
+        "reminder-deadline-actions";
 
 
-card.appendChild(
-  info
-);
+      actions.appendChild(
+        editButton
+      );
 
-card.appendChild(
-  actions
-);
+      actions.appendChild(
+        deleteButton
+      );
+
+
+      card.appendChild(
+        countdownBadge
+      );
+
+      card.appendChild(
+        info
+      );
+
+      card.appendChild(
+        actions
+      );
+
 
       reminderDeadlineList.appendChild(
         card
@@ -1329,9 +1466,7 @@ card.appendChild(
 // 💎 SAVE DEADLINE
 // ========================================
 
-if (
-  reminderDeadlineSave
-) {
+if (reminderDeadlineSave) {
 
   reminderDeadlineSave.addEventListener(
     "click",
@@ -1372,77 +1507,80 @@ if (
       }
 
 
-     if (
-  editingReminderDeadlineId
-) {
+      // 編集中
+      if (
+        editingReminderDeadlineId !==
+        null
+      ) {
 
-  reminderDeadlines =
-    reminderDeadlines.map(
-      (item) => {
+        reminderDeadlines =
+          reminderDeadlines.map(
+            (item) => {
 
-        if (
-          item.id ===
-          editingReminderDeadlineId
-        ) {
+              if (
+                item.id ===
+                editingReminderDeadlineId
+              ) {
 
-          return {
-            ...item,
+                return {
+                  ...item,
 
-            title:
-              title,
+                  title:
+                    title,
 
-            date:
-              date,
+                  date:
+                    date,
 
-            time:
-              time,
+                  time:
+                    time,
 
-            memo:
-              memo,
+                  memo:
+                    memo,
 
-            updatedAt:
-              new Date().toISOString()
-          };
+                  updatedAt:
+                    new Date().toISOString()
+                };
 
-        }
+              }
 
+              return item;
 
-        return item;
+            }
+          );
 
       }
-    );
+
+      // 新規追加
+      else {
+
+        const deadline = {
+
+          id:
+            Date.now(),
+
+          title:
+            title,
+
+          date:
+            date,
+
+          time:
+            time,
+
+          memo:
+            memo,
+
+          createdAt:
+            new Date().toISOString()
+
+        };
 
 
-} else {
+        reminderDeadlines.push(
+          deadline
+        );
 
-  const deadline = {
-
-    id:
-      Date.now(),
-
-    title:
-      title,
-
-    date:
-      date,
-
-    time:
-      time,
-
-    memo:
-      memo,
-
-    createdAt:
-      new Date().toISOString()
-
-  };
-
-
-  reminderDeadlines.push(
-    deadline
-  );
-
-}
+      }
 
 
       localStorage.setItem(
@@ -1453,55 +1591,7 @@ if (
       );
 
 
-      if (
-        reminderDeadlineTitle
-      ) {
-        reminderDeadlineTitle.value =
-          "";
-      }
-
-      if (
-        reminderDeadlineDate
-      ) {
-        reminderDeadlineDate.value =
-          "";
-      }
-
-      if (
-        reminderDeadlineTime
-      ) {
-        reminderDeadlineTime.value =
-          "";
-      }
-
-      if (
-        reminderDeadlineMemo
-      ) {
-        reminderDeadlineMemo.value =
-          "";
-      }
-editingReminderDeadlineId =
-  null;
-
-      if (
-        reminderDeadlineForm
-      ) {
-
-        reminderDeadlineForm.style.display =
-          "none";
-
-      }
-
-
-      if (
-        reminderDeadlineAddBtn
-      ) {
-
-        reminderDeadlineAddBtn.style.display =
-          "block";
-
-      }
-
+      resetReminderDeadlineForm();
 
       renderReminderDeadlines();
 
@@ -1511,7 +1601,10 @@ editingReminderDeadlineId =
 }
 
 
-// 最初の表示
+// ========================================
+// ✨ INITIAL RENDER
+// ========================================
+
 renderReminderDeadlines();
 // ========================================
 // 📝 MEMORY
