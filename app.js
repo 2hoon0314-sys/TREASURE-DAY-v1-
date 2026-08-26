@@ -38154,7 +38154,10 @@ tradingCardAnalyze.textContent =
 
 
 try {
-
+console.log(
+  "SCAN IMAGE SRC",
+  preview.src
+);
   const result =
     await findBestTradingCardMatch(
       preview.src
