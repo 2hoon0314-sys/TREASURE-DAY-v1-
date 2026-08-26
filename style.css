@@ -8627,3 +8627,72 @@ z-index: 1400;
 
   color: #8c9bb0;
 }
+/* ========================================
+   🔙 REMINDER / PLAN NAV BUTTONS
+======================================== */
+
+/* PLAN → REMINDER HUB */
+#reminder-hub-btn {
+  width: 100%;
+  margin-top: 14px;
+  padding: 15px 18px;
+
+  border: none;
+  border-radius: 18px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(226, 239, 255, 0.95),
+      rgba(239, 233, 255, 0.95)
+    );
+
+  color: #29415f;
+
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+
+  box-shadow:
+    0 6px 18px
+    rgba(80, 110, 150, 0.10);
+
+  cursor: pointer;
+}
+
+
+/* 戻るボタン共通 */
+.back-settings-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  width: auto;
+
+  padding: 10px 14px;
+
+  border: none;
+  border-radius: 999px;
+
+  background:
+    rgba(235, 242, 252, 0.95);
+
+  color: #526b8c;
+
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+
+  box-shadow:
+    0 4px 14px
+    rgba(70, 100, 140, 0.08);
+
+  cursor: pointer;
+}
+
+
+/* タップ感 */
+#reminder-hub-btn:active,
+.back-settings-btn:active {
+  transform: scale(0.97);
+}
