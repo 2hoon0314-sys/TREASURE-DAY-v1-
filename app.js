@@ -37952,9 +37952,15 @@ async function findBestTradingCardMatch(
   scanImageSrc
 ) {
 
+  const normalizedScanImage =
+    await normalizeTradingCardImage(
+      scanImageSrc
+    );
+
+
   const scanSignature =
     await getImageSignature(
-      scanImageSrc
+      normalizedScanImage
     );
 
 
