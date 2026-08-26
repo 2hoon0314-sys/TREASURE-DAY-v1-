@@ -37967,7 +37967,7 @@ if (tradingCardAnalyze) {
       */
 
       setTimeout(
-        () => {
+  async () => {
 
         const preview =
   document.getElementById(
