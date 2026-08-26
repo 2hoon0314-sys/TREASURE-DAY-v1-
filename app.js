@@ -1024,7 +1024,87 @@ function renderReminderDeadlines() {
 
   sortedDeadlines.forEach(
     (deadline) => {
+const now =
+  new Date();
 
+now.setHours(
+  0,
+  0,
+  0,
+  0
+);
+
+
+const deadlineDate =
+  new Date(
+    deadline.date +
+    "T00:00:00"
+  );
+
+
+const diffDays =
+  Math.ceil(
+    (
+      deadlineDate -
+      now
+    ) /
+    (
+      1000 *
+      60 *
+      60 *
+      24
+    )
+  );
+
+
+let countdownText =
+  "";
+
+let countdownClass =
+  "";
+
+
+if (
+  diffDays < 0
+) {
+
+  countdownText =
+    "期限切れ";
+
+  countdownClass =
+    "expired";
+
+} else if (
+  diffDays === 0
+) {
+
+  countdownText =
+    "TODAY";
+
+  countdownClass =
+    "today";
+
+} else if (
+  diffDays === 1
+) {
+
+  countdownText =
+    "明日";
+
+  countdownClass =
+    "tomorrow";
+
+} else {
+
+  countdownText =
+    `あと${diffDays}日`;
+
+  countdownClass =
+    diffDays <= 3
+      ? "soon"
+      : "normal";
+
+}
       const card =
         document.createElement(
           "article"
