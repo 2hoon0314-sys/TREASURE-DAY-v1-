@@ -953,7 +953,8 @@ const reminderDeadlineEmpty =
 
 
 let reminderDeadlines = [];
-
+let editingReminderDeadlineId =
+  null;
 
 try {
 
