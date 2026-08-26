@@ -1247,7 +1247,9 @@ countdownBadge.textContent =
         }
       );
 
-
+card.appendChild(
+  countdownBadge
+);
       card.appendChild(
         info
       );
