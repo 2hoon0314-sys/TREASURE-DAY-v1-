@@ -1333,32 +1333,77 @@ if (
       }
 
 
-      const deadline = {
+     if (
+  editingReminderDeadlineId
+) {
 
-        id:
-          Date.now(),
+  reminderDeadlines =
+    reminderDeadlines.map(
+      (item) => {
 
-        title:
-          title,
+        if (
+          item.id ===
+          editingReminderDeadlineId
+        ) {
 
-        date:
-          date,
+          return {
+            ...item,
 
-        time:
-          time,
+            title:
+              title,
 
-        memo:
-          memo,
+            date:
+              date,
 
-        createdAt:
-          new Date().toISOString()
+            time:
+              time,
 
-      };
+            memo:
+              memo,
+
+            updatedAt:
+              new Date().toISOString()
+          };
+
+        }
 
 
-      reminderDeadlines.push(
-        deadline
-      );
+        return item;
+
+      }
+    );
+
+
+} else {
+
+  const deadline = {
+
+    id:
+      Date.now(),
+
+    title:
+      title,
+
+    date:
+      date,
+
+    time:
+      time,
+
+    memo:
+      memo,
+
+    createdAt:
+      new Date().toISOString()
+
+  };
+
+
+  reminderDeadlines.push(
+    deadline
+  );
+
+}
 
 
       localStorage.setItem(
