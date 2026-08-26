@@ -37604,11 +37604,16 @@ if (
 
 }
 // ========================================
-// ✂️ NORMALIZE SCAN IMAGE
-// カード比率に中央トリミング
+// 🧠 ORB FEATURE CARD MATCH
+// JSFeat
 // ========================================
 
-async function normalizeTradingCardImage(src) {
+
+// ----------------------------------------
+// IMAGE → ORB FEATURES
+// ----------------------------------------
+
+async function getTradingCardFeatures(src) {
 
   return new Promise((resolve, reject) => {
 
@@ -37616,43 +37621,25 @@ async function normalizeTradingCardImage(src) {
 
     img.onload = () => {
 
-      const targetWidth = 600;
-      const targetHeight = 840;
+      const maxWidth =
+        420;
 
-      const targetRatio =
-        targetWidth / targetHeight;
-
-      const imageRatio =
-        img.width / img.height;
-
-
-      let sx = 0;
-      let sy = 0;
-      let sw = img.width;
-      let sh = img.height;
+      const scale =
+        Math.min(
+          1,
+          maxWidth / img.width
+        );
 
 
-      if (imageRatio > targetRatio) {
+      const width =
+        Math.round(
+          img.width * scale
+        );
 
-        // 横が広すぎる → 左右をカット
-        sw =
-          img.height *
-          targetRatio;
-
-        sx =
-          (img.width - sw) / 2;
-
-      } else {
-
-        // 縦が長すぎる → 上下をカット
-        sh =
-          img.width /
-          targetRatio;
-
-        sy =
-          (img.height - sh) / 2;
-
-      }
+      const height =
+        Math.round(
+          img.height * scale
+        );
 
 
       const canvas =
@@ -37661,39 +37648,142 @@ async function normalizeTradingCardImage(src) {
         );
 
       canvas.width =
-        targetWidth;
+        width;
 
       canvas.height =
-        targetHeight;
+        height;
 
 
       const ctx =
         canvas.getContext(
-          "2d"
+          "2d",
+          {
+            willReadFrequently: true
+          }
         );
 
 
       ctx.drawImage(
         img,
-
-        sx,
-        sy,
-        sw,
-        sh,
-
         0,
         0,
-        targetWidth,
-        targetHeight
+        width,
+        height
       );
 
 
-      resolve(
-        canvas.toDataURL(
-          "image/jpeg",
-          0.9
-        )
+      const imageData =
+        ctx.getImageData(
+          0,
+          0,
+          width,
+          height
+        );
+
+
+      const gray =
+        new jsfeat.matrix_t(
+          width,
+          height,
+          jsfeat.U8_t |
+          jsfeat.C1_t
+        );
+
+
+      jsfeat.imgproc.grayscale(
+        imageData.data,
+        width,
+        height,
+        gray
       );
+
+
+      // 少しぼかして
+      // 撮影ノイズを減らす
+      jsfeat.imgproc.gaussian_blur(
+        gray,
+        gray,
+        3,
+        0
+      );
+
+
+      const corners = [];
+
+      const maxCorners =
+        500;
+
+
+      for (
+        let i = 0;
+        i < maxCorners;
+        i++
+      ) {
+
+        corners.push(
+          new jsfeat.keypoint_t(
+            0,
+            0,
+            0,
+            0
+          )
+        );
+
+      }
+
+
+      jsfeat.yape06.laplacian_threshold =
+        30;
+
+      jsfeat.yape06.min_eigen_value_threshold =
+        25;
+
+
+      let count =
+        jsfeat.yape06.detect(
+          gray,
+          corners,
+          17
+        );
+
+
+      count =
+        Math.min(
+          count,
+          maxCorners
+        );
+
+
+      corners.length =
+        count;
+
+
+      const descriptors =
+        new jsfeat.matrix_t(
+          32,
+          count,
+          jsfeat.U8_t |
+          jsfeat.C1_t
+        );
+
+
+      if (count > 0) {
+
+        jsfeat.orb.describe(
+          gray,
+          corners,
+          count,
+          descriptors
+        );
+
+      }
+
+
+      resolve({
+        corners,
+        descriptors,
+        count
+      });
 
     };
 
@@ -37708,267 +37798,223 @@ async function normalizeTradingCardImage(src) {
   });
 
 }
-// ========================================
-// 🧠 GRID CARD IMAGE MATCH
-// ========================================
-
-async function getImageSignature(src) {
-
-  return new Promise((resolve, reject) => {
-
-    const img = new Image();
-
-    img.onload = () => {
-
-      const canvas =
-        document.createElement("canvas");
-
-      const gridSize = 8;
-      const cellSize = 8;
-
-      const size =
-        gridSize * cellSize;
-
-      canvas.width = size;
-      canvas.height = size;
-
-      const ctx =
-        canvas.getContext("2d");
-
-
-      ctx.drawImage(
-        img,
-        0,
-        0,
-        size,
-        size
-      );
-
-
-      const signature = [];
-
-
-      for (
-        let gy = 0;
-        gy < gridSize;
-        gy++
-      ) {
-
-        for (
-          let gx = 0;
-          gx < gridSize;
-          gx++
-        ) {
-
-          const imageData =
-            ctx.getImageData(
-              gx * cellSize,
-              gy * cellSize,
-              cellSize,
-              cellSize
-            );
-
-
-          const data =
-            imageData.data;
-
-
-          let r = 0;
-          let g = 0;
-          let b = 0;
-          let brightness = 0;
-
-          let count = 0;
-
-
-          for (
-            let i = 0;
-            i < data.length;
-            i += 4
-          ) {
-
-            const red =
-              data[i];
-
-            const green =
-              data[i + 1];
-
-            const blue =
-              data[i + 2];
-
-
-            r += red;
-            g += green;
-            b += blue;
-
-
-            brightness +=
-              red * 0.299 +
-              green * 0.587 +
-              blue * 0.114;
-
-
-            count++;
-
-          }
-
-
-          signature.push({
-            r:
-              r / count,
-
-            g:
-              g / count,
-
-            b:
-              b / count,
-
-            brightness:
-              brightness / count
-          });
-
-        }
-
-      }
-
-
-      resolve(
-        signature
-      );
-
-    };
-
-
-    img.onerror = () => {
-
-      reject(
-        new Error(
-          "IMAGE LOAD ERROR: " +
-          src
-        )
-      );
-
-    };
-
-
-    img.src =
-      src;
-
-  });
-
-}
 
 
 
 // ========================================
-// 📊 SIGNATURE COMPARE
+// 🔢 HAMMING DISTANCE
 // ========================================
 
-function compareImageSignatures(
-  a,
-  b
+function hammingDistance(
+  dataA,
+  offsetA,
+  dataB,
+  offsetB
 ) {
 
-  if (
-    !Array.isArray(a) ||
-    !Array.isArray(b) ||
-    a.length !== b.length
-  ) {
-
-    return Infinity;
-
-  }
-
-
-  let totalDistance =
+  let distance =
     0;
 
 
   for (
     let i = 0;
-    i < a.length;
+    i < 32;
     i++
   ) {
 
-    const cellA =
-      a[i];
-
-    const cellB =
-      b[i];
-
-
-    const colorDistance =
-      Math.sqrt(
-
-        Math.pow(
-          cellA.r -
-          cellB.r,
-          2
-        ) +
-
-        Math.pow(
-          cellA.g -
-          cellB.g,
-          2
-        ) +
-
-        Math.pow(
-          cellA.b -
-          cellB.b,
-          2
-        )
-
-      );
+    let value =
+      dataA[
+        offsetA + i
+      ] ^
+      dataB[
+        offsetB + i
+      ];
 
 
-    const brightnessDistance =
-      Math.abs(
-        cellA.brightness -
-        cellB.brightness
-      );
+    while (value) {
 
+      distance +=
+        value & 1;
 
-    totalDistance +=
-      colorDistance +
-      brightnessDistance * 0.5;
+      value >>=
+        1;
+
+    }
 
   }
 
 
-  return (
-    totalDistance /
-    a.length
-  );
+  return distance;
 
 }
 
 
 
 // ========================================
-// 🔎 FIND BEST CARD MATCH
+// 🔎 COMPARE ORB DESCRIPTORS
+// ========================================
+
+function compareTradingCardFeatures(
+  scanFeatures,
+  masterFeatures
+) {
+
+  if (
+    !scanFeatures ||
+    !masterFeatures ||
+    scanFeatures.count < 5 ||
+    masterFeatures.count < 5
+  ) {
+
+    return {
+      goodMatches: 0,
+      score: 0
+    };
+
+  }
+
+
+  const scanData =
+    scanFeatures.descriptors.data;
+
+  const masterData =
+    masterFeatures.descriptors.data;
+
+
+  let goodMatches =
+    0;
+
+
+  for (
+    let i = 0;
+    i < scanFeatures.count;
+    i++
+  ) {
+
+    let best =
+      Infinity;
+
+    let secondBest =
+      Infinity;
+
+
+    const scanOffset =
+      i * 32;
+
+
+    for (
+      let j = 0;
+      j < masterFeatures.count;
+      j++
+    ) {
+
+      const masterOffset =
+        j * 32;
+
+
+      const distance =
+        hammingDistance(
+          scanData,
+          scanOffset,
+          masterData,
+          masterOffset
+        );
+
+
+      if (
+        distance < best
+      ) {
+
+        secondBest =
+          best;
+
+        best =
+          distance;
+
+      } else if (
+        distance <
+        secondBest
+      ) {
+
+        secondBest =
+          distance;
+
+      }
+
+    }
+
+
+    // 1位が2位より
+    // 明確に良い特徴だけ採用
+    if (
+      best < 65 &&
+      best <
+        secondBest * 0.78
+    ) {
+
+      goodMatches++;
+
+    }
+
+  }
+
+
+  const base =
+    Math.min(
+      scanFeatures.count,
+      masterFeatures.count
+    );
+
+
+  const score =
+    base > 0
+      ? (
+          goodMatches /
+          base
+        ) * 100
+      : 0;
+
+
+  return {
+    goodMatches,
+    score
+  };
+
+}
+
+
+
+// ========================================
+// 🏆 FIND BEST CARD MATCH
 // ========================================
 
 async function findBestTradingCardMatch(
   scanImageSrc
 ) {
 
-  const normalizedScanImage =
-    await normalizeTradingCardImage(
+  const scanFeatures =
+    await getTradingCardFeatures(
       scanImageSrc
     );
 
 
-  const scanSignature =
-    await getImageSignature(
-      normalizedScanImage
-    );
+  console.log(
+    "SCAN FEATURES",
+    scanFeatures.count
+  );
 
 
   let bestCard =
     null;
 
-  let bestDistance =
-    Infinity;
+  let bestScore =
+    0;
+
+  let bestMatches =
+    0;
+
+  let secondBestScore =
+    0;
 
 
   for (
@@ -37978,43 +38024,58 @@ async function findBestTradingCardMatch(
 
     try {
 
-      const masterSignature =
-        await getImageSignature(
+      const masterFeatures =
+        await getTradingCardFeatures(
           card.masterImage
         );
 
 
-      const distance =
-        compareImageSignatures(
-          scanSignature,
-          masterSignature
+      const result =
+        compareTradingCardFeatures(
+          scanFeatures,
+          masterFeatures
         );
 
 
       console.log(
-        "CARD CHECK",
+        "ORB CARD CHECK",
         card.id,
-        distance
+        result.goodMatches,
+        result.score
       );
 
 
       if (
-        distance <
-        bestDistance
+        result.score >
+        bestScore
       ) {
 
-        bestDistance =
-          distance;
+        secondBestScore =
+          bestScore;
+
+        bestScore =
+          result.score;
+
+        bestMatches =
+          result.goodMatches;
 
         bestCard =
           card;
+
+      } else if (
+        result.score >
+        secondBestScore
+      ) {
+
+        secondBestScore =
+          result.score;
 
       }
 
     } catch (error) {
 
       console.log(
-        "MASTER IMAGE LOAD ERROR",
+        "ORB MASTER ERROR",
         card.id,
         error
       );
@@ -38025,12 +38086,43 @@ async function findBestTradingCardMatch(
 
 
   console.log(
-    "BEST CARD",
+    "ORB BEST",
     bestCard
       ? bestCard.id
       : "NONE",
-    bestDistance
+    bestMatches,
+    bestScore,
+    "SECOND",
+    secondBestScore
   );
+
+
+  // ----------------------------------------
+  // NO MATCH SAFETY
+  // ----------------------------------------
+
+  const scoreGap =
+    bestScore -
+    secondBestScore;
+
+
+  if (
+    !bestCard ||
+    bestMatches < 5 ||
+    bestScore < 4 ||
+    scoreGap < 1
+  ) {
+
+    return {
+      card: null,
+      distance: Infinity,
+      score:
+        bestScore,
+      matches:
+        bestMatches
+    };
+
+  }
 
 
   return {
@@ -38038,10 +38130,17 @@ async function findBestTradingCardMatch(
       bestCard,
 
     distance:
-      bestDistance
+      100 - bestScore,
+
+    score:
+      bestScore,
+
+    matches:
+      bestMatches
   };
 
 }
+
 // ========================================
 // 🃏 TREASURE CARD DATABASE
 // ========================================
