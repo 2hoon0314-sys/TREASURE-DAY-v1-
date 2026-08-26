@@ -1244,7 +1244,6 @@ editButton.addEventListener(
     editingReminderDeadlineId =
       deadline.id;
 
-    ...
   }
 );
       const deleteButton =
