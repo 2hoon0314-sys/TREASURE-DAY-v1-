@@ -1250,14 +1250,31 @@ countdownBadge.textContent =
 card.appendChild(
   countdownBadge
 );
-      card.appendChild(
-        info
-      );
+    const actions =
+  document.createElement(
+    "div"
+  );
 
-      card.appendChild(
-        deleteButton
-      );
+actions.className =
+  "reminder-deadline-actions";
 
+
+actions.appendChild(
+  editButton
+);
+
+actions.appendChild(
+  deleteButton
+);
+
+
+card.appendChild(
+  info
+);
+
+card.appendChild(
+  actions
+);
 
       reminderDeadlineList.appendChild(
         card
