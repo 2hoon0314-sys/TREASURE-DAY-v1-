@@ -907,7 +907,23 @@ if (
 
       reminderDeadlineAddBtn.style.display =
         "block";
+editingReminderDeadlineId =
+  null;
+      if (reminderDeadlineTitle) {
+  reminderDeadlineTitle.value = "";
+}
 
+if (reminderDeadlineDate) {
+  reminderDeadlineDate.value = "";
+}
+
+if (reminderDeadlineTime) {
+  reminderDeadlineTime.value = "";
+}
+
+if (reminderDeadlineMemo) {
+  reminderDeadlineMemo.value = "";
+}
     }
   );
 
