@@ -1465,7 +1465,8 @@ if (
         reminderDeadlineMemo.value =
           "";
       }
-
+editingReminderDeadlineId =
+  null;
 
       if (
         reminderDeadlineForm
