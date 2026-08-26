@@ -8544,3 +8544,86 @@ z-index: 1400;
   object-fit: cover !important;
   object-position: center !important;
 }
+/* ========================================
+   🎫 APPLICATION DEADLINE
+======================================== */
+
+.reminder-menu-button {
+  width: 100%;
+  border: none;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+}
+
+.reminder-deadline-card {
+  min-height: 70vh;
+}
+
+.reminder-deadline-header {
+  margin-top: 28px;
+  margin-bottom: 34px;
+}
+
+.reminder-deadline-kicker {
+  display: inline-block;
+  margin-bottom: 10px;
+
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+
+  color: #7d95b7;
+}
+
+.reminder-deadline-header h2 {
+  margin-bottom: 10px;
+
+  font-size: 32px;
+  line-height: 1.15;
+
+  color: #172033;
+}
+
+.reminder-deadline-header p {
+  font-size: 14px;
+  color: #7d8da6;
+}
+
+.reminder-deadline-empty {
+  padding: 48px 24px;
+
+  text-align: center;
+
+  border-radius: 28px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #f4f8ff,
+      #f8f4ff
+    );
+}
+
+.reminder-deadline-empty-icon {
+  margin-bottom: 16px;
+  font-size: 36px;
+}
+
+.reminder-deadline-empty strong {
+  display: block;
+  margin-bottom: 8px;
+
+  font-size: 16px;
+  color: #22304a;
+}
+
+.reminder-deadline-empty small {
+  display: block;
+
+  font-size: 11px;
+  line-height: 1.7;
+
+  color: #8c9bb0;
+}
