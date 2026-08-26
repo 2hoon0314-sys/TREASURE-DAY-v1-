@@ -37710,8 +37710,8 @@ async function getTradingCardFeatures(src) {
 
       const corners = [];
 
-      const maxCorners =
-        500;
+     const maxCorners =
+  180;
 
 
       for (
