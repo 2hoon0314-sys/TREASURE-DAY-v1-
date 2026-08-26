@@ -465,6 +465,14 @@ if (pastEventsPage) {
       ? "block"
       : "none";
 }
+  if (reminderDeadlinePage) {
+
+  reminderDeadlinePage.style.display =
+    pageName === "reminder-deadline"
+      ? "block"
+      : "none";
+
+}
   if (notificationPage) {
   notificationPage.style.display =
     pageName === "notifications" ? "block" : "none";
