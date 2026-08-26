@@ -8696,3 +8696,120 @@ z-index: 1400;
 .back-settings-btn:active {
   transform: scale(0.97);
 }
+/* ========================================
+   🎫 DEADLINE ADD FORM
+======================================== */
+
+.reminder-deadline-add-btn {
+  width: 100%;
+
+  margin-bottom: 22px;
+  padding: 16px;
+
+  border: none;
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #9fc6ff,
+      #b8b7ff
+    );
+
+  color: #ffffff;
+
+  font-size: 15px;
+  font-weight: 900;
+
+  box-shadow:
+    0 8px 22px
+    rgba(80, 110, 170, 0.14);
+}
+
+
+.reminder-deadline-form {
+  gap: 14px;
+
+  margin-bottom: 24px;
+  padding: 22px;
+
+  border-radius: 26px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #f4f8ff,
+      #f7f2ff
+    );
+}
+
+
+.reminder-deadline-form label {
+  display: grid;
+  gap: 7px;
+}
+
+
+.reminder-deadline-form label span {
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+
+  color: #7d91ad;
+}
+
+
+.reminder-deadline-form input,
+.reminder-deadline-form textarea {
+  width: 100%;
+
+  padding: 13px 14px;
+
+  border: none;
+  border-radius: 16px;
+
+  background: #ffffff;
+
+  color: #243247;
+
+  font: inherit;
+
+  outline: none;
+}
+
+
+.reminder-deadline-form textarea {
+  resize: vertical;
+}
+
+
+.reminder-deadline-form-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+
+  margin-top: 4px;
+}
+
+
+.reminder-deadline-form-actions button {
+  padding: 13px;
+
+  border: none;
+  border-radius: 16px;
+
+  font-size: 12px;
+  font-weight: 900;
+}
+
+
+#reminder-deadline-cancel {
+  background: #e9eef6;
+  color: #61738d;
+}
+
+
+#reminder-deadline-save {
+  background: #91baf2;
+  color: #ffffff;
+}
