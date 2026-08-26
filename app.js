@@ -37770,9 +37770,9 @@ function showTradingCardResult(card) {
 
 if (tradingCardAnalyze) {
 
-  tradingCardAnalyze.addEventListener(
-    "click",
-    () => {
+ tradingCardAnalyze.addEventListener(
+  "click",
+  async () => {
 
       if (
         !tradingCardScanInput ||
