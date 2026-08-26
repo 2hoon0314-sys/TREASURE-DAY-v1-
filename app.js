@@ -1207,7 +1207,30 @@ countdownBadge.textContent =
 
       }
 
+const editButton =
+  document.createElement(
+    "button"
+  );
 
+editButton.type =
+  "button";
+
+editButton.className =
+  "reminder-deadline-edit";
+
+editButton.textContent =
+  "編集";
+
+editButton.addEventListener(
+  "click",
+  () => {
+
+    editingReminderDeadlineId =
+      deadline.id;
+
+    ...
+  }
+);
       const deleteButton =
         document.createElement(
           "button"
