@@ -8953,3 +8953,40 @@ z-index: 1400;
   background: #eceff3;
   color: #8a94a3;
 }
+/* ========================================
+   ✏️ DEADLINE ACTIONS
+======================================== */
+
+.reminder-deadline-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  flex-shrink: 0;
+}
+
+
+.reminder-deadline-edit,
+.reminder-deadline-delete {
+  min-width: 54px;
+
+  border: none;
+  border-radius: 14px;
+
+  padding: 9px 11px;
+
+  font-size: 10px;
+  font-weight: 800;
+}
+
+
+.reminder-deadline-edit {
+  background: #e8f1ff;
+  color: #6481aa;
+}
+
+
+.reminder-deadline-delete {
+  background: #f0f2f6;
+  color: #808b9c;
+}
