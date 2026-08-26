@@ -37604,6 +37604,111 @@ if (
 
 }
 // ========================================
+// ✂️ NORMALIZE SCAN IMAGE
+// カード比率に中央トリミング
+// ========================================
+
+async function normalizeTradingCardImage(src) {
+
+  return new Promise((resolve, reject) => {
+
+    const img = new Image();
+
+    img.onload = () => {
+
+      const targetWidth = 600;
+      const targetHeight = 840;
+
+      const targetRatio =
+        targetWidth / targetHeight;
+
+      const imageRatio =
+        img.width / img.height;
+
+
+      let sx = 0;
+      let sy = 0;
+      let sw = img.width;
+      let sh = img.height;
+
+
+      if (imageRatio > targetRatio) {
+
+        // 横が広すぎる → 左右をカット
+        sw =
+          img.height *
+          targetRatio;
+
+        sx =
+          (img.width - sw) / 2;
+
+      } else {
+
+        // 縦が長すぎる → 上下をカット
+        sh =
+          img.width /
+          targetRatio;
+
+        sy =
+          (img.height - sh) / 2;
+
+      }
+
+
+      const canvas =
+        document.createElement(
+          "canvas"
+        );
+
+      canvas.width =
+        targetWidth;
+
+      canvas.height =
+        targetHeight;
+
+
+      const ctx =
+        canvas.getContext(
+          "2d"
+        );
+
+
+      ctx.drawImage(
+        img,
+
+        sx,
+        sy,
+        sw,
+        sh,
+
+        0,
+        0,
+        targetWidth,
+        targetHeight
+      );
+
+
+      resolve(
+        canvas.toDataURL(
+          "image/jpeg",
+          0.9
+        )
+      );
+
+    };
+
+
+    img.onerror =
+      reject;
+
+
+    img.src =
+      src;
+
+  });
+
+}
+// ========================================
 // 🧠 GRID CARD IMAGE MATCH
 // ========================================
 
