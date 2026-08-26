@@ -20285,7 +20285,74 @@ id="junkyuVisualBook"
 
     </div>
 
+<button
+  id="reminder-deadline-add-btn"
+  class="reminder-deadline-add-btn"
+  type="button"
+>
+  ＋ 締切を追加
+</button>
 
+
+<div
+  id="reminder-deadline-form"
+  class="reminder-deadline-form"
+  style="display:none;"
+>
+
+  <label>
+    <span>TITLE</span>
+    <input
+      id="reminder-deadline-title"
+      type="text"
+      placeholder="例：個別サイン会 応募締切"
+    >
+  </label>
+
+  <label>
+    <span>DATE</span>
+    <input
+      id="reminder-deadline-date"
+      type="date"
+    >
+  </label>
+
+  <label>
+    <span>TIME</span>
+    <input
+      id="reminder-deadline-time"
+      type="time"
+    >
+  </label>
+
+  <label>
+    <span>MEMO</span>
+    <textarea
+      id="reminder-deadline-memo"
+      rows="3"
+      placeholder="応募サイト・必要枚数など..."
+    ></textarea>
+  </label>
+
+  <div class="reminder-deadline-form-actions">
+
+    <button
+      id="reminder-deadline-cancel"
+      type="button"
+    >
+      CANCEL
+    </button>
+
+    <button
+      id="reminder-deadline-save"
+      type="button"
+    >
+      SAVE 💎
+    </button>
+
+  </div>
+
+</div>
     <div class="reminder-deadline-empty">
 
       <div class="reminder-deadline-empty-icon">
