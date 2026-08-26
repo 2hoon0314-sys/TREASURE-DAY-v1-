@@ -37604,7 +37604,7 @@ if (
 
 }
 // ========================================
-// 🧠 SIMPLE CARD IMAGE MATCH
+// 🧠 GRID CARD IMAGE MATCH
 // ========================================
 
 async function getImageSignature(src) {
@@ -37618,13 +37618,18 @@ async function getImageSignature(src) {
       const canvas =
         document.createElement("canvas");
 
-      const size = 32;
+      const gridSize = 8;
+      const cellSize = 8;
+
+      const size =
+        gridSize * cellSize;
 
       canvas.width = size;
       canvas.height = size;
 
       const ctx =
         canvas.getContext("2d");
+
 
       ctx.drawImage(
         img,
@@ -37634,51 +37639,115 @@ async function getImageSignature(src) {
         size
       );
 
-      const imageData =
-        ctx.getImageData(
-          0,
-          0,
-          size,
-          size
-        );
 
-      const data =
-        imageData.data;
-
-      let r = 0;
-      let g = 0;
-      let b = 0;
-
-      let count = 0;
+      const signature = [];
 
 
       for (
-        let i = 0;
-        i < data.length;
-        i += 4
+        let gy = 0;
+        gy < gridSize;
+        gy++
       ) {
 
-        r += data[i];
-        g += data[i + 1];
-        b += data[i + 2];
+        for (
+          let gx = 0;
+          gx < gridSize;
+          gx++
+        ) {
 
-        count++;
+          const imageData =
+            ctx.getImageData(
+              gx * cellSize,
+              gy * cellSize,
+              cellSize,
+              cellSize
+            );
+
+
+          const data =
+            imageData.data;
+
+
+          let r = 0;
+          let g = 0;
+          let b = 0;
+          let brightness = 0;
+
+          let count = 0;
+
+
+          for (
+            let i = 0;
+            i < data.length;
+            i += 4
+          ) {
+
+            const red =
+              data[i];
+
+            const green =
+              data[i + 1];
+
+            const blue =
+              data[i + 2];
+
+
+            r += red;
+            g += green;
+            b += blue;
+
+
+            brightness +=
+              red * 0.299 +
+              green * 0.587 +
+              blue * 0.114;
+
+
+            count++;
+
+          }
+
+
+          signature.push({
+            r:
+              r / count,
+
+            g:
+              g / count,
+
+            b:
+              b / count,
+
+            brightness:
+              brightness / count
+          });
+
+        }
 
       }
 
 
-      resolve({
-        r: r / count,
-        g: g / count,
-        b: b / count
-      });
+      resolve(
+        signature
+      );
 
     };
 
 
-    img.onerror = reject;
+    img.onerror = () => {
 
-    img.src = src;
+      reject(
+        new Error(
+          "IMAGE LOAD ERROR: " +
+          src
+        )
+      );
+
+    };
+
+
+    img.src =
+      src;
 
   });
 
@@ -37686,24 +37755,93 @@ async function getImageSignature(src) {
 
 
 
+// ========================================
+// 📊 SIGNATURE COMPARE
+// ========================================
+
 function compareImageSignatures(
   a,
   b
 ) {
 
-  const distance =
-    Math.sqrt(
-      Math.pow(a.r - b.r, 2) +
-      Math.pow(a.g - b.g, 2) +
-      Math.pow(a.b - b.b, 2)
-    );
+  if (
+    !Array.isArray(a) ||
+    !Array.isArray(b) ||
+    a.length !== b.length
+  ) {
+
+    return Infinity;
+
+  }
 
 
-  return distance;
+  let totalDistance =
+    0;
+
+
+  for (
+    let i = 0;
+    i < a.length;
+    i++
+  ) {
+
+    const cellA =
+      a[i];
+
+    const cellB =
+      b[i];
+
+
+    const colorDistance =
+      Math.sqrt(
+
+        Math.pow(
+          cellA.r -
+          cellB.r,
+          2
+        ) +
+
+        Math.pow(
+          cellA.g -
+          cellB.g,
+          2
+        ) +
+
+        Math.pow(
+          cellA.b -
+          cellB.b,
+          2
+        )
+
+      );
+
+
+    const brightnessDistance =
+      Math.abs(
+        cellA.brightness -
+        cellB.brightness
+      );
+
+
+    totalDistance +=
+      colorDistance +
+      brightnessDistance * 0.5;
+
+  }
+
+
+  return (
+    totalDistance /
+    a.length
+  );
 
 }
 
 
+
+// ========================================
+// 🔎 FIND BEST CARD MATCH
+// ========================================
 
 async function findBestTradingCardMatch(
   scanImageSrc
@@ -37715,13 +37853,16 @@ async function findBestTradingCardMatch(
     );
 
 
-  let bestCard = null;
+  let bestCard =
+    null;
+
   let bestDistance =
     Infinity;
 
 
   for (
-    const card of treasureCardDatabase
+    const card of
+    treasureCardDatabase
   ) {
 
     try {
@@ -37737,6 +37878,13 @@ async function findBestTradingCardMatch(
           scanSignature,
           masterSignature
         );
+
+
+      console.log(
+        "CARD CHECK",
+        card.id,
+        distance
+      );
 
 
       if (
@@ -37765,9 +37913,21 @@ async function findBestTradingCardMatch(
   }
 
 
+  console.log(
+    "BEST CARD",
+    bestCard
+      ? bestCard.id
+      : "NONE",
+    bestDistance
+  );
+
+
   return {
-    card: bestCard,
-    distance: bestDistance
+    card:
+      bestCard,
+
+    distance:
+      bestDistance
   };
 
 }
