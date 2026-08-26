@@ -855,6 +855,63 @@ if (backToReminderFromDeadline) {
   );
 
 }
+const reminderDeadlineAddBtn =
+  document.getElementById(
+    "reminder-deadline-add-btn"
+  );
+
+const reminderDeadlineForm =
+  document.getElementById(
+    "reminder-deadline-form"
+  );
+
+const reminderDeadlineCancel =
+  document.getElementById(
+    "reminder-deadline-cancel"
+  );
+
+
+if (
+  reminderDeadlineAddBtn &&
+  reminderDeadlineForm
+) {
+
+  reminderDeadlineAddBtn.addEventListener(
+    "click",
+    () => {
+
+      reminderDeadlineForm.style.display =
+        "grid";
+
+      reminderDeadlineAddBtn.style.display =
+        "none";
+
+    }
+  );
+
+}
+
+
+if (
+  reminderDeadlineCancel &&
+  reminderDeadlineForm &&
+  reminderDeadlineAddBtn
+) {
+
+  reminderDeadlineCancel.addEventListener(
+    "click",
+    () => {
+
+      reminderDeadlineForm.style.display =
+        "none";
+
+      reminderDeadlineAddBtn.style.display =
+        "block";
+
+    }
+  );
+
+}
 // ========================================
 // 📝 MEMORY
 // ========================================
