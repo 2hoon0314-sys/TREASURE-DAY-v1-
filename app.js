@@ -800,7 +800,61 @@ card.appendChild(pastBadge);
     pastEventsList.appendChild(card);
   });
 }
+// ========================================
+// 🎫 APPLICATION DEADLINE
+// ========================================
 
+const reminderDeadlineBtn =
+  document.getElementById(
+    "reminder-deadline-btn"
+  );
+
+const backToReminderFromDeadline =
+  document.getElementById(
+    "back-to-reminder-from-deadline"
+  );
+
+
+if (reminderDeadlineBtn) {
+
+  reminderDeadlineBtn.addEventListener(
+    "click",
+    () => {
+
+      showPage(
+        "reminder-deadline"
+      );
+
+      window.scrollTo(
+        0,
+        0
+      );
+
+    }
+  );
+
+}
+
+
+if (backToReminderFromDeadline) {
+
+  backToReminderFromDeadline.addEventListener(
+    "click",
+    () => {
+
+      showPage(
+        "reminder"
+      );
+
+      window.scrollTo(
+        0,
+        0
+      );
+
+    }
+  );
+
+}
 // ========================================
 // 📝 MEMORY
 // ========================================
