@@ -37801,11 +37801,84 @@ if (tradingCardAnalyze) {
       setTimeout(
         () => {
 
-          const card =
-            treasureCardDatabase[0];
+        const preview =
+  document.getElementById(
+    "trading-card-scan-preview"
+  );
 
-          showTradingCardResult(card);
 
+if (!preview || !preview.src) {
+
+  alert(
+    "先にカード画像を選んでね💎"
+  );
+
+  return;
+
+}
+
+
+tradingCardAnalyze.disabled =
+  true;
+
+tradingCardAnalyze.textContent =
+  "ANALYZING...";
+
+
+try {
+
+  const result =
+    await findBestTradingCardMatch(
+      preview.src
+    );
+
+
+  if (!result.card) {
+
+    alert(
+      "カードを判定できませんでした"
+    );
+
+    return;
+
+  }
+
+
+  console.log(
+    "CARD MATCH",
+    result.card.id,
+    "DISTANCE",
+    result.distance
+  );
+
+
+  showTradingCardResult(
+    result.card
+  );
+
+
+} catch (error) {
+
+  console.error(
+    "CARD ANALYZE ERROR",
+    error
+  );
+
+
+  alert(
+    "カード判定中にエラーが発生しました"
+  );
+
+
+} finally {
+
+  tradingCardAnalyze.disabled =
+    false;
+
+  tradingCardAnalyze.textContent =
+    "ANALYZE CARD";
+
+}
 
           tradingCardAnalyze.textContent =
             "✨ ANALYZE CARD";
