@@ -37621,8 +37621,8 @@ async function getTradingCardFeatures(src) {
 
     img.onload = () => {
 
-      const maxWidth =
-        420;
+     const maxWidth =
+  300;
 
       const scale =
         Math.min(
