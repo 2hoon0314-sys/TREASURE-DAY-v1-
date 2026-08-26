@@ -1112,7 +1112,17 @@ if (
 
       card.className =
         "reminder-deadline-item";
+const countdownBadge =
+  document.createElement(
+    "span"
+  );
 
+countdownBadge.className =
+  "reminder-deadline-countdown " +
+  countdownClass;
+
+countdownBadge.textContent =
+  countdownText;
 
       const info =
         document.createElement(
