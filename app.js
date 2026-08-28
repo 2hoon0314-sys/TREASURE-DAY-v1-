@@ -798,8 +798,7 @@ pastBadge.textContent = "PAST 💎";
 card.appendChild(pastBadge);
     card.appendChild(info);
     pastEventsList.appendChild(card);
-  });
-}// ========================================
+  });// ========================================
 // 🎫 APPLICATION DEADLINE
 // ========================================
 
@@ -1071,6 +1070,26 @@ function renderReminderDeadlines() {
     [...reminderDeadlines].sort(
       (a, b) => {
 
+        const completedA =
+          a.completed ? 1 : 0;
+
+        const completedB =
+          b.completed ? 1 : 0;
+
+
+        if (
+          completedA !==
+          completedB
+        ) {
+
+          return (
+            completedA -
+            completedB
+          );
+
+        }
+
+
         const dateA =
           new Date(
             `${a.date}T${a.time || "23:59"}`
@@ -1080,6 +1099,7 @@ function renderReminderDeadlines() {
           new Date(
             `${b.date}T${b.time || "23:59"}`
           );
+
 
         return dateA - dateB;
 
@@ -1144,7 +1164,15 @@ function renderReminderDeadlines() {
         "";
 
 
-      if (diffDays < 0) {
+      if (deadline.completed) {
+
+        countdownText =
+          "DONE ✓";
+
+        countdownClass =
+          "done";
+
+      } else if (diffDays < 0) {
 
         countdownText =
           "期限切れ";
@@ -1192,6 +1220,15 @@ function renderReminderDeadlines() {
 
       card.className =
         "reminder-deadline-item";
+
+
+      if (deadline.completed) {
+
+        card.classList.add(
+          "completed"
+        );
+
+      }
 
 
       const countdownBadge =
@@ -1286,6 +1323,68 @@ function renderReminderDeadlines() {
         );
 
       }
+
+
+      // ========================================
+      // ✅ DONE / UNDO
+      // ========================================
+
+      const doneButton =
+        document.createElement(
+          "button"
+        );
+
+      doneButton.type =
+        "button";
+
+      doneButton.className =
+        "reminder-deadline-done";
+
+      doneButton.textContent =
+        deadline.completed
+          ? "UNDO"
+          : "DONE ✓";
+
+
+      doneButton.addEventListener(
+        "click",
+        () => {
+
+          reminderDeadlines =
+            reminderDeadlines.map(
+              (item) => {
+
+                if (
+                  item.id ===
+                  deadline.id
+                ) {
+
+                  return {
+                    ...item,
+                    completed:
+                      !item.completed
+                  };
+
+                }
+
+                return item;
+
+              }
+            );
+
+
+          localStorage.setItem(
+            "treasure-reminder-deadlines",
+            JSON.stringify(
+              reminderDeadlines
+            )
+          );
+
+
+          renderReminderDeadlines();
+
+        }
+      );
 
 
       // ========================================
@@ -1431,6 +1530,10 @@ function renderReminderDeadlines() {
 
 
       actions.appendChild(
+        doneButton
+      );
+
+      actions.appendChild(
         editButton
       );
 
@@ -1507,7 +1610,6 @@ if (reminderDeadlineSave) {
       }
 
 
-      // 編集中
       if (
         editingReminderDeadlineId !==
         null
@@ -1548,10 +1650,7 @@ if (reminderDeadlineSave) {
             }
           );
 
-      }
-
-      // 新規追加
-      else {
+      } else {
 
         const deadline = {
 
@@ -1569,6 +1668,9 @@ if (reminderDeadlineSave) {
 
           memo:
             memo,
+
+          completed:
+            false,
 
           createdAt:
             new Date().toISOString()
