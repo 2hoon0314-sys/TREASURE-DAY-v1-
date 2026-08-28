@@ -797,11 +797,15 @@ pastBadge.textContent = "PAST 💎";
     info.appendChild(date);
 card.appendChild(pastBadge);
     card.appendChild(info);
-    pastEventsList.appendChild(card);
-  });// ========================================
+  pastEventsList.appendChild(card);
+
+  });
+
+}
+
+// ========================================
 // 🎫 APPLICATION DEADLINE
 // ========================================
-
 const reminderDeadlineBtn =
   document.getElementById(
     "reminder-deadline-btn"
