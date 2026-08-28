@@ -8990,3 +8990,39 @@ z-index: 1400;
   background: #f0f2f6;
   color: #808b9c;
 }
+/* ========================================
+   ✅ DEADLINE DONE
+======================================== */
+
+.reminder-deadline-done {
+  min-width: 54px;
+
+  border: none;
+  border-radius: 14px;
+
+  padding: 9px 11px;
+
+  background: #e6f6ed;
+
+  color: #5f8d72;
+
+  font-size: 10px;
+  font-weight: 900;
+}
+
+
+.reminder-deadline-item.completed {
+  opacity: 0.58;
+}
+
+
+.reminder-deadline-item.completed
+.reminder-deadline-item-info strong {
+  text-decoration: line-through;
+}
+
+
+.reminder-deadline-countdown.done {
+  background: #e4f4eb;
+  color: #5f8d72;
+}
